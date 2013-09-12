@@ -1,7 +1,7 @@
 import numpy
 from scipy.signal import fftconvolve
 
-from traits.api import HasTraits, Int
+from traits.api import HasTraits, Int, Event
 from traitsui.api import View, Item
 
 def compute_energy(traces, n_samples ):
@@ -33,7 +33,7 @@ class Energy( HasTraits ):
     Simple class for creating energy attribute calculator.
     """
     n_samples = Int
-    
+    updated = Event
     traits_view = View( Item( 'nsamples' ) )
     
     def __init__( self, n_samples ):
@@ -49,5 +49,7 @@ class Energy( HasTraits ):
     
         return data_out
     
+    def _n_samples_changed(self):
+        self.updated = True
     
     

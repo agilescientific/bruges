@@ -1,5 +1,5 @@
 import numpy as np
-from enthought.traits.api import HasTraits,Array,Float, Range, Int
+from enthought.traits.api import HasTraits,Array,Float, Range, Int, Event
 from scipy.signal import hilbert
 from enthought.traits.ui.api import View,Item, RangeEditor
 
@@ -63,17 +63,18 @@ def ormsby_alg(duration, nsamps, f1,f2,f3,f4):
     """
     
     def numerator(f,t):
-        return np.sinc(np.pi * f * t)**2 * ((np.pi * f) ** 2)
+        return (np.sinc( f * t)**2) * ((np.pi * f) ** 2)
 
-    pf43 = np.pi * f4 - np.pi * f3
-    pf21 = np.pi * f2 - np.pi * f1
+    pf43 = ( np.pi * f4 ) - ( np.pi * f3 )
+    pf21 = ( np.pi * f2 ) - ( np.pi * f1 )
     
     n = nsamps
     t = np.linspace( -.5,.5,n) * duration
     
-    A = (numerator(f4,t)/pf43 - numerator(f3,t)/pf43 -
-         numerator(f2,t)/pf21 + numerator(f1,t)/pf21)
+    A = ( ( numerator(f4,t)/pf43 ) - ( numerator(f3,t)/pf43 ) -
+         ( numerator(f2,t)/pf21 ) + ( numerator(f1,t)/pf21) )
 
+    A /= np.amax( A )
     return A
 
 
@@ -109,6 +110,7 @@ class Wavelet( HasTraits ):
     nsamps = Int
     duration = Float
     phase = Range( -180.,180.,0, mode = 'slider')
+    updated = Event
     
     def __init__(self):
         super( Wavelet, self).__init__()
@@ -119,7 +121,7 @@ class Ricker( Wavelet ):
     
     nsamps = Int(512)
     duration = Float(0.2)
-    center_frequency = Range( 0., 100. ,40)
+    center_frequency = Range( 1., 100. ,40)
 
    
     triats_view = View( Item( 'nsamps' ), 
@@ -130,9 +132,10 @@ class Ricker( Wavelet ):
           
     def __init__(self):
         super( Ricker, self).__init__()
-        self._calculate()
+        self.updated = True
+        self._compute()
                       
-    def _calculate( self ):
+    def _compute( self ):
         
         wavelet = ricker_alg( self.duration, 
                               self.nsamps, 
@@ -141,13 +144,17 @@ class Ricker( Wavelet ):
         phase_rad = self.phase * np.pi / 180.                  
         self.wavelet = rotate_phase( wavelet,
                                      phase_rad )
+        
                                    
     def _anytrait_changed( self, name ):
-        if (name != 'wavelet' ):self._calculate()
+        if (( name not in ['wavelet', 'updated'] ) ):
+            self._compute()
+            self.updated = True
 
 class Ormsby( Wavelet ):
     
     max_f = Float( 100.0 )
+    min_f = Float( 0.0 )
     f1 = Range(low=1., value=10.)
     f2 = Range(low=1., value=30.)
     f3 = Range(low=1.,value=50.)
@@ -158,7 +165,8 @@ class Ormsby( Wavelet ):
     duration = Float(0.2)
   
     traits_view = View( Item('nsamps'), Item( 'duration' ),
-                        Item( 'f1', editor=RangeEditor( mode='slider', 
+                        Item( 'f1', editor=RangeEditor( mode='slider',
+                                                        low_name = 'min_f',
                                                         high_name='f2' )), 
                         Item( 'f2', editor=RangeEditor( mode='slider', 
                                                         low_name='f1',
@@ -173,7 +181,9 @@ class Ormsby( Wavelet ):
                         buttons = ['OK'])
     def __init__( self ):
         super( Ormsby, self ).__init__()
+        self.updated=True
         self._compute()
+        
     
     def _compute( self ):
         wavelet = ormsby_alg( self.duration, self.nsamps,
@@ -183,7 +193,9 @@ class Ormsby( Wavelet ):
         self.wavelet = rotate_phase( wavelet, phase_rad )
                         
     def _anytrait_changed( self, name ):
-        if (name != 'wavelet' ): self._compute()
+        if (( name not in ['wavelet', 'updated'] ) ):
+            self._compute()
+            self.updated = True
         
     
     

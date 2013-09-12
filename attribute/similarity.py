@@ -1,4 +1,4 @@
-from traits.api import HasTraits, Int
+from traits.api import HasTraits, Int, Event
 from traitsui.api import View, Item
 import numpy 
 
@@ -30,12 +30,16 @@ def compute_similarity(traces, n_samples):
     
 class Similarity( HasTraits ):
     
-    n_samples = Int
+    n_samples = Int 
+    updated = Event
     traits_view = View( Item( 'n_samples' ))
     
     def __init__( self, n_samples ):
         
         self.n_samples = n_samples
+        
+    def _n_samples_changed(self):
+        self.updated=True
         
     def compute( self, traces ):
         
