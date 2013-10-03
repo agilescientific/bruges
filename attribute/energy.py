@@ -16,7 +16,7 @@ def compute_energy(traces, n_samples ):
     window = numpy.zeros( n_samples ) + 1.0
     
     if ( len( signal.shape ) ) == 1 : 
-        ## Compute the sliding ave)rage using a convolution
+        ## Compute the sliding average using a convolution
         energy_data = fftconvolve( signal, window, mode='same' ) / n_samples
     
     elif ( len( signal.shape ) == 2 ):
