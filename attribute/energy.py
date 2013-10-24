@@ -5,10 +5,15 @@ from traits.api import HasTraits, Int, Event
 from traitsui.api import View, Item
 
 def compute_energy(traces, n_samples ):
-    """ Compute an instantaneous spectrum for each point of a seismic cube.
-    :param traces: The data array to use for calculating MS energy. Must be 1D
-                   or 2D.
-    :param n_samples: The number of samples to use for the RMS window.
+    """
+    Compute an mean-squared energy measurement for each point of a
+    seismic section.
+        
+    :param traces: The data array to use for calculating MS energy.
+                   Must be 1D or 2D numpy array.
+    :param n_samples: The number of samples to use for the MS window.
+
+    :returns An array the same dimensions as the input array.
     """
     
     energy_data = numpy.zeros( traces.shape )
@@ -17,7 +22,8 @@ def compute_energy(traces, n_samples ):
     
     if ( len( signal.shape ) ) == 1 : 
         ## Compute the sliding average using a convolution
-        energy_data = fftconvolve( signal, window, mode='same' ) / n_samples
+        energy_data = fftconvolve( signal, window, mode='same' ) \
+                     / n_samples
     
     elif ( len( signal.shape ) == 2 ):
         for trace in range(signal.shape[1]):

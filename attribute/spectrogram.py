@@ -5,15 +5,20 @@ from numpy import hanning, concatenate
 
 def compute_spectra( data, window, overlap=0.5 ):
     """
-    Calculates a spectrogram using windowed STFTs. 
-    :param data: Array of data to process into spectra.
+    Calculates a spectrogram using windowed STFTs.
+     
+    :param data: 1D numpy array to process into spectra. 
     :param window: Array of data defining the window to use for
-                   the STFTs. (See scipy Tukey, Hann, Hamming, etc.). Function
-                   will automatically pad to a power of 2.
-    :keyword overlap: The fractional overlap for each window. A value of 0
-                      uses no redudant data, a value of 1 slides the STFT window
-                      one sample at a time. Defaults to 0.5
-    :returns A spectrogram of the data. ( 2D array for 1D input )
+                   the STFTs. (See scipy Tukey, Hann, Hamming, etc.).
+                   Function will automatically pad to a power of 2.
+                   
+    :keyword overlap: The fractional overlap for each window.
+                      A value of 0 uses no redudant data, a value of 1
+                      slides the STFT window one sample at a time.
+                      Defaults to 0.5
+                      
+    :returns A spectrogram of the data ([time, freq]).
+            ( 2D array for 1D input )
     """
     
     # Calculate how many STFTs we need to do.
@@ -37,7 +42,8 @@ def compute_spectra( data, window, overlap=0.5 ):
         if ( end > data.size-1 ): break        
  
         output[ i, : ] = ( 2.* \
-                         absolute( fft( data[ start:end ] * padded_window ) ) / \
+                         absolute( fft( data[ start:end ] *\
+                                        padded_window ) ) / \
                          window.size )[0 : padded_window.size /2. ]
     
     return output

@@ -79,13 +79,13 @@ def ormsby_alg(duration, nsamps, f1,f2,f3,f4):
 
 
 def ricker_alg( duration, nsamps, f ):
-    
     """
     Also known as the mexican hat wavelet, models the function:
     A =  (1-2 \pi^2 f^2 t^2) e^{-\pi^2 f^2 t^2}
 
     :params duration: Length of the wavelet
-    :params fs: The sample rate of the date (samples/second)
+    :params nsamps: The number of samples to take. 
+                    nsamps/duration = sample rate
     :params f: Center frequency of the wavelet.
 
     :returns: The ricker wavelet with center frequency f sampled at t.
