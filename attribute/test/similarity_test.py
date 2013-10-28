@@ -80,6 +80,8 @@ class SimilarityTest( unittest.TestCase ):
         same = numpy.allclose( check_data[:,1:], 
                                output[:,1:], .001 )
 
+        self.assertTrue( same )
+        
         # Should be zero with no lag
         lag = 0
         window_size = 20
@@ -91,6 +93,8 @@ class SimilarityTest( unittest.TestCase ):
         same = numpy.allclose( check_data[:,1:], 
                                output[:,1:], .001 )
 
+        self.assertTrue( same )
+        
 if __name__ == '__main__':
     unittest.main()
     

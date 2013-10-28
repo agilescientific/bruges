@@ -41,6 +41,25 @@ def lfm( duration,fs,f1,f2 ):
 
     return A
 
+
+
+def klauder(points, f_lower, f_upper):
+    """
+    The autocorrelation of a linearly swept frequency-modulated sinuusoidal signal used in Vibroseis.
+    It is zero-phase, and symmetrical about time t = 0 ms.
+    Requires f_upper and f_lower, and a duration, which we can interpret from points.
+    """
+    
+    T = points * 0.001
+    t = np.linspace(-.1, .1, points)
+    k = (f_lower + f_upper) / T
+    f0 = (f_lower + f_upper) / 2.0
+    i = (0 + 1j)
+    A = np.real( np.sin(np.pi * k * t * (T - t))/ \
+                 (np.pi * k * t * np.exp(2.0 * np.pi * f0 * t * i)))
+
+    return A
+
 def ormsby_alg(duration, nsamps, f1,f2,f3,f4):
     """
     The Ormsby wavelet requires four frequencies:
