@@ -68,6 +68,7 @@ class SimilarityTest( unittest.TestCase ):
 
         # Make an off by 1 similarity that can be corrected
         # with lag
+        data+=11
         data[::2,::2] = -11.
         data[1::2,1::2]=-11
 
@@ -75,11 +76,13 @@ class SimilarityTest( unittest.TestCase ):
         window_size = 20
         
         output = compute_similarity( data, window_size,
-                                     lag=lag )
+                                     lag=lag, test=True )
 
-        same = numpy.allclose( check_data[:,1:], 
-                               output[:,1:], .001 )
+      
+        same = numpy.allclose( check_data[window_size/2 :,1:], 
+                               output[window_size/2 :,1:], atol=.01 )
 
+       
         self.assertTrue( same )
         
         # Should be zero with no lag
@@ -89,6 +92,7 @@ class SimilarityTest( unittest.TestCase ):
         output = compute_similarity( data, window_size,
                                      lag=lag )
 
+ 
         check_data[:,1:] -= 1.
         same = numpy.allclose( check_data[:,1:], 
                                output[:,1:], .001 )
