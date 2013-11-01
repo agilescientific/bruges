@@ -11,22 +11,28 @@ def ricker( duration, dt, f ):
 
     :param duration: The length in seconds of the wavelet.
     :param dt: is the sample interval in seconds (usually 0.001, 0.002, 0.004)
-    :params f: Center frequency of the wavelet (in Hz)
+    :params f: Center frequency of the wavelet (in Hz). If a list is
+               passed, the first element will be used.
 
     :returns: The ricker wavelet with center frequency f sampled at t.
     """
-    t = np.arange( -duration/2, duration/2 , dt) 
+
+    # Check size of f. API compatibility may allow for a list
+    if ( isinstance( f, list ) ): f=f[0]
+     
+    t = np.arange( -duration/2, duration/2 , dt)
+
     pi2 = (np.pi ** 2.0)
-    fsqr = f ** 2
-    tsqr = t ** 2
+    fsqr = f ** 2.0
+    tsqr = t ** 2.0
     pft = pi2 * fsqr * tsqr
     A = (1 - (2 * pft)) * np.exp(-pft)
 
     return A
     
     
-def sweep( duration, dt, f, method = 'linear', phi = 0, vertex_zero = True, 
-    autocorrelate = True ):
+def sweep( duration, dt, f, method = 'linear', phi = 0,
+           vertex_zero = True, autocorrelate = True ):
     """
     Generates a linear frequency modulated wavelet (sweep)
     Does a wrapping of scipy.signal.chirp
@@ -55,9 +61,9 @@ def sweep( duration, dt, f, method = 'linear', phi = 0, vertex_zero = True,
     A = chirp( t , f1, t1, f2, method, phi, vertex_zero  )
     
     if autocorrelate:
-        A = np.correlate(A, A, mode='same')
-    
-    return A
+        A = np.correlate(A, A, mode='full')
+     
+    return A / np.amax( A )
 
 
 def ormsby(duration, dt, f):
