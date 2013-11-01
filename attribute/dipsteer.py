@@ -1,5 +1,5 @@
 import numpy as np
-from agilegeo.attribute import compute_energy 
+from agilegeo.attribute import energy 
 
 def dipsteer( data, window_length, stepout, maxlag, overlap=0. ):
     """
@@ -36,7 +36,7 @@ def dipsteer( data, window_length, stepout, maxlag, overlap=0. ):
                          stride ) + 1
     print( n_windows )
     # Normalize each trace to the same RMS energy
-    norm_factor = np.sqrt( compute_energy( data, window_length ) )
+    norm_factor = np.sqrt( energy( data, window_length ) )
     norm_data = data / norm_factor
 
     # Replace the 0/0 with 0
