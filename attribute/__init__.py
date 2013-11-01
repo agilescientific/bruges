@@ -1,4 +1,4 @@
-from energy import Energy, compute_energy
-from similarity import Similarity, compute_similarity
+from energy import Energy, energy
+from similarity import Similarity, similarity
 from dipsteer import dipsteer
 #from envelope import envelope
