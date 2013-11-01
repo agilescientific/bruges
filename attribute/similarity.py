@@ -2,7 +2,7 @@ from traits.api import HasTraits, Int, Event, Range
 from traitsui.api import View, Item
 import numpy 
 
-def compute_similarity(traces, n_samples, step_out=1, lag=0,
+def similarity(traces, duration, dt, step_out=1, lag=0,
                        test = False ):
     """
     Compute similarity for each point of a seismic section using
@@ -18,8 +18,9 @@ def compute_similarity(traces, n_samples, step_out=1, lag=0,
     similiarity, which should be increased for dipping data.
     
     :param traces: A 2D numpy array arranged as [time, trace].
-    :param n_samples: The length in samples of the trace kernel
+    :param duration: The length in seconds of the window trace kernel
                       used to calculate the similarity.
+    :param dt: The sampe interval of the traces in sec. (eg. 0.001, 0.002, ...)
     :keyword step_out (default=1 ):
                        The number of adjacent traces to 
                        the kernel to check similarity. The maximum
@@ -31,8 +32,8 @@ def compute_similarity(traces, n_samples, step_out=1, lag=0,
                   
                     
     """
-
-    half_n_samples = n_samples // 2
+   
+    half_n_samples = int( duration / (2*dt) )
 
     similarity_cube = numpy.zeros_like(traces, dtype='float32')
     traces = numpy.nan_to_num(traces)

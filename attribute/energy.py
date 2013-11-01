@@ -4,21 +4,23 @@ from scipy.signal import fftconvolve
 from traits.api import HasTraits, Int, Event
 from traitsui.api import View, Item
 
-def compute_energy(traces, n_samples ):
+def energy(traces, duration, dt ):
     """
     Compute an mean-squared energy measurement for each point of a
     seismic section.
         
     :param traces: The data array to use for calculating MS energy.
                    Must be 1D or 2D numpy array.
-    :param n_samples: The number of samples to use for the MS window.
-
+    :param duration: the time duration of the window (in seconds)
+    :param dt: the sample interval of the data (in seconds) 
     :returns An array the same dimensions as the input array.
     """
     
     energy_data = numpy.zeros( traces.shape )
     signal = traces * traces 
-    window = numpy.zeros( n_samples ) + 1.0
+    n_samples = int(duration / dt)
+    
+    window = numpy.ones( n_samples )
     
     if ( len( signal.shape ) ) == 1 : 
         ## Compute the sliding average using a convolution
