@@ -152,7 +152,7 @@ class Ricker( Wavelet ):
                       
     def _compute( self ):
         
-        wavelet = ricker_alg( self.duration, 
+        wavelet = ricker( self.duration, 
                               self.nsamps, 
                               self.center_frequency )
         
@@ -201,7 +201,7 @@ class Ormsby( Wavelet ):
         
     
     def _compute( self ):
-        wavelet = ormsby_alg( self.duration, self.nsamps,
+        wavelet = ormsby( self.duration, self.nsamps,
                               self.f1, self.f2, self.f3,
                               self.f4 )
         phase_rad = self.phase * np.pi / 180.
