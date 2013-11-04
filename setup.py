@@ -13,6 +13,5 @@ setup(
     description='Useful geophysics functions',
     long_description=open('README.txt').read(),
     url='http://pypi.python.org/pypi/agilegeo/',
-    license='LICENSE.txt',
-    install_requires=['scipy', 'matplotlib', 'numpy']
+    license='LICENSE.txt
     )
