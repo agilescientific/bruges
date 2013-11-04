@@ -1,0 +1,8 @@
+The agilegeo package is designed to be used as stand alone function 
+defs and corresponding classes that can be used to build applications 
+using the traits framework.
+
+The core function definitions are test driven and contain the 
+algorithm implementations. The class definitions wrap and abstract
+the defs into Traits classes, which allows for interfacing into
+traits/traitsui based applications.

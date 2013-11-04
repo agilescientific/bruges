@@ -30,7 +30,8 @@ def energy(traces, duration, dt ):
     elif ( len( signal.shape ) == 2 ):
         for trace in range(signal.shape[1]):
             energy_data[ :, trace ] = (
-                    fftconvolve( signal[:,trace], window, mode='same' ) )
+                    fftconvolve( signal[:,trace], window,
+                                 mode='same' ) )
     
     else: raise ValueError( 'Array must be 1D or 2D' )
     
