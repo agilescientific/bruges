@@ -1,8 +1,5 @@
-# -*- coding: utf-8 -*-
 import numpy as np
-from enthought.traits.api import HasTraits,Array,Float, Range, Int, Event
 from scipy.signal import hilbert
-from enthought.traits.ui.api import View,Item, RangeEditor
 
 def ricker( duration, dt, f ):
     """
@@ -10,7 +7,8 @@ def ricker( duration, dt, f ):
     A =  (1-2 \pi^2 f^2 t^2) e^{-\pi^2 f^2 t^2}
 
     :param duration: The length in seconds of the wavelet.
-    :param dt: is the sample interval in seconds (usually 0.001, 0.002, 0.004)
+    :param dt: is the sample interval in seconds (usually 0.001,
+               0.002, 0.004)
     :params f: Center frequency of the wavelet (in Hz). If a list is
                passed, the first element will be used.
 
@@ -123,100 +121,7 @@ def rotate_phase( w, phi ):
 
     return A
 
-class Wavelet( HasTraits ):
-    """
-    Abstract Class
-    """
-    wavelet = Array
-    nsamps = Int
-    duration = Float
-    phase = Range( -180.,180.,0, mode = 'slider')
-    updated = Event
-    
-    def __init__(self):
-        super( Wavelet, self).__init__()
-    
-    
 
-class Ricker( Wavelet ):
-    
-    nsamps = Int(512)
-    duration = Float(0.2)
-    center_frequency = Range( 1., 100. ,40)
-
-   
-    triats_view = View( Item( 'nsamps' ), 
-                        Item( 'duration' ),
-                        Item( 'center_frequency' ),
-                        Item( 'phase' ),
-                        buttons=['OK'] )
-          
-    def __init__(self):
-        super( Ricker, self).__init__()
-        self.updated = True
-        self._compute()
-                      
-    def _compute( self ):
-        
-        wavelet = ricker( self.duration, 
-                              self.nsamps, 
-                              self.center_frequency )
-        
-        phase_rad = self.phase * np.pi / 180.                  
-        self.wavelet = rotate_phase( wavelet,
-                                     phase_rad )
-        
-                                   
-    def _anytrait_changed( self, name ):
-        if (( name not in ['wavelet', 'updated'] ) ):
-            self._compute()
-            self.updated = True
-
-class Ormsby( Wavelet ):
-    
-    max_f = Float( 100.0 )
-    min_f = Float( 0.0 )
-    f1 = Range(low=1., value=10.)
-    f2 = Range(low=1., value=30.)
-    f3 = Range(low=1.,value=50.)
-    f4 = Range(low=1., value=75.)
-    
-    phase = Range(-180.,180.,0., mode='slider' )
-    nsamps = Int( 512 )
-    duration = Float(0.2)
-  
-    traits_view = View( Item('nsamps'), Item( 'duration' ),
-                        Item( 'f1', editor=RangeEditor( mode='slider',
-                                                        low_name = 'min_f',
-                                                        high_name='f2' )), 
-                        Item( 'f2', editor=RangeEditor( mode='slider', 
-                                                        low_name='f1',
-                                                        high_name='f3' )),
-                        Item( 'f3',editor=RangeEditor( mode='slider', 
-                                                        low_name='f2',
-                                                        high_name='f4' )),
-                        Item( 'f4', editor=RangeEditor( mode='slider', 
-                                                        low_name='f3',
-                                                        high_name='max_f')),
-                        Item( 'phase' ),
-                        buttons = ['OK'])
-    def __init__( self ):
-        super( Ormsby, self ).__init__()
-        self.updated=True
-        self._compute()
-        
-    
-    def _compute( self ):
-        wavelet = ormsby( self.duration, self.nsamps,
-                              self.f1, self.f2, self.f3,
-                              self.f4 )
-        phase_rad = self.phase * np.pi / 180.
-        self.wavelet = rotate_phase( wavelet, phase_rad )
-                        
-    def _anytrait_changed( self, name ):
-        if (( name not in ['wavelet', 'updated'] ) ):
-            self._compute()
-            self.updated = True
         
     
     

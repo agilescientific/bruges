@@ -1,9 +1,6 @@
 import numpy
 from scipy.signal import fftconvolve
 
-from traits.api import HasTraits, Int, Event
-from traitsui.api import View, Item
-
 def energy(traces, duration, dt ):
     """
     Compute an mean-squared energy measurement for each point of a
@@ -37,28 +34,6 @@ def energy(traces, duration, dt ):
     
     return energy_data
     
-class Energy( HasTraits ):
-    """
-    Simple class for creating energy attribute calculator.
-    """
-    n_samples = Int
-    updated = Event
-    traits_view = View( Item( 'nsamples' ) )
-    
-    def __init__( self, n_samples ):
-        
-        super( Energy, self ).__init__()
-        
-        self.n_samples = n_samples
-    
-    def compute( self, traces ):
-        
-        data_out = compute_energy( traces,
-                                   self.n_samples )
-    
-        return data_out
-    
-    def _n_samples_changed(self):
-        self.updated = True
+
     
     

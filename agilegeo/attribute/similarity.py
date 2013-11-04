@@ -1,5 +1,4 @@
-from traits.api import HasTraits, Int, Event, Range
-from traitsui.api import View, Item
+
 import numpy 
 
 def similarity(traces, duration, dt, step_out=1, lag=0,
@@ -73,25 +72,4 @@ def similarity(traces, duration, dt, step_out=1, lag=0,
 
     return (similarity_cube)
     
-class Similarity( HasTraits ):
-    
-    n_samples = Range( 1,100,3)
-    step_out = Range(1,10,3)
-    updated = Event
-    traits_view = View( Item( 'n_samples' ), Item( 'step_out'))
-    
-    def __init__( self, n_samples ):
-        
-        self.n_samples = n_samples
-        
-    def _n_samples_changed(self):
-        self.updated=True
-        
-    def _step_out_changed(self):
-        self.updated=True
-    def compute( self, traces ):
-        
-        return compute_similarity( traces, self.n_samples,
-                                   self.step_out) 
-    
-    
+

@@ -1,16 +1,17 @@
 from numpy import zeros, log2, ceil, arange, absolute
 from scipy.fftpack import fft
-from traits.api import HasTraits, Array, Event, Range, Int
+
 from numpy import hanning, concatenate
 
-def compute_spectra( data, window, overlap=0.5 ):
+def spectra( data, window=hanning(128), overlap=0.5 ):
     """
     Calculates a spectrogram using windowed STFTs.
      
     :param data: 1D numpy array to process into spectra. 
-    :param window: Array of data defining the window to use for
+    :keyword window: Array of data defining the window to use for
                    the STFTs. (See scipy Tukey, Hann, Hamming, etc.).
                    Function will automatically pad to a power of 2.
+                   Defaults to a 128 point Hann window.
                    
     :keyword overlap: The fractional overlap for each window.
                       A value of 0 uses no redudant data, a value of 1
@@ -20,6 +21,7 @@ def compute_spectra( data, window, overlap=0.5 ):
     :returns A spectrogram of the data ([time, freq]).
             ( 2D array for 1D input )
     """
+
     
     # Calculate how many STFTs we need to do.
     stride = window.size * ( 1 - overlap ) + 1
@@ -49,52 +51,7 @@ def compute_spectra( data, window, overlap=0.5 ):
     return output
 
 
-class Spectrogram( HasTraits ):
-    """
-    Processing module that turns traces into spectra using hanning windowed 
-    STFTs.
-    """
-    window = Array 
-    updated = Event
-    overlap = Range( 0.0,1.0, 0.5 )
-    nsamps = Int
-    
-    def __init__( self, nsamps = 128, overlap=0.5 ):
-        """
-        Initializes the class
-        :param nsamps: The number of samples to use for STFT window. 
-        """
-        
-        super( Spectrogram, self ).__init__()
-        
-        self.nsamps = nsamps
-        self.overlap = overlap
-        
-        self.window = hanning( nsamps )
-    
-    def _on_nsamps_changed( self ):
-        
-        self.window = hanning( self.nsamps )
-        self.updated = True
-    
-    def compute( self, data ):
-        
-        
-        for trace in range( data.shape[-1]):
-            
-            if trace == 0:
-                first = compute_spectra( data[:,trace], self.window, 
-                                         self.overlap ) 
-                output = zeros( [ first.shape[0], data.shape[-1], \
-                                  first.shape[1] ] )
-                output[:,0, : ] = first        
-            else: 
-                spec = compute_spectra( data[:,trace], \
-                                      self.window, 
-                                      self.overlap )  
-                output[ :, trace, : ] = spec
-        return output
-        
+
     
         
         
