@@ -1,8 +1,18 @@
 import unittest
 import agilegeo.avo as avo
+import numpy as np
 
 class AvoTest( unittest.TestCase ):
-
+    """
+    Tests zoeppritz using a values from a spreadsheet, and also a
+    qualitative comparison to plots made by the CREWES avo explorer
+    web app. Other algorithms are then tested to be with 10% of the
+    zoeppritz answer for angles < 45 degrees.
+    """
+    
+    # 5 percent tolerance
+    tolerance = 0.1
+    
     def test_zoeppritz(self):
 
         vp1 = 12250.
@@ -35,12 +45,17 @@ class AvoTest( unittest.TestCase ):
         rho1 = 2.66
         rho2 = 2.34
 
-        theta = 40.
+        theta = np.arange( 45 )
 
 
         reflect = avo.akirichards( vp1,vs1,rho1,vp2,vs2,rho2,theta )
+        reflect_zoep = avo.zoeppritz( vp1,vs1,rho1,vp2,
+                                      vs2,rho2,theta )
 
-        self.assertAlmostEquals( reflect, -0.112236, places=3 )
+        # See if it is within .1 of zoep for < 45 deg
+        test = np.allclose( reflect, reflect_zoep,
+                            rtol=self.tolerance )
+        self.assertTrue( test )
 
     def test_akirichards_alt(self):
 
@@ -53,13 +68,18 @@ class AvoTest( unittest.TestCase ):
         rho1 = 2.66
         rho2 = 2.34
 
-        theta = 40.
+        theta = np.arange( 45 )
 
 
         reflect = avo.akirichards_alt( vp1,vs1,rho1,vp2,
                                         vs2,rho2,theta )
+        reflect_zoep = avo.zoeppritz( vp1,vs1,rho1,vp2,
+                                      vs2,rho2,theta )
 
-        self.assertAlmostEquals( reflect, -0.112236, places = 3 )
+        # See if it is within .1 of zoep for < 45 deg
+        test = np.allclose( reflect, reflect_zoep,
+                            rtol=self.tolerance )
+        self.assertTrue( test )
 
     def test_fatti(self):
 
@@ -72,12 +92,18 @@ class AvoTest( unittest.TestCase ):
         rho1 = 2.66
         rho2 = 2.34
 
-        theta = 40.
+        theta = np.arange( 45 )
 
 
         reflect = avo.fatti( vp1,vs1,rho1,vp2,vs2,rho2,theta )
 
-        self.assertAlmostEquals( reflect, -0.11155, places = 3 )
+        reflect_zoep = avo.zoeppritz( vp1,vs1,rho1,vp2,
+                                      vs2,rho2,theta )
+
+        # See if it is within .1 of zoep for < 45 deg
+        test = np.allclose( reflect, reflect_zoep,
+                            rtol=self.tolerance )
+        self.assertTrue( test )
 
     def test_shuey2(self):
 
@@ -90,12 +116,18 @@ class AvoTest( unittest.TestCase ):
         rho1 = 2.66
         rho2 = 2.34
 
-        theta = 40.
+        theta = np.arange( 45 )
 
 
         reflect = avo.shuey2( vp1,vs1,rho1,vp2,vs2,rho2,theta )
+        reflect_zoep = avo.zoeppritz( vp1,vs1,rho1,vp2,
+                                      vs2,rho2,theta )
 
-        self.assertAlmostEquals( reflect, -0.08955, places = 3 )
+        # See if it is within .1 of zoep for < 45 deg
+        test = np.allclose( reflect, reflect_zoep,
+                            rtol=self.tolerance )
+        self.assertTrue( test )
+        
 
     def test_shuey3(self):
         
@@ -109,17 +141,68 @@ class AvoTest( unittest.TestCase ):
         rho1 = 2.66
         rho2 = 2.34
 
-        theta = 40.
+        theta = np.arange(45)
 
 
         reflect = avo.shuey3( vp1,vs1,rho1,vp2,vs2,rho2,theta )
 
-        self.assertAlmostEquals( reflect, -0.0975, places = 3 )
+        reflect_zoep = avo.zoeppritz( vp1,vs1,rho1,vp2,
+                                      vs2,rho2,theta )
 
-   # def test_borfield2(self):
+        # See if it is within .1 of zoep for < 45 deg
+        test = np.allclose( reflect, reflect_zoep,
+                            rtol=self.tolerance )
+        self.assertTrue( test )
+        
 
-    #def test_borfield3(self):
+    def test_bortfeld2(self):
+        vp1 = 12250.
+        vp2 = 11600.
+
+        vs1 = 6200.
+        vs2 = 6650.
+
+        rho1 = 2.66
+        rho2 = 2.34
+
+        theta = np.arange(45)
+
+
+        reflect = avo.bortfeld2( vp1,vs1,rho1,vp2,vs2,rho2,theta )
+
+        reflect_zoep = avo.zoeppritz( vp1,vs1,rho1,vp2,
+                                      vs2,rho2,theta )
+
+        # See if it is within .1 of zoep for < 45 deg
+        test = np.allclose( reflect, reflect_zoep,
+                            rtol=self.tolerance )
+        self.assertTrue( test )
+
+    def test_bortfeld3(self):
+        vp1 = 12250.
+        vp2 = 11600.
+
+        vs1 = 6200.
+        vs2 = 6650.
+
+        rho1 = 2.66
+        rho2 = 2.34
+
+        theta = np.arange(45)
+
+
+        reflect = avo.bortfeld3( vp1,vs1,rho1,vp2,vs2,rho2,theta )
+
+        reflect_zoep = avo.zoeppritz( vp1,vs1,rho1,vp2,
+                                      vs2,rho2,theta )
+
+        # See if it is within .1 of zoep for < 45 deg
+        test = np.allclose( reflect, reflect_zoep,
+                            rtol=self.tolerance )
+        self.assertTrue( test )
         
 if __name__ == '__main__':
-    # sys.path.append( '~/agilegeo')
-    unittest.main()
+
+    suite = \
+      unittest.TestLoader().loadTestsFromTestCase(AvoTest)
+    unittest.TextTestRunner(verbosity=2).run(suite)
