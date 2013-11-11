@@ -1,14 +1,16 @@
 import numpy as np
 from agilegeo.attribute import energy 
 
-def dipsteer( data, window_length, stepout, maxlag, overlap=0. ):
+def dipsteer( data, window_length, stepout,
+              maxlag, overlap=0., dt=1 ):
     """
     Calculates a dip field by finding the maximum correlation between
     adjacent traces.
 
     :param data: A 2D seismic section (samples,traces) used to
                  calculate dip.
-    :param window_length: The length [samples] of the window to use
+    :param window_length: The length [seconds] of the window to use
+    :param dt: The time sample interval of the traces.
                           
     :param stepout: The number of traces on either side of each point
                     to average when calculating the dip.
@@ -27,6 +29,8 @@ def dipsteer( data, window_length, stepout, maxlag, overlap=0. ):
 
     dip = np.zeros( data.shape )
 
+    window_length = np.floor( window_length / dt )
+    
     # Force the window length to be odd for index tracking
     if not ( window_length % 2 ): window_length+=1
     
@@ -34,7 +38,7 @@ def dipsteer( data, window_length, stepout, maxlag, overlap=0. ):
     stride = window_length * ( 1 - overlap ) 
     n_windows = np.ceil( ( data.shape[0] - window_length ) /
                          stride ) + 1
-    print( n_windows )
+ 
     # Normalize each trace to the same RMS energy
     norm_factor = np.sqrt( energy( data, window_length ) )
     norm_data = data / norm_factor

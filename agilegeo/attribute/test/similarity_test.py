@@ -1,6 +1,6 @@
 import unittest
 import numpy
-from agilegeo.attribute import compute_similarity
+from agilegeo.attribute import similarity
 
 class SimilarityTest( unittest.TestCase ):
 
@@ -16,7 +16,7 @@ class SimilarityTest( unittest.TestCase ):
         window_size = 20
 
     
-        output = compute_similarity( data, window_size )
+        output = similarity( data, window_size )
 
         same = numpy.allclose( check_data[:,1:], 
                                output[:,1:], .001 )
@@ -38,7 +38,7 @@ class SimilarityTest( unittest.TestCase ):
 
 
         # Check with a step out of 2
-        output = compute_similarity( data, window_size,
+        output = similarity( data, window_size,
                                      step_out = step_out )
         
 
@@ -49,7 +49,7 @@ class SimilarityTest( unittest.TestCase ):
 
         # Check with a step out of 1
         step_out = 1
-        output = compute_similarity( data, window_size,
+        output = similarity( data, window_size,
                                      step_out = step_out )
         
 
@@ -75,8 +75,8 @@ class SimilarityTest( unittest.TestCase ):
         lag = 1
         window_size = 20
         
-        output = compute_similarity( data, window_size,
-                                     lag=lag, test=True )
+        output = similarity( data, window_size,
+                                     lag=lag )
 
       
         same = numpy.allclose( check_data[window_size/2 :,1:], 
@@ -89,8 +89,8 @@ class SimilarityTest( unittest.TestCase ):
         lag = 0
         window_size = 20
         
-        output = compute_similarity( data, window_size,
-                                     lag=lag )
+        output = similarity( data, window_size,
+                             lag=lag )
 
  
         check_data[:,1:] -= 1.
@@ -100,5 +100,7 @@ class SimilarityTest( unittest.TestCase ):
         self.assertTrue( same )
         
 if __name__ == '__main__':
-    unittest.main()
+    suite = \
+      unittest.TestLoader().loadTestsFromTestCase(SimilarityTest)
+    unittest.TextTestRunner(verbosity=2).run(suite)
     

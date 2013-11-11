@@ -2,7 +2,7 @@ import unittest
 import numpy as np
 from agilegeo.attribute import dipsteer
 #import pylab as pl
-from agilegeo.wavelet import ricker_alg as ricker
+from agilegeo.wavelet import ricker
 
 class DipTest( unittest.TestCase ):
 
@@ -22,7 +22,7 @@ class DipTest( unittest.TestCase ):
 
         # Output should be all -1 except for the edge effects
         same = np.allclose( dip[ maxlag:-maxlag, maxlag:-maxlag], 
-                            -test_data[maxlag:-maxlag,maxlag:-maxlag], 
+                            -test_data[maxlag:-maxlag,maxlag:-maxlag],
                             .01 )
         
         self.assertTrue( same )
@@ -63,12 +63,14 @@ class DipTest( unittest.TestCase ):
       
         for i in range( dips.size ):
             
-            data[:,i]= np.convolve( wavelet, np.roll( data[:,i], dips[i] ),
+            data[:,i]= np.convolve( wavelet, np.roll( data[:,i],
+                                                      dips[i] ),
                                     mode = 'same' )
             
         stepout=1
         maxlag=2
-        dip = dipsteer( data, window_size, stepout=stepout, maxlag=maxlag )
+        dip = dipsteer( data, window_size, stepout=stepout,
+                        maxlag=maxlag )
         
         
         undipped = np.zeros( dips.shape )
@@ -96,7 +98,8 @@ class DipTest( unittest.TestCase ):
     
                     
 if __name__ == '__main__':
-    unittest.main()
+    suite = unittest.TestLoader().loadTestsFromTestCase(DipTest)
+    unittest.TextTestRunner(verbosity=2).run(suite)
     
 
         

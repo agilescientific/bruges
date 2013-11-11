@@ -1,8 +1,7 @@
 
 import numpy 
 
-def similarity(traces, duration, dt, step_out=1, lag=0,
-                       test = False ):
+def similarity(traces, duration, dt=1, step_out=1, lag=0 ):
     """
     Compute similarity for each point of a seismic section using
     a variance method between traces.  
@@ -19,7 +18,7 @@ def similarity(traces, duration, dt, step_out=1, lag=0,
     :param traces: A 2D numpy array arranged as [time, trace].
     :param duration: The length in seconds of the window trace kernel
                       used to calculate the similarity.
-    :param dt: The sampe interval of the traces in sec. (eg. 0.001, 0.002, ...)
+    
     :keyword step_out (default=1 ):
                        The number of adjacent traces to 
                        the kernel to check similarity. The maximum
@@ -28,6 +27,9 @@ def similarity(traces, duration, dt, step_out=1, lag=0,
                   The maximum number of time samples adjacent traces
                   can be shifted by. The maximum similarity of
                   will be used.
+    :keyword dt (default=1): The sample interval of the traces in sec.
+               (eg. 0.001, 0.002, ...). Will default to one, allowing
+               duration to be given in samples.
                   
                     
     """

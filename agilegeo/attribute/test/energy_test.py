@@ -1,6 +1,6 @@
 import unittest
 from numpy import linspace, sin, pi, amax
-from agilegeo.attribute import compute_energy
+from agilegeo.attribute import energy
 
 class EnergyTest( unittest.TestCase ):
     
@@ -21,7 +21,7 @@ class EnergyTest( unittest.TestCase ):
         Tests the basic algorithm returns the right amplitude 
         location.
         """
-        amplitude = compute_energy( self.data, self.n_samples )
+        amplitude = energy( self.data, self.n_samples )
         max_amp = amax( amplitude )
         
         ms_sin = 0.5 # The MS energy of a sin wave
@@ -31,7 +31,7 @@ class EnergyTest( unittest.TestCase ):
         self.assertEqual( max_amp, amplitude[501] )
         
 if __name__ == '__main__':
-    #suite = unittest.TestLoader().loadTestsFromTestCase(EnergyTest)
-    #unittest.TextTestRunner(verbosity=2).run(suite)
-    unittest.main()
+    suite = unittest.TestLoader().loadTestsFromTestCase(EnergyTest)
+    unittest.TextTestRunner(verbosity=2).run(suite)
+
         

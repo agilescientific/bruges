@@ -1,15 +1,17 @@
 import numpy
 from scipy.signal import fftconvolve
 
-def energy(traces, duration, dt ):
+def energy(traces, duration, dt=1 ):
     """
     Compute an mean-squared energy measurement for each point of a
     seismic section.
         
     :param traces: The data array to use for calculating MS energy.
                    Must be 1D or 2D numpy array.
-    :param duration: the time duration of the window (in seconds)
-    :param dt: the sample interval of the data (in seconds) 
+    :param duration: the time duration of the window (in seconds), or
+                     samples if dt=1.
+    :param dt: the sample interval of the data (in seconds). Defaults
+               to 1 so duration can be in samples.
     :returns An array the same dimensions as the input array.
     """
     
