@@ -40,7 +40,7 @@ def sweep( duration, dt, f, method = 'linear', phi = 0,
     :keyword method: {'linear','quadratic','logarithmic'}, optional
     :keyword phi: float, phase offset in degrees
     :keyword vertex_zero: bool, optional
-        This parameter is only used when method is ‘quadratic’. 
+        This parameter is only used when method is 'quadratic'. 
         It determines whether the vertex of the parabola that 
         is the graph of the frequency is at t=0 or t=t1.
 
