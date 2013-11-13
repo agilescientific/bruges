@@ -1,17 +1,16 @@
 import unittest
 import numpy as np
 from agilegeo.attribute import dipsteer
-#import pylab as pl
+import pylab as pl
 from agilegeo.wavelet import ricker
 
 class DipTest( unittest.TestCase ):
-
 
     def test_spikes( self ):
         """
         Make a simple case with spikes offset on each trace.
         """
-
+     
         test_data = np.zeros( (100,100) )
         index = np.arange( 0,100 )
 
@@ -27,7 +26,7 @@ class DipTest( unittest.TestCase ):
         
         self.assertTrue( same )
         
-        # Answer should not change it we increase the stepout
+        # Answer should not change if we increase the stepout
         stepout=4
         maxlag=1
         dip = dipsteer( test_data, 1,stepout,maxlag )
@@ -49,7 +48,7 @@ class DipTest( unittest.TestCase ):
     def test_wavelet(self):
         
         # Make a dipping reflectivity field
-        data = np.zeros( ( 150,100 ) )
+        data = np.zeros( ( 150,100 ) ) 
         
         data[0,:] = np.arange( 100 ) / 10.0
         
@@ -70,7 +69,7 @@ class DipTest( unittest.TestCase ):
         stepout=1
         maxlag=2
         dip = dipsteer( data, window_size, stepout=stepout,
-                        maxlag=maxlag )
+                        maxlag=maxlag, overlap=0.5 )
         
         
         undipped = np.zeros( dips.shape )
@@ -85,14 +84,13 @@ class DipTest( unittest.TestCase ):
         test[(test.size/2)  ] = 1
         test[ (test.size/2)+1 : ] = 2
         
-        #for i in range( test.size ): print( test[i], check[i] )
-        """fig = pl.figure()
+        fig = pl.figure()
         pl.imshow( dip )
         fig.show()
    
         fig2 = pl.figure()
         pl.imshow( data)
-        fig2.show()"""
+        fig2.show()
         
         self.assertTrue( np.allclose( test, check ) )
     
