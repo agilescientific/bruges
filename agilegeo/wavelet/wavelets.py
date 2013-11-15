@@ -9,14 +9,14 @@ def ricker( duration, dt, f ):
     :param duration: The length in seconds of the wavelet.
     :param dt: is the sample interval in seconds (usually 0.001,
                0.002, 0.004)
-    :params f: Center frequency of the wavelet (in Hz). If a list is
+    :params f: Center frequency of the wavelet (in Hz). If a list or tuple is
                passed, the first element will be used.
 
     :returns: The ricker wavelet with center frequency f sampled at t.
     """
 
     # Check size of f. API compatibility may allow for a list
-    if ( isinstance( f, list ) ): f=f[0]
+    if isinstance(f, list) or isinstance(f,tuple): f = f[0]
      
     t = np.arange( -duration/2, duration/2 , dt)
 
@@ -36,7 +36,7 @@ def sweep( duration, dt, f, method = 'linear', phi = 0,
     Does a wrapping of scipy.signal.chirp
     :param duration: The length in seconds of the wavelet.
     :param dt: is the sample interval in seconds (usually 0.001, 0.002, 0.004)
-    :param f: Tuple of (f1, f2).
+    :param f: Tuple of (f1, f2), or a similar list.
     :keyword method: {'linear','quadratic','logarithmic'}, optional
     :keyword phi: float, phase offset in degrees
     :keyword vertex_zero: bool, optional
@@ -77,14 +77,28 @@ def ormsby(duration, dt, f):
 
     :param duration: The length in seconds of the wavelet.
     :param dt: is the sample interval in seconds (usually 0.001, 0.002, 0.004)
-    :params f: Tuple of form (f1,f2,f3,f4)
+    :params f: Tuple of form (f1,f2,f3,f4), or a similar list. If fewer (or 
+    more than 
 
     :returns: A vector containing the ormsby wavelet
     """
-    f1 = f[0]
-    f2 = f[1]
-    f3 = f[2]
-    f4 = f[3]
+    # Try to handle some duck typing
+    if not ( isinstance(f, list) or isinstance(f, tuple) ) : f = [f]
+    
+    # Deal with having fewer than 4 frequencies
+    if len(f) == 4:
+        f1 = f[0]
+        f2 = f[1]
+        f3 = f[2]
+        f4 = f[3]
+    else:
+        # Cope with only having one frequency
+        # This is an arbitrary hack, is this desirable?
+        # Need a way to notify with warnings
+        f1 = f[0]/4
+        f2 = f[0]/2
+        f3 = f[0]*2
+        f4 = f[0]*2.5
     
     def numerator(f,t):
         return (np.sinc( f * t)**2) * ((np.pi * f) ** 2)
@@ -120,12 +134,4 @@ def rotate_phase( w, phi ):
          np.imag( a  ) * np.sin( phi ) )
 
     return A
-
-
-        
-    
-    
-
-
-
     
