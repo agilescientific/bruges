@@ -1,5 +1,7 @@
 import numpy as np
 from scipy.signal import hilbert
+from scipy.signal import chirp
+
 
 def ricker( duration, dt, f ):
     """
@@ -12,21 +14,27 @@ def ricker( duration, dt, f ):
     :params f: Center frequency of the wavelet (in Hz). If a list or tuple is
                passed, the first element will be used.
 
-    :returns: The ricker wavelet with center frequency f sampled at t.
+    :returns: ricker wavelets with center frequency f sampled at t.
     """
 
-    # Check size of f. API compatibility may allow for a list
-    if isinstance(f, list) or isinstance(f,tuple): f = f[0]
+
+    freq = np.array( f )
      
     t = np.arange( -duration/2, duration/2 , dt)
 
-    pi2 = (np.pi ** 2.0)
-    fsqr = f ** 2.0
-    tsqr = t ** 2.0
-    pft = pi2 * fsqr * tsqr
-    A = (1 - (2 * pft)) * np.exp(-pft)
+    output = np.zeros( (t.size, freq.size ) )
 
-    return A
+    for i in range(freq.size):
+        pi2 = (np.pi ** 2.0)
+        fsqr =  freq[i] ** 2.0
+        tsqr = t ** 2.0
+        pft = pi2 * fsqr * tsqr
+        A = (1 - (2 * pft)) * np.exp(-pft)
+        output[:,i] = A
+
+    if freq.size == 1: output.flatten
+        
+    return output
     
     
 def sweep( duration, dt, f, method = 'linear', phi = 0,
@@ -34,9 +42,11 @@ def sweep( duration, dt, f, method = 'linear', phi = 0,
     """
     Generates a linear frequency modulated wavelet (sweep)
     Does a wrapping of scipy.signal.chirp
+    
     :param duration: The length in seconds of the wavelet.
     :param dt: is the sample interval in seconds (usually 0.001, 0.002, 0.004)
-    :param f: Tuple of (f1, f2), or a similar list.
+    :param f: Tuple of (f1, f2), or a similar list. A list of lists
+              will create a wavelet bank.
     :keyword method: {'linear','quadratic','logarithmic'}, optional
     :keyword phi: float, phase offset in degrees
     :keyword vertex_zero: bool, optional
@@ -50,18 +60,28 @@ def sweep( duration, dt, f, method = 'linear', phi = 0,
     t = np.arange( -duration/2, duration/2 , dt) 
     t0 = -duration/2
     t1 = duration/2
+
+    freq = np.array( f )
+
+    if freq.size == 2:
+         A = chirp( t , freq[0], t1, freq[1],
+                    method, phi, vertex_zero  )
+         if autocorrelate:
+             A = np.correlate(A, A, mode='same')
+         output =  A / np.amax( A )
     
-    f1 = f[0]
-    f2 = f[1]
+    else:
+        output = np.zeros( (t.size, freq.shape[1] ) )
+        
+        for i in range( freq.shape[1] ):
+            A = chirp( t , freq[0,i], t1, freq[1,i],
+                       method, phi, vertex_zero  )
     
-    from scipy.signal import chirp
-    
-    A = chirp( t , f1, t1, f2, method, phi, vertex_zero  )
-    
-    if autocorrelate:
-        A = np.correlate(A, A, mode='full')
+            if autocorrelate:
+                A = np.correlate(A, A, mode='same')
+            output[:,i] = A / np.max( A )
      
-    return A / np.amax( A )
+    return output
 
 
 def ormsby(duration, dt, f):
@@ -71,14 +91,16 @@ def ormsby(duration, dt, f):
     f2 = low-pass frequency
     f3 = high-pass frequency
     f4 = hi-cut frequency
-    Together, the frequencies define a trapezoid shape in the spectrum.
+    Together, the frequencies define a trapezoid shape in the
+    spectrum.
     The Ormsby wavelet has several sidelobes, unlike Ricker wavelets
     which only have two, one either side.
 
     :param duration: The length in seconds of the wavelet.
-    :param dt: is the sample interval in seconds (usually 0.001, 0.002, 0.004)
-    :params f: Tuple of form (f1,f2,f3,f4), or a similar list. If fewer (or 
-    more than 
+    :param dt: is the sample interval in seconds (usually 0.001,
+               0.002, 0.004)
+    :params f: Tuple of form (f1,f2,f3,f4), or a similar list.
+    If fewer (or more than) 
 
     :returns: A vector containing the ormsby wavelet
     """
