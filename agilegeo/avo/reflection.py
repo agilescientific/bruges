@@ -202,7 +202,7 @@ def fatti(vp1, vs1, rho1, vp2, vs2, rho2, theta1):
     Aki-Richards equation, which does not account for the
     critical angle. Fatti et al (1994), Geophysics 59 (9).
 
-        :param vp1: The p-wave velocity of the upper medium.
+    :param vp1: The p-wave velocity of the upper medium.
     :param vs1: The s-wave velocity of the upper medium.
     :param rho1: The density of the upper medium.
 
