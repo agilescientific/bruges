@@ -6,7 +6,7 @@ class AvoTest( unittest.TestCase ):
     """
     Tests zoeppritz using a values from a spreadsheet, and also a
     qualitative comparison to plots made by the CREWES avo explorer
-    web app. Other algorithms are then tested to be with 10% of the
+    web app. Other algorithms are then tested to be within 10% of the
     zoeppritz answer for angles < 45 degrees.
     """
     
