@@ -58,8 +58,8 @@ class DipTest( unittest.TestCase ):
         window_size = 10
         freq = 20.0
         duration = .2
-        wavelet = ( ricker( duration, window_size, freq ) )
-      
+        wavelet =  ricker( window_size, 1, freq )
+  
         for i in range( dips.size ):
             
             data[:,i]= np.convolve( wavelet, np.roll( data[:,i],
@@ -84,13 +84,13 @@ class DipTest( unittest.TestCase ):
         test[(test.size/2)  ] = 1
         test[ (test.size/2)+1 : ] = 2
         
-        fig = pl.figure()
+        """fig = pl.figure()
         pl.imshow( dip )
         fig.show()
    
         fig2 = pl.figure()
         pl.imshow( data)
-        fig2.show()
+        fig2.show()"""
         
         self.assertTrue( np.allclose( test, check ) )
     

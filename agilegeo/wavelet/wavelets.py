@@ -23,16 +23,19 @@ def ricker( duration, dt, f ):
     t = np.arange( -duration/2, duration/2 , dt)
 
     output = np.zeros( (t.size, freq.size ) )
-
+        
     for i in range(freq.size):
         pi2 = (np.pi ** 2.0)
-        fsqr =  freq[i] ** 2.0
+        if ( freq.size == 1 ):
+            fsqr = freq ** 2.0
+        else:
+            fsqr =  freq[i] ** 2.0
         tsqr = t ** 2.0
         pft = pi2 * fsqr * tsqr
         A = (1 - (2 * pft)) * np.exp(-pft)
         output[:,i] = A
 
-    if freq.size == 1: output.flatten
+    if freq.size == 1: output = output.flatten()
         
     return output
     
