@@ -1,0 +1,259 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Module contents &mdash; agilegeo 0.1.1 documentation</title>
+    
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.1.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="agilegeo 0.1.1 documentation" href="index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="index.html">agilegeo 0.1.1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="module-agilegeo.attribute">
+<span id="module-contents"></span><h1>Module contents<a class="headerlink" href="#module-agilegeo.attribute" title="Permalink to this headline">¶</a></h1>
+<dl class="function">
+<dt id="agilegeo.attribute.energy">
+<tt class="descclassname">agilegeo.attribute.</tt><tt class="descname">energy</tt><big>(</big><em>traces</em>, <em>duration</em>, <em>dt=1</em><big>)</big><a class="headerlink" href="#agilegeo.attribute.energy" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute an mean-squared energy measurement for each point of a
+seismic section.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>traces</strong> &#8211; The data array to use for calculating MS energy.
+Must be 1D or 2D numpy array.</li>
+<li><strong>duration</strong> &#8211; the time duration of the window (in seconds), or
+samples if dt=1.</li>
+<li><strong>dt</strong> &#8211; the sample interval of the data (in seconds). Defaults
+to 1 so duration can be in samples.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">An array the same dimensions as the input array.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="agilegeo.attribute.similarity">
+<tt class="descclassname">agilegeo.attribute.</tt><tt class="descname">similarity</tt><big>(</big><em>traces</em>, <em>duration</em>, <em>dt=1</em>, <em>step_out=1</em>, <em>lag=0</em><big>)</big><a class="headerlink" href="#agilegeo.attribute.similarity" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute similarity for each point of a seismic section using
+a variance method between traces.</p>
+<p>For each point, a kernel of n_samples length is extracted from a
+trace. The similarity is calculated as a normalized variance
+between two adjacent trace sections, where a value of 1 is
+obtained by identical if the traces are identical. The step out
+will decide how many adjacent traces will be used for each kernel,
+and should be increased for poor quality data. The lag determines
+how much neighbouring traces can be shifted when calculating
+similiarity, which should be increased for dipping data.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>traces</strong> &#8211; A 2D numpy array arranged as [time, trace].</li>
+<li><strong>duration</strong> &#8211; The length in seconds of the window trace kernel
+used to calculate the similarity.</li>
+<li><strong>(default=1 )</strong> (<em>step_out</em>) &#8211; The number of adjacent traces to 
+the kernel to check similarity. The maximum
+similarity value will be chosen.</li>
+<li><strong>(default=0)</strong> (<em>lag</em>) &#8211; The maximum number of time samples adjacent traces
+can be shifted by. The maximum similarity of
+will be used.</li>
+<li><strong>(default=1)</strong> (<em>dt</em>) &#8211; The sample interval of the traces in sec.
+(eg. 0.001, 0.002, ...). Will default to one, allowing
+duration to be given in samples.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="agilegeo.attribute.dipsteer">
+<tt class="descclassname">agilegeo.attribute.</tt><tt class="descname">dipsteer</tt><big>(</big><em>data</em>, <em>window_length</em>, <em>stepout</em>, <em>maxlag</em>, <em>overlap=0.0</em>, <em>dt=1</em><big>)</big><a class="headerlink" href="#agilegeo.attribute.dipsteer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculates a dip field by finding the maximum correlation between
+adjacent traces.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>data</strong> &#8211; A 2D seismic section (samples,traces) used to
+calculate dip.</li>
+<li><strong>window_length</strong> &#8211; The length [seconds] of the window to use</li>
+<li><strong>dt</strong> &#8211; The time sample interval of the traces.</li>
+<li><strong>stepout</strong> &#8211; The number of traces on either side of each point
+to average when calculating the dip.</li>
+<li><strong>maxlag</strong> &#8211; The maximum amount time lag to use when correlating
+the traces.</li>
+<li><strong>overlap</strong> &#8211; The fractional overlap for each window.
+A value of 0 uses no redudant data, a value of 1
+slides the dip correlator one sample at a time.
+Defaults to 0.5</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">a dip field [samples/trace] of the same shape as the
+input data, and correlation coefficients corresponding
+to the data.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="agilegeo.attribute.spectra">
+<tt class="descclassname">agilegeo.attribute.</tt><tt class="descname">spectra</tt><big>(</big><em>data</em>, <em>window_length</em>, <em>dt=1.0</em>, <em>window_type='boxcar'</em>, <em>overlap=0.5</em>, <em>normalize=False</em><big>)</big><a class="headerlink" href="#agilegeo.attribute.spectra" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculates a spectrogram using windowed STFTs.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>data</strong> &#8211; 1D numpy array to process into spectra.</li>
+<li><strong>window_length</strong> &#8211; The length of the window in seconds if
+dt is set, otherwise in samples. Will
+zero pad to the closest power of two.</li>
+<li><strong>window_type</strong> &#8211; A string specifying the type of window to
+use for the STFT. The same input as
+scipy.signal.get_window</li>
+<li><strong>dt</strong> &#8211; The time sample interval of the trace. Defaults to
+1, which allows window_length to be in seconds.</li>
+<li><strong>overlap</strong> &#8211; The fractional overlap for each window.
+A value of 0 uses no redudant data, a value of 1
+slides the STFT window one sample at a time.
+Defaults to 0.5</li>
+<li><strong>normalize</strong> &#8211; Normalizes the each spectral slice to have
+unity energy.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">A spectrogram of the data ([time, freq]).
+( 2D array for 1D input )</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="agilegeo.attribute.spectraldecomp">
+<tt class="descclassname">agilegeo.attribute.</tt><tt class="descname">spectraldecomp</tt><big>(</big><em>data</em>, <em>f=(0.1</em>, <em>0.25</em>, <em>0.4)</em>, <em>window_length=32</em>, <em>dt=1</em>, <em>window_type='hann'</em><big>)</big><a class="headerlink" href="#agilegeo.attribute.spectraldecomp" title="Permalink to this definition">¶</a></dt>
+<dd><p>Uses the STFT to decompose traces into normalized spectra. Only
+frequencies defined by the user will be output. Using 3
+frequencies will work for RGB color plots.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>data</strong> &#8211; A 1/2D array (samples, traces) of data that will
+be decomposed.</li>
+<li><strong>f</strong> &#8211; A list of frequencies to select from the spectra.</li>
+<li><strong>window_length</strong> &#8211; The length of fft window to use for
+the STFTs. Defaults to 32. Can be
+provided in seconds if dt is specified.</li>
+<li><strong>dt</strong> &#8211; The time sample interval of the traces.</li>
+<li><strong>window_type</strong> &#8211; The type of window to use for the STFT. The
+same input as scipy.signal.get_window.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">an array of shape (samples, traces, f)</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/agilegeo.attribute.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="index.html">agilegeo 0.1.1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2013, Evan Bianco, Ben Bougher, Matt Hall.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2b3.
+    </div>
+  </body>
+</html>
