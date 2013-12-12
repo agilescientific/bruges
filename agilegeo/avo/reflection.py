@@ -39,7 +39,7 @@ def zoeppritz(vp1, vs1, rho1, vp0, vs0, rho0, theta1):
     :param theta1: An array of incident angles to use for reflectivity
                    calculation [degrees].
 
-    :returns a vector of len(theta1) containing the reflectivity
+    :returns: a vector of len(theta1) containing the reflectivity
              value corresponding to each angle.
     '''
     
@@ -111,7 +111,7 @@ def akirichards(vp1, vs1, rho1, vp2, vs2, rho2, theta1):
     :param theta1: An array of incident angles to use for reflectivity
                    calculation [degrees].
 
-    :returns a vector of len(theta1) containing the reflectivity
+    :returns: a vector of len(theta1) containing the reflectivity
              value corresponding to each angle.
     
     """
@@ -164,7 +164,7 @@ def akirichards_alt(vp1, vs1, rho1, vp2, vs2, rho2, theta1):
     :param theta1: An array of incident angles to use for reflectivity
                    calculation [degrees].
 
-    :returns a vector of len(theta1) containing the reflectivity
+    :returns: a vector of len(theta1) containing the reflectivity
              value corresponding to each angle.
     
     """
@@ -213,7 +213,7 @@ def fatti(vp1, vs1, rho1, vp2, vs2, rho2, theta1):
     :param theta1: An array of incident angles to use for reflectivity
                    calculation [degrees].
 
-    :returns a vector of len(theta1) containing the reflectivity
+    :returns: a vector of len(theta1) containing the reflectivity
              value corresponding to each angle.
     
     """
@@ -255,7 +255,7 @@ def shuey2(vp1, vs1, rho1, vp2, vs2, rho2, theta1):
     :param theta1: An array of incident angles to use for reflectivity
                    calculation [degrees].
 
-    :returns a vector of len(theta1) containing the reflectivity
+    :returns: a vector of len(theta1) containing the reflectivity
              value corresponding to each angle.
     
     
@@ -292,7 +292,7 @@ def shuey3(vp1, vs1, rho1, vp2, vs2, rho2, theta1):
     :param theta1: An array of incident angles to use for reflectivity
                    calculation [degrees].
 
-    :returns a vector of len(theta1) containing the reflectivity
+    :returns: a vector of len(theta1) containing the reflectivity
              value corresponding to each angle.
     
     """
@@ -329,7 +329,7 @@ def bortfeld2(vp1, vs1, rho1, vp2, vs2, rho2, theta1):
     :param theta1: An array of incident angles to use for reflectivity
                    calculation [degrees].
 
-    :returns a vector of len(theta1) containing the reflectivity
+    :returns: a vector of len(theta1) containing the reflectivity
              value corresponding to each angle.
     
     """
@@ -362,7 +362,7 @@ def bortfeld3(vp1, vs1, rho1, vp2, vs2, rho2, theta1):
     :param theta1: An array of incident angles to use for reflectivity
                    calculation [degrees].
 
-    :returns a vector of len(theta1) containing the reflectivity
+    :returns: a vector of len(theta1) containing the reflectivity
              value corresponding to each angle.
     
     """

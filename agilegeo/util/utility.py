@@ -14,7 +14,7 @@ def next_pow2( num ):
 
     :param num: The number to round to the next power if two.
 
-    :returns the next power of 2 closest to num.
+    :returns: the next power of 2 closest to num.
     """
 
     return( 2**np.ceil( np.log2( num ) ))

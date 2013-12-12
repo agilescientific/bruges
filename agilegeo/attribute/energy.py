@@ -12,7 +12,7 @@ def energy(traces, duration, dt=1 ):
                      samples if dt=1.
     :param dt: the sample interval of the data (in seconds). Defaults
                to 1 so duration can be in samples.
-    :returns An array the same dimensions as the input array.
+    :returns: An array the same dimensions as the input array.
     """
     
     energy_data = numpy.zeros( traces.shape )

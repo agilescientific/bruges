@@ -21,7 +21,7 @@ def spectraldecomp( data, f=(.1,.25,.4),
     :keyword window_type: The type of window to use for the STFT. The
                           same input as scipy.signal.get_window.
 
-    :returns an array of shape (samples, traces, f)
+    :returns: an array of shape (samples, traces, f)
     """
 
     overlap = 0.5

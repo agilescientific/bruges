@@ -103,10 +103,10 @@ def ormsby(duration, dt, f):
     :param dt: is the sample interval in seconds (usually 0.001,
                0.002, 0.004)
     :params f: Tuple of form (f1,f2,f3,f4), or a similar list.
-    If fewer (or more than) 
 
     :returns: A vector containing the ormsby wavelet
     """
+    
     # Try to handle some duck typing
     if not ( isinstance(f, list) or isinstance(f, tuple) ) : f = [f]
     

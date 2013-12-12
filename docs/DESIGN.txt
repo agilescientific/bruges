@@ -1,4 +1,0 @@
-The agilegeo package is designed to be used as a library for 
-modelling and analysis of geophysical data. 
-The core function definitions are test driven and contain the 
-algorithm implementations. 

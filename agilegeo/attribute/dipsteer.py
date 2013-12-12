@@ -22,7 +22,7 @@ def dipsteer( data, window_length, stepout,
                       Defaults to 0.5
     
 
-    :returns a dip field [samples/trace] of the same shape as the
+    :returns: a dip field [samples/trace] of the same shape as the
              input data, and correlation coefficients corresponding
              to the data.
     """

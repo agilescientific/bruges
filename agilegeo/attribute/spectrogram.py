@@ -26,7 +26,7 @@ def spectra( data, window_length, dt=1.0, window_type='boxcar',
     :keyword normalize: Normalizes the each spectral slice to have
                         unity energy.
                       
-    :returns A spectrogram of the data ([time, freq]).
+    :returns: A spectrogram of the data ([time, freq]).
             ( 2D array for 1D input )
     """
 

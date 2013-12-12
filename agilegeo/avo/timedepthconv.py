@@ -14,7 +14,7 @@ def time_to_depth( data,vmodel, dt, dz ):
     :param dt: The sample interval of the input data [s].
     :param dz: The sample interval of the output data [m].
 
-    :returns The data resampled in the depth domain.
+    :returns: The data resampled in the depth domain.
     """
 
     # Do depth to time with inverted velocity profile
@@ -33,7 +33,7 @@ def depth_to_time( data,vmodel, dz, dt ):
     :param dz: The sample interval of the input data [m].
     :param dt: The sample interval of the output data [s].
 
-    :returns The data resampled in the time domain.
+    :returns: The data resampled in the time domain.
     """
 
     if( len( data.shape ) == 1 ):
