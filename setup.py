@@ -12,7 +12,7 @@ setup(
               'agilegeo.avo',
               'agilegeo.util'],
     description='Useful geophysics functions',
-    long_description=open('README.txt').read(),
+    long_description=open('README.rst').read(),
     url='http://pypi.python.org/pypi/agilegeo/',
     license='LICENSE.txt'
     )
