@@ -5,11 +5,16 @@
 
 Welcome to agilegeo's documentation!
 ====================================
-
+.. include:: ../README.rst
 Contents:
 
 .. toctree::
    :maxdepth: 2
+
+   agilegeo.attribute.rst
+   agilegeo.avo.rst
+   agilegeo.util.rst
+   agilegeo.wavelet.rst
 
 
 

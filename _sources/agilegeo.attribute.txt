@@ -1,4 +1,5 @@
-
+agilegeo.attribute package
+========================
 
 Module contents
 ---------------
