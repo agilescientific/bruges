@@ -6,7 +6,9 @@
 Welcome to agilegeo's documentation!
 ====================================
 .. include:: ../README.rst
+
 Contents:
+===========
 
 .. toctree::
    :maxdepth: 2
