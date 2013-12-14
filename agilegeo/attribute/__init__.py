@@ -1,3 +1,9 @@
+"""
+===================
+agilegeo.attribute
+===================
+"""
+
 from energy import  energy
 from similarity import similarity
 from dipsteer import dipsteer

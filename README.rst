@@ -20,7 +20,7 @@ Matt Hall
 
 
 Links
-+++++++++++
++++++++
 
 * `Agile Geoscience <http://www.agilegeoscience.com>`_
 * `Homepage <http://agile-geoscience.github.com/agilegeo/>`_
