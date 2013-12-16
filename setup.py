@@ -3,7 +3,7 @@ from setuptools import setup
     
 setup(
     name='agilegeo',
-    version=open('version.txt').read(),
+    version=open('version.txt').read().rstrip(),
     author='Agile Geoscience',
     author_email='hello@agilegeoscience.com',
     packages=['agilegeo',
