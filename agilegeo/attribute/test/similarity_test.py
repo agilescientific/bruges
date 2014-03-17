@@ -72,7 +72,7 @@ class SimilarityTest( unittest.TestCase ):
         data[::2,::2] = -11.
         data[1::2,1::2]=-11
 
-        lag = 1
+        lag = 2
         window_size = 20
         
         output = similarity( data, window_size,

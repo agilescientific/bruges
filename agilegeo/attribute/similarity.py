@@ -44,18 +44,22 @@ def similarity(traces, duration, dt=1, step_out=1, lag=0 ):
         for i in ( numpy.arange( step_out )  ):
             for idx in xrange(similarity_cube.shape[0]):
 
+                # Get the signal
                 start_sig_idx = max(0, (idx+(j*(i+1))-half_n_samples))
                 stop_sig_idx = min(similarity_cube.shape[0]-1, \
                                   (idx-((i+1)*j))+half_n_samples)
-                start_data_idx = max(0, (idx -half_n_samples))
+
+                # Get the data
+                start_data_idx = max(0, (idx - half_n_samples))
                 end_data_idx = start_data_idx + (stop_sig_idx -
-                                                 start_sig_idx )
+                                                 start_sig_idx)
 
-              
-                signal = traces[ start_sig_idx:stop_sig_idx, :]
-                data = traces[ start_data_idx : end_data_idx,:]
+                if(end_data_idx > traces.shape[0]): break
 
-             
+                
+                signal = traces[start_sig_idx:stop_sig_idx, :]
+                data = traces[start_data_idx:end_data_idx,:]
+
                 squares = (signal*signal).sum(axis=0)
                 
                 squares_of_diff = ((signal[:,1+i:] -
