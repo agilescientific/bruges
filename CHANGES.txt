@@ -3,3 +3,6 @@ v0.1.1, December 12 2013
 Added AVO reflection models, time to depth conversions, dip filters,
 and spectral decompositions. Updated API's to use time itervals and
 wavelet banks.
+v0.1.2, June 13 2014
+Added data edge handling in time to depth conversion
+
