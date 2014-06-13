@@ -43,31 +43,33 @@ def depth_to_time( data,vmodel, dz, dt ):
         ntraces = data.shape[-1]
         nsamps = data.shape[0]
         
-    depths = transpose(asarray([ (arange( nsamps ) * dz) \
-                       for i in range(ntraces) ] ) )
+    depths = transpose(asarray([(arange(nsamps) * dz) \
+                       for i in range(ntraces)]))
 
     v_avg = cumsum( vmodel, axis=0 ) / \
-                    transpose( [arange( nsamps ) \
-                                for i in range( ntraces )] )
+                    transpose([arange( nsamps ) \
+                            for i in range(ntraces)])
     # convert depths to times
     times = depths / v_avg
-    print( amax( depths ) )
-    times_lin = arange( amin( times), amax( times ), dt )
-    #for i in gradient( times[:,50] ) : print i
+
+    times_lin = arange(amin(times), amax(times ), dt)
+    
     if( ntraces == 1 ):
         inter = interp1d(times, data,
-                         bounds_error=False)
+                         bounds_error=False,
+                         fill_value = data[0,i],
+                         kind='nearest')
         return( inter( times_lin ) )
 
-    output = zeros( (times_lin.size, ntraces) )
+    output = zeros((times_lin.size, ntraces))
     
-    for i in range( ntraces ):
+    for i in range(ntraces):
         
         inter = interp1d(times[:,i], data[:,i],
                          bounds_error=False,
-                         fill_value = 0,
+                         fill_value = data[-1,i],
                          kind='nearest')
-        output[:,i] += inter( times_lin )
+        output[:,i] += inter(times_lin)
 
     return( output )
          
