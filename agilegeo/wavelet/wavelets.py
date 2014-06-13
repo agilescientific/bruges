@@ -3,7 +3,7 @@ from scipy.signal import hilbert
 from scipy.signal import chirp
 
 
-def ricker( duration, dt, f ):
+def ricker(duration, dt, f):
     """
     Also known as the mexican hat wavelet, models the function:
     A =  (1-2 \pi^2 f^2 t^2) e^{-\pi^2 f^2 t^2}
@@ -18,11 +18,11 @@ def ricker( duration, dt, f ):
     """
 
 
-    freq = np.array( f )
+    freq = np.array(f)
      
-    t = np.arange( -duration/2, duration/2 , dt)
+    t = np.arange(-duration/2, duration/2 , dt)
 
-    output = np.zeros( (t.size, freq.size ) )
+    output = np.zeros((t.size, freq.size))
         
     for i in range(freq.size):
         pi2 = (np.pi ** 2.0)
@@ -37,11 +37,11 @@ def ricker( duration, dt, f ):
 
     if freq.size == 1: output = output.flatten()
         
-    return output
+    return output / np.amax(output)
     
     
-def sweep( duration, dt, f, method = 'linear', phi = 0,
-           vertex_zero = True, autocorrelate = True ):
+def sweep(duration, dt, f, method = 'linear', phi = 0,
+          vertex_zero = True, autocorrelate = True):
     """
     Generates a linear frequency modulated wavelet (sweep)
     Does a wrapping of scipy.signal.chirp
@@ -60,29 +60,29 @@ def sweep( duration, dt, f, method = 'linear', phi = 0,
     :returns: An LFM waveform.
     """
     
-    t = np.arange( -duration/2, duration/2 , dt) 
+    t = np.arange(-duration/2, duration/2 , dt) 
     t0 = -duration/2
     t1 = duration/2
 
     freq = np.array( f )
 
     if freq.size == 2:
-         A = chirp( t , freq[0], t1, freq[1],
-                    method, phi, vertex_zero  )
+         A = chirp(t, freq[0], t1, freq[1],
+                    method, phi, vertex_zero)
          if autocorrelate:
              A = np.correlate(A, A, mode='same')
-         output =  A / np.amax( A )
+         output =  A / np.amax(A)
     
     else:
-        output = np.zeros( (t.size, freq.shape[1] ) )
+        output = np.zeros((t.size, freq.shape[1]))
         
         for i in range( freq.shape[1] ):
-            A = chirp( t , freq[0,i], t1, freq[1,i],
-                       method, phi, vertex_zero  )
+            A = chirp(t,freq[0,i],t1,freq[1,i],
+                       method, phi, vertex_zero)
     
             if autocorrelate:
                 A = np.correlate(A, A, mode='same')
-            output[:,i] = A / np.max( A )
+            output[:,i] = A / np.max(A)
      
     return output
 
@@ -108,7 +108,8 @@ def ormsby(duration, dt, f):
     """
     
     # Try to handle some duck typing
-    if not ( isinstance(f, list) or isinstance(f, tuple) ) : f = [f]
+    if not (isinstance(f, list) or isinstance(f, tuple)):
+        f = [f]
     
     # Deal with having fewer than 4 frequencies
     if len(f) == 4:
@@ -131,16 +132,16 @@ def ormsby(duration, dt, f):
     pf43 = ( np.pi * f4 ) - ( np.pi * f3 )
     pf21 = ( np.pi * f2 ) - ( np.pi * f1 )
     
-    t = np.arange( -duration/2, duration/2 , dt) 
+    t = np.arange(-duration/2, duration/2 , dt) 
     
-    A = ( ( numerator(f4,t)/pf43 ) - ( numerator(f3,t)/pf43 ) -
-         ( numerator(f2,t)/pf21 ) + ( numerator(f1,t)/pf21) )
+    A = ((numerator(f4,t)/pf43) - (numerator(f3,t)/pf43) -
+         (numerator(f2,t)/pf21) + (numerator(f1,t)/pf21))
 
-    A /= np.amax( A )
+    A /= np.amax(A)
     return A
 
 
-def rotate_phase( w, phi ):
+def rotate_phase(w, phi):
     """
     Performs a phase rotation of wavelet using:
     A = w(t)Cos(phi) + h(t)Sin(phi)
@@ -153,10 +154,10 @@ def rotate_phase( w, phi ):
     """
 
     # Get the analytic signal for the wavelet
-    a = hilbert( w )
+    a = hilbert(w, axis=0)
 
-    A = (np.real( a ) * np.cos( phi ) +
-         np.imag( a  ) * np.sin( phi ) )
+    A = (np.real(a) * np.cos(phi) +
+         np.imag(a) * np.sin(phi))
 
     return A
     
