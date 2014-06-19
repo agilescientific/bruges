@@ -20,7 +20,7 @@ def time_to_depth(data,vmodel, dt, dz, twt=True):
     """
 
     if twt:
-        scale = 2.0
+        scale = 1/2.0
     else:
         scale = 1.0
     # Do depth to time with inverted velocity profile
@@ -98,8 +98,8 @@ def depth_to_time(data,vmodel, dz, dt, twt=True):
     """
 
     if twt:
-        scale=0.5
-    else: scale=1.0
+        scale = 2.0
+    else: scale = 1.0
     # Do depth to time with inverted velocity profile
     return convert(data, vmodel, dz, dt, scale)
          
