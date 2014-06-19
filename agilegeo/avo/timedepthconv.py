@@ -18,12 +18,12 @@ def time_to_depth( data,vmodel, dt, dz ):
     """
 
     # Do depth to time with inverted velocity profile
-    return( depth_to_time( data, 1. / vmodel, dt, dz ) )
+    return depth_to_time(data, 1. / vmodel, dt, dz, twt=False)
 
 
-def depth_to_time( data,vmodel, dz, dt ):
+def depth_to_time(data,vmodel, dz, dt, twt=True):
     """
-    Converts data from the time domain to the depth domain given a
+    Converts data from the depth domain to the time domain given a
     velocity model.
 
     :param data: The data to convert, will work with a 1 or 2D numpy
@@ -32,6 +32,8 @@ def depth_to_time( data,vmodel, dz, dt ):
                    Must be the same shape as data.
     :param dz: The sample interval of the input data [m].
     :param dt: The sample interval of the output data [s].
+
+    :keyword twt: Use twt travel time, defaults to true
 
     :returns: The data resampled in the time domain.
     """
@@ -49,17 +51,23 @@ def depth_to_time( data,vmodel, dz, dt ):
     v_avg = cumsum( vmodel, axis=0 ) / \
                     transpose([arange( nsamps ) \
                             for i in range(ntraces)])
+
+    
+
+    
     # convert depths to times
     times = depths / v_avg
+
+    if twt: times *= 2.0
 
     times_lin = arange(amin(times), amax(times ), dt)
     
     if( ntraces == 1 ):
         inter = interp1d(times, data,
                          bounds_error=False,
-                         fill_value = data[0,i],
+                         fill_value = data[-1],
                          kind='nearest')
-        return( inter( times_lin ) )
+        return(inter(times_lin))
 
     output = zeros((times_lin.size, ntraces))
     
@@ -70,6 +78,7 @@ def depth_to_time( data,vmodel, dz, dt ):
                          fill_value = data[-1,i],
                          kind='nearest')
         output[:,i] += inter(times_lin)
+
 
     return( output )
          
