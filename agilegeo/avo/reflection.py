@@ -1,22 +1,6 @@
-#!/usr/bin/env python
-#
-#   Python application for calculating angle-dependent p-wave reflectivity
-#   using Zoeppritz equations & various approximations.
-#
-#   Originally written to give insight into limitations of the Zoeppritz
-#   approximations and to get more familiar with GUI programming using wxPython
-#   and Matplotlib.
-#
-#   Requires:   Python (2.6 or 2.7)
-#               wxPython
-#               Numpy & Matplotlib
-#
+# Incorporates Zoeppritz code from:
 #       Written by: Wes Hamlyn
 #       Modified by: Sean Ross-Ross
-#       Last Mod:   May 1, 2012
-#
-#   Use for whatever you like but at your own risk...
-#
 
 import numpy as np
 from numpy import log, tan, sin, cos, arcsin, arccosh, radians, \
