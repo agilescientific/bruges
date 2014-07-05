@@ -1,5 +1,5 @@
 ===========
-AGILEGEO
+agilegeo
 ===========
 
 .. image:: https://img.shields.io/badge/license-Apache-blue.svg
@@ -24,21 +24,19 @@ AGILEGEO
 
 Prerequisites
 ++++++++++++++++
-Requires scipy and numpy
+Requires scipy and numpy.
 
 Contributors
 ++++++++++++
-Evan Bianco
-Ben Bougher
-Matt Hall
+* Evan Bianco
+* Ben Bougher
+* Matt Hall
+* Wes Hamlyn, and Sean Ross-Ross
 
 Links
 +++++++
-
 * `Agile Geoscience <http://www.agilegeoscience.com>`_
 * `Homepage <http://agile-geoscience.github.com/agilegeo/>`_
 * `Issue Tracker <https://github.com/agile-geoscience/agilegeo/issues/>`_
-
-
 * `PyPi <http://pypi.python.org/pypi/agilegeo/>`_
 * `Github <https://github.com/agile-geoscience/agilegeo>`_
