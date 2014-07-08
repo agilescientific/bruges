@@ -5,4 +5,5 @@ agilegeo.util
 """
 
 from utility import *
-__all__=["next_pow2"]
+
+__all__=["rms", "next_pow2", "noise_db"]
