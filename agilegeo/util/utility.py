@@ -48,10 +48,10 @@ def noise_db(a, snr):
     
     # Calculate the amp of the noise,
     # given the desired SNR
-    noisemean = sigmean / 10.0**(snr/20)
+    noisemean = sigmean / 10.0**(snr/20.0)
     
     # Normal noise, centered on 0,
     # SD=sqrt(var), same shape as input
     noise = noisemean * np.random.normal(0.0, 1.0, a.shape)
-        
+    
     return noise

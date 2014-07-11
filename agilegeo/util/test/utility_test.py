@@ -1,14 +1,32 @@
 import unittest
-from agilegeo.util import next_pow2
+import numpy as np
+from agilegeo.util import next_pow2, rms, noise_db
+
 
 class UtilityTest( unittest.TestCase ):
 
     def test_nextpow2( self ):
-
         num = 888
         ans = 1024
 
         self.assertEqual( ans, next_pow2( num ) )
+
+
+    def test_rms( self ):
+        l = np.array([2,3,4.5])
+        ans = 3.329164
+
+        self.assertAlmostEqual( ans, rms( num ), places=5 )
+
+
+    def noise_db( self ):
+        a = np.ones(1000000)
+        ans10p = 3.32
+        ans0 = 1.41
+        ans10n = 1.05
+
+        self.assertAlmostEqual( ans, rms( num ), places=2 )
+
 
 if __name__ == '__main__':
 
