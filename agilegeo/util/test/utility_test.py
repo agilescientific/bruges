@@ -3,16 +3,16 @@ import numpy as np
 from agilegeo.util import next_pow2, rms, noise_db
 
 
-class UtilityTest( unittest.TestCase ):
+class UtilityTest(unittest.TestCase):
 
-    def test_nextpow2( self ):
+    def test_nextpow2(self):
         num = 888
         ans = 1024
 
-        self.assertEqual( ans, next_pow2( num ) )
+        self.assertEqual(ans, next_pow2(num))
 
 
-    def test_rms( self ):
+    def test_rms(self):
         l = np.array([2,3,4.5])
         ans = 3.329164
 

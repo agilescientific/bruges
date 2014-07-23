@@ -53,7 +53,7 @@ def noise_db(a, snr):
     and SNR in dB.
 
     Returns an array of noise, the same 
-    shape as the imput.
+    shape as the input.
 
     Note it does *not* return the input
     array with the noise added.
