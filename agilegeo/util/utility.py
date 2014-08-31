@@ -18,7 +18,7 @@ def rms(a):
     return np.sqrt(np.sum(a**2.0)/a.size)
 
 
-def next_pow2( num ):
+def next_pow2(num):
     """
     Calculates the next nearest power of 2 to the input. Uses
       2**ceil( log2( num ) ).
@@ -28,7 +28,7 @@ def next_pow2( num ):
     :returns: the next power of 2 closest to num.
     """
 
-    return( 2**np.ceil( np.log2( num ) ))
+    return(2**np.ceil(np.log2(num)))
 
 def noise_db(a, snr):
     """
@@ -45,7 +45,7 @@ def noise_db(a, snr):
     
     # Get the amplitude of the signal
     sigmean = rms(a)
-    
+
     # Calculate the amp of the noise,
     # given the desired SNR
     noisemean = sigmean / 10.0**(snr/20.0)
