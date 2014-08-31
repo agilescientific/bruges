@@ -9,13 +9,29 @@ def rms(a):
     """
     Calculates the RMS of an array.
 
-    :param array: An array.
+    :param a: An array.
 
     :returns: The RMS of the array.
 
     """
 
     return np.sqrt(np.sum(a**2.0)/a.size)
+
+
+def normalize(a, new_min=0.0, new_max=1.0):
+    """
+    Normalize an array to [0,1] or to 
+    arbitrary new min and max.
+
+    :param a: An array.
+    :param new_min: A float to be the new min, default 0.
+    :param new_max: A float to be the new max, default 1.
+
+    :returns: The normalized array.
+    """
+    
+    n = (a - np.amin(a)) / np.amax(a - np.amin(a))
+    return n * (new_max - new_min) + new_min
 
 
 def next_pow2(num):
@@ -29,6 +45,7 @@ def next_pow2(num):
     """
 
     return(2**np.ceil(np.log2(num)))
+
 
 def noise_db(a, snr):
     """

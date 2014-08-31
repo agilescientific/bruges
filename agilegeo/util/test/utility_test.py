@@ -16,7 +16,7 @@ class UtilityTest(unittest.TestCase):
         l = np.array([2,3,4.5])
         ans = 3.329164
 
-        self.assertAlmostEqual(ans, rms(num), places=5)
+        self.assertAlmostEqual( ans, rms( l ), places=5 )
 
 
     def noise_db( self ):
@@ -25,7 +25,9 @@ class UtilityTest(unittest.TestCase):
         ans0 = 1.41
         ans10n = 1.05
 
-        self.assertAlmostEqual(ans, rms(num), places=2)
+        self.assertAlmostEqual( ans10p, noise_db( a, 10 ), places=2 )
+        self.assertAlmostEqual( ans0, noise_db( a, 10 ), places=2 )
+        self.assertAlmostEqual( ans10n, noise_db( a, -10 ), places=2 )
 
 
 if __name__ == '__main__':
