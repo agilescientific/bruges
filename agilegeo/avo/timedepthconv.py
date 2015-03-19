@@ -1,6 +1,6 @@
 from scipy.interpolate import griddata, interp1d
 from numpy import  arange, amax, amin, asarray,zeros, cumsum, \
-     transpose, gradient, mean
+     transpose, gradient, mean, size
 
 def time_to_depth(data,vmodel, dt, dz, twt=True):
     """
@@ -11,8 +11,10 @@ def time_to_depth(data,vmodel, dt, dz, twt=True):
                  numpy array. array(samples,traces).
     :param vmodel: P-wave velocity model that corresponds to the data.
                    Must be the same shape as data.
-    :param dt: The sample interval of the input data [s].
-    :param dz: The sample interval of the output data [m].
+    :param dt: The sample interval of the input data [s], or an
+               array of times.
+    :param dz: The sample interval of the output data [m], or an
+               array of depths
 
     :keyword twt: Use twt travel time, defaults to true
 
@@ -39,16 +41,26 @@ def convert(data, vmodel, interval, interval_new,scale):
     if( len( data.shape ) == 1 ):
         ntraces = 1
         nsamps = data.size
+
+        if size(dz) == 1:
+            depths = arange(nsamps)*dz
+        else: depths = dz
+            
+        v_avg = cumsum(vmodel) / arange(nsamps)
+        
     else:
         ntraces = data.shape[-1]
         nsamps = data.shape[0]
-        
-    depths = transpose(asarray([(arange(nsamps) * dz) \
-                       for i in range(ntraces)]))
 
-    v_avg = cumsum( vmodel, axis=0 ) / \
-                    transpose([arange( nsamps ) \
-                            for i in range(ntraces)])
+        if (size(dz) == 1):
+            depths = transpose(asarray([(arange(nsamps) * dz) \
+                                        for i in range(ntraces)]))
+        else:
+            depths = dz
+            
+        v_avg = cumsum( vmodel, axis=0 ) / \
+          transpose([arange( nsamps ) \
+                     for i in range(ntraces)])
 
     
 
@@ -58,9 +70,13 @@ def convert(data, vmodel, interval, interval_new,scale):
 
     times *= scale
 
-    times_lin = arange(amin(times), amax(times ), dt)
+    if size(dt)==1:
+        times_lin = arange(amin(times), amax(times ), dt)
+    else:
+        times_lin = dt
     
     if( ntraces == 1 ):
+        
         inter = interp1d(times, data,
                          bounds_error=False,
                          fill_value = data[-1],
