@@ -2,7 +2,8 @@ from scipy.interpolate import griddata, interp1d
 from numpy import  arange, amax, amin, asarray,zeros, cumsum, \
      transpose, gradient, mean, size
 
-def time_to_depth(data,vmodel, dt, dz, twt=True):
+def time_to_depth(data,vmodel, dt, dz, twt=True,
+                  mode="nearest"):
     """
     Converts data from the time domain to the depth domain given a
     velocity model.
@@ -26,10 +27,10 @@ def time_to_depth(data,vmodel, dt, dz, twt=True):
     else:
         scale = 1.0
     # Do depth to time with inverted velocity profile
-    return convert(data, 1. / vmodel, dt, dz, scale)
+    return convert(data, 1. / vmodel, dt, dz, scale, mode)
 
 
-def convert(data, vmodel, interval, interval_new,scale):
+def convert(data, vmodel, interval, interval_new,scale, mode):
     """
     Generic function for converting between scales. Use either
     time to depth or depth to time
@@ -46,7 +47,8 @@ def convert(data, vmodel, interval, interval_new,scale):
             depths = arange(nsamps)*dz
         else: depths = dz
             
-        v_avg = cumsum(vmodel) / arange(nsamps)
+        v_avg = cumsum(vmodel) / (arange(nsamps) + 1)
+                                  
         
     else:
         ntraces = data.shape[-1]
@@ -59,7 +61,7 @@ def convert(data, vmodel, interval, interval_new,scale):
             depths = dz
             
         v_avg = cumsum( vmodel, axis=0 ) / \
-          transpose([arange( nsamps ) \
+          transpose([arange( nsamps ) + 1 \
                      for i in range(ntraces)])
 
     
@@ -90,13 +92,13 @@ def convert(data, vmodel, interval, interval_new,scale):
         inter = interp1d(times[:,i], data[:,i],
                          bounds_error=False,
                          fill_value = data[-1,i],
-                         kind='nearest')
+                         kind=mode)
         output[:,i] += inter(times_lin)
 
 
     return(output)
     
-def depth_to_time(data,vmodel, dz, dt, twt=True):
+def depth_to_time(data,vmodel, dz, dt, twt=True, mode="nearest"):
     """
     Converts data from the depth domain to the time domain given a
     velocity model.
@@ -117,7 +119,7 @@ def depth_to_time(data,vmodel, dz, dt, twt=True):
         scale = 2.0
     else: scale = 1.0
     # Do depth to time with inverted velocity profile
-    return convert(data, vmodel, dz, dt, scale)
+    return convert(data, vmodel, dz, dt, scale, mode)
          
         
 
