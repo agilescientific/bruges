@@ -12,7 +12,7 @@ def __convert(data, vmodel, interval, interval_new, scale, mode):
     dz = interval
     dt = interval_new
 
-    if len(data.shape == 1):
+    if len(data.shape) == 1:
         ntraces = 1
         nsamps = data.size
 
