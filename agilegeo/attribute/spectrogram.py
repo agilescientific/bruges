@@ -59,7 +59,7 @@ def spectra( data, window_length, dt=1.0, window_type='boxcar',
 
         spect = ( 2.* absolute( fft( data[ start:end ] *\
                                 padded_window ) ) / \
-                         window.size )[0 : padded_window.size /2. ]
+                         window.size )[0:int(padded_window.size /2.)]
         if normalize: output[ i, : ] = spect / sum( spect**2)
         else: output[ i, : ] = spect
     
