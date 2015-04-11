@@ -1,3 +1,7 @@
+v0.1.5 April 11 2015
+Added keywords and changed defaults to spectal decomps,
+added rock modulii, fixed divide by zero in time to depth
+
 v0.1.4 August 31 2014
 Added noise utility functions and rock physics calculators
 
