@@ -97,6 +97,7 @@ def rhogas(gravity, temp, pressure):
 
     return rhogas
 
+
 def rhosat(phi, sw, rhomin, rhow, rhohc):
     """ 
     Density of partially saturated rock.
@@ -244,13 +245,4 @@ def smith_fluidsub(vp, vs, rho, phi, rhow, rhohc,
     vs2 = moduli.vs(mu=g, rho=rhob2)
 
     return vp2, vs2, rhob2
-
-
-
-
-
-
-
-
-
 
