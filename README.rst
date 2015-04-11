@@ -2,6 +2,14 @@
 agilegeo
 ===========
 
+.. image:: https://travis-ci.org/agile-geoscience/agilegeo.png?branch=master
+    :target: https://travis-ci.org/agile-geoscience/agilegeo
+    :alt: Build
+
+.. image:: https://www.codacy.com/project/badge/f445542bc50e48c18a0d0e15a2768eb7
+    :target: https://www.codacy.com/public/matt/agilegeo
+    :alt: Codacy
+
 .. image:: https://img.shields.io/badge/license-Apache-blue.svg
     :target: https://github.com/agile-geoscience/modelr/blob/develop/LICENSE.md
     :alt: Apache 2 license
