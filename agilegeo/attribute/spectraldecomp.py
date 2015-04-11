@@ -7,7 +7,7 @@ def spectraldecomp(data, f=(.1,.25,.4),
                    window_length=32, dt=1,
                    window_type='hann',
                    overlap=1,
-                   normalize=True):
+                   normalize=False):
     """
     Uses the STFT to decompose traces into normalized spectra. Only
     frequencies defined by the user will be output. Using 3
