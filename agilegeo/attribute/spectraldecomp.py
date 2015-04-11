@@ -3,9 +3,10 @@ import numpy as np
 from agilegeo.attribute import spectra
 
 
-def spectraldecomp( data, f=(.1,.25,.4),
-                    window_length=32, dt=1,
-                    window_type='hann' ):
+def spectraldecomp(data, f=(.1,.25,.4),
+                   window_length=32, dt=1,
+                   window_type='hann',
+                   overlap=.9):
     """
     Uses the STFT to decompose traces into normalized spectra. Only
     frequencies defined by the user will be output. Using 3
@@ -20,40 +21,43 @@ def spectraldecomp( data, f=(.1,.25,.4),
     :keyword dt: The time sample interval of the traces.
     :keyword window_type: The type of window to use for the STFT. The
                           same input as scipy.signal.get_window.
+    :keyword overlap: The fraction of overlap between adjacent
+                      STFT windows
 
     :returns: an array of shape (samples, traces, f)
     """
 
-    overlap = 0.5
-
     
     # Do the 1D case
-    if len( data.shape ) == 1:
+    if len(data.shape) == 1:
         ntraces = 1
     else:
         ntraces = data.shape[-1]
 
-    
+    if overlap > 1: overlap = 1
         
-    for i in range( ntraces ):
 
-        if( ntraces == 1 ):
-            spect = spectra( data, window_length, dt=dt,
-                             window_type=window_type, overlap=overlap,
-                             normalize = True )
+    # TODO We should think about removing these for loops
+    for i in range(ntraces):
+
+        if(ntraces == 1):
+            spect = spectra(data, window_length, dt=dt,
+                            window_type=window_type, overlap=overlap,
+                            normalize = True)
             if( i == 0 ): output = np.zeros( (spect.shape[0], len(f)))
             
         else:
-            spect = spectra( data[:,i], window_length, dt=dt,
-                             window_type=window_type, overlap=overlap,
-                             normalize = True )
+            spect = spectra(data[:,i], window_length, dt=dt,
+                            window_type=window_type, overlap=overlap,
+                            normalize = True)
             if( i == 0 ):
                 output = np.zeros( (spect.shape[0],ntraces,
                                    len(f) ))
 
-        res = ( (1. / dt) / 2.0 ) / spect.shape[-1]
+        res = ((1. / dt) * overlap) / spect.shape[-1]
 
-        for j in range( len( f ) ):
+        # TODO again, we should think about removing this loop
+        for j in range(len(f)):
 
             index = np.floor( f[j] / res )
 
