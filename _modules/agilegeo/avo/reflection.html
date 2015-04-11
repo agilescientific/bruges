@@ -1,0 +1,464 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>agilegeo.avo.reflection &mdash; agilegeo 0.1.5 documentation</title>
+    
+    <link rel="stylesheet" href="../../../_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '0.1.5',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="agilegeo 0.1.5 documentation" href="../../../index.html" />
+    <link rel="up" title="Module code" href="../../index.html" /> 
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../index.html">agilegeo 0.1.5 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="../../index.html" accesskey="U">Module code</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for agilegeo.avo.reflection</h1><div class="highlight"><pre>
+<span class="c"># Incorporates Zoeppritz code from:</span>
+<span class="c">#       Written by: Wes Hamlyn</span>
+<span class="c">#       Modified by: Sean Ross-Ross</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">numpy</span> <span class="kn">import</span> <span class="n">log</span><span class="p">,</span> <span class="n">tan</span><span class="p">,</span> <span class="n">sin</span><span class="p">,</span> <span class="n">cos</span><span class="p">,</span> <span class="n">arcsin</span><span class="p">,</span> <span class="n">arccosh</span><span class="p">,</span> <span class="n">radians</span><span class="p">,</span> \
+                  <span class="n">degrees</span>
+
+<div class="viewcode-block" id="zoeppritz"><a class="viewcode-back" href="../../../agilegeo.avo.html#agilegeo.avo.zoeppritz">[docs]</a><span class="k">def</span> <span class="nf">zoeppritz</span><span class="p">(</span><span class="n">vp1</span><span class="p">,</span> <span class="n">vs1</span><span class="p">,</span> <span class="n">rho1</span><span class="p">,</span> <span class="n">vp0</span><span class="p">,</span> <span class="n">vs0</span><span class="p">,</span> <span class="n">rho0</span><span class="p">,</span> <span class="n">theta1</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    Full Zoeppritz solution, considered the definitive solution.</span>
+<span class="sd">    Calculates the angle dependent p-wave reflectivity of an interface</span>
+<span class="sd">    between two mediums.</span>
+
+<span class="sd">    :param vp1: The p-wave velocity of the upper medium.</span>
+<span class="sd">    :param vs1: The s-wave velocity of the upper medium.</span>
+<span class="sd">    :param rho1: The density of the upper medium.</span>
+
+<span class="sd">    :param vp0: The p-wave velocity of the lower medium.</span>
+<span class="sd">    :param vs0: The s-wave velocity of the lower medium.</span>
+<span class="sd">    :param rho0: The density of the lower medium.</span>
+<span class="sd">    </span>
+<span class="sd">    :param theta1: An array of incident angles to use for reflectivity</span>
+<span class="sd">                   calculation [degrees].</span>
+
+<span class="sd">    :returns: a vector of len(theta1) containing the reflectivity</span>
+<span class="sd">             value corresponding to each angle.</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    
+    <span class="c"># Set the ray paramter, p</span>
+    <span class="n">p</span> <span class="o">=</span> <span class="n">sin</span><span class="p">(</span><span class="n">radians</span><span class="p">(</span><span class="n">theta1</span><span class="p">))</span> <span class="o">/</span> <span class="n">vp1</span> <span class="c"># ray parameter</span>
+    
+    <span class="c"># Calculate reflection &amp; transmission angles for Zoeppritz</span>
+    <span class="n">theta1</span> <span class="o">=</span> <span class="n">radians</span><span class="p">(</span><span class="n">theta1</span><span class="p">)</span>   <span class="c"># Convert theta1 to radians</span>
+    <span class="n">theta2</span> <span class="o">=</span> <span class="n">arcsin</span><span class="p">(</span><span class="n">p</span> <span class="o">*</span> <span class="n">vp0</span><span class="p">);</span>      <span class="c"># Trans. angle of P-wave</span>
+    <span class="n">phi1</span> <span class="o">=</span> <span class="n">arcsin</span><span class="p">(</span><span class="n">p</span> <span class="o">*</span> <span class="n">vs1</span><span class="p">);</span>      <span class="c"># Refl. angle of converted S-wave</span>
+    <span class="n">phi2</span> <span class="o">=</span> <span class="n">arcsin</span><span class="p">(</span><span class="n">p</span> <span class="o">*</span> <span class="n">vs0</span><span class="p">);</span>      <span class="c"># Trans. angle of converted S-wave</span>
+                
+    <span class="c"># Matrix form of Zoeppritz Equations... M &amp; N are matricies</span>
+    <span class="n">M</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span> \
+        <span class="p">[</span><span class="o">-</span><span class="n">sin</span><span class="p">(</span><span class="n">theta1</span><span class="p">),</span> <span class="o">-</span><span class="n">cos</span><span class="p">(</span><span class="n">phi1</span><span class="p">),</span> <span class="n">sin</span><span class="p">(</span><span class="n">theta2</span><span class="p">),</span> <span class="n">cos</span><span class="p">(</span><span class="n">phi2</span><span class="p">)],</span> \
+        <span class="p">[</span><span class="n">cos</span><span class="p">(</span><span class="n">theta1</span><span class="p">),</span> <span class="o">-</span><span class="n">sin</span><span class="p">(</span><span class="n">phi1</span><span class="p">),</span> <span class="n">cos</span><span class="p">(</span><span class="n">theta2</span><span class="p">),</span> <span class="o">-</span><span class="n">sin</span><span class="p">(</span><span class="n">phi2</span><span class="p">)],</span> \
+        <span class="p">[</span><span class="mi">2</span> <span class="o">*</span> <span class="n">rho1</span> <span class="o">*</span> <span class="n">vs1</span> <span class="o">*</span> <span class="n">sin</span><span class="p">(</span><span class="n">phi1</span><span class="p">)</span> <span class="o">*</span> <span class="n">cos</span><span class="p">(</span><span class="n">theta1</span><span class="p">),</span> <span class="n">rho1</span> <span class="o">*</span> <span class="n">vs1</span> <span class="o">*</span>\
+            <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">sin</span><span class="p">(</span><span class="n">phi1</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span><span class="p">),</span> \
+            <span class="mi">2</span> <span class="o">*</span> <span class="n">rho0</span> <span class="o">*</span> <span class="n">vs0</span> <span class="o">*</span> <span class="n">sin</span><span class="p">(</span><span class="n">phi2</span><span class="p">)</span> <span class="o">*</span> <span class="n">cos</span><span class="p">(</span><span class="n">theta2</span><span class="p">),</span> \
+            <span class="n">rho0</span> <span class="o">*</span> <span class="n">vs0</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">sin</span><span class="p">(</span><span class="n">phi2</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)],</span> \
+        <span class="p">[</span><span class="o">-</span><span class="n">rho1</span> <span class="o">*</span> <span class="n">vp1</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">sin</span><span class="p">(</span><span class="n">phi1</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span><span class="p">),</span> <span class="n">rho1</span> <span class="o">*</span> <span class="n">vs1</span> <span class="o">*</span> \
+             <span class="n">sin</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">phi1</span><span class="p">),</span> \
+            <span class="n">rho0</span> <span class="o">*</span> <span class="n">vp0</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">sin</span><span class="p">(</span><span class="n">phi2</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span><span class="p">),</span> <span class="o">-</span><span class="n">rho0</span> <span class="o">*</span> \
+              <span class="n">vs0</span> <span class="o">*</span> <span class="n">sin</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">phi2</span><span class="p">)]</span>
+        <span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="s">&#39;float&#39;</span><span class="p">)</span>
+    
+    <span class="n">N</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span> \
+        <span class="p">[</span><span class="n">sin</span><span class="p">(</span><span class="n">theta1</span><span class="p">),</span> <span class="n">cos</span><span class="p">(</span><span class="n">phi1</span><span class="p">),</span> <span class="o">-</span><span class="n">sin</span><span class="p">(</span><span class="n">theta2</span><span class="p">),</span> <span class="o">-</span><span class="n">cos</span><span class="p">(</span><span class="n">phi2</span><span class="p">)],</span> \
+        <span class="p">[</span><span class="n">cos</span><span class="p">(</span><span class="n">theta1</span><span class="p">),</span> <span class="o">-</span><span class="n">sin</span><span class="p">(</span><span class="n">phi1</span><span class="p">),</span> <span class="n">cos</span><span class="p">(</span><span class="n">theta2</span><span class="p">),</span> <span class="o">-</span><span class="n">sin</span><span class="p">(</span><span class="n">phi2</span><span class="p">)],</span> \
+        <span class="p">[</span><span class="mi">2</span> <span class="o">*</span> <span class="n">rho1</span> <span class="o">*</span> <span class="n">vs1</span> <span class="o">*</span> <span class="n">sin</span><span class="p">(</span><span class="n">phi1</span><span class="p">)</span> <span class="o">*</span> <span class="n">cos</span><span class="p">(</span><span class="n">theta1</span><span class="p">),</span> <span class="n">rho1</span> <span class="o">*</span> <span class="n">vs1</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">sin</span><span class="p">(</span><span class="n">phi1</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span><span class="p">),</span> \
+            <span class="mi">2</span> <span class="o">*</span> <span class="n">rho0</span> <span class="o">*</span> <span class="n">vs0</span> <span class="o">*</span> <span class="n">sin</span><span class="p">(</span><span class="n">phi2</span><span class="p">)</span> <span class="o">*</span> <span class="n">cos</span><span class="p">(</span><span class="n">theta2</span><span class="p">),</span> <span class="n">rho0</span> <span class="o">*</span> <span class="n">vs0</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">sin</span><span class="p">(</span><span class="n">phi2</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)],</span> \
+        <span class="p">[</span><span class="n">rho1</span> <span class="o">*</span> <span class="n">vp1</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">sin</span><span class="p">(</span><span class="n">phi1</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span><span class="p">),</span> <span class="o">-</span><span class="n">rho1</span> <span class="o">*</span> <span class="n">vs1</span> <span class="o">*</span> <span class="n">sin</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">phi1</span><span class="p">),</span> \
+            <span class="o">-</span> <span class="n">rho0</span> <span class="o">*</span> <span class="n">vp0</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">sin</span><span class="p">(</span><span class="n">phi2</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span><span class="p">),</span> <span class="n">rho0</span> <span class="o">*</span> <span class="n">vs0</span> <span class="o">*</span> <span class="n">sin</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">phi2</span><span class="p">)]</span>\
+        <span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="s">&#39;float&#39;</span><span class="p">)</span>
+    
+    <span class="c"># This is the important step, calculating</span>
+    <span class="c"># coefficients for all modes</span>
+    <span class="c"># and rays result is a 4x4 matrix, we want the R[0][0]</span>
+    <span class="c"># element for Rpp reflectivity only</span>
+    
+    <span class="k">if</span> <span class="n">M</span><span class="o">.</span><span class="n">ndim</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span>
+        <span class="n">zoep</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">([</span><span class="n">M</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]])</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">M</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]):</span> 
+            <span class="n">Mi</span> <span class="o">=</span> <span class="n">M</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="n">i</span><span class="p">]</span>
+            <span class="n">Ni</span> <span class="o">=</span> <span class="n">N</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="n">i</span><span class="p">]</span>
+            <span class="n">dt</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">inv</span><span class="p">(</span><span class="n">Mi</span><span class="p">),</span> <span class="n">Ni</span><span class="p">)</span>
+            <span class="n">zoep</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">dt</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">dt</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">inv</span><span class="p">(</span><span class="n">M</span><span class="p">),</span> <span class="n">N</span><span class="p">)</span>
+        <span class="n">zoep</span> <span class="o">=</span> <span class="n">dt</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+    
+    <span class="k">return</span> <span class="n">zoep</span>
+</div>
+<div class="viewcode-block" id="akirichards"><a class="viewcode-back" href="../../../agilegeo.avo.html#agilegeo.avo.akirichards">[docs]</a><span class="k">def</span> <span class="nf">akirichards</span><span class="p">(</span><span class="n">vp1</span><span class="p">,</span> <span class="n">vs1</span><span class="p">,</span> <span class="n">rho1</span><span class="p">,</span> <span class="n">vp2</span><span class="p">,</span> <span class="n">vs2</span><span class="p">,</span> <span class="n">rho2</span><span class="p">,</span> <span class="n">theta1</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This is the formulation from Avseth et al.,</span>
+<span class="sd">    Quantitative seismic interpretation,</span>
+<span class="sd">    Cambridge University Press, 2006. Adapted for a 4-term formula. </span>
+<span class="sd">    See http://subsurfwiki.org/wiki/Aki-Richards_equation</span>
+
+<span class="sd">    :param vp1: The p-wave velocity of the upper medium.</span>
+<span class="sd">    :param vs1: The s-wave velocity of the upper medium.</span>
+<span class="sd">    :param rho1: The density of the upper medium.</span>
+
+<span class="sd">    :param vp2: The p-wave velocity of the lower medium.</span>
+<span class="sd">    :param vs2: The s-wave velocity of the lower medium.</span>
+<span class="sd">    :param rho2: The density of the lower medium.</span>
+<span class="sd">    </span>
+<span class="sd">    :param theta1: An array of incident angles to use for reflectivity</span>
+<span class="sd">                   calculation [degrees].</span>
+
+<span class="sd">    :returns: a vector of len(theta1) containing the reflectivity</span>
+<span class="sd">             value corresponding to each angle.</span>
+<span class="sd">    </span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c"># We are not using this for anything, but will</span>
+    <span class="c"># critical_angle = arcsin(vp1/vp2)</span>
+    
+    <span class="c"># Do we need to ensure that we get floats out before</span>
+    <span class="c"># computing sines?</span>
+    <span class="n">vp1</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">vp1</span><span class="p">)</span>
+
+    <span class="n">theta2</span> <span class="o">=</span> <span class="n">degrees</span><span class="p">(</span><span class="n">arcsin</span><span class="p">(</span><span class="n">vp2</span><span class="o">/</span><span class="n">vp1</span><span class="o">*</span><span class="n">sin</span><span class="p">(</span><span class="n">radians</span><span class="p">(</span><span class="n">theta1</span><span class="p">))))</span>
+
+    <span class="c"># Compute the various parameters</span>
+    <span class="n">drho</span> <span class="o">=</span> <span class="n">rho2</span><span class="o">-</span><span class="n">rho1</span>
+    <span class="n">dvp</span> <span class="o">=</span> <span class="n">vp2</span><span class="o">-</span><span class="n">vp1</span>
+    <span class="n">dvs</span> <span class="o">=</span> <span class="n">vs2</span><span class="o">-</span><span class="n">vs1</span>
+    <span class="n">meantheta</span> <span class="o">=</span> <span class="p">(</span><span class="n">theta1</span><span class="o">+</span><span class="n">theta2</span><span class="p">)</span><span class="o">/</span><span class="mf">2.0</span>
+    <span class="n">rho</span> <span class="o">=</span> <span class="p">(</span><span class="n">rho1</span><span class="o">+</span><span class="n">rho2</span><span class="p">)</span><span class="o">/</span><span class="mf">2.0</span>
+    <span class="n">vp</span> <span class="o">=</span> <span class="p">(</span><span class="n">vp1</span><span class="o">+</span><span class="n">vp2</span><span class="p">)</span><span class="o">/</span><span class="mf">2.0</span>
+    <span class="n">vs</span> <span class="o">=</span> <span class="p">(</span><span class="n">vs1</span><span class="o">+</span><span class="n">vs2</span><span class="p">)</span><span class="o">/</span><span class="mf">2.0</span>
+
+    <span class="c"># Compute the coefficients </span>
+    <span class="n">w</span> <span class="o">=</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">drho</span><span class="o">/</span><span class="n">rho</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="p">(</span><span class="n">vs</span><span class="o">/</span><span class="n">vp1</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span> <span class="o">*</span> <span class="n">drho</span><span class="o">/</span><span class="n">rho</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="p">(</span><span class="n">dvp</span><span class="o">/</span><span class="n">vp</span><span class="p">)</span>
+    <span class="n">z</span> <span class="o">=</span> <span class="mi">4</span> <span class="o">*</span> <span class="p">(</span><span class="n">vs</span><span class="o">/</span><span class="n">vp1</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span> <span class="o">*</span> <span class="p">(</span><span class="n">dvs</span><span class="o">/</span><span class="n">vs</span><span class="p">)</span>
+
+    <span class="c"># Compute the terms</span>
+    <span class="n">term1</span> <span class="o">=</span> <span class="n">w</span>
+    <span class="n">term2</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span> <span class="o">*</span> <span class="n">x</span> <span class="o">*</span> <span class="n">sin</span><span class="p">(</span><span class="n">radians</span><span class="p">(</span><span class="n">theta1</span><span class="p">))</span><span class="o">**</span><span class="mi">2</span>
+    <span class="n">term3</span> <span class="o">=</span> <span class="n">y</span> <span class="o">/</span> <span class="n">cos</span><span class="p">(</span><span class="n">radians</span><span class="p">(</span><span class="n">meantheta</span><span class="p">))</span><span class="o">**</span><span class="mi">2</span>
+    <span class="n">term4</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span> <span class="o">*</span> <span class="n">z</span> <span class="o">*</span> <span class="n">sin</span><span class="p">(</span><span class="n">radians</span><span class="p">(</span><span class="n">theta1</span><span class="p">))</span><span class="o">**</span><span class="mi">2</span>
+    
+    <span class="k">return</span> <span class="p">(</span><span class="n">term1</span> <span class="o">+</span> <span class="n">term2</span> <span class="o">+</span> <span class="n">term3</span> <span class="o">+</span> <span class="n">term4</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="akirichards_alt"><a class="viewcode-back" href="../../../agilegeo.avo.html#agilegeo.avo.akirichards_alt">[docs]</a><span class="k">def</span> <span class="nf">akirichards_alt</span><span class="p">(</span><span class="n">vp1</span><span class="p">,</span> <span class="n">vs1</span><span class="p">,</span> <span class="n">rho1</span><span class="p">,</span> <span class="n">vp2</span><span class="p">,</span> <span class="n">vs2</span><span class="p">,</span> <span class="n">rho2</span><span class="p">,</span> <span class="n">theta1</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This is another formulation of the Aki-Richards solution. </span>
+<span class="sd">    See http://subsurfwiki.org/wiki/Aki-Richards_equation</span>
+
+<span class="sd">    :param vp1: The p-wave velocity of the upper medium.</span>
+<span class="sd">    :param vs1: The s-wave velocity of the upper medium.</span>
+<span class="sd">    :param rho1: The density of the upper medium.</span>
+
+<span class="sd">    :param vp2: The p-wave velocity of the lower medium.</span>
+<span class="sd">    :param vs2: The s-wave velocity of the lower medium.</span>
+<span class="sd">    :param rho2: The density of the lower medium.</span>
+<span class="sd">    </span>
+<span class="sd">    :param theta1: An array of incident angles to use for reflectivity</span>
+<span class="sd">                   calculation [degrees].</span>
+
+<span class="sd">    :returns: a vector of len(theta1) containing the reflectivity</span>
+<span class="sd">             value corresponding to each angle.</span>
+<span class="sd">    </span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c"># We are not using this for anything, but will</span>
+    <span class="c"># critical_angle = arcsin(vp1/vp2)</span>
+    
+    <span class="c"># Do we need to ensure that we get floats out before</span>
+    <span class="c"># computing sines?</span>
+    <span class="n">vp1</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">vp1</span><span class="p">)</span>    
+
+    <span class="n">theta2</span> <span class="o">=</span> <span class="n">degrees</span><span class="p">(</span><span class="n">arcsin</span><span class="p">(</span><span class="n">vp2</span><span class="o">/</span><span class="n">vp1</span><span class="o">*</span><span class="n">sin</span><span class="p">(</span><span class="n">radians</span><span class="p">(</span><span class="n">theta1</span><span class="p">))))</span>
+
+    <span class="c"># Compute the various parameters</span>
+    <span class="n">drho</span> <span class="o">=</span> <span class="n">rho2</span><span class="o">-</span><span class="n">rho1</span>
+    <span class="n">dvp</span> <span class="o">=</span> <span class="n">vp2</span><span class="o">-</span><span class="n">vp1</span>
+    <span class="n">dvs</span> <span class="o">=</span> <span class="n">vs2</span><span class="o">-</span><span class="n">vs1</span>
+    <span class="n">theta</span> <span class="o">=</span> <span class="p">(</span><span class="n">theta1</span><span class="o">+</span><span class="n">theta2</span><span class="p">)</span><span class="o">/</span><span class="mf">2.0</span>
+    <span class="n">rho</span> <span class="o">=</span> <span class="p">(</span><span class="n">rho1</span><span class="o">+</span><span class="n">rho2</span><span class="p">)</span><span class="o">/</span><span class="mf">2.0</span>
+    <span class="n">vp</span> <span class="o">=</span> <span class="p">(</span><span class="n">vp1</span><span class="o">+</span><span class="n">vp2</span><span class="p">)</span><span class="o">/</span><span class="mf">2.0</span>
+    <span class="n">vs</span> <span class="o">=</span> <span class="p">(</span><span class="n">vs1</span><span class="o">+</span><span class="n">vs2</span><span class="p">)</span><span class="o">/</span><span class="mf">2.0</span>
+
+    <span class="c"># Compute the three terms</span>
+    <span class="n">term1</span> <span class="o">=</span> <span class="mf">0.5</span><span class="o">*</span><span class="p">(</span><span class="n">dvp</span><span class="o">/</span><span class="n">vp</span> <span class="o">+</span> <span class="n">drho</span><span class="o">/</span><span class="n">rho</span><span class="p">)</span>
+    <span class="n">term2</span> <span class="o">=</span> <span class="p">(</span><span class="mf">0.5</span><span class="o">*</span><span class="n">dvp</span><span class="o">/</span><span class="n">vp</span><span class="o">-</span><span class="mi">2</span><span class="o">*</span><span class="p">(</span><span class="n">vs</span><span class="o">/</span><span class="n">vp</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="o">*</span><span class="p">(</span><span class="n">drho</span><span class="o">/</span><span class="n">rho</span><span class="o">+</span><span class="mi">2</span><span class="o">*</span><span class="n">dvs</span><span class="o">/</span><span class="n">vs</span><span class="p">))</span><span class="o">*</span>\
+            <span class="n">sin</span><span class="p">(</span><span class="n">radians</span><span class="p">(</span><span class="n">theta</span><span class="p">))</span><span class="o">**</span><span class="mi">2</span>
+    <span class="n">term3</span> <span class="o">=</span> <span class="mf">0.5</span><span class="o">*</span><span class="n">dvp</span><span class="o">/</span><span class="n">vp</span><span class="o">*</span><span class="p">(</span><span class="n">tan</span><span class="p">(</span><span class="n">radians</span><span class="p">(</span><span class="n">theta</span><span class="p">))</span><span class="o">**</span><span class="mi">2</span> <span class="o">-</span> \
+                        <span class="n">sin</span><span class="p">(</span><span class="n">radians</span><span class="p">(</span><span class="n">theta</span><span class="p">))</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+    
+    <span class="k">return</span> <span class="p">(</span><span class="n">term1</span> <span class="o">+</span> <span class="n">term2</span> <span class="o">+</span> <span class="n">term3</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="fatti"><a class="viewcode-back" href="../../../agilegeo.avo.html#agilegeo.avo.fatti">[docs]</a><span class="k">def</span> <span class="nf">fatti</span><span class="p">(</span><span class="n">vp1</span><span class="p">,</span> <span class="n">vs1</span><span class="p">,</span> <span class="n">rho1</span><span class="p">,</span> <span class="n">vp2</span><span class="p">,</span> <span class="n">vs2</span><span class="p">,</span> <span class="n">rho2</span><span class="p">,</span> <span class="n">theta1</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Compute reflectivities with Fatti&#39;s formulation of the</span>
+<span class="sd">    Aki-Richards equation, which does not account for the</span>
+<span class="sd">    critical angle. Fatti et al (1994), Geophysics 59 (9).</span>
+
+<span class="sd">    :param vp1: The p-wave velocity of the upper medium.</span>
+<span class="sd">    :param vs1: The s-wave velocity of the upper medium.</span>
+<span class="sd">    :param rho1: The density of the upper medium.</span>
+
+<span class="sd">    :param vp2: The p-wave velocity of the lower medium.</span>
+<span class="sd">    :param vs2: The s-wave velocity of the lower medium.</span>
+<span class="sd">    :param rho2: The density of the lower medium.</span>
+<span class="sd">    </span>
+<span class="sd">    :param theta1: An array of incident angles to use for reflectivity</span>
+<span class="sd">                   calculation [degrees].</span>
+
+<span class="sd">    :returns: a vector of len(theta1) containing the reflectivity</span>
+<span class="sd">             value corresponding to each angle.</span>
+<span class="sd">    </span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="c"># Do we need to ensure that we get floats out before computing sines?</span>
+    <span class="n">vp1</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">vp1</span><span class="p">)</span>
+
+    <span class="c"># Compute the various parameters</span>
+    <span class="n">drho</span> <span class="o">=</span> <span class="n">rho2</span><span class="o">-</span><span class="n">rho1</span>
+    <span class="n">dvp</span> <span class="o">=</span> <span class="n">vp2</span><span class="o">-</span><span class="n">vp1</span>
+    <span class="n">dvs</span> <span class="o">=</span> <span class="n">vs2</span><span class="o">-</span><span class="n">vs1</span>
+    <span class="n">rho</span> <span class="o">=</span> <span class="p">(</span><span class="n">rho1</span><span class="o">+</span><span class="n">rho2</span><span class="p">)</span><span class="o">/</span><span class="mf">2.0</span>
+    <span class="n">vp</span> <span class="o">=</span> <span class="p">(</span><span class="n">vp1</span><span class="o">+</span><span class="n">vp2</span><span class="p">)</span><span class="o">/</span><span class="mf">2.0</span>
+    <span class="n">vs</span> <span class="o">=</span> <span class="p">(</span><span class="n">vs1</span><span class="o">+</span><span class="n">vs2</span><span class="p">)</span><span class="o">/</span><span class="mf">2.0</span>
+    <span class="n">dip</span> <span class="o">=</span> <span class="p">(</span><span class="n">vp2</span><span class="o">*</span><span class="n">rho2</span> <span class="o">-</span> <span class="n">vp1</span><span class="o">*</span><span class="n">rho1</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="n">vp2</span><span class="o">*</span><span class="n">rho2</span> <span class="o">+</span> <span class="n">vp1</span><span class="o">*</span><span class="n">rho1</span><span class="p">)</span>
+    <span class="n">dis</span> <span class="o">=</span> <span class="p">(</span><span class="n">vs2</span><span class="o">*</span><span class="n">rho2</span> <span class="o">-</span> <span class="n">vs1</span><span class="o">*</span><span class="n">rho1</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="n">vs2</span><span class="o">*</span><span class="n">rho2</span> <span class="o">+</span> <span class="n">vs1</span><span class="o">*</span><span class="n">rho1</span><span class="p">)</span>
+
+    <span class="c"># Compute the three terms</span>
+    <span class="n">term1</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">tan</span><span class="p">(</span><span class="n">radians</span><span class="p">(</span><span class="n">theta1</span><span class="p">))</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span> <span class="o">*</span> <span class="n">dip</span>
+    <span class="n">term2</span> <span class="o">=</span> <span class="o">-</span><span class="mi">8</span> <span class="o">*</span> <span class="p">(</span><span class="n">vs</span><span class="o">/</span><span class="n">vp</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span> <span class="o">*</span> <span class="n">sin</span><span class="p">(</span><span class="n">radians</span><span class="p">(</span><span class="n">theta1</span><span class="p">))</span><span class="o">**</span><span class="mi">2</span> <span class="o">*</span> <span class="n">dis</span>
+    <span class="n">term3</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span> <span class="o">*</span> <span class="p">(</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">tan</span><span class="p">(</span><span class="n">radians</span><span class="p">(</span><span class="n">theta1</span><span class="p">))</span><span class="o">**</span><span class="mi">2</span> <span class="o">-</span> <span class="mi">2</span> <span class="o">*</span> \
+                   <span class="p">(</span><span class="n">vs</span><span class="o">/</span><span class="n">vp</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span> <span class="o">*</span> <span class="n">sin</span><span class="p">(</span><span class="n">radians</span><span class="p">(</span><span class="n">theta1</span><span class="p">))</span><span class="o">**</span><span class="mi">2</span> <span class="p">)</span> <span class="o">*</span> <span class="n">drho</span><span class="o">/</span><span class="n">rho</span>
+    
+    <span class="k">return</span> <span class="p">(</span><span class="n">term1</span> <span class="o">+</span> <span class="n">term2</span> <span class="o">+</span> <span class="n">term3</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="shuey2"><a class="viewcode-back" href="../../../agilegeo.avo.html#agilegeo.avo.shuey2">[docs]</a><span class="k">def</span> <span class="nf">shuey2</span><span class="p">(</span><span class="n">vp1</span><span class="p">,</span> <span class="n">vs1</span><span class="p">,</span> <span class="n">rho1</span><span class="p">,</span> <span class="n">vp2</span><span class="p">,</span> <span class="n">vs2</span><span class="p">,</span> <span class="n">rho2</span><span class="p">,</span> <span class="n">theta1</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Compute Shuey approximation with 2 terms.</span>
+<span class="sd">    http://subsurfwiki.org/wiki/Shuey_equation</span>
+
+<span class="sd">    :param vp1: The p-wave velocity of the upper medium.</span>
+<span class="sd">    :param vs1: The s-wave velocity of the upper medium.</span>
+<span class="sd">    :param rho1: The density of the upper medium.</span>
+
+<span class="sd">    :param vp2: The p-wave velocity of the lower medium.</span>
+<span class="sd">    :param vs2: The s-wave velocity of the lower medium.</span>
+<span class="sd">    :param rho2: The density of the lower medium.</span>
+<span class="sd">    </span>
+<span class="sd">    :param theta1: An array of incident angles to use for reflectivity</span>
+<span class="sd">                   calculation [degrees].</span>
+
+<span class="sd">    :returns: a vector of len(theta1) containing the reflectivity</span>
+<span class="sd">             value corresponding to each angle.</span>
+<span class="sd">    </span>
+<span class="sd">    </span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c"># Compute some parameters</span>
+    <span class="n">drho</span> <span class="o">=</span> <span class="n">rho2</span><span class="o">-</span><span class="n">rho1</span>
+    <span class="n">dvp</span> <span class="o">=</span> <span class="n">vp2</span><span class="o">-</span><span class="n">vp1</span>
+    <span class="n">dvs</span> <span class="o">=</span> <span class="n">vs2</span><span class="o">-</span><span class="n">vs1</span>
+    <span class="n">rho</span> <span class="o">=</span> <span class="p">(</span><span class="n">rho1</span><span class="o">+</span><span class="n">rho2</span><span class="p">)</span><span class="o">/</span><span class="mf">2.0</span>
+    <span class="n">vp</span> <span class="o">=</span> <span class="p">(</span><span class="n">vp1</span><span class="o">+</span><span class="n">vp2</span><span class="p">)</span><span class="o">/</span><span class="mf">2.0</span>
+    <span class="n">vs</span> <span class="o">=</span> <span class="p">(</span><span class="n">vs1</span><span class="o">+</span><span class="n">vs2</span><span class="p">)</span><span class="o">/</span><span class="mf">2.0</span>
+
+    <span class="c"># Compute two-term reflectivity</span>
+
+    <span class="n">r0</span> <span class="o">=</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="p">(</span><span class="n">dvp</span><span class="o">/</span><span class="n">vp</span> <span class="o">+</span> <span class="n">drho</span><span class="o">/</span><span class="n">rho</span><span class="p">)</span>
+    <span class="n">g</span>  <span class="o">=</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">dvp</span><span class="o">/</span><span class="n">vp</span> <span class="o">-</span> <span class="mi">2</span> <span class="o">*</span> <span class="p">(</span><span class="n">vs</span><span class="o">**</span><span class="mi">2</span><span class="o">/</span><span class="n">vp</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span> <span class="n">drho</span><span class="o">/</span><span class="n">rho</span> <span class="o">+</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">dvs</span><span class="o">/</span><span class="n">vs</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">r0</span> <span class="o">+</span> <span class="n">g</span> <span class="o">*</span> <span class="n">sin</span><span class="p">(</span><span class="n">radians</span><span class="p">(</span><span class="n">theta1</span><span class="p">))</span><span class="o">**</span><span class="mi">2</span>
+</div>
+<div class="viewcode-block" id="shuey3"><a class="viewcode-back" href="../../../agilegeo.avo.html#agilegeo.avo.shuey3">[docs]</a><span class="k">def</span> <span class="nf">shuey3</span><span class="p">(</span><span class="n">vp1</span><span class="p">,</span> <span class="n">vs1</span><span class="p">,</span> <span class="n">rho1</span><span class="p">,</span> <span class="n">vp2</span><span class="p">,</span> <span class="n">vs2</span><span class="p">,</span> <span class="n">rho2</span><span class="p">,</span> <span class="n">theta1</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Compute Shuey approximation with 3 terms.</span>
+<span class="sd">    http://subsurfwiki.org/wiki/Shuey_equation</span>
+
+<span class="sd">    :param vp1: The p-wave velocity of the upper medium.</span>
+<span class="sd">    :param vs1: The s-wave velocity of the upper medium.</span>
+<span class="sd">    :param rho1: The density of the upper medium.</span>
+
+<span class="sd">    :param vp2: The p-wave velocity of the lower medium.</span>
+<span class="sd">    :param vs2: The s-wave velocity of the lower medium.</span>
+<span class="sd">    :param rho2: The density of the lower medium.</span>
+<span class="sd">    </span>
+<span class="sd">    :param theta1: An array of incident angles to use for reflectivity</span>
+<span class="sd">                   calculation [degrees].</span>
+
+<span class="sd">    :returns: a vector of len(theta1) containing the reflectivity</span>
+<span class="sd">             value corresponding to each angle.</span>
+<span class="sd">    </span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c"># Compute some parameters</span>
+    <span class="n">drho</span> <span class="o">=</span> <span class="n">rho2</span><span class="o">-</span><span class="n">rho1</span>
+    <span class="n">dvp</span> <span class="o">=</span> <span class="n">vp2</span><span class="o">-</span><span class="n">vp1</span>
+    <span class="n">dvs</span> <span class="o">=</span> <span class="n">vs2</span><span class="o">-</span><span class="n">vs1</span>
+    <span class="n">rho</span> <span class="o">=</span> <span class="p">(</span><span class="n">rho1</span><span class="o">+</span><span class="n">rho2</span><span class="p">)</span><span class="o">/</span><span class="mf">2.0</span>
+    <span class="n">vp</span> <span class="o">=</span> <span class="p">(</span><span class="n">vp1</span><span class="o">+</span><span class="n">vp2</span><span class="p">)</span><span class="o">/</span><span class="mf">2.0</span>
+    <span class="n">vs</span> <span class="o">=</span> <span class="p">(</span><span class="n">vs1</span><span class="o">+</span><span class="n">vs2</span><span class="p">)</span><span class="o">/</span><span class="mf">2.0</span>
+
+    <span class="c"># Compute three-term reflectivity</span>
+    
+    <span class="n">r0</span> <span class="o">=</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="p">(</span><span class="n">dvp</span><span class="o">/</span><span class="n">vp</span> <span class="o">+</span> <span class="n">drho</span><span class="o">/</span><span class="n">rho</span><span class="p">)</span>
+    <span class="n">g</span>  <span class="o">=</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">dvp</span><span class="o">/</span><span class="n">vp</span> <span class="o">-</span> <span class="mi">2</span> <span class="o">*</span> <span class="p">(</span><span class="n">vs</span><span class="o">**</span><span class="mi">2</span><span class="o">/</span><span class="n">vp</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span> <span class="n">drho</span><span class="o">/</span><span class="n">rho</span> <span class="o">+</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">dvs</span><span class="o">/</span><span class="n">vs</span><span class="p">)</span>
+    <span class="n">f</span> <span class="o">=</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">dvp</span><span class="o">/</span><span class="n">vp</span>
+
+    <span class="k">return</span> <span class="n">r0</span> <span class="o">+</span> <span class="n">g</span> <span class="o">*</span> <span class="n">sin</span><span class="p">(</span><span class="n">radians</span><span class="p">(</span><span class="n">theta1</span><span class="p">))</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">f</span> <span class="o">*</span> \
+       <span class="p">(</span><span class="n">tan</span><span class="p">(</span><span class="n">radians</span><span class="p">(</span><span class="n">theta1</span><span class="p">))</span><span class="o">**</span><span class="mi">2</span> <span class="o">-</span> <span class="n">sin</span><span class="p">(</span><span class="n">radians</span><span class="p">(</span><span class="n">theta1</span><span class="p">))</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="bortfeld2"><a class="viewcode-back" href="../../../agilegeo.avo.html#agilegeo.avo.bortfeld2">[docs]</a><span class="k">def</span> <span class="nf">bortfeld2</span><span class="p">(</span><span class="n">vp1</span><span class="p">,</span> <span class="n">vs1</span><span class="p">,</span> <span class="n">rho1</span><span class="p">,</span> <span class="n">vp2</span><span class="p">,</span> <span class="n">vs2</span><span class="p">,</span> <span class="n">rho2</span><span class="p">,</span> <span class="n">theta1</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    The 2-term Bortfeld approximation for ava analysis.</span>
+
+<span class="sd">    :param vp1: The p-wave velocity of the upper medium.</span>
+<span class="sd">    :param vs1: The s-wave velocity of the upper medium.</span>
+<span class="sd">    :param rho1: The density of the upper medium.</span>
+
+<span class="sd">    :param vp2: The p-wave velocity of the lower medium.</span>
+<span class="sd">    :param vs2: The s-wave velocity of the lower medium.</span>
+<span class="sd">    :param rho2: The density of the lower medium.</span>
+<span class="sd">    </span>
+<span class="sd">    :param theta1: An array of incident angles to use for reflectivity</span>
+<span class="sd">                   calculation [degrees].</span>
+
+<span class="sd">    :returns: a vector of len(theta1) containing the reflectivity</span>
+<span class="sd">             value corresponding to each angle.</span>
+<span class="sd">    </span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="c"># Bortfeld only needs one extra parameter</span>
+    <span class="n">theta2</span> <span class="o">=</span> <span class="n">degrees</span><span class="p">(</span><span class="n">arcsin</span><span class="p">(</span><span class="n">vp2</span><span class="o">/</span><span class="n">vp1</span><span class="o">*</span><span class="n">sin</span><span class="p">(</span><span class="n">radians</span><span class="p">(</span><span class="n">theta1</span><span class="p">))))</span>
+
+    <span class="c"># This breaks if theta = 90 deg</span>
+    <span class="n">term1</span> <span class="o">=</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">log</span><span class="p">(</span> <span class="p">(</span><span class="n">vp2</span><span class="o">*</span><span class="n">rho2</span><span class="o">*</span><span class="n">cos</span><span class="p">(</span><span class="n">radians</span><span class="p">(</span><span class="n">theta1</span><span class="p">)))</span><span class="o">/</span> \
+                       <span class="p">(</span><span class="n">vp1</span><span class="o">*</span><span class="n">rho1</span><span class="o">*</span><span class="n">cos</span><span class="p">(</span><span class="n">radians</span><span class="p">(</span><span class="n">theta2</span><span class="p">)))</span> <span class="p">)</span>
+                       
+    <span class="n">term2</span> <span class="o">=</span> <span class="p">(</span><span class="n">sin</span><span class="p">(</span><span class="n">radians</span><span class="p">(</span><span class="n">theta1</span><span class="p">))</span><span class="o">/</span><span class="n">vp1</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span> <span class="o">*</span> <span class="p">(</span><span class="n">vs1</span><span class="o">**</span><span class="mi">2</span><span class="o">-</span><span class="n">vs2</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span> <span class="o">*</span> \
+             <span class="p">(</span><span class="mi">2</span><span class="o">+</span><span class="n">log</span><span class="p">(</span><span class="n">rho2</span><span class="o">/</span><span class="n">rho1</span><span class="p">)</span><span class="o">/</span><span class="n">log</span><span class="p">(</span><span class="n">vs2</span><span class="o">/</span><span class="n">vs1</span><span class="p">))</span>
+
+    <span class="k">return</span> <span class="n">term1</span> <span class="o">+</span> <span class="n">term2</span>
+</div>
+<div class="viewcode-block" id="bortfeld3"><a class="viewcode-back" href="../../../agilegeo.avo.html#agilegeo.avo.bortfeld3">[docs]</a><span class="k">def</span> <span class="nf">bortfeld3</span><span class="p">(</span><span class="n">vp1</span><span class="p">,</span> <span class="n">vs1</span><span class="p">,</span> <span class="n">rho1</span><span class="p">,</span> <span class="n">vp2</span><span class="p">,</span> <span class="n">vs2</span><span class="p">,</span> <span class="n">rho2</span><span class="p">,</span> <span class="n">theta1</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Compute Bortfeld approximation with three terms.</span>
+<span class="sd">    http://sepwww.stanford.edu/public/docs/sep111/marie2/paper_html/node2.html</span>
+
+<span class="sd">    :param vp1: The p-wave velocity of the upper medium.</span>
+<span class="sd">    :param vs1: The s-wave velocity of the upper medium.</span>
+<span class="sd">    :param rho1: The density of the upper medium.</span>
+
+<span class="sd">    :param vp2: The p-wave velocity of the lower medium.</span>
+<span class="sd">    :param vs2: The s-wave velocity of the lower medium.</span>
+<span class="sd">    :param rho2: The density of the lower medium.</span>
+<span class="sd">    </span>
+<span class="sd">    :param theta1: An array of incident angles to use for reflectivity</span>
+<span class="sd">                   calculation [degrees].</span>
+
+<span class="sd">    :returns: a vector of len(theta1) containing the reflectivity</span>
+<span class="sd">             value corresponding to each angle.</span>
+<span class="sd">    </span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c"># Compute some parameters</span>
+    <span class="n">drho</span> <span class="o">=</span> <span class="n">rho2</span><span class="o">-</span><span class="n">rho1</span>
+    <span class="n">dvp</span> <span class="o">=</span> <span class="n">vp2</span><span class="o">-</span><span class="n">vp1</span>
+    <span class="n">dvs</span> <span class="o">=</span> <span class="n">vs2</span><span class="o">-</span><span class="n">vs1</span>
+    <span class="n">rho</span> <span class="o">=</span> <span class="p">(</span><span class="n">rho1</span><span class="o">+</span><span class="n">rho2</span><span class="p">)</span><span class="o">/</span><span class="mf">2.0</span>
+    <span class="n">vp</span> <span class="o">=</span> <span class="p">(</span><span class="n">vp1</span><span class="o">+</span><span class="n">vp2</span><span class="p">)</span><span class="o">/</span><span class="mf">2.0</span>
+    <span class="n">vs</span> <span class="o">=</span> <span class="p">(</span><span class="n">vs1</span><span class="o">+</span><span class="n">vs2</span><span class="p">)</span><span class="o">/</span><span class="mf">2.0</span>
+    <span class="n">k</span> <span class="o">=</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">vs</span><span class="o">/</span><span class="n">vp</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span>
+    <span class="n">rsh</span> <span class="o">=</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="p">(</span><span class="n">dvp</span><span class="o">/</span><span class="n">vp</span> <span class="o">-</span> <span class="n">k</span><span class="o">*</span><span class="n">drho</span><span class="o">/</span><span class="n">rho</span> <span class="o">-</span><span class="mi">2</span><span class="o">*</span><span class="n">k</span><span class="o">*</span><span class="n">dvs</span><span class="o">/</span><span class="n">vs</span><span class="p">)</span>
+
+    <span class="c"># Compute three-term reflectivity</span>
+
+    <span class="n">term1</span> <span class="o">=</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="p">(</span><span class="n">dvp</span><span class="o">/</span><span class="n">vp</span> <span class="o">+</span> <span class="n">drho</span><span class="o">/</span><span class="n">rho</span><span class="p">)</span>
+    <span class="n">term2</span> <span class="o">=</span> <span class="n">rsh</span> <span class="o">*</span> <span class="n">sin</span><span class="p">(</span><span class="n">radians</span><span class="p">(</span><span class="n">theta1</span><span class="p">))</span><span class="o">**</span><span class="mi">2</span>
+    <span class="n">term3</span> <span class="o">=</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">dvp</span><span class="o">/</span><span class="n">vp</span> <span class="o">*</span> <span class="n">tan</span><span class="p">(</span><span class="n">radians</span><span class="p">(</span><span class="n">theta1</span><span class="p">))</span><span class="o">**</span><span class="mi">2</span> <span class="o">*</span> \
+            <span class="n">sin</span><span class="p">(</span><span class="n">radians</span><span class="p">(</span><span class="n">theta1</span><span class="p">))</span><span class="o">**</span><span class="mi">2</span>
+
+    <span class="k">return</span> <span class="n">term1</span> <span class="o">+</span> <span class="n">term2</span> <span class="o">+</span> <span class="n">term3</span></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../index.html">agilegeo 0.1.5 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="../../index.html" >Module code</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &copy; Copyright 2013, Evan Bianco, Ben Bougher, Matt Hall.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.1.
+    </div>
+  </body>
+</html>

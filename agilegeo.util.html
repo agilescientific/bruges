@@ -6,15 +6,15 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>agilegeo.util package &mdash; agilegeo 0.1.1 documentation</title>
+    <title>agilegeo.util package &mdash; agilegeo 0.1.5 documentation</title>
     
-    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/classic.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '0.1.1',
+        VERSION:     '0.1.5',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -23,13 +23,13 @@
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-    <link rel="top" title="agilegeo 0.1.1 documentation" href="index.html" />
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="agilegeo 0.1.5 documentation" href="index.html" />
     <link rel="next" title="agilegeo.wavelet package" href="agilegeo.wavelet.html" />
     <link rel="prev" title="agilegeo.avo package" href="agilegeo.avo.html" /> 
   </head>
-  <body>
-    <div class="related">
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -44,22 +44,40 @@
         <li class="right" >
           <a href="agilegeo.avo.html" title="agilegeo.avo package"
              accesskey="P">previous</a> |</li>
-        <li><a href="index.html">agilegeo 0.1.1 documentation</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">agilegeo 0.1.5 documentation</a> &raquo;</li> 
       </ul>
     </div>  
 
     <div class="document">
       <div class="documentwrapper">
         <div class="bodywrapper">
-          <div class="body">
+          <div class="body" role="main">
             
   <div class="section" id="agilegeo-util-package">
 <h1>agilegeo.util package<a class="headerlink" href="#agilegeo-util-package" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="module-agilegeo.util">
 <span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-agilegeo.util" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="agilegeo-util">
+<h3>agilegeo.util<a class="headerlink" href="#agilegeo-util" title="Permalink to this headline">¶</a></h3>
+<dl class="function">
+<dt id="agilegeo.util.rms">
+<code class="descclassname">agilegeo.util.</code><code class="descname">rms</code><span class="sig-paren">(</span><em>a</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/agilegeo/util/utility.html#rms"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#agilegeo.util.rms" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculates the RMS of an array.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>a</strong> &#8211; An array.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">The RMS of the array.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
 <dl class="function">
 <dt id="agilegeo.util.next_pow2">
-<tt class="descclassname">agilegeo.util.</tt><tt class="descname">next_pow2</tt><big>(</big><em>num</em><big>)</big><a class="headerlink" href="#agilegeo.util.next_pow2" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">agilegeo.util.</code><code class="descname">next_pow2</code><span class="sig-paren">(</span><em>num</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/agilegeo/util/utility.html#next_pow2"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#agilegeo.util.next_pow2" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="docutils">
 <dt>Calculates the next nearest power of 2 to the input. Uses</dt>
 <dd>2**ceil( log2( num ) ).</dd>
@@ -76,6 +94,18 @@
 </table>
 </dd></dl>
 
+<dl class="function">
+<dt id="agilegeo.util.noise_db">
+<code class="descclassname">agilegeo.util.</code><code class="descname">noise_db</code><span class="sig-paren">(</span><em>a</em>, <em>snr</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/agilegeo/util/utility.html#noise_db"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#agilegeo.util.noise_db" title="Permalink to this definition">¶</a></dt>
+<dd><p>Takes an array of seismic amplitudes
+and SNR in dB.</p>
+<p>Returns an array of noise, the same 
+shape as the input.</p>
+<p>Note it does <em>not</em> return the input
+array with the noise added.</p>
+</dd></dl>
+
+</div>
 </div>
 </div>
 
@@ -83,12 +113,15 @@
           </div>
         </div>
       </div>
-      <div class="sphinxsidebar">
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
   <h3><a href="index.html">Table Of Contents</a></h3>
   <ul>
 <li><a class="reference internal" href="#">agilegeo.util package</a><ul>
-<li><a class="reference internal" href="#module-agilegeo.util">Module contents</a></li>
+<li><a class="reference internal" href="#module-agilegeo.util">Module contents</a><ul>
+<li><a class="reference internal" href="#agilegeo-util">agilegeo.util</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -99,12 +132,14 @@
   <h4>Next topic</h4>
   <p class="topless"><a href="agilegeo.wavelet.html"
                         title="next chapter">agilegeo.wavelet package</a></p>
-  <h3>This Page</h3>
-  <ul class="this-page-menu">
-    <li><a href="_sources/agilegeo.util.txt"
-           rel="nofollow">Show Source</a></li>
-  </ul>
-<div id="searchbox" style="display: none">
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/agilegeo.util.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="search.html" method="get">
       <input type="text" name="q" />
@@ -121,7 +156,7 @@
       </div>
       <div class="clearer"></div>
     </div>
-    <div class="related">
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -136,12 +171,12 @@
         <li class="right" >
           <a href="agilegeo.avo.html" title="agilegeo.avo package"
              >previous</a> |</li>
-        <li><a href="index.html">agilegeo 0.1.1 documentation</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">agilegeo 0.1.5 documentation</a> &raquo;</li> 
       </ul>
     </div>
-    <div class="footer">
+    <div class="footer" role="contentinfo">
         &copy; Copyright 2013, Evan Bianco, Ben Bougher, Matt Hall.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2b3.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.1.
     </div>
   </body>
 </html>

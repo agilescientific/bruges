@@ -1,0 +1,454 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>agilegeo.avo.moduli &mdash; agilegeo 0.1.5 documentation</title>
+    
+    <link rel="stylesheet" href="../../../_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '0.1.5',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="agilegeo 0.1.5 documentation" href="../../../index.html" />
+    <link rel="up" title="Module code" href="../../index.html" /> 
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../index.html">agilegeo 0.1.5 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="../../index.html" accesskey="U">Module code</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for agilegeo.avo.moduli</h1><div class="highlight"><pre>
+<span class="c"># -*- coding: utf-8 -*-</span>
+<span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">===================</span>
+<span class="sd">moduli.py</span>
+<span class="sd">===================</span>
+
+<span class="sd">Converts between various acoustic/eslatic parameters,</span>
+<span class="sd">and provides a way to calculate all the elastic moduli</span>
+<span class="sd">from Vp, Vs, and rho</span>
+
+<span class="sd">Created June 2014</span>
+
+<span class="sd">@author: Matt Hall</span>
+
+<span class="sd">Using equations http://www.subsurfwiki.org/wiki/Elastic_modulus</span>
+<span class="sd">from Mavko, G, T Mukerji and J Dvorkin (2003), The Rock Physics Handbook, Cambridge University Press</span>
+
+<span class="sd">&#39;&#39;&#39;</span>
+
+<span class="kn">from</span> <span class="nn">numpy</span> <span class="kn">import</span> <span class="n">sqrt</span>
+
+<div class="viewcode-block" id="youngs"><a class="viewcode-back" href="../../../agilegeo.avo.html#agilegeo.avo.youngs">[docs]</a><span class="k">def</span> <span class="nf">youngs</span><span class="p">(</span><span class="n">vp</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">vs</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">rho</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">mu</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">lam</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">bulk</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">pr</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">pmod</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    Computes Young&#39;s modulus given either Vp, Vs, and rho, or</span>
+<span class="sd">    any two elastic moduli (e.g. lambda and mu, or bulk and P</span>
+<span class="sd">    moduli).</span>
+
+<span class="sd">    SI units only.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        vp, vs, and rho</span>
+<span class="sd">        or any 2 from lam, mu, bulk, pr, and pmod</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        Young&#39;s modulus in pascals, Pa</span>
+
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="k">if</span> <span class="n">vp</span> <span class="ow">and</span> <span class="n">vs</span> <span class="ow">and</span> <span class="n">rho</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">rho</span> <span class="o">*</span> <span class="n">vs</span><span class="o">**</span><span class="mi">2</span> <span class="o">*</span> <span class="p">(</span><span class="mf">3.</span><span class="o">*</span><span class="n">vp</span><span class="o">**</span><span class="mi">2</span> <span class="o">-</span> <span class="mf">4.</span><span class="o">*</span><span class="n">vs</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">vp</span><span class="o">**</span><span class="mi">2</span> <span class="o">-</span> <span class="n">vs</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+
+    <span class="k">elif</span> <span class="n">mu</span> <span class="ow">and</span> <span class="n">lam</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">mu</span> <span class="o">*</span> <span class="p">(</span><span class="mf">3.</span><span class="o">*</span><span class="n">lam</span> <span class="o">+</span> <span class="mi">2</span><span class="o">*</span><span class="n">mu</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">lam</span> <span class="o">+</span> <span class="n">mu</span><span class="p">)</span>
+
+    <span class="k">elif</span> <span class="n">bulk</span> <span class="ow">and</span> <span class="n">lam</span><span class="p">:</span>
+        <span class="k">return</span> <span class="mf">9.</span><span class="o">*</span><span class="n">bulk</span> <span class="o">*</span> <span class="p">(</span><span class="n">bulk</span> <span class="o">-</span> <span class="n">lam</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="mf">3.</span><span class="o">*</span><span class="n">bulk</span> <span class="o">-</span> <span class="n">lam</span><span class="p">)</span>
+
+    <span class="k">elif</span> <span class="n">bulk</span> <span class="ow">and</span> <span class="n">mu</span><span class="p">:</span>
+        <span class="k">return</span> <span class="mf">9.</span><span class="o">*</span><span class="n">bulk</span><span class="o">*</span><span class="n">mu</span> <span class="o">/</span> <span class="p">(</span><span class="mf">3.</span><span class="o">*</span><span class="n">bulk</span> <span class="o">+</span> <span class="n">mu</span><span class="p">)</span>
+
+    <span class="k">elif</span> <span class="n">lam</span> <span class="ow">and</span> <span class="n">pr</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">lam</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span><span class="o">+</span><span class="n">pr</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="mi">2</span><span class="o">*</span><span class="n">pr</span><span class="p">)</span> <span class="o">/</span> <span class="n">pr</span>
+
+    <span class="k">elif</span> <span class="n">pr</span> <span class="ow">and</span> <span class="n">mu</span><span class="p">:</span>
+        <span class="k">return</span> <span class="mf">2.</span> <span class="o">*</span> <span class="n">mu</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span><span class="o">+</span><span class="n">pr</span><span class="p">)</span>
+
+    <span class="k">elif</span> <span class="n">pr</span> <span class="ow">and</span> <span class="n">bulk</span><span class="p">:</span>
+        <span class="k">return</span> <span class="mf">3.</span> <span class="o">*</span> <span class="n">bulk</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="mi">2</span><span class="o">*</span><span class="n">pr</span><span class="p">)</span>
+
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">None</span>
+
+</div>
+<div class="viewcode-block" id="bulk"><a class="viewcode-back" href="../../../agilegeo.avo.html#agilegeo.avo.bulk">[docs]</a><span class="k">def</span> <span class="nf">bulk</span><span class="p">(</span><span class="n">vp</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">vs</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">rho</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">mu</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">lam</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">youngs</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">pr</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">pmod</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    Computes bulk modulus given either Vp, Vs, and rho, or</span>
+<span class="sd">    any two elastic moduli (e.g. lambda and mu, or Young&#39;s</span>
+<span class="sd">    and P moduli).</span>
+
+<span class="sd">    SI units only.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        vp, vs, and rho</span>
+<span class="sd">        or any 2 from lam, mu, youngs, pr, and pmod</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        Bulk modulus in pascals, Pa</span>
+
+<span class="sd">    &#39;&#39;&#39;</span>
+
+    <span class="k">if</span> <span class="n">vp</span> <span class="ow">and</span> <span class="n">vs</span> <span class="ow">and</span> <span class="n">rho</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">rho</span> <span class="o">*</span> <span class="p">(</span><span class="n">vp</span><span class="o">**</span><span class="mi">2</span> <span class="o">-</span> <span class="p">(</span><span class="mf">4.</span><span class="o">/</span><span class="mf">3.</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="n">vs</span><span class="o">**</span><span class="mi">2</span><span class="p">))</span>
+
+    <span class="k">elif</span> <span class="n">mu</span> <span class="ow">and</span> <span class="n">lam</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">lam</span> <span class="o">+</span> <span class="mi">2</span><span class="o">*</span><span class="n">mu</span><span class="o">/</span><span class="mf">3.</span>
+
+    <span class="k">elif</span> <span class="n">mu</span> <span class="ow">and</span> <span class="n">youngs</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">youngs</span> <span class="o">*</span> <span class="n">mu</span> <span class="o">/</span> <span class="p">(</span><span class="mf">9.</span><span class="o">*</span><span class="n">mu</span> <span class="o">-</span> <span class="mf">3.</span><span class="o">*</span><span class="n">youngs</span><span class="p">)</span>
+
+    <span class="k">elif</span> <span class="n">lam</span> <span class="ow">and</span> <span class="n">pr</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">lam</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span><span class="o">+</span><span class="n">pr</span><span class="p">)</span> <span class="o">/</span> <span class="mf">3.</span><span class="o">*</span><span class="n">pr</span>
+
+    <span class="k">elif</span> <span class="n">pr</span> <span class="ow">and</span> <span class="n">mu</span><span class="p">:</span>
+        <span class="k">return</span> <span class="mf">2.</span> <span class="o">*</span> <span class="n">mu</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span><span class="o">+</span><span class="n">pr</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="mf">3.</span> <span class="o">-</span> <span class="mf">6.</span><span class="o">*</span><span class="n">pr</span><span class="p">)</span>
+
+    <span class="k">elif</span> <span class="n">pr</span> <span class="ow">and</span> <span class="n">youngs</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">youngs</span> <span class="o">/</span> <span class="p">(</span><span class="mf">3.</span> <span class="o">-</span> <span class="mf">6.</span><span class="o">*</span><span class="n">pr</span><span class="p">)</span>
+
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">None</span>
+
+</div>
+<div class="viewcode-block" id="pr"><a class="viewcode-back" href="../../../agilegeo.avo.html#agilegeo.avo.pr">[docs]</a><span class="k">def</span> <span class="nf">pr</span><span class="p">(</span><span class="n">vp</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">vs</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">rho</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">mu</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">lam</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">youngs</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">bulk</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">pmod</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    Computes Poisson ratio given either Vp, Vs, and rho, or</span>
+<span class="sd">    any two elastic moduli (e.g. lambda and mu, or Young&#39;s</span>
+<span class="sd">    and P moduli).</span>
+
+<span class="sd">    SI units only.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        vp, vs, and rho</span>
+<span class="sd">        or any 2 from lam, mu, youngs, bulk, and pmod</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        Poisson&#39;s ratio, dimensionless</span>
+
+<span class="sd">    &#39;&#39;&#39;</span>
+
+
+    <span class="k">if</span> <span class="n">vp</span> <span class="ow">and</span> <span class="n">vs</span> <span class="ow">and</span> <span class="n">rho</span><span class="p">:</span>
+        <span class="k">return</span> <span class="p">(</span><span class="n">vp</span><span class="o">**</span><span class="mf">2.</span> <span class="o">-</span> <span class="mf">2.</span><span class="o">*</span><span class="n">vs</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="mf">2.</span> <span class="o">*</span> <span class="p">(</span><span class="n">vp</span><span class="o">**</span><span class="mi">2</span> <span class="o">-</span> <span class="n">vs</span><span class="o">**</span><span class="mi">2</span><span class="p">))</span>
+
+    <span class="k">elif</span> <span class="n">mu</span> <span class="ow">and</span> <span class="n">lam</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">lam</span> <span class="o">/</span> <span class="p">(</span><span class="mf">2.</span> <span class="o">*</span> <span class="p">(</span><span class="n">lam</span><span class="o">+</span><span class="n">mu</span><span class="p">))</span>
+
+    <span class="k">elif</span> <span class="n">mu</span> <span class="ow">and</span> <span class="n">youngs</span><span class="p">:</span>
+        <span class="k">return</span> <span class="p">(</span><span class="n">youngs</span> <span class="o">/</span> <span class="p">(</span><span class="mf">2.</span><span class="o">*</span><span class="n">mu</span><span class="p">))</span> <span class="o">-</span> <span class="mi">1</span>
+
+    <span class="k">elif</span> <span class="n">lam</span> <span class="ow">and</span> <span class="n">bulk</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">lam</span> <span class="o">/</span> <span class="p">(</span><span class="mf">3.</span><span class="o">*</span><span class="n">bulk</span> <span class="o">-</span> <span class="n">lam</span><span class="p">)</span>
+
+    <span class="k">elif</span> <span class="n">bulk</span> <span class="ow">and</span> <span class="n">mu</span><span class="p">:</span>
+        <span class="k">return</span> <span class="p">(</span><span class="mf">3.</span><span class="o">*</span><span class="n">bulk</span> <span class="o">-</span> <span class="mi">2</span><span class="o">*</span><span class="n">mu</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="mf">6.</span><span class="o">*</span><span class="n">bulk</span> <span class="o">+</span> <span class="mi">2</span><span class="o">*</span><span class="n">mu</span><span class="p">)</span>
+
+    <span class="k">elif</span> <span class="n">bulk</span> <span class="ow">and</span> <span class="n">youngs</span><span class="p">:</span>
+        <span class="k">return</span> <span class="p">(</span><span class="mf">3.</span><span class="o">*</span><span class="n">bulk</span> <span class="o">-</span> <span class="n">youngs</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="mf">6.</span><span class="o">*</span><span class="n">bulk</span><span class="p">)</span>
+
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">None</span>
+
+</div>
+<div class="viewcode-block" id="mu"><a class="viewcode-back" href="../../../agilegeo.avo.html#agilegeo.avo.mu">[docs]</a><span class="k">def</span> <span class="nf">mu</span><span class="p">(</span><span class="n">vp</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">vs</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">rho</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">pr</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">lam</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">youngs</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">bulk</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">pmod</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    Computes shear modulus given either Vp, Vs, and rho, or</span>
+<span class="sd">    any two elastic moduli (e.g. lambda and bulk, or Young&#39;s</span>
+<span class="sd">    and P moduli).</span>
+
+<span class="sd">    SI units only.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        vp, vs, and rho</span>
+<span class="sd">        or any 2 from lam, bulk, youngs, pr, and pmod</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        Shear modulus in pascals, Pa</span>
+
+<span class="sd">    &#39;&#39;&#39;</span>
+
+
+    <span class="k">if</span> <span class="n">vs</span> <span class="ow">and</span> <span class="n">rho</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">rho</span> <span class="o">*</span> <span class="n">vs</span><span class="o">**</span><span class="mi">2</span>
+
+    <span class="k">elif</span> <span class="n">bulk</span> <span class="ow">and</span> <span class="n">lam</span><span class="p">:</span>
+        <span class="k">return</span> <span class="mf">3.</span> <span class="o">*</span> <span class="p">(</span><span class="n">bulk</span> <span class="o">-</span> <span class="n">lam</span><span class="p">)</span> <span class="o">/</span> <span class="mf">2.</span>
+
+    <span class="k">elif</span> <span class="n">bulk</span> <span class="ow">and</span> <span class="n">youngs</span><span class="p">:</span>
+        <span class="k">return</span> <span class="mf">3.</span> <span class="o">*</span> <span class="n">bulk</span> <span class="o">*</span> <span class="n">youngs</span> <span class="o">/</span> <span class="p">(</span><span class="mf">9.</span><span class="o">*</span><span class="n">bulk</span> <span class="o">-</span> <span class="n">youngs</span><span class="p">)</span>
+
+    <span class="k">elif</span> <span class="n">lam</span> <span class="ow">and</span> <span class="n">pr</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">lam</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="mf">2.</span><span class="o">*</span><span class="n">pr</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="mf">2.</span><span class="o">*</span><span class="n">pr</span><span class="p">)</span>
+
+    <span class="k">elif</span> <span class="n">pr</span> <span class="ow">and</span> <span class="n">youngs</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">youngs</span> <span class="o">/</span> <span class="p">(</span><span class="mf">2.</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">pr</span><span class="p">))</span>
+
+    <span class="k">elif</span> <span class="n">pr</span> <span class="ow">and</span> <span class="n">bulk</span><span class="p">:</span>
+        <span class="k">return</span> <span class="mf">3.</span> <span class="o">*</span> <span class="n">bulk</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="mi">2</span><span class="o">*</span><span class="n">pr</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="mf">2.</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">pr</span><span class="p">))</span>
+
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">None</span>
+
+</div>
+<div class="viewcode-block" id="lam"><a class="viewcode-back" href="../../../agilegeo.avo.html#agilegeo.avo.lam">[docs]</a><span class="k">def</span> <span class="nf">lam</span><span class="p">(</span><span class="n">vp</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">vs</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">rho</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">pr</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span>  <span class="n">mu</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">youngs</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">bulk</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">pmod</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    Computes lambda given either Vp, Vs, and rho, or</span>
+<span class="sd">    any two elastic moduli (e.g. bulk and mu, or Young&#39;s</span>
+<span class="sd">    and P moduli).</span>
+
+<span class="sd">    SI units only.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        vp, vs, and rho</span>
+<span class="sd">        or any 2 from bulk, mu, youngs, pr, and pmod</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        Lambda in pascals, Pa</span>
+
+<span class="sd">    &#39;&#39;&#39;</span>
+
+
+    <span class="k">if</span> <span class="n">vs</span> <span class="ow">and</span> <span class="n">rho</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">rho</span> <span class="o">*</span> <span class="p">(</span><span class="n">vp</span><span class="o">**</span><span class="mi">2</span> <span class="o">-</span> <span class="mf">2.</span><span class="o">*</span><span class="n">vs</span><span class="o">**</span><span class="mf">2.</span><span class="p">)</span>
+
+    <span class="k">elif</span> <span class="n">youngs</span> <span class="ow">and</span> <span class="n">mu</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">mu</span> <span class="o">*</span> <span class="p">(</span><span class="n">youngs</span> <span class="o">-</span> <span class="mf">2.</span><span class="o">*</span><span class="n">mu</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="mf">3.</span><span class="o">*</span><span class="n">mu</span> <span class="o">-</span> <span class="n">youngs</span><span class="p">)</span>
+
+    <span class="k">elif</span> <span class="n">bulk</span> <span class="ow">and</span> <span class="n">mu</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">bulk</span> <span class="o">-</span> <span class="p">(</span><span class="mf">2.</span><span class="o">*</span><span class="n">mu</span><span class="o">/</span><span class="mf">3.</span><span class="p">)</span>
+
+    <span class="k">elif</span> <span class="n">bulk</span> <span class="ow">and</span> <span class="n">youngs</span><span class="p">:</span>
+        <span class="k">return</span> <span class="mf">3.</span> <span class="o">*</span> <span class="n">bulk</span> <span class="o">*</span> <span class="p">(</span><span class="mi">3</span><span class="o">*</span><span class="n">bulk</span> <span class="o">-</span> <span class="n">youngs</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="mi">9</span><span class="o">*</span><span class="n">bulk</span> <span class="o">-</span> <span class="n">youngs</span><span class="p">)</span>
+
+    <span class="k">elif</span> <span class="n">pr</span> <span class="ow">and</span> <span class="n">mu</span><span class="p">:</span>
+        <span class="k">return</span> <span class="mf">2.</span> <span class="o">*</span> <span class="n">pr</span> <span class="o">*</span> <span class="n">mu</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="mf">2.</span><span class="o">*</span><span class="n">pr</span><span class="p">)</span>
+
+    <span class="k">elif</span> <span class="n">pr</span> <span class="ow">and</span> <span class="n">youngs</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">pr</span> <span class="o">*</span> <span class="n">youngs</span> <span class="o">/</span> <span class="p">((</span><span class="mi">1</span><span class="o">+</span><span class="n">pr</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="mi">2</span><span class="o">*</span><span class="n">pr</span><span class="p">))</span>
+
+    <span class="k">elif</span> <span class="n">pr</span> <span class="ow">and</span> <span class="n">bulk</span><span class="p">:</span>
+        <span class="k">return</span> <span class="mf">3.</span> <span class="o">*</span> <span class="n">bulk</span> <span class="o">*</span> <span class="n">pr</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span><span class="o">+</span><span class="n">pr</span><span class="p">)</span>
+
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">None</span>
+
+</div>
+<div class="viewcode-block" id="pmod"><a class="viewcode-back" href="../../../agilegeo.avo.html#agilegeo.avo.pmod">[docs]</a><span class="k">def</span> <span class="nf">pmod</span><span class="p">(</span><span class="n">vp</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">vs</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">rho</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">pr</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">mu</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">lam</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">youngs</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">bulk</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    Computes P-wave modulus given either Vp, Vs, and rho, or</span>
+<span class="sd">    any two elastic moduli (e.g. lambda and mu, or Young&#39;s</span>
+<span class="sd">    and bulk moduli).</span>
+
+<span class="sd">    SI units only.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        vp, vs, and rho</span>
+<span class="sd">        or any 2 from lam, mu, youngs, pr, and bulk</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        P-wave modulus in pascals, Pa</span>
+
+<span class="sd">    &#39;&#39;&#39;</span>
+
+    <span class="k">if</span> <span class="n">vp</span> <span class="ow">and</span> <span class="n">rho</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">rho</span> <span class="o">*</span> <span class="n">vp</span><span class="o">**</span><span class="mi">2</span>
+
+    <span class="k">elif</span> <span class="n">lam</span> <span class="ow">and</span> <span class="n">mu</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">lam</span> <span class="o">+</span> <span class="mi">2</span><span class="o">*</span><span class="n">mu</span>
+
+    <span class="k">elif</span> <span class="n">youngs</span> <span class="ow">and</span> <span class="n">mu</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">mu</span> <span class="o">*</span> <span class="p">(</span><span class="mf">4.</span><span class="o">*</span><span class="n">mu</span> <span class="o">-</span> <span class="n">youngs</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="mf">3.</span><span class="o">*</span><span class="n">mu</span> <span class="o">-</span> <span class="n">youngs</span><span class="p">)</span>
+
+    <span class="k">elif</span> <span class="n">bulk</span> <span class="ow">and</span> <span class="n">lam</span><span class="p">:</span>
+        <span class="k">return</span> <span class="mi">3</span><span class="o">*</span><span class="n">bulk</span> <span class="o">-</span> <span class="mf">2.</span><span class="o">*</span><span class="n">lam</span>
+
+    <span class="k">elif</span> <span class="n">bulk</span> <span class="ow">and</span> <span class="n">mu</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">bulk</span> <span class="o">+</span> <span class="p">(</span><span class="mf">4.</span><span class="o">*</span><span class="n">mu</span><span class="o">/</span><span class="mf">3.</span><span class="p">)</span>
+
+    <span class="k">elif</span> <span class="n">bulk</span> <span class="ow">and</span> <span class="n">youngs</span><span class="p">:</span>
+        <span class="k">return</span> <span class="mf">3.</span> <span class="o">*</span> <span class="n">bulk</span> <span class="o">*</span> <span class="p">(</span><span class="mi">3</span><span class="o">*</span><span class="n">bulk</span> <span class="o">+</span> <span class="n">youngs</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="mi">9</span><span class="o">*</span><span class="n">bulk</span> <span class="o">-</span> <span class="n">youngs</span><span class="p">)</span>
+
+    <span class="k">elif</span> <span class="n">lam</span> <span class="ow">and</span> <span class="n">pr</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">lam</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">pr</span><span class="p">)</span> <span class="o">/</span> <span class="n">pr</span>
+
+    <span class="k">elif</span> <span class="n">pr</span> <span class="ow">and</span> <span class="n">mu</span><span class="p">:</span>
+        <span class="k">return</span> <span class="mf">2.</span> <span class="o">*</span> <span class="n">pr</span> <span class="o">*</span> <span class="n">mu</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">pr</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="mf">2.</span><span class="o">*</span><span class="n">pr</span><span class="p">)</span>
+
+    <span class="k">elif</span> <span class="n">pr</span> <span class="ow">and</span> <span class="n">youngs</span><span class="p">:</span>
+        <span class="k">return</span> <span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">pr</span><span class="p">)</span> <span class="o">*</span> <span class="n">youngs</span> <span class="o">/</span> <span class="p">((</span><span class="mi">1</span><span class="o">+</span><span class="n">pr</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="mf">2.</span><span class="o">*</span><span class="n">pr</span><span class="p">))</span>
+
+    <span class="k">elif</span> <span class="n">pr</span> <span class="ow">and</span> <span class="n">bulk</span><span class="p">:</span>
+        <span class="k">return</span> <span class="mf">3.</span> <span class="o">*</span> <span class="n">bulk</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">pr</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span><span class="o">+</span><span class="n">pr</span><span class="p">)</span>
+
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">None</span>
+
+</div>
+<div class="viewcode-block" id="vp"><a class="viewcode-back" href="../../../agilegeo.avo.html#agilegeo.avo.vp">[docs]</a><span class="k">def</span> <span class="nf">vp</span><span class="p">(</span><span class="n">youngs</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">vs</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">rho</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">mu</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">lam</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">bulk</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">pr</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">pmod</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    Computes Vp given bulk density and any two elastic moduli</span>
+<span class="sd">    (e.g. lambda and mu, or Young&#39;s and P moduli).</span>
+
+<span class="sd">    SI units only.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        Any 2 from lam, mu, youngs, pr, pmod, bulk</span>
+<span class="sd">        Rho</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        Vp in m/s</span>
+
+<span class="sd">    &#39;&#39;&#39;</span>
+
+    <span class="k">if</span> <span class="n">mu</span> <span class="ow">and</span> <span class="n">lam</span> <span class="ow">and</span> <span class="n">rho</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">sqrt</span><span class="p">(</span> <span class="p">(</span><span class="n">lam</span> <span class="o">+</span> <span class="mf">2.</span><span class="o">*</span><span class="n">mu</span><span class="p">)</span> <span class="o">/</span> <span class="n">rho</span> <span class="p">)</span>
+
+    <span class="k">elif</span> <span class="n">youngs</span> <span class="ow">and</span> <span class="n">mu</span> <span class="ow">and</span> <span class="n">rho</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">sqrt</span><span class="p">(</span> <span class="n">mu</span> <span class="o">*</span> <span class="p">(</span><span class="n">youngs</span> <span class="o">-</span> <span class="mf">4.</span><span class="o">*</span><span class="n">mu</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">rho</span> <span class="o">*</span> <span class="p">(</span><span class="n">youngs</span> <span class="o">-</span> <span class="mf">3.</span><span class="o">*</span><span class="n">mu</span><span class="p">))</span> <span class="p">)</span>
+
+    <span class="k">elif</span> <span class="n">youngs</span> <span class="ow">and</span> <span class="n">pr</span> <span class="ow">and</span> <span class="n">rho</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">sqrt</span><span class="p">(</span> <span class="n">youngs</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">pr</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">rho</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span><span class="o">+</span><span class="n">pr</span><span class="p">)</span><span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="mf">2.</span><span class="o">*</span><span class="n">pr</span><span class="p">))</span> <span class="p">)</span>
+
+    <span class="k">elif</span> <span class="n">bulk</span> <span class="ow">and</span> <span class="n">lam</span> <span class="ow">and</span> <span class="n">rho</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">sqrt</span><span class="p">(</span> <span class="p">(</span><span class="mf">9.</span><span class="o">*</span><span class="n">bulk</span> <span class="o">-</span> <span class="mf">2.</span><span class="o">*</span><span class="n">lam</span><span class="p">)</span> <span class="o">/</span> <span class="n">rho</span> <span class="p">)</span>
+
+    <span class="k">elif</span> <span class="n">bulk</span> <span class="ow">and</span> <span class="n">mu</span> <span class="ow">and</span> <span class="n">rho</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">sqrt</span><span class="p">(</span> <span class="p">(</span><span class="n">bulk</span> <span class="o">+</span> <span class="mf">4.</span><span class="o">*</span><span class="n">mu</span><span class="o">/</span><span class="mf">3.</span> <span class="p">)</span> <span class="o">/</span> <span class="n">rho</span><span class="p">)</span>
+
+    <span class="k">elif</span> <span class="n">lam</span> <span class="ow">and</span> <span class="n">pr</span> <span class="ow">and</span> <span class="n">rho</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">sqrt</span><span class="p">(</span> <span class="n">lam</span> <span class="o">*</span> <span class="p">(</span><span class="mf">1.</span> <span class="o">-</span> <span class="n">pr</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">pr</span><span class="o">*</span><span class="n">rho</span><span class="p">))</span>
+
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">None</span>
+
+</div>
+<div class="viewcode-block" id="vs"><a class="viewcode-back" href="../../../agilegeo.avo.html#agilegeo.avo.vs">[docs]</a><span class="k">def</span> <span class="nf">vs</span><span class="p">(</span><span class="n">youngs</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">vp</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">rho</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">mu</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">lam</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">bulk</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">pr</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">pmod</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    Computes Vs given bulk density and shear modulus.</span>
+
+<span class="sd">    SI units only.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        Mu</span>
+<span class="sd">        Rho</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        Vs in m/s</span>
+
+<span class="sd">    &#39;&#39;&#39;</span>
+
+    <span class="k">if</span> <span class="n">mu</span> <span class="ow">and</span> <span class="n">rho</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">sqrt</span><span class="p">(</span> <span class="n">mu</span> <span class="o">/</span> <span class="n">rho</span> <span class="p">)</span>
+
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">None</span>
+
+</div>
+<div class="viewcode-block" id="moduli"><a class="viewcode-back" href="../../../agilegeo.avo.html#agilegeo.avo.moduli">[docs]</a><span class="k">def</span> <span class="nf">moduli</span><span class="p">(</span><span class="n">vp</span><span class="p">,</span> <span class="n">vs</span><span class="p">,</span> <span class="n">rho</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    Computes elastic moduli given Vp, Vs, and rho.</span>
+
+<span class="sd">    SI units only.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        Vp, Vs, and rho</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        A dict of elastic moduli, plus P-wave impedance.</span>
+
+<span class="sd">    &#39;&#39;&#39;</span>
+    
+    <span class="n">mod</span> <span class="o">=</span> <span class="p">{}</span>
+
+    <span class="n">mod</span><span class="p">[</span><span class="s">&#39;imp&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">vp</span> <span class="o">*</span> <span class="n">rho</span>
+
+    <span class="n">mod</span><span class="p">[</span><span class="s">&#39;mu&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">mu</span><span class="p">(</span><span class="n">vs</span><span class="o">=</span><span class="n">vs</span><span class="p">,</span> <span class="n">rho</span><span class="o">=</span><span class="n">rho</span><span class="p">)</span>
+    <span class="n">mod</span><span class="p">[</span><span class="s">&#39;pr&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pr</span><span class="p">(</span><span class="n">vp</span><span class="o">=</span><span class="n">vp</span><span class="p">,</span> <span class="n">vs</span><span class="o">=</span><span class="n">vs</span><span class="p">,</span> <span class="n">rho</span><span class="o">=</span><span class="n">rho</span><span class="p">)</span>
+    <span class="n">mod</span><span class="p">[</span><span class="s">&#39;lam&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">lam</span><span class="p">(</span><span class="n">vp</span><span class="o">=</span><span class="n">vp</span><span class="p">,</span> <span class="n">vs</span><span class="o">=</span><span class="n">vs</span><span class="p">,</span> <span class="n">rho</span><span class="o">=</span><span class="n">rho</span><span class="p">)</span>
+    <span class="n">mod</span><span class="p">[</span><span class="s">&#39;bulk&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">bulk</span><span class="p">(</span><span class="n">vp</span><span class="o">=</span><span class="n">vp</span><span class="p">,</span> <span class="n">vs</span><span class="o">=</span><span class="n">vs</span><span class="p">,</span> <span class="n">rho</span><span class="o">=</span><span class="n">rho</span><span class="p">)</span>
+    <span class="n">mod</span><span class="p">[</span><span class="s">&#39;pmod&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pmod</span><span class="p">(</span><span class="n">vp</span><span class="o">=</span><span class="n">vp</span><span class="p">,</span> <span class="n">rho</span><span class="o">=</span><span class="n">rho</span><span class="p">)</span>
+    <span class="n">mod</span><span class="p">[</span><span class="s">&#39;youngs&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">youngs</span><span class="p">(</span><span class="n">vp</span><span class="o">=</span><span class="n">vp</span><span class="p">,</span> <span class="n">vs</span><span class="o">=</span><span class="n">vs</span><span class="p">,</span> <span class="n">rho</span><span class="o">=</span><span class="n">rho</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">mod</span></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../index.html">agilegeo 0.1.5 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="../../index.html" >Module code</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &copy; Copyright 2013, Evan Bianco, Ben Bougher, Matt Hall.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.1.
+    </div>
+  </body>
+</html>

@@ -6,15 +6,15 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>agilegeo.wavelet package &mdash; agilegeo 0.1.1 documentation</title>
+    <title>agilegeo.wavelet package &mdash; agilegeo 0.1.5 documentation</title>
     
-    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/classic.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '0.1.1',
+        VERSION:     '0.1.5',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -23,12 +23,12 @@
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-    <link rel="top" title="agilegeo 0.1.1 documentation" href="index.html" />
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="agilegeo 0.1.5 documentation" href="index.html" />
     <link rel="prev" title="agilegeo.util package" href="agilegeo.util.html" /> 
   </head>
-  <body>
-    <div class="related">
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -40,22 +40,24 @@
         <li class="right" >
           <a href="agilegeo.util.html" title="agilegeo.util package"
              accesskey="P">previous</a> |</li>
-        <li><a href="index.html">agilegeo 0.1.1 documentation</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">agilegeo 0.1.5 documentation</a> &raquo;</li> 
       </ul>
     </div>  
 
     <div class="document">
       <div class="documentwrapper">
         <div class="bodywrapper">
-          <div class="body">
+          <div class="body" role="main">
             
   <div class="section" id="agilegeo-wavelet-package">
 <h1>agilegeo.wavelet package<a class="headerlink" href="#agilegeo-wavelet-package" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="module-agilegeo.wavelet">
 <span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-agilegeo.wavelet" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="agilegeo-wavelet">
+<h3>agilegeo.wavelet<a class="headerlink" href="#agilegeo-wavelet" title="Permalink to this headline">¶</a></h3>
 <dl class="function">
 <dt id="agilegeo.wavelet.ricker">
-<tt class="descclassname">agilegeo.wavelet.</tt><tt class="descname">ricker</tt><big>(</big><em>duration</em>, <em>dt</em>, <em>f</em><big>)</big><a class="headerlink" href="#agilegeo.wavelet.ricker" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">agilegeo.wavelet.</code><code class="descname">ricker</code><span class="sig-paren">(</span><em>duration</em>, <em>dt</em>, <em>f</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/agilegeo/wavelet/wavelets.html#ricker"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#agilegeo.wavelet.ricker" title="Permalink to this definition">¶</a></dt>
 <dd><p>Also known as the mexican hat wavelet, models the function:
 A =  (1-2 pi^2 f^2 t^2) e^{-pi^2 f^2 t^2}</p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -82,7 +84,7 @@ passed, the first element will be used.</p>
 
 <dl class="function">
 <dt id="agilegeo.wavelet.ormsby">
-<tt class="descclassname">agilegeo.wavelet.</tt><tt class="descname">ormsby</tt><big>(</big><em>duration</em>, <em>dt</em>, <em>f</em><big>)</big><a class="headerlink" href="#agilegeo.wavelet.ormsby" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">agilegeo.wavelet.</code><code class="descname">ormsby</code><span class="sig-paren">(</span><em>duration</em>, <em>dt</em>, <em>f</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/agilegeo/wavelet/wavelets.html#ormsby"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#agilegeo.wavelet.ormsby" title="Permalink to this definition">¶</a></dt>
 <dd><p>The Ormsby wavelet requires four frequencies:
 f1 = low-cut frequency
 f2 = low-pass frequency
@@ -115,7 +117,7 @@ which only have two, one either side.</p>
 
 <dl class="function">
 <dt id="agilegeo.wavelet.sweep">
-<tt class="descclassname">agilegeo.wavelet.</tt><tt class="descname">sweep</tt><big>(</big><em>duration</em>, <em>dt</em>, <em>f</em>, <em>method='linear'</em>, <em>phi=0</em>, <em>vertex_zero=True</em>, <em>autocorrelate=True</em><big>)</big><a class="headerlink" href="#agilegeo.wavelet.sweep" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">agilegeo.wavelet.</code><code class="descname">sweep</code><span class="sig-paren">(</span><em>duration</em>, <em>dt</em>, <em>f</em>, <em>method='linear'</em>, <em>phi=0</em>, <em>vertex_zero=True</em>, <em>autocorrelate=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/agilegeo/wavelet/wavelets.html#sweep"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#agilegeo.wavelet.sweep" title="Permalink to this definition">¶</a></dt>
 <dd><p>Generates a linear frequency modulated wavelet (sweep)
 Does a wrapping of scipy.signal.chirp</p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -145,7 +147,7 @@ is the graph of the frequency is at t=0 or t=t1.</li>
 
 <dl class="function">
 <dt id="agilegeo.wavelet.rotate_phase">
-<tt class="descclassname">agilegeo.wavelet.</tt><tt class="descname">rotate_phase</tt><big>(</big><em>w</em>, <em>phi</em><big>)</big><a class="headerlink" href="#agilegeo.wavelet.rotate_phase" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">agilegeo.wavelet.</code><code class="descname">rotate_phase</code><span class="sig-paren">(</span><em>w</em>, <em>phi</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/agilegeo/wavelet/wavelets.html#rotate_phase"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#agilegeo.wavelet.rotate_phase" title="Permalink to this definition">¶</a></dt>
 <dd><p>Performs a phase rotation of wavelet using:
 A = w(t)Cos(phi) + h(t)Sin(phi)
 Where w(t) is the wavelet and h(t) is it&#8217;s hilbert transform.</p>
@@ -165,17 +167,21 @@ Where w(t) is the wavelet and h(t) is it&#8217;s hilbert transform.</p>
 
 </div>
 </div>
+</div>
 
 
           </div>
         </div>
       </div>
-      <div class="sphinxsidebar">
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
   <h3><a href="index.html">Table Of Contents</a></h3>
   <ul>
 <li><a class="reference internal" href="#">agilegeo.wavelet package</a><ul>
-<li><a class="reference internal" href="#module-agilegeo.wavelet">Module contents</a></li>
+<li><a class="reference internal" href="#module-agilegeo.wavelet">Module contents</a><ul>
+<li><a class="reference internal" href="#agilegeo-wavelet">agilegeo.wavelet</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -183,12 +189,14 @@ Where w(t) is the wavelet and h(t) is it&#8217;s hilbert transform.</p>
   <h4>Previous topic</h4>
   <p class="topless"><a href="agilegeo.util.html"
                         title="previous chapter">agilegeo.util package</a></p>
-  <h3>This Page</h3>
-  <ul class="this-page-menu">
-    <li><a href="_sources/agilegeo.wavelet.txt"
-           rel="nofollow">Show Source</a></li>
-  </ul>
-<div id="searchbox" style="display: none">
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/agilegeo.wavelet.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="search.html" method="get">
       <input type="text" name="q" />
@@ -205,7 +213,7 @@ Where w(t) is the wavelet and h(t) is it&#8217;s hilbert transform.</p>
       </div>
       <div class="clearer"></div>
     </div>
-    <div class="related">
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -217,12 +225,12 @@ Where w(t) is the wavelet and h(t) is it&#8217;s hilbert transform.</p>
         <li class="right" >
           <a href="agilegeo.util.html" title="agilegeo.util package"
              >previous</a> |</li>
-        <li><a href="index.html">agilegeo 0.1.1 documentation</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">agilegeo 0.1.5 documentation</a> &raquo;</li> 
       </ul>
     </div>
-    <div class="footer">
+    <div class="footer" role="contentinfo">
         &copy; Copyright 2013, Evan Bianco, Ben Bougher, Matt Hall.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2b3.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.1.
     </div>
   </body>
 </html>

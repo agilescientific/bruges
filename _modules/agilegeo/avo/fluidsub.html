@@ -1,0 +1,340 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>agilegeo.avo.fluidsub &mdash; agilegeo 0.1.5 documentation</title>
+    
+    <link rel="stylesheet" href="../../../_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '0.1.5',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="agilegeo 0.1.5 documentation" href="../../../index.html" />
+    <link rel="up" title="Module code" href="../../index.html" /> 
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../index.html">agilegeo 0.1.5 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="../../index.html" accesskey="U">Module code</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for agilegeo.avo.fluidsub</h1><div class="highlight"><pre>
+<span class="c"># -*- coding: utf-8 -*-</span>
+<span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">===================</span>
+<span class="sd">fluidsub.py</span>
+<span class="sd">===================</span>
+
+<span class="sd">Calculates various parameters for fluid substitution</span>
+<span class="sd">from Vp, Vs, and rho</span>
+
+<span class="sd">Created July 2014</span>
+
+<span class="sd">@author: Matt Hall, Evan Bianco</span>
+
+<span class="sd">Using http://www.subsurfwiki.org/wiki/Gassmann_equation</span>
+
+<span class="sd">The algorithm is from Avseth et al (2006), per the wiki page.</span>
+
+<span class="sd">Informed by Smith et al, Geophysics 68(2), 2003. </span>
+
+<span class="sd">At some point we should do Biot too, per Russell...</span>
+<span class="sd">http://cseg.ca/symposium/archives/2012/presentations/Biot_Gassmann_and_me.pdf</span>
+
+
+<span class="sd">&#39;&#39;&#39;</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">moduli</span>
+
+
+<div class="viewcode-block" id="avseth_gassmann"><a class="viewcode-back" href="../../../agilegeo.avo.html#agilegeo.avo.avseth_gassmann">[docs]</a><span class="k">def</span> <span class="nf">avseth_gassmann</span><span class="p">(</span><span class="n">ksat1</span><span class="p">,</span> <span class="n">kf1</span><span class="p">,</span> <span class="n">kf2</span><span class="p">,</span> <span class="n">kmin</span><span class="p">,</span> <span class="n">phi</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Applies the Gassmann equation. Takes Ksat1,</span>
+<span class="sd">    Kfluid1, Kfluid2, Kmineral, and phi.</span>
+
+<span class="sd">    Returns Ksat2.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">s</span>  <span class="o">=</span> <span class="n">ksat1</span> <span class="o">/</span> <span class="p">(</span><span class="n">kmin</span> <span class="o">-</span> <span class="n">ksat1</span><span class="p">)</span>
+    <span class="n">f1</span> <span class="o">=</span> <span class="n">kf1</span> <span class="o">/</span> <span class="p">(</span><span class="n">phi</span> <span class="o">*</span> <span class="p">(</span><span class="n">kmin</span> <span class="o">-</span> <span class="n">kf1</span><span class="p">))</span>
+    <span class="n">f2</span> <span class="o">=</span> <span class="n">kf2</span> <span class="o">/</span> <span class="p">(</span><span class="n">phi</span> <span class="o">*</span> <span class="p">(</span><span class="n">kmin</span> <span class="o">-</span> <span class="n">kf2</span><span class="p">))</span>
+
+    <span class="n">ksat2</span> <span class="o">=</span> <span class="n">kmin</span> <span class="o">/</span> <span class="p">((</span><span class="mi">1</span><span class="o">/</span><span class="p">(</span><span class="n">s</span> <span class="o">-</span> <span class="n">f1</span> <span class="o">+</span> <span class="n">f2</span><span class="p">))</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">ksat2</span>
+
+</div>
+<div class="viewcode-block" id="smith_gassmann"><a class="viewcode-back" href="../../../agilegeo.avo.html#agilegeo.avo.smith_gassmann">[docs]</a><span class="k">def</span> <span class="nf">smith_gassmann</span><span class="p">(</span><span class="n">kstar</span><span class="p">,</span> <span class="n">k0</span><span class="p">,</span> <span class="n">kfl2</span><span class="p">,</span> <span class="n">phi</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Applies the Gassmann equation.</span>
+
+<span class="sd">    Returns Ksat2.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">a</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">kstar</span><span class="o">/</span><span class="n">k0</span><span class="p">)</span><span class="o">**</span><span class="mf">2.0</span>
+    <span class="n">b</span> <span class="o">=</span> <span class="n">phi</span><span class="o">/</span><span class="n">kfl2</span> <span class="o">+</span> <span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">phi</span><span class="p">)</span><span class="o">/</span><span class="n">k0</span> <span class="o">-</span> <span class="p">(</span><span class="n">kstar</span><span class="o">/</span><span class="n">k0</span><span class="o">**</span><span class="mf">2.0</span><span class="p">)</span>
+
+    <span class="n">ksat2</span> <span class="o">=</span> <span class="n">kstar</span> <span class="o">+</span> <span class="p">(</span><span class="n">a</span><span class="o">/</span><span class="n">b</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">ksat2</span>
+
+</div>
+<div class="viewcode-block" id="vrh"><a class="viewcode-back" href="../../../agilegeo.avo.html#agilegeo.avo.vrh">[docs]</a><span class="k">def</span> <span class="nf">vrh</span><span class="p">(</span><span class="n">kclay</span><span class="p">,</span> <span class="n">kqtz</span><span class="p">,</span> <span class="n">vclay</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Voigt-Reuss-Hill average to find Kmatrix from clay and qtz components.</span>
+
+<span class="sd">    From Smith et al, Geophysics 68(2), 2003.</span>
+
+<span class="sd">    Works for any two components.</span>
+
+<span class="sd">    Returns Kvrh, AKA Kmatrix.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">vqtz</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">vclay</span>
+
+    <span class="n">kreuss</span> <span class="o">=</span> <span class="mf">1.</span> <span class="o">/</span> <span class="p">(</span><span class="n">vclay</span><span class="o">/</span><span class="n">kclay</span> <span class="o">+</span> <span class="n">vqtz</span><span class="o">/</span><span class="n">kqtz</span><span class="p">)</span>
+    <span class="n">kvoigt</span> <span class="o">=</span> <span class="n">vclay</span><span class="o">*</span><span class="n">kclay</span> <span class="o">+</span> <span class="n">vqtz</span><span class="o">*</span><span class="n">kqtz</span>
+    <span class="n">kvrh</span>  <span class="o">=</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="p">(</span><span class="n">kreuss</span> <span class="o">+</span> <span class="n">kvoigt</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">kvrh</span>
+
+</div>
+<div class="viewcode-block" id="rhogas"><a class="viewcode-back" href="../../../agilegeo.avo.html#agilegeo.avo.rhogas">[docs]</a><span class="k">def</span> <span class="nf">rhogas</span><span class="p">(</span><span class="n">gravity</span><span class="p">,</span> <span class="n">temp</span><span class="p">,</span> <span class="n">pressure</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; </span>
+<span class="sd">    From http://www.spgindia.org/geohorizon/jan_2006/dhananjay_paper.pdf</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c"># Compute pseudo-reduced temp and pressure:</span>
+    <span class="n">tpr</span> <span class="o">=</span> <span class="p">(</span><span class="n">temp</span> <span class="o">+</span> <span class="mf">273.15</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">gravity</span> <span class="o">*</span> <span class="p">(</span><span class="mf">94.72</span> <span class="o">+</span> <span class="mf">170.75</span><span class="p">))</span>
+    <span class="n">ppr</span> <span class="o">=</span> <span class="n">pressure</span> <span class="o">/</span> <span class="p">(</span><span class="mf">4.892</span> <span class="o">-</span> <span class="mf">0.4048</span><span class="o">*</span><span class="n">gravity</span><span class="p">)</span>
+
+    <span class="n">exponent</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span> <span class="o">*</span> <span class="p">(</span><span class="mf">0.45</span> <span class="o">+</span> <span class="mi">8</span> <span class="o">*</span> <span class="p">(</span><span class="mf">0.56</span> <span class="o">-</span> <span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="n">tpr</span><span class="p">))</span><span class="o">**</span><span class="mf">2.0</span><span class="p">)</span> <span class="o">*</span> <span class="n">ppr</span><span class="o">**</span><span class="mf">1.2</span> <span class="o">/</span> <span class="n">tpr</span>
+    <span class="n">bige</span> <span class="o">=</span> <span class="mf">0.109</span> <span class="o">*</span> <span class="p">(</span><span class="mf">3.85</span> <span class="o">-</span> <span class="n">tpr</span><span class="p">)</span><span class="o">**</span><span class="mf">2.0</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">exponent</span><span class="p">)</span>
+
+    <span class="n">z</span> <span class="o">=</span> <span class="n">ppr</span> <span class="o">*</span> <span class="p">(</span><span class="mf">0.03</span> <span class="o">+</span> <span class="mf">0.00527</span> <span class="o">*</span> <span class="p">(</span><span class="mf">3.5</span> <span class="o">-</span> <span class="n">tpr</span><span class="p">))</span> <span class="o">+</span> <span class="p">(</span><span class="mf">0.642</span><span class="o">*</span><span class="n">tpr</span> <span class="o">-</span> <span class="mf">0.007</span><span class="o">*</span><span class="n">tpr</span><span class="o">**</span><span class="mf">4.0</span> <span class="o">-</span> <span class="mf">0.52</span><span class="p">)</span> <span class="o">+</span> <span class="n">bige</span>
+
+    <span class="n">rhogas</span> <span class="o">=</span> <span class="mf">28.8</span> <span class="o">*</span> <span class="n">gravity</span> <span class="o">*</span> <span class="n">pressure</span> <span class="o">/</span> <span class="p">(</span><span class="n">z</span> <span class="o">*</span> <span class="n">r</span> <span class="o">*</span> <span class="p">(</span><span class="n">temp</span> <span class="o">+</span> <span class="mf">273.15</span><span class="p">))</span>
+
+    <span class="k">return</span> <span class="n">rhogas</span>
+
+</div>
+<div class="viewcode-block" id="rhosat"><a class="viewcode-back" href="../../../agilegeo.avo.html#agilegeo.avo.rhosat">[docs]</a><span class="k">def</span> <span class="nf">rhosat</span><span class="p">(</span><span class="n">phi</span><span class="p">,</span> <span class="n">sw</span><span class="p">,</span> <span class="n">rhomin</span><span class="p">,</span> <span class="n">rhow</span><span class="p">,</span> <span class="n">rhohc</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; </span>
+<span class="sd">    Density of partially saturated rock.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">a</span> <span class="o">=</span> <span class="n">rhomin</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">phi</span><span class="p">)</span>        <span class="c"># grains</span>
+    <span class="n">b</span> <span class="o">=</span> <span class="n">rhow</span> <span class="o">*</span> <span class="n">sw</span> <span class="o">*</span> <span class="n">phi</span>           <span class="c"># brine</span>
+    <span class="n">c</span> <span class="o">=</span> <span class="n">rhohc</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">sw</span><span class="p">)</span> <span class="o">*</span> <span class="n">phi</span>    <span class="c"># hydrocarbon</span>
+
+    <span class="k">return</span> <span class="n">a</span> <span class="o">+</span> <span class="n">b</span> <span class="o">+</span> <span class="n">c</span>
+
+</div>
+<div class="viewcode-block" id="avseth_fluidsub"><a class="viewcode-back" href="../../../agilegeo.avo.html#agilegeo.avo.avseth_fluidsub">[docs]</a><span class="k">def</span> <span class="nf">avseth_fluidsub</span><span class="p">(</span><span class="n">vp</span><span class="p">,</span> <span class="n">vs</span><span class="p">,</span> <span class="n">rho</span><span class="p">,</span> <span class="n">phi</span><span class="p">,</span> <span class="n">rhof1</span><span class="p">,</span> <span class="n">rhof2</span><span class="p">,</span> <span class="n">kmin</span><span class="p">,</span> <span class="n">kf1</span><span class="p">,</span> <span class="n">kf2</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Naive fluid substitution from Avseth et al. </span>
+<span class="sd">    No pressure/temperature correction.</span>
+
+<span class="sd">    :param vp: P-wave velocity </span>
+<span class="sd">    :param vs: S-wave velocity</span>
+<span class="sd">    :param rho: bulk density</span>
+<span class="sd">    :param phi: porosity (i.e. 0.20)</span>
+<span class="sd">    :param rhof1: bulk density of original fluid (base case)</span>
+<span class="sd">    :param rhof2: bulk density of substitute fluid (subbed case)</span>
+<span class="sd">    :param kmin: bulk modulus of solid mineral(s)</span>
+<span class="sd">    :param kf1: bulk modulus of original fluid</span>
+<span class="sd">    :param kf2: bulk modulus of substitue fluid</span>
+<span class="sd">    </span>
+<span class="sd">    Only works for SI units right now.</span>
+
+<span class="sd">    Returns Vp, Vs, and rho for the substituted case</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="c"># Step 1: Extract the dynamic bulk and shear moduli</span>
+    <span class="n">ksat1</span> <span class="o">=</span> <span class="n">moduli</span><span class="o">.</span><span class="n">bulk</span><span class="p">(</span><span class="n">vp</span><span class="o">=</span><span class="n">vp</span><span class="p">,</span> <span class="n">vs</span><span class="o">=</span><span class="n">vs</span><span class="p">,</span> <span class="n">rho</span><span class="o">=</span><span class="n">rho</span><span class="p">)</span>
+    <span class="n">musat1</span> <span class="o">=</span> <span class="n">moduli</span><span class="o">.</span><span class="n">mu</span><span class="p">(</span><span class="n">vp</span><span class="o">=</span><span class="n">vp</span><span class="p">,</span> <span class="n">vs</span><span class="o">=</span><span class="n">vs</span><span class="p">,</span> <span class="n">rho</span><span class="o">=</span><span class="n">rho</span><span class="p">)</span>
+        
+    <span class="c"># Step 2: Apply Gassmann&#39;s relation</span>
+    <span class="n">ksat2</span> <span class="o">=</span> <span class="n">avseth_gassmann</span><span class="p">(</span><span class="n">ksat1</span><span class="o">=</span><span class="n">ksat1</span><span class="p">,</span> <span class="n">kf1</span><span class="o">=</span><span class="n">kf1</span><span class="p">,</span> <span class="n">kf2</span><span class="o">=</span><span class="n">kf2</span><span class="p">,</span> <span class="n">kmin</span><span class="o">=</span><span class="n">kmin</span><span class="p">,</span> <span class="n">phi</span><span class="o">=</span><span class="n">phi</span><span class="p">)</span>
+
+    <span class="c"># Step 3: Leave the shear modulus unchanged</span>
+    <span class="n">musat2</span> <span class="o">=</span> <span class="n">musat1</span>
+
+    <span class="c"># Step 4: Correct the bulk density for the change in fluid</span>
+    <span class="n">rho2</span> <span class="o">=</span> <span class="n">rho</span> <span class="o">+</span> <span class="n">phi</span> <span class="o">*</span> <span class="p">(</span><span class="n">rhof2</span> <span class="o">-</span> <span class="n">rhof1</span><span class="p">)</span>
+
+    <span class="c"># Step 5: recompute the fluid substituted velocities</span>
+    <span class="n">vp2</span> <span class="o">=</span> <span class="n">moduli</span><span class="o">.</span><span class="n">vp</span><span class="p">(</span><span class="n">bulk</span><span class="o">=</span><span class="n">ksat2</span><span class="p">,</span> <span class="n">mu</span><span class="o">=</span><span class="n">musat2</span><span class="p">,</span> <span class="n">rho</span><span class="o">=</span><span class="n">rho2</span><span class="p">)</span>
+    <span class="n">vs2</span> <span class="o">=</span> <span class="n">moduli</span><span class="o">.</span><span class="n">vs</span><span class="p">(</span><span class="n">mu</span><span class="o">=</span><span class="n">musat2</span><span class="p">,</span> <span class="n">rho</span><span class="o">=</span><span class="n">rho2</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">vp2</span><span class="p">,</span> <span class="n">vs2</span><span class="p">,</span> <span class="n">rho2</span>
+
+</div>
+<div class="viewcode-block" id="smith_fluidsub"><a class="viewcode-back" href="../../../agilegeo.avo.html#agilegeo.avo.smith_fluidsub">[docs]</a><span class="k">def</span> <span class="nf">smith_fluidsub</span><span class="p">(</span><span class="n">vp</span><span class="p">,</span> <span class="n">vs</span><span class="p">,</span> <span class="n">rho</span><span class="p">,</span> <span class="n">phi</span><span class="p">,</span> <span class="n">rhow</span><span class="p">,</span> <span class="n">rhohc</span><span class="p">,</span>
+                   <span class="n">sw</span><span class="p">,</span> <span class="n">swnew</span><span class="p">,</span> <span class="n">kw</span><span class="p">,</span> <span class="n">khc</span><span class="p">,</span> <span class="n">kclay</span><span class="p">,</span> <span class="n">kqtz</span><span class="p">,</span>
+                   <span class="n">vclay</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span>
+                   <span class="n">rhownew</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">rhohcnew</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span>
+                   <span class="n">kwnew</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">khcnew</span><span class="o">=</span><span class="bp">None</span>
+                   <span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Naive fluid substitution from Smith et al. 2003</span>
+<span class="sd">    No pressure/temperature correction.</span>
+
+<span class="sd">    :param vp: P-wave velocity </span>
+<span class="sd">    :param vs: S-wave velocity</span>
+
+<span class="sd">    :param rho: bulk density</span>
+<span class="sd">    :param rhow: density of water</span>
+<span class="sd">    :param rhohc: density of HC</span>
+<span class="sd">    :param rhownew: density of water in subbed case (optional)</span>
+<span class="sd">    :param rhohcnew: density of HC in subbed case (optional)</span>
+
+<span class="sd">    :param phi: porosity (fraction)</span>
+
+<span class="sd">    :param sw: water saturation in base case</span>
+<span class="sd">    :param swnew: water saturation in subbed case</span>
+
+<span class="sd">    :param kw:  bulk modulus of water</span>
+<span class="sd">    :param khc: bulk modulus of hydrocarbon</span>
+<span class="sd">    :param kwnew:  bulk modulus of water in subbed case (optional)</span>
+<span class="sd">    :param khcnew: bulk modulus of hydrocarbon in subbed case (optional)</span>
+
+<span class="sd">    :param vclay: Vclay (give this or vsh)</span>
+<span class="sd">    :param vsh: Vsh (or give vclay; vclay = 0.7 * vsh)</span>
+<span class="sd">    :param kclay: bulk modulus of clay (DEFAULT?)</span>
+<span class="sd">    :param kqtz:  bulk modulus of quartz (DEFAULT?)</span>
+<span class="sd">    </span>
+<span class="sd">    Only works for SI units right now.</span>
+
+<span class="sd">    Returns Vp, Vs, and rho for the substituted case.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="c"># Using the workflow in Smith et al., Table 2</span>
+    <span class="c"># Using Smith&#39;s notation, more or less (not the same</span>
+    <span class="c"># as Avseth&#39;s notation).</span>
+    <span class="c">#</span>
+    <span class="c"># Step 1: Log edits and interpretation.</span>
+    <span class="c">#</span>
+    <span class="c"># Step 2. Shear velocity estimation, if necessary.</span>
+    <span class="c">#</span>
+    <span class="c"># Step 3. Calculate K and G for the in-situ conditions.</span>
+    <span class="n">ksat</span> <span class="o">=</span> <span class="n">moduli</span><span class="o">.</span><span class="n">bulk</span><span class="p">(</span><span class="n">vp</span><span class="o">=</span><span class="n">vp</span><span class="p">,</span> <span class="n">vs</span><span class="o">=</span><span class="n">vs</span><span class="p">,</span> <span class="n">rho</span><span class="o">=</span><span class="n">rho</span><span class="p">)</span>
+    <span class="n">g</span> <span class="o">=</span> <span class="n">moduli</span><span class="o">.</span><span class="n">mu</span><span class="p">(</span><span class="n">vp</span><span class="o">=</span><span class="n">vp</span><span class="p">,</span> <span class="n">vs</span><span class="o">=</span><span class="n">vs</span><span class="p">,</span> <span class="n">rho</span><span class="o">=</span><span class="n">rho</span><span class="p">)</span>
+
+    <span class="c"># Step 4. Calculate K0 based on lithology estimates (VRH or HS mixing)</span>
+    <span class="n">k0</span> <span class="o">=</span> <span class="n">vrh</span><span class="p">(</span><span class="n">kclay</span><span class="o">=</span><span class="n">kclay</span><span class="p">,</span> <span class="n">kqtz</span><span class="o">=</span><span class="n">kqtz</span><span class="p">,</span> <span class="n">vclay</span><span class="o">=</span><span class="n">vclay</span><span class="p">)</span>
+
+    <span class="c"># Step 5. Calculate fluid properties (K and ρ).</span>
+    <span class="c"># Step 6. Mix fluids for the in-situ case according to Sw</span>
+    <span class="n">kfl</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">/</span> <span class="p">(</span><span class="n">sw</span><span class="o">/</span><span class="n">kw</span> <span class="o">+</span> <span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">sw</span><span class="p">)</span><span class="o">/</span><span class="n">khc</span><span class="p">)</span>
+    <span class="n">rhofl</span> <span class="o">=</span> <span class="n">sw</span> <span class="o">*</span> <span class="n">rhow</span> <span class="o">+</span> <span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">sw</span><span class="p">)</span><span class="o">*</span><span class="n">rhohc</span>
+
+    <span class="c"># Step 7: Calculate K*</span>
+    <span class="n">a</span> <span class="o">=</span> <span class="n">ksat</span> <span class="o">*</span> <span class="p">((</span><span class="n">phi</span><span class="o">*</span><span class="n">k0</span><span class="o">/</span><span class="n">kfl</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">phi</span><span class="p">)</span> <span class="o">-</span> <span class="n">k0</span>
+    <span class="n">b</span> <span class="o">=</span> <span class="p">(</span><span class="n">phi</span><span class="o">*</span><span class="n">k0</span><span class="o">/</span><span class="n">kfl</span><span class="p">)</span> <span class="o">+</span> <span class="p">(</span><span class="n">ksat</span><span class="o">/</span><span class="n">k0</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">phi</span>
+    <span class="n">kstar</span> <span class="o">=</span> <span class="n">a</span> <span class="o">/</span> <span class="n">b</span>
+
+    <span class="c"># Step 8: Calculate new fluid properties (K and ρ) at the desired Sw</span>
+    <span class="c"># First set the new fluid properties, in case they are unchanged</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">kwnew</span><span class="p">:</span>
+        <span class="n">kwnew</span> <span class="o">=</span> <span class="n">kw</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">rhownew</span><span class="p">:</span>
+        <span class="n">rhownew</span> <span class="o">=</span> <span class="n">rhow</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">khcnew</span><span class="p">:</span>
+        <span class="n">khcnew</span> <span class="o">=</span> <span class="n">khc</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">rhohcnew</span><span class="p">:</span>
+        <span class="n">rhohcnew</span> <span class="o">=</span> <span class="n">rhohc</span>
+    <span class="c"># Now calculate the new fluid properties</span>
+    <span class="n">kfl2</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">/</span> <span class="p">(</span><span class="n">swnew</span><span class="o">/</span><span class="n">kwnew</span> <span class="o">+</span> <span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">swnew</span><span class="p">)</span><span class="o">/</span><span class="n">khcnew</span><span class="p">)</span>
+    <span class="n">rhofl2</span> <span class="o">=</span> <span class="n">swnew</span> <span class="o">*</span> <span class="n">rhownew</span> <span class="o">+</span> <span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">swnew</span><span class="p">)</span><span class="o">*</span><span class="n">rhohcnew</span>
+
+    <span class="c"># Step 9: Calculate the new saturated bulk modulus of the rock using Gassmann</span>
+    <span class="n">ksat2</span> <span class="o">=</span> <span class="n">smith_gassmann</span><span class="p">(</span><span class="n">kstar</span><span class="o">=</span><span class="n">kstar</span><span class="p">,</span> <span class="n">k0</span><span class="o">=</span><span class="n">k0</span><span class="p">,</span> <span class="n">kfl2</span><span class="o">=</span><span class="n">kfl2</span><span class="p">,</span> <span class="n">phi</span><span class="o">=</span><span class="n">phi</span><span class="p">)</span>
+
+    <span class="c"># Step 10: Calculate the new bulk density</span>
+    <span class="c"># First we need the grain density...</span>
+    <span class="n">rhog</span> <span class="o">=</span> <span class="p">(</span><span class="n">rho</span> <span class="o">-</span> <span class="n">phi</span><span class="o">*</span><span class="n">rhofl</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">phi</span><span class="p">)</span>
+    <span class="c"># Now we can find the new bulk density</span>
+    <span class="n">rhob2</span> <span class="o">=</span> <span class="n">phi</span><span class="o">*</span><span class="n">rhofl2</span> <span class="o">+</span> <span class="n">rhog</span><span class="o">*</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">phi</span><span class="p">)</span>
+
+    <span class="c"># Step 11: Calculate the new compressional velocity</span>
+    <span class="c"># Remember, mu (G) is unchanged</span>
+    <span class="n">vp2</span> <span class="o">=</span> <span class="n">moduli</span><span class="o">.</span><span class="n">vp</span><span class="p">(</span><span class="n">bulk</span><span class="o">=</span><span class="n">ksat2</span><span class="p">,</span> <span class="n">mu</span><span class="o">=</span><span class="n">g</span><span class="p">,</span> <span class="n">rho</span><span class="o">=</span><span class="n">rhob2</span><span class="p">)</span>
+
+    <span class="c"># Step 12: Calculate the new shear velocity</span>
+    <span class="n">vs2</span> <span class="o">=</span> <span class="n">moduli</span><span class="o">.</span><span class="n">vs</span><span class="p">(</span><span class="n">mu</span><span class="o">=</span><span class="n">g</span><span class="p">,</span> <span class="n">rho</span><span class="o">=</span><span class="n">rhob2</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">vp2</span><span class="p">,</span> <span class="n">vs2</span><span class="p">,</span> <span class="n">rhob2</span>
+</pre></div></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../index.html">agilegeo 0.1.5 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="../../index.html" >Module code</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &copy; Copyright 2013, Evan Bianco, Ben Bougher, Matt Hall.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.1.
+    </div>
+  </body>
+</html>

@@ -6,15 +6,15 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>agilegeo.attribute package &mdash; agilegeo 0.1.1 documentation</title>
+    <title>agilegeo.attribute package &mdash; agilegeo 0.1.5 documentation</title>
     
-    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/classic.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '0.1.1',
+        VERSION:     '0.1.5',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -23,13 +23,13 @@
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-    <link rel="top" title="agilegeo 0.1.1 documentation" href="index.html" />
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="agilegeo 0.1.5 documentation" href="index.html" />
     <link rel="next" title="agilegeo.avo package" href="agilegeo.avo.html" />
     <link rel="prev" title="Welcome to agilegeo’s documentation!" href="index.html" /> 
   </head>
-  <body>
-    <div class="related">
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -44,22 +44,24 @@
         <li class="right" >
           <a href="index.html" title="Welcome to agilegeo’s documentation!"
              accesskey="P">previous</a> |</li>
-        <li><a href="index.html">agilegeo 0.1.1 documentation</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">agilegeo 0.1.5 documentation</a> &raquo;</li> 
       </ul>
     </div>  
 
     <div class="document">
       <div class="documentwrapper">
         <div class="bodywrapper">
-          <div class="body">
+          <div class="body" role="main">
             
   <div class="section" id="agilegeo-attribute-package">
 <h1>agilegeo.attribute package<a class="headerlink" href="#agilegeo-attribute-package" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="module-agilegeo.attribute">
 <span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-agilegeo.attribute" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="agilegeo-attribute">
+<h3>agilegeo.attribute<a class="headerlink" href="#agilegeo-attribute" title="Permalink to this headline">¶</a></h3>
 <dl class="function">
 <dt id="agilegeo.attribute.energy">
-<tt class="descclassname">agilegeo.attribute.</tt><tt class="descname">energy</tt><big>(</big><em>traces</em>, <em>duration</em>, <em>dt=1</em><big>)</big><a class="headerlink" href="#agilegeo.attribute.energy" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">agilegeo.attribute.</code><code class="descname">energy</code><span class="sig-paren">(</span><em>traces</em>, <em>duration</em>, <em>dt=1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/agilegeo/attribute/energy.html#energy"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#agilegeo.attribute.energy" title="Permalink to this definition">¶</a></dt>
 <dd><p>Compute an mean-squared energy measurement for each point of a
 seismic section.</p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -85,7 +87,7 @@ to 1 so duration can be in samples.</li>
 
 <dl class="function">
 <dt id="agilegeo.attribute.similarity">
-<tt class="descclassname">agilegeo.attribute.</tt><tt class="descname">similarity</tt><big>(</big><em>traces</em>, <em>duration</em>, <em>dt=1</em>, <em>step_out=1</em>, <em>lag=0</em><big>)</big><a class="headerlink" href="#agilegeo.attribute.similarity" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">agilegeo.attribute.</code><code class="descname">similarity</code><span class="sig-paren">(</span><em>traces</em>, <em>duration</em>, <em>dt=1</em>, <em>step_out=1</em>, <em>lag=0</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/agilegeo/attribute/similarity.html#similarity"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#agilegeo.attribute.similarity" title="Permalink to this definition">¶</a></dt>
 <dd><p>Compute similarity for each point of a seismic section using
 a variance method between traces.</p>
 <p>For each point, a kernel of n_samples length is extracted from a
@@ -122,7 +124,7 @@ duration to be given in samples.</li>
 
 <dl class="function">
 <dt id="agilegeo.attribute.dipsteer">
-<tt class="descclassname">agilegeo.attribute.</tt><tt class="descname">dipsteer</tt><big>(</big><em>data</em>, <em>window_length</em>, <em>stepout</em>, <em>maxlag</em>, <em>overlap=0.0</em>, <em>dt=1</em><big>)</big><a class="headerlink" href="#agilegeo.attribute.dipsteer" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">agilegeo.attribute.</code><code class="descname">dipsteer</code><span class="sig-paren">(</span><em>data</em>, <em>window_length</em>, <em>stepout</em>, <em>maxlag</em>, <em>overlap=0.0</em>, <em>dt=1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/agilegeo/attribute/dipsteer.html#dipsteer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#agilegeo.attribute.dipsteer" title="Permalink to this definition">¶</a></dt>
 <dd><p>Calculates a dip field by finding the maximum correlation between
 adjacent traces.</p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -156,7 +158,7 @@ to the data.</p>
 
 <dl class="function">
 <dt id="agilegeo.attribute.spectra">
-<tt class="descclassname">agilegeo.attribute.</tt><tt class="descname">spectra</tt><big>(</big><em>data</em>, <em>window_length</em>, <em>dt=1.0</em>, <em>window_type='boxcar'</em>, <em>overlap=0.5</em>, <em>normalize=False</em><big>)</big><a class="headerlink" href="#agilegeo.attribute.spectra" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">agilegeo.attribute.</code><code class="descname">spectra</code><span class="sig-paren">(</span><em>data</em>, <em>window_length</em>, <em>dt=1.0</em>, <em>window_type='boxcar'</em>, <em>overlap=0.5</em>, <em>normalize=False</em>, <em>zero_padding=0</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/agilegeo/attribute/spectrogram.html#spectra"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#agilegeo.attribute.spectra" title="Permalink to this definition">¶</a></dt>
 <dd><p>Calculates a spectrogram using windowed STFTs.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -178,6 +180,8 @@ slides the STFT window one sample at a time.
 Defaults to 0.5</li>
 <li><strong>normalize</strong> &#8211; Normalizes the each spectral slice to have
 unity energy.</li>
+<li><strong>zero_padding</strong> &#8211; The amount of zero padding to when creating
+the spectra.</li>
 </ul>
 </td>
 </tr>
@@ -191,7 +195,7 @@ unity energy.</li>
 
 <dl class="function">
 <dt id="agilegeo.attribute.spectraldecomp">
-<tt class="descclassname">agilegeo.attribute.</tt><tt class="descname">spectraldecomp</tt><big>(</big><em>data</em>, <em>f=(0.1</em>, <em>0.25</em>, <em>0.4)</em>, <em>window_length=32</em>, <em>dt=1</em>, <em>window_type='hann'</em><big>)</big><a class="headerlink" href="#agilegeo.attribute.spectraldecomp" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">agilegeo.attribute.</code><code class="descname">spectraldecomp</code><span class="sig-paren">(</span><em>data</em>, <em>f=(0.1</em>, <em>0.25</em>, <em>0.4)</em>, <em>window_length=32</em>, <em>dt=1</em>, <em>window_type='hann'</em>, <em>overlap=1</em>, <em>normalize=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/agilegeo/attribute/spectraldecomp.html#spectraldecomp"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#agilegeo.attribute.spectraldecomp" title="Permalink to this definition">¶</a></dt>
 <dd><p>Uses the STFT to decompose traces into normalized spectra. Only
 frequencies defined by the user will be output. Using 3
 frequencies will work for RGB color plots.</p>
@@ -209,6 +213,8 @@ provided in seconds if dt is specified.</li>
 <li><strong>dt</strong> &#8211; The time sample interval of the traces.</li>
 <li><strong>window_type</strong> &#8211; The type of window to use for the STFT. The
 same input as scipy.signal.get_window.</li>
+<li><strong>overlap</strong> &#8211; The fraction of overlap between adjacent
+STFT windows</li>
 </ul>
 </td>
 </tr>
@@ -221,17 +227,21 @@ same input as scipy.signal.get_window.</li>
 
 </div>
 </div>
+</div>
 
 
           </div>
         </div>
       </div>
-      <div class="sphinxsidebar">
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
   <h3><a href="index.html">Table Of Contents</a></h3>
   <ul>
 <li><a class="reference internal" href="#">agilegeo.attribute package</a><ul>
-<li><a class="reference internal" href="#module-agilegeo.attribute">Module contents</a></li>
+<li><a class="reference internal" href="#module-agilegeo.attribute">Module contents</a><ul>
+<li><a class="reference internal" href="#agilegeo-attribute">agilegeo.attribute</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -242,12 +252,14 @@ same input as scipy.signal.get_window.</li>
   <h4>Next topic</h4>
   <p class="topless"><a href="agilegeo.avo.html"
                         title="next chapter">agilegeo.avo package</a></p>
-  <h3>This Page</h3>
-  <ul class="this-page-menu">
-    <li><a href="_sources/agilegeo.attribute.txt"
-           rel="nofollow">Show Source</a></li>
-  </ul>
-<div id="searchbox" style="display: none">
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/agilegeo.attribute.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="search.html" method="get">
       <input type="text" name="q" />
@@ -264,7 +276,7 @@ same input as scipy.signal.get_window.</li>
       </div>
       <div class="clearer"></div>
     </div>
-    <div class="related">
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -279,12 +291,12 @@ same input as scipy.signal.get_window.</li>
         <li class="right" >
           <a href="index.html" title="Welcome to agilegeo’s documentation!"
              >previous</a> |</li>
-        <li><a href="index.html">agilegeo 0.1.1 documentation</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">agilegeo 0.1.5 documentation</a> &raquo;</li> 
       </ul>
     </div>
-    <div class="footer">
+    <div class="footer" role="contentinfo">
         &copy; Copyright 2013, Evan Bianco, Ben Bougher, Matt Hall.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2b3.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.1.
     </div>
   </body>
 </html>

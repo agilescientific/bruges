@@ -11,7 +11,7 @@ Contents:
 ===========
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 1
 
    agilegeo.attribute.rst
    agilegeo.avo.rst
