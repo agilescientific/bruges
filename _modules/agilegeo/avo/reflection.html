@@ -155,7 +155,10 @@
     
     <span class="c"># Do we need to ensure that we get floats out before</span>
     <span class="c"># computing sines?</span>
-    <span class="n">vp1</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">vp1</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">ndim</span><span class="p">(</span><span class="n">vp1</span><span class="p">)</span><span class="o">==</span><span class="mi">0</span><span class="p">:</span>
+        <span class="n">vp1</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">vp1</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">vp1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">vp1</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">float</span><span class="p">)</span>
 
     <span class="n">theta2</span> <span class="o">=</span> <span class="n">degrees</span><span class="p">(</span><span class="n">arcsin</span><span class="p">(</span><span class="n">vp2</span><span class="o">/</span><span class="n">vp1</span><span class="o">*</span><span class="n">sin</span><span class="p">(</span><span class="n">radians</span><span class="p">(</span><span class="n">theta1</span><span class="p">))))</span>
 
@@ -208,7 +211,10 @@
     
     <span class="c"># Do we need to ensure that we get floats out before</span>
     <span class="c"># computing sines?</span>
-    <span class="n">vp1</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">vp1</span><span class="p">)</span>    
+    <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">ndim</span><span class="p">(</span><span class="n">vp1</span><span class="p">)</span><span class="o">==</span><span class="mi">0</span><span class="p">:</span>
+        <span class="n">vp1</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">vp1</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">vp1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">vp1</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">float</span><span class="p">)</span>
 
     <span class="n">theta2</span> <span class="o">=</span> <span class="n">degrees</span><span class="p">(</span><span class="n">arcsin</span><span class="p">(</span><span class="n">vp2</span><span class="o">/</span><span class="n">vp1</span><span class="o">*</span><span class="n">sin</span><span class="p">(</span><span class="n">radians</span><span class="p">(</span><span class="n">theta1</span><span class="p">))))</span>
 
@@ -252,8 +258,12 @@
 <span class="sd">    </span>
 <span class="sd">    &quot;&quot;&quot;</span>
     
-    <span class="c"># Do we need to ensure that we get floats out before computing sines?</span>
-    <span class="n">vp1</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">vp1</span><span class="p">)</span>
+    <span class="c"># Do we need to ensure that we get floats out before computing</span>
+    <span class="c"># sines?</span>
+    <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">ndim</span><span class="p">(</span><span class="n">vp1</span><span class="p">)</span><span class="o">==</span><span class="mi">0</span><span class="p">:</span>
+        <span class="n">vp1</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">vp1</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">vp1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">vp1</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">float</span><span class="p">)</span>
 
     <span class="c"># Compute the various parameters</span>
     <span class="n">drho</span> <span class="o">=</span> <span class="n">rho2</span><span class="o">-</span><span class="n">rho1</span>
