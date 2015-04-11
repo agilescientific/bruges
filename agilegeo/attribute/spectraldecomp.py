@@ -25,6 +25,8 @@ def spectraldecomp(data, f=(.1,.25,.4),
     :keyword overlap: The fraction of overlap between adjacent
                       STFT windows
 
+    :keyword normalize: Normalize the energy in each STFT window
+
     :returns: an array of shape (samples, traces, f)
     """
 

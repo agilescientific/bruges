@@ -55,7 +55,23 @@ class AvoTest( unittest.TestCase ):
         # See if it is within .1 of zoep for < 45 deg
         test = np.allclose( reflect, reflect_zoep,
                             rtol=self.tolerance )
-        self.assertTrue( test )
+        self.assertTrue(test)
+
+        # Test it won't complain about arrays
+        
+
+        
+        vp1 = np.ones(1000)*2
+        vp2 = np.ones(1000)*3
+
+        vs1 = np.ones(1000)*4
+        vs2 = np.ones(1000)*5
+
+        rho1 = np.ones(1000)*6
+        rho2 = np.ones(1000)*7
+        theta = 0
+        reflect = avo.akirichards(vp1,vs1,rho1,vp2,vs2,rho2,theta)
+        
 
     def test_akirichards_alt(self):
 
@@ -81,6 +97,17 @@ class AvoTest( unittest.TestCase ):
                             rtol=self.tolerance )
         self.assertTrue( test )
 
+        vp1 = np.ones(1000)*2
+        vp2 = np.ones(1000)*3
+
+        vs1 = np.ones(1000)*4
+        vs2 = np.ones(1000)*5
+
+        rho1 = np.ones(1000)*6
+        rho2 = np.ones(1000)*7
+        theta = 0
+        reflect = avo.akirichards_alt(vp1,vs1,rho1,vp2,vs2,rho2,theta)
+        
     def test_fatti(self):
 
         vp1 = 12250.
@@ -105,6 +132,18 @@ class AvoTest( unittest.TestCase ):
                             rtol=self.tolerance )
         self.assertTrue( test )
 
+        vp1 = np.ones(1000)*2
+        vp2 = np.ones(1000)*3
+
+        vs1 = np.ones(1000)*4
+        vs2 = np.ones(1000)*5
+
+        rho1 = np.ones(1000)*6
+        rho2 = np.ones(1000)*7
+
+        theta = 0
+        reflect = avo.fatti(vp1,vs1,rho1,vp2,vs2,rho2,theta)
+        
     def test_shuey2(self):
 
         vp1 = 12250.
