@@ -4,8 +4,9 @@ from scipy.signal import get_window
 from agilegeo.util import next_pow2
 from numpy import hanning, concatenate
 
-def spectra( data, window_length, dt=1.0, window_type='boxcar',
-             overlap=0.5, normalize=False ):
+def spectra(data, window_length, dt=1.0, window_type='boxcar',
+            overlap=0.5, normalize=False,
+            zero_padding=0):
     """
     Calculates a spectrogram using windowed STFTs.
      
@@ -25,6 +26,8 @@ def spectra( data, window_length, dt=1.0, window_type='boxcar',
                       Defaults to 0.5
     :keyword normalize: Normalizes the each spectral slice to have
                         unity energy.
+    :keyword zero_padding: The amount of zero padding to when creating
+                           the spectra.
                       
     :returns: A spectrogram of the data ([time, freq]).
             ( 2D array for 1D input )
@@ -33,35 +36,37 @@ def spectra( data, window_length, dt=1.0, window_type='boxcar',
     
     # Make the base window
     window_n = floor( window_length / dt )
-    window = get_window( window_type, window_n )
+    pad = floor( zero_padding / dt )
+    window = get_window(window_type, window_n)
     
     # Calculate how many STFTs we need to do.
-    stride = window.size * ( 1 - overlap ) + 1
-    n_windows = ceil( ( data.size - window.size ) / stride ) + 1
+    stride = window.size * (1 - overlap) + 1
+    n_windows = int(ceil((data.size - window.size) / stride) + 1)
 
     # Pad window to power of 2
-    padded_window = zeros( next_pow2( window.size ) )
-    padded_window[0:window.size] = window
+    padded_window = zeros(next_pow2(window.size+pad))
     
     # Init the output array
-    output = zeros( [n_windows, padded_window.size / 2.] )
+    output = zeros([n_windows, int(padded_window.size)/2])
 
     norm_factor = 1.0
     
     # Do the loop
-    for i in arange( 0,n_windows, 1 ):
-        
-        start = i * stride
-        end = start + padded_window.size 
+    for i in range(int(n_windows)):
+
+        start = int(i * stride)
+        end = start + int(window.size)
         
         # Do not compute last samples if we don't have a full window
         if ( end > data.size-1 ): break
 
-        spect = ( 2.* absolute( fft( data[ start:end ] *\
-                                padded_window ) ) / \
-                         window.size )[0 : padded_window.size /2. ]
-        if normalize: output[ i, : ] = spect / sum( spect**2)
-        else: output[ i, : ] = spect
+        padded_window[0:window.size] = window*data[start:end]
+        spect = (2.* absolute(fft(padded_window))/ \
+                         window.size)[0:int(padded_window.size /2.)]
+                         
+        if normalize: output[i, :] = spect / sum(spect**2)
+                
+        else: output[i, :] = spect
     
     return output
 

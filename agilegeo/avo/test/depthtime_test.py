@@ -1,6 +1,8 @@
 import unittest
 from agilegeo.avo import time_to_depth, depth_to_time
 import numpy as np
+import matplotlib
+matplotlib.use("WX")
 from matplotlib import pyplot as plt
 
 class TimeDepthTest( unittest.TestCase ):
@@ -50,7 +52,10 @@ class TimeDepthTest( unittest.TestCase ):
   
         output = time_to_depth(data, vmodel,dt, dz, twt=False)
 
-        face_change = np.floor(((49* dt) * 1500.0) /dz)
+        plt.imshow(output)
+        plt.show()
+        face_change = np.floor(((49.5* dt) * 1500.0) /dz)
+
         self.assertTrue((output[face_change+1,50] -
                            output[ face_change, 50 ]) == 100)
 

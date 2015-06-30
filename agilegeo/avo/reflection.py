@@ -105,7 +105,10 @@ def akirichards(vp1, vs1, rho1, vp2, vs2, rho2, theta1):
     
     # Do we need to ensure that we get floats out before
     # computing sines?
-    vp1 = float(vp1)
+    if np.ndim(vp1)==0:
+        vp1 = float(vp1)
+    else:
+        vp1 = np.array(vp1).astype(float)
 
     theta2 = degrees(arcsin(vp2/vp1*sin(radians(theta1))))
 
@@ -158,7 +161,10 @@ def akirichards_alt(vp1, vs1, rho1, vp2, vs2, rho2, theta1):
     
     # Do we need to ensure that we get floats out before
     # computing sines?
-    vp1 = float(vp1)    
+    if np.ndim(vp1)==0:
+        vp1 = float(vp1)
+    else:
+        vp1 = np.array(vp1).astype(float)
 
     theta2 = degrees(arcsin(vp2/vp1*sin(radians(theta1))))
 
@@ -202,8 +208,12 @@ def fatti(vp1, vs1, rho1, vp2, vs2, rho2, theta1):
     
     """
     
-    # Do we need to ensure that we get floats out before computing sines?
-    vp1 = float(vp1)
+    # Do we need to ensure that we get floats out before computing
+    # sines?
+    if np.ndim(vp1)==0:
+        vp1 = float(vp1)
+    else:
+        vp1 = np.array(vp1).astype(float)
 
     # Compute the various parameters
     drho = rho2-rho1
