@@ -1,6 +1,10 @@
+#!/usr/bin/env python
+# -*- coding: utf 8 -*-
+"""
+Tests.
+"""
 import unittest
 import agilegeo.avo as avo
-import numpy as np
 
 # Inputs.
 vp_gas = 2429.0
@@ -12,12 +16,13 @@ vp_brine = 2850.5
 vs_brine = 1416.1
 rho_brine = 2210.
 
-class FluidsubTest( unittest.TestCase ):
+
+class FluidsubTest(unittest.TestCase):
     """
     Tests fluid sub calculations against Smith et al 2003.
     https://dl.dropboxusercontent.com/u/14965965/Smith_etal_2003.pdf
     """
-    
+
     def test_avseth(self):
         # Base case: gas
         # Subbing with: brine
@@ -29,9 +34,20 @@ class FluidsubTest( unittest.TestCase ):
         kf1 = 207000000.     # gas
         kf2 = 50000000000.   # brine
 
-        self.assertAlmostEqual( avo.avseth_fluidsub(vp=vp_gas, vs=vs_gas, rho=rho_gas, phi=phi, rhof1=rhof1, rhof2=rhof2, kmin=kmin, kf1=kf1, kf2=kf2)[0], vp_brine,  places=0 )        
-        self.assertAlmostEqual( avo.avseth_fluidsub(vp=vp_gas, vs=vs_gas, rho=rho_gas, phi=phi, rhof1=rhof1, rhof2=rhof2, kmin=kmin, kf1=kf1, kf2=kf2)[1], vs_brine,  places=0 )        
-        self.assertAlmostEqual( avo.avseth_fluidsub(vp=vp_gas, vs=vs_gas, rho=rho_gas, phi=phi, rhof1=rhof1, rhof2=rhof2, kmin=kmin, kf1=kf1, kf2=kf2)[2], rho_brine, places=0 )        
+        self.assertAlmostEqual(avo.avseth_fluidsub(vp=vp_gas,
+                                                   vs=vs_gas,
+                                                   rho=rho_gas,
+                                                   phi=phi,
+                                                   rhof1=rhof1,
+                                                   rhof2=rhof2,
+                                                   kmin=kmin,
+                                                   kf1=kf1,
+                                                   kf2=kf2)[0],
+                               vp_brine,
+                               places=0)
+
+        self.assertAlmostEqual(avo.avseth_fluidsub(vp=vp_gas, vs=vs_gas, rho=rho_gas, phi=phi, rhof1=rhof1, rhof2=rhof2, kmin=kmin, kf1=kf1, kf2=kf2)[1], vs_brine,  places=0 )        
+        self.assertAlmostEqual(avo.avseth_fluidsub(vp=vp_gas, vs=vs_gas, rho=rho_gas, phi=phi, rhof1=rhof1, rhof2=rhof2, kmin=kmin, kf1=kf1, kf2=kf2)[2], rho_brine, places=0 )        
 
     def test_smith(self):
         # Base case: gas
@@ -51,8 +67,9 @@ class FluidsubTest( unittest.TestCase ):
         self.assertAlmostEqual( avo.smith_fluidsub(vp=vp_gas, vs=vs_gas, rho=rho_gas, phi=phi, rhohc=rhohc, rhow=rhow, sw=sw, swnew=swnew, khc=khc, kw=kw, kclay=kclay, kqtz=kqtz, vclay=vclay)[0], vp_brine,  places=0 )        
         self.assertAlmostEqual( avo.smith_fluidsub(vp=vp_gas, vs=vs_gas, rho=rho_gas, phi=phi, rhohc=rhohc, rhow=rhow, sw=sw, swnew=swnew, khc=khc, kw=kw, kclay=kclay, kqtz=kqtz, vclay=vclay)[1], vs_brine,  places=0 )        
         self.assertAlmostEqual( avo.smith_fluidsub(vp=vp_gas, vs=vs_gas, rho=rho_gas, phi=phi, rhohc=rhohc, rhow=rhow, sw=sw, swnew=swnew, khc=khc, kw=kw, kclay=kclay, kqtz=kqtz, vclay=vclay)[2], rho_brine, places=0 )        
-        
+
+
 if __name__ == '__main__':
 
-    suite = unittest.TestLoader().loadTestsFromTestCase(ModuliTest)
+    suite = unittest.TestLoader().loadTestsFromTestCase(FluidsubTest)
     unittest.TextTestRunner(verbosity=2).run(suite)
