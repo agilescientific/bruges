@@ -96,7 +96,7 @@ def zoeppritz_element(vp1, vs1, rho1, vp0, vs0, rho0, theta1, element='PdPu'):
 
     Z = scattering_matrix(vp1, vs1, rho1, vp0, vs0, rho0, theta1)
 
-    return Z[np.where(elements == element)]
+    return np.squeeze(Z[np.where(elements == element)])
 
 
 def zoeppritz(vp1, vs1, rho1, vp0, vs0, rho0, theta1):
