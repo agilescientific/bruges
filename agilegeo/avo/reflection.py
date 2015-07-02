@@ -8,7 +8,8 @@ from numpy import log, tan, sin, cos, arcsin, arccosh, radians, \
 
 def zoeppritz(vp1, vs1, rho1, vp0, vs0, rho0, theta1):
     '''
-    Full Zoeppritz solution, considered the definitive solution.
+    Returns the PP reflection coefficients from the Zoeppritz 
+    scattering matrix.
     Calculates the angle dependent p-wave reflectivity of an interface
     between two mediums.
 
@@ -76,6 +77,108 @@ def zoeppritz(vp1, vs1, rho1, vp0, vs0, rho0, theta1):
         zoep = dt[0][0]
     
     return zoep
+
+def scattering_mtx(vp1, vs1, rho1, vp0, vs0, rho0, theta1):
+    '''
+    Full Zoeppritz solution, considered the definitive solution.
+    Calculates the angle dependent p-wave reflectivity of an interface
+    between two mediums.
+
+    :param vp1: The p-wave velocity of the upper medium.
+    :param vs1: The s-wave velocity of the upper medium.
+    :param rho1: The density of the upper medium.
+
+    :param vp0: The p-wave velocity of the lower medium.
+    :param vs0: The s-wave velocity of the lower medium.
+    :param rho0: The density of the lower medium.
+    
+    :param theta1: A scalar  [degrees].
+    
+    :returns: a 4x4 array representing the scattering matrix
+                at the incident angle theta1.
+    '''
+    if theta1.size == 1:
+        # add a dimension
+        theta1 = np.expand_dims(theta1, axis=1)
+    
+    # Set the ray paramter, p
+    p = sin(radians(theta1)) / vp1 # ray parameter
+    
+    # Calculate reflection & transmission angles for Zoeppritz
+    theta1 = radians(theta1)   # Convert theta1 to radians
+    theta2 = arcsin(p * vp0);      # Trans. angle of P-wave
+    phi1 = arcsin(p * vs1);      # Refl. angle of converted S-wave
+    phi2 = arcsin(p * vs0);      # Trans. angle of converted S-wave
+                
+    # Matrix form of Zoeppritz Equations... M & N are matricies
+    M = np.array([ \
+        [-sin(theta1), -cos(phi1), sin(theta2), cos(phi2)], \
+        [cos(theta1), -sin(phi1), cos(theta2), -sin(phi2)], \
+        [2 * rho1 * vs1 * sin(phi1) * cos(theta1), rho1 * vs1 *\
+            (1 - 2 * sin(phi1) ** 2), \
+            2 * rho0 * vs0 * sin(phi2) * cos(theta2), \
+            rho0 * vs0 * (1 - 2 * sin(phi2) ** 2)], \
+        [-rho1 * vp1 * (1 - 2 * sin(phi1) ** 2), rho1 * vs1 * \
+             sin(2 * phi1), \
+            rho0 * vp0 * (1 - 2 * sin(phi2) ** 2), -rho0 * \
+              vs0 * sin(2 * phi2)]
+        ], dtype='float')
+    
+    N = np.array([ \
+        [sin(theta1), cos(phi1), -sin(theta2), -cos(phi2)], \
+        [cos(theta1), -sin(phi1), cos(theta2), -sin(phi2)], \
+        [2 * rho1 * vs1 * sin(phi1) * cos(theta1), rho1 * vs1 * (1 - 2 * sin(phi1) ** 2), \
+            2 * rho0 * vs0 * sin(phi2) * cos(theta2), rho0 * vs0 * (1 - 2 * sin(phi2) ** 2)], \
+        [rho1 * vp1 * (1 - 2 * sin(phi1) ** 2), -rho1 * vs1 * sin(2 * phi1), \
+            - rho0 * vp0 * (1 - 2 * sin(phi2) ** 2), rho0 * vs0 * sin(2 * phi2)]\
+        ], dtype='float')
+    
+    #print M.shape
+    #print N.shape
+    # This is the important step, calculating
+    # coefficients for all modes
+    # and rays result is a 4x4 matrix, we want to return
+    # all 16 elements of the Zoeppritz scattering matrix 
+    # for each angle
+    
+    zoep = np.zeros((4,4,M.shape[-1]))
+    for i in range(M.shape[-1]): 
+        Mi = M[..., i]
+        Ni = N[..., i]
+        dt = np.dot(np.linalg.inv(Mi), Ni)
+        zoep[...,i] = dt
+    
+    return zoep
+
+def scattering_dict(Q):
+    """Takes the Zoepprittz scattering matrix as input and
+    maps each element to a keyword in a dictionary
+    :param: Q - the 4x4 scattering matrix
+    """
+    
+    scattering_keys = {
+    # downgoing incident P-waves
+    'dPuP' : Q[0,0,:],  # Rpp
+    'dPuS' : Q[1,0,:],  # Rps
+    'dPdP' : Q[2,0,:],
+    'dPdS' : Q[3,0,:],
+    # downgoing incident S-waves
+    'dSuP' : Q[0,1,:],
+    'dSuS' : Q[1,1,:],
+    'dSdP' : Q[2,1,:],
+    'dSdS' : Q[3,1,:],
+    # upgoing incident P-waves
+    'uPuP' : Q[0,2,:],
+    'uPuS' : Q[1,2,:],
+    'uPdP' : Q[2,2,:],
+    'uPdS' : Q[3,2,:],
+    # upgoing incident S-waves
+    'uSuP' : Q[0,3,:],
+    'uSuS' : Q[1,3,:],
+    'uSdP' : Q[2,3,:],
+    'uSdS' : Q[3,3,:]
+    }
+    return scattering_keys
 
 def akirichards(vp1, vs1, rho1, vp2, vs2, rho2, theta1):
     """
