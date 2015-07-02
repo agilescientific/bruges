@@ -406,7 +406,7 @@ def elastic_impedance(vp, vs, rho, theta1, normalize='True'):
     :param normalized: if 'True', returns the normalized form from 
                     Whitcombe et. al (2001).
     """
-    k = (vs / vp)**2  # average over interval of interest
+    k = (np.mean(vs) / np.mean(vp))**2  # average over interval of interest
     a = 1 + (np.tan(theta1))**2
     b = -8 * k * ((np.sin(theta1)) ** 2)
     c = 1 - 4 * k * (np.sin(theta1))** 2)
