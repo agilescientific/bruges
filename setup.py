@@ -4,6 +4,18 @@
 Python installation file.
 """
 from setuptools import setup
+import re
+
+verstr = 'unknown'
+VERSIONFILE = "agilegeo/_version.py"
+with open(VERSIONFILE, "r")as f:
+    verstrline = f.read().strip()
+    pattern = re.compile(r"__version__ = ['\"](.*)['\"]")
+    mo = pattern.search(verstrline)
+if mo:
+    verstr = mo.group(1)
+else:
+    raise RuntimeError("Unable to find version string in %s." % (VERSIONFILE,))
 
 REQUIREMENTS = ['numpy', 'scipy']
 
@@ -17,7 +29,7 @@ CLASSIFIERS = ['Development Status :: 4 - Beta',
                ]
 
 setup(name='agilegeo',
-      version=open('version.txt').read().rstrip(),
+      version=verstr,
       author='Agile Geoscience',
       author_email='hello@agilegeoscience.com',
       packages=['agilegeo',
