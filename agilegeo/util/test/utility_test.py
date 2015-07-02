@@ -11,24 +11,21 @@ class UtilityTest(unittest.TestCase):
 
         self.assertEqual(ans, next_pow2(num))
 
-
     def test_rms(self):
-        l = np.array([2,3,4.5])
+        l = np.array([2, 3, 4.5])
         ans = 3.329164
 
-        self.assertAlmostEqual( ans, rms( l ), places=5 )
+        self.assertAlmostEqual(ans, rms(l), places=5)
 
-
-    def noise_db( self ):
+    def noise_db(self):
         a = np.ones(1000000)
         ans10p = 3.32
         ans0 = 1.41
         ans10n = 1.05
 
-        self.assertAlmostEqual( ans10p, noise_db( a, 10 ), places=2 )
-        self.assertAlmostEqual( ans0, noise_db( a, 10 ), places=2 )
-        self.assertAlmostEqual( ans10n, noise_db( a, -10 ), places=2 )
-
+        self.assertAlmostEqual(ans10p, noise_db(a, 10), places=2)
+        self.assertAlmostEqual(ans0, noise_db(a, 10), places=2)
+        self.assertAlmostEqual(ans10n, noise_db(a, -10), places=2)
 
 if __name__ == '__main__':
 
