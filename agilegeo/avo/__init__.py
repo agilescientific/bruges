@@ -4,7 +4,8 @@ agilegeo.avo
 ===============
 """
 
-from .reflection import zoeppritz, akirichards, akirichards_alt, \
+from .reflection import zoeppritz, zoeppritz_element, akirichards,\
+                       akirichards_alt, elastic_impedance,\
                        fatti, shuey2, shuey3, bortfeld2, bortfeld3
 from .timedepthconv import time_to_depth, depth_to_time
 from .moduli import youngs, bulk, pr, mu, lam, \
@@ -13,7 +14,8 @@ from .fluidsub import avseth_gassmann, smith_gassmann, \
                      vrh, rhogas, rhosat, \
                      avseth_fluidsub, smith_fluidsub
 
-__all__ = ["zoeppritz", "akirichards", "akirichards_alt",
+__all__ = ["zoeppritz", "zoeppritz_element", "akirichards",
+           "akirichards_alt", "elastic_impedance",
            "fatti", "shuey2", "shuey3", "bortfeld2", "bortfeld3",
            "time_to_depth", "depth_to_time",
            "youngs", "bulk", "pr",
