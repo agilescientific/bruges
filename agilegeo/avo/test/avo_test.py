@@ -2,6 +2,23 @@ import unittest
 import agilegeo.avo as avo
 import numpy as np
 
+vp1 = 12250.
+vp2 = 11600.
+vs1 = 6200.
+vs2 = 6650.
+rho1 = 2.66
+rho2 = 2.34
+theta = np.arange( 45 )
+
+arr_vp1 = np.ones(1000)*2
+arr_vp2 = np.ones(1000)*3
+arr_vs1 = np.ones(1000)*4
+arr_vs2 = np.ones(1000)*5
+arr_rho1 = np.ones(1000)*6
+arr_rho2 = np.ones(1000)*7
+arr_theta = 0
+
+
 class AvoTest( unittest.TestCase ):
     """
     Tests zoeppritz using a values from a spreadsheet, and also a
@@ -15,17 +32,7 @@ class AvoTest( unittest.TestCase ):
     
     def test_zoeppritz(self):
 
-        vp1 = 12250.
-        vp2 = 11600.
-
-        vs1 = 6200.
-        vs2 = 6650.
-
-        rho1 = 2.66
-        rho2 = 2.34
-
         theta = 40.
-
 
         reflect = avo.zoeppritz( vp1,vs1,rho1,vp2,vs2,rho2,theta )
 
@@ -36,18 +43,6 @@ class AvoTest( unittest.TestCase ):
     
     def test_akirichards(self):
         
-        vp1 = 12250.
-        vp2 = 11600.
-
-        vs1 = 6200.
-        vs2 = 6650.
-
-        rho1 = 2.66
-        rho2 = 2.34
-
-        theta = np.arange( 45 )
-
-
         reflect = avo.akirichards( vp1,vs1,rho1,vp2,vs2,rho2,theta )
         reflect_zoep = avo.zoeppritz( vp1,vs1,rho1,vp2,
                                       vs2,rho2,theta )
@@ -59,33 +54,11 @@ class AvoTest( unittest.TestCase ):
 
         # Test it won't complain about arrays
         
-
-        
-        vp1 = np.ones(1000)*2
-        vp2 = np.ones(1000)*3
-
-        vs1 = np.ones(1000)*4
-        vs2 = np.ones(1000)*5
-
-        rho1 = np.ones(1000)*6
-        rho2 = np.ones(1000)*7
-        theta = 0
-        reflect = avo.akirichards(vp1,vs1,rho1,vp2,vs2,rho2,theta)
-        
+        reflect = avo.akirichards(arr_vp1, arr_vs1, arr_rho1,
+                                  arr_vp2, arr_vs2, arr_rho2,
+                                  arr_theta)
 
     def test_akirichards_alt(self):
-
-        vp1 = 12250.
-        vp2 = 11600.
-
-        vs1 = 6200.
-        vs2 = 6650.
-
-        rho1 = 2.66
-        rho2 = 2.34
-
-        theta = np.arange( 45 )
-
 
         reflect = avo.akirichards_alt( vp1,vs1,rho1,vp2,
                                         vs2,rho2,theta )
@@ -97,67 +70,25 @@ class AvoTest( unittest.TestCase ):
                             rtol=self.tolerance )
         self.assertTrue( test )
 
-        vp1 = np.ones(1000)*2
-        vp2 = np.ones(1000)*3
-
-        vs1 = np.ones(1000)*4
-        vs2 = np.ones(1000)*5
-
-        rho1 = np.ones(1000)*6
-        rho2 = np.ones(1000)*7
-        theta = 0
-        reflect = avo.akirichards_alt(vp1,vs1,rho1,vp2,vs2,rho2,theta)
+        reflect = avo.akirichards_alt(arr_vp1, arr_vs1, arr_rho1,
+                                  arr_vp2, arr_vs2, arr_rho2,
+                                  arr_theta)
         
     def test_fatti(self):
-
-        vp1 = 12250.
-        vp2 = 11600.
-
-        vs1 = 6200.
-        vs2 = 6650.
-
-        rho1 = 2.66
-        rho2 = 2.34
-
-        theta = np.arange( 45 )
-
-
         reflect = avo.fatti( vp1,vs1,rho1,vp2,vs2,rho2,theta )
-
-        reflect_zoep = avo.zoeppritz( vp1,vs1,rho1,vp2,
-                                      vs2,rho2,theta )
+        reflect_zoep = avo.zoeppritz(vp1,vs1,rho1,vp2,
+                                     vs2,rho2,theta)
 
         # See if it is within .1 of zoep for < 45 deg
         test = np.allclose( reflect, reflect_zoep,
                             rtol=self.tolerance )
         self.assertTrue( test )
 
-        vp1 = np.ones(1000)*2
-        vp2 = np.ones(1000)*3
+        reflect = avo.fatti(arr_vp1, arr_vs1, arr_rho1,
+                                  arr_vp2, arr_vs2, arr_rho2,
+                                  arr_theta)
 
-        vs1 = np.ones(1000)*4
-        vs2 = np.ones(1000)*5
-
-        rho1 = np.ones(1000)*6
-        rho2 = np.ones(1000)*7
-
-        theta = 0
-        reflect = avo.fatti(vp1,vs1,rho1,vp2,vs2,rho2,theta)
-        
     def test_shuey2(self):
-
-        vp1 = 12250.
-        vp2 = 11600.
-
-        vs1 = 6200.
-        vs2 = 6650.
-
-        rho1 = 2.66
-        rho2 = 2.34
-
-        theta = np.arange( 45 )
-
-
         reflect = avo.shuey2( vp1,vs1,rho1,vp2,vs2,rho2,theta )
         reflect_zoep = avo.zoeppritz( vp1,vs1,rho1,vp2,
                                       vs2,rho2,theta )
@@ -166,25 +97,9 @@ class AvoTest( unittest.TestCase ):
         test = np.allclose( reflect, reflect_zoep,
                             rtol=self.tolerance )
         self.assertTrue( test )
-        
 
     def test_shuey3(self):
-        
-    
-        vp1 = 12250.
-        vp2 = 11600.
-
-        vs1 = 6200.
-        vs2 = 6650.
-
-        rho1 = 2.66
-        rho2 = 2.34
-
-        theta = np.arange(45)
-
-
         reflect = avo.shuey3( vp1,vs1,rho1,vp2,vs2,rho2,theta )
-
         reflect_zoep = avo.zoeppritz( vp1,vs1,rho1,vp2,
                                       vs2,rho2,theta )
 
@@ -192,23 +107,9 @@ class AvoTest( unittest.TestCase ):
         test = np.allclose( reflect, reflect_zoep,
                             rtol=self.tolerance )
         self.assertTrue( test )
-        
 
     def test_bortfeld2(self):
-        vp1 = 12250.
-        vp2 = 11600.
-
-        vs1 = 6200.
-        vs2 = 6650.
-
-        rho1 = 2.66
-        rho2 = 2.34
-
-        theta = np.arange(45)
-
-
         reflect = avo.bortfeld2( vp1,vs1,rho1,vp2,vs2,rho2,theta )
-
         reflect_zoep = avo.zoeppritz( vp1,vs1,rho1,vp2,
                                       vs2,rho2,theta )
 
@@ -218,20 +119,7 @@ class AvoTest( unittest.TestCase ):
         self.assertTrue( test )
 
     def test_bortfeld3(self):
-        vp1 = 12250.
-        vp2 = 11600.
-
-        vs1 = 6200.
-        vs2 = 6650.
-
-        rho1 = 2.66
-        rho2 = 2.34
-
-        theta = np.arange(45)
-
-
         reflect = avo.bortfeld3( vp1,vs1,rho1,vp2,vs2,rho2,theta )
-
         reflect_zoep = avo.zoeppritz( vp1,vs1,rho1,vp2,
                                       vs2,rho2,theta )
 
@@ -239,7 +127,20 @@ class AvoTest( unittest.TestCase ):
         test = np.allclose( reflect, reflect_zoep,
                             rtol=self.tolerance )
         self.assertTrue( test )
-        
+
+    def test_hilterman(self):
+        reflect = avo.hilterman( vp1,vs1,rho1,vp2,vs2,rho2,theta )
+        reflect_zoep = avo.zoeppritz( vp1,vs1,rho1,vp2,
+                                      vs2,rho2,theta )
+
+        # See if it is within .1 of zoep for < 45 deg
+        test = np.allclose( reflect, reflect_zoep,
+                            rtol=self.tolerance )
+        self.assertTrue( test )
+
+    def test_elastic_impedance(self):
+        pass
+
 if __name__ == '__main__':
 
     suite = \
