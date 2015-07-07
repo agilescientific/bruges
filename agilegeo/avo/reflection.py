@@ -10,6 +10,7 @@ import numpy as np
 from numpy import log, tan, sin, cos, arcsin, radians, \
                   degrees
 
+from .moduli import pr
 
 def scattering_matrix(vp1, vs1, rho1, vp0, vs0, rho0, theta1):
     '''
@@ -393,6 +394,35 @@ def bortfeld3(vp1, vs1, rho1, vp2, vs2, rho2, theta1):
     term3 = 0.5 * dvp/vp * tan(radians(theta1))**2 * sin(radians(theta1))**2
 
     return term1 + term2 + term3
+
+def hilterman(vp1, vs1, rho1, vp2, vs2, rho2, theta1):
+    """
+    Hilterman (1989) approximation.
+    According to Dvorkin: "arguably the simplest and a very convenient
+    [approximation]." At least for small angles and small contrasts.
+
+    :param vp1: The p-wave velocity of the upper medium.
+    :param vs1: The s-wave velocity of the upper medium.
+    :param rho1: The density of the upper medium.
+
+    :param vp2: The p-wave velocity of the lower medium.
+    :param vs2: The s-wave velocity of the lower medium.
+    :param rho2: The density of the lower medium.
+
+    :param theta1: An array of incident angles to use for reflectivity
+                   calculation [degrees].
+
+    :returns: a vector of len(theta1) containing the reflectivity
+             value corresponding to each angle.
+    """
+    ip1 = vp1 * rho1
+    ip2 = vp2 * rho2
+    rpp0 = (ip2 - ip1) / (ip2 + ip1)
+    dpr = pr(vp2, vs2) - pr(vp1, vs1)
+
+    term2 = 2.25*(dpr - rpp0)*np.sin(theta1)**2
+
+    return rpp0 + term2
 
 def elastic_impedance(vp, vs, rho, theta1, normalize='True'):
     """

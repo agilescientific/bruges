@@ -117,7 +117,7 @@ def pr(vp=None, vs=None, rho=None, mu=None, lam=None, youngs=None, bulk=None, pm
     '''
 
 
-    if vp and vs and rho:
+    if vp and vs:
         return (vp**2. - 2.*vs**2) / (2. * (vp**2 - vs**2))
 
     elif mu and lam:
