@@ -1,3 +1,11 @@
+#!/usr/bin/env python
+# -*- coding: utf 8 -*-
+"""
+Seismic wavelets.
+
+:copyright: 2015 Agile Geoscience
+:license: Apache 2.0
+"""
 import numpy as np
 from scipy.signal import hilbert
 from scipy.signal import chirp
