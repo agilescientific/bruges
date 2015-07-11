@@ -1,10 +1,10 @@
-agilegeo.util package
-=====================
+agilegeo.transform package
+==========================
 
 Module contents
 ---------------
 
-.. automodule:: agilegeo.util
+.. automodule:: agilegeo.transform
     :members:
     :undoc-members:
     :show-inheritance:

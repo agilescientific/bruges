@@ -1,10 +1,10 @@
-agilegeo.util package
-=====================
+agilegeo.filters package
+========================
 
 Module contents
 ---------------
 
-.. automodule:: agilegeo.util
+.. automodule:: agilegeo.filters
     :members:
     :undoc-members:
     :show-inheritance:

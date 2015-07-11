@@ -1,11 +1,10 @@
-agilegeo.avo package
-====================
-
+agilegeo.unit package
+=====================
 
 Module contents
 ---------------
 
-.. automodule:: agilegeo.avo
+.. automodule:: agilegeo.unit
     :members:
     :undoc-members:
     :show-inheritance:

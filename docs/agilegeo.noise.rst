@@ -1,13 +1,10 @@
-agilegeo.wavelet package
-========================
-
-
-
+agilegeo.noise package
+======================
 
 Module contents
 ---------------
 
-.. automodule:: agilegeo.wavelet
+.. automodule:: agilegeo.noise
     :members:
     :undoc-members:
     :show-inheritance:

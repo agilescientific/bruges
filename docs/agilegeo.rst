@@ -7,9 +7,13 @@ Subpackages
 .. toctree::
 
     agilegeo.attribute
-    agilegeo.avo
+    agilegeo.filters
+    agilegeo.noise
+    agilegeo.reflection
+    agilegeo.rockphysics
+    agilegeo.transform
+    agilegeo.unit
     agilegeo.util
-    agilegeo.wavelet
 
 Module contents
 ---------------
