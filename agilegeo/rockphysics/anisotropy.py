@@ -8,8 +8,8 @@ Thin-layer anisotropy.
 """
 import numpy as np
 
-import moduli
-from utility import moving_average
+from agilegeo.rockphysics import moduli
+from agilegeo.util import moving_average
 
 
 def backus_parameters(vp, vs, rho, lb, dz):

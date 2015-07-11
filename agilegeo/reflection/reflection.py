@@ -207,7 +207,7 @@ def akirichards(vp1, vs1, rho1, vp2, vs2, rho2, theta1, terms=False):
         return (term1 + term2 + term3 + term4)
 
 
-def akirichards_alt(vp1, vs1, rho1, vp2, vs2, rho2, theta1):
+def akirichards_alt(vp1, vs1, rho1, vp2, vs2, rho2, theta1, terms=False):
     """
     This is another formulation of the Aki-Richards solution.
     See http://subsurfwiki.org/wiki/Aki-Richards_equation
@@ -259,7 +259,7 @@ def akirichards_alt(vp1, vs1, rho1, vp2, vs2, rho2, theta1):
     else:
         return (term1 + term2 + term3)
 
-def fatti(vp1, vs1, rho1, vp2, vs2, rho2, theta1):
+def fatti(vp1, vs1, rho1, vp2, vs2, rho2, theta1, terms=False):
     """
     Compute reflectivities with Fatti's formulation of the
     Aki-Richards equation, which does not account for the
@@ -452,7 +452,7 @@ def bortfeld3(vp1, vs1, rho1, vp2, vs2, rho2, theta1, terms=False):
     else:
         return (term1 + term2 + term3)
 
-def hilterman(vp1, vs1, rho1, vp2, vs2, rho2, theta1):
+def hilterman(vp1, vs1, rho1, vp2, vs2, rho2, theta1, terms=False):
     """
     Hilterman (1989) approximation.
     According to Dvorkin: "arguably the simplest and a very convenient
@@ -485,29 +485,3 @@ def hilterman(vp1, vs1, rho1, vp2, vs2, rho2, theta1):
         return term1, term2
     else:
         return (term1 + term2)
-
-def elastic_impedance(vp, vs, rho, theta1, normalize=True):
-    """
-    Returns the elastic impedance (as defined by Connolly, 1999)
-    for each incidence angle in theta1:
-
-    :param vp1: The p-wave velocity or p-wave velocity array.
-    :param vs1: The s-wave velocity of s-wave velocity array.
-    :param rho1: The density (either scalar or array).
-    :param theta1: An array of incident angles to use for reflectivity
-        calculation [degrees].
-    :param normalized: if True, returns the normalized form from
-        Whitcombe et. al (2001).
-    """
-    theta1 = np.radians(theta1)
-    k = (np.mean(vs) / np.mean(vp)) ** 2  # avg over interval of interest
-    a = 1 + (np.tan(theta1)) ** 2
-    b = -8 * k * ((np.sin(theta1)) ** 2)
-    c = 1 - 4 * k * ((np.sin(theta1)) ** 2)
-    ei = (vp ** a) * (vs ** b) * (rho ** c)
-
-    if normalize:
-        n = vp **(1-a) * vs**(-b) * rho**(1-c)
-        ei = n * ei
-
-    return ei

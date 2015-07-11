@@ -5,7 +5,7 @@ Tests.
 """
 import unittest
 
-from agilegeo.rockphysics import moduli
+from agilegeo.rockphysics import moduli as m
 
 vp = 2350.
 vs = 1125.
@@ -25,26 +25,26 @@ class ModuliTest(unittest.TestCase):
     """
 
     def test_vpvs(self):
-        self.assertAlmostEqual(moduli.youngs(vp=vp, vs=vs, rho=rho), youngs, places=-2)
-        self.assertAlmostEqual(    moduli.mu(vp=vp, vs=vs, rho=rho), mu, places=-2)
-        self.assertAlmostEqual(    moduli.pr(vp=vp, vs=vs, rho=rho), pr)
-        self.assertAlmostEqual(   moduli.lam(vp=vp, vs=vs, rho=rho), lam, places=-2)
-        self.assertAlmostEqual(  moduli.bulk(vp=vp, vs=vs, rho=rho), bulk, places=-2)
-        self.assertAlmostEqual(  moduli.pmod(vp=vp, vs=vs, rho=rho), pmod, places=-2)
+        self.assertAlmostEqual(m.youngs(vp=vp, vs=vs, rho=rho), youngs, places=-2)
+        self.assertAlmostEqual(    m.mu(vp=vp, vs=vs, rho=rho), mu, places=-2)
+        self.assertAlmostEqual(    m.pr(vp=vp, vs=vs, rho=rho), pr)
+        self.assertAlmostEqual(   m.lam(vp=vp, vs=vs, rho=rho), lam, places=-2)
+        self.assertAlmostEqual(  m.bulk(vp=vp, vs=vs, rho=rho), bulk, places=-2)
+        self.assertAlmostEqual(  m.pmod(vp=vp, vs=vs, rho=rho), pmod, places=-2)
 
     def test_lammu(self):
-        self.assertAlmostEqual(    moduli.vp(lam=lam, mu=mu, rho=rho), vp, places=2)
-        self.assertAlmostEqual(moduli.youngs(lam=lam, mu=mu), youngs, places=-2)
-        self.assertAlmostEqual(    moduli.pr(lam=lam, mu=mu), pr)
-        self.assertAlmostEqual(  moduli.bulk(lam=lam, mu=mu), bulk, places=-2)
-        self.assertAlmostEqual(  moduli.pmod(lam=lam, mu=mu), pmod, places=-2)
+        self.assertAlmostEqual(    m.vp(lam=lam, mu=mu, rho=rho), vp, places=2)
+        self.assertAlmostEqual(m.youngs(lam=lam, mu=mu), youngs, places=-2)
+        self.assertAlmostEqual(    m.pr(lam=lam, mu=mu), pr)
+        self.assertAlmostEqual(  m.bulk(lam=lam, mu=mu), bulk, places=-2)
+        self.assertAlmostEqual(  m.pmod(lam=lam, mu=mu), pmod, places=-2)
 
     def test_youngspr(self):
-        self.assertAlmostEqual(  moduli.vp(youngs=youngs, pr=pr, rho=rho), vp, places=2)
-        self.assertAlmostEqual(  moduli.mu(youngs=youngs, pr=pr), mu, places=-2)
-        self.assertAlmostEqual( moduli.lam(youngs=youngs, pr=pr), lam, places=-2)
-        self.assertAlmostEqual(moduli.bulk(youngs=youngs, pr=pr), bulk, places=-2)
-        self.assertAlmostEqual(moduli.pmod(youngs=youngs, pr=pr), pmod, places=-2)
+        self.assertAlmostEqual(  m.vp(youngs=youngs, pr=pr, rho=rho), vp, places=2)
+        self.assertAlmostEqual(  m.mu(youngs=youngs, pr=pr), mu, places=-2)
+        self.assertAlmostEqual( m.lam(youngs=youngs, pr=pr), lam, places=-2)
+        self.assertAlmostEqual(m.bulk(youngs=youngs, pr=pr), bulk, places=-2)
+        self.assertAlmostEqual(m.pmod(youngs=youngs, pr=pr), pmod, places=-2)
 
     def test_moduli(self):
         mod = {'imp': vp * rho}
@@ -55,7 +55,7 @@ class ModuliTest(unittest.TestCase):
         mod['pmod'] = pmod
         mod['youngs'] = youngs
 
-        self.assertDictEqual(moduli.moduli(vp=vp, vs=vs, rho=rho), mod)
+        self.assertDictEqual(m.moduli_dict(vp=vp, vs=vs, rho=rho), mod)
 
 
 if __name__ == '__main__':

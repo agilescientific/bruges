@@ -5,7 +5,7 @@ Tests.
 """
 import unittest
 
-from agilegoe.rockphysics import fluidsub
+from agilegeo.rockphysics import fluidsub
 
 # Inputs.
 vp_gas = 2429.0

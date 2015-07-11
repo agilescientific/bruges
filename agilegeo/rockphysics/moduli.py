@@ -16,8 +16,8 @@ Using equations http://www.subsurfwiki.org/wiki/Elastic_modulus
 from Mavko, G, T Mukerji and J Dvorkin (2003), The Rock Physics Handbook, Cambridge University Press
 
 '''
+import numpy as np
 
-from numpy import sqrt
 
 def youngs(vp=None, vs=None, rho=None, mu=None, lam=None, bulk=None, pr=None, pmod=None):
     '''
@@ -290,22 +290,22 @@ def vp(youngs=None, vs=None, rho=None, mu=None, lam=None, bulk=None, pr=None, pm
     '''
 
     if mu and lam and rho:
-        return sqrt( (lam + 2.*mu) / rho )
+        return np.sqrt( (lam + 2.*mu) / rho )
 
     elif youngs and mu and rho:
-        return sqrt( mu * (youngs - 4.*mu) / (rho * (youngs - 3.*mu)) )
+        return np.sqrt( mu * (youngs - 4.*mu) / (rho * (youngs - 3.*mu)) )
 
     elif youngs and pr and rho:
-        return sqrt( youngs * (1 - pr) / (rho * (1+pr)* (1 - 2.*pr)) )
+        return np.sqrt( youngs * (1 - pr) / (rho * (1+pr)* (1 - 2.*pr)) )
 
     elif bulk and lam and rho:
-        return sqrt( (9.*bulk - 2.*lam) / rho )
+        return np.sqrt( (9.*bulk - 2.*lam) / rho )
 
     elif bulk and mu and rho:
-        return sqrt( (bulk + 4.*mu/3. ) / rho)
+        return np.sqrt( (bulk + 4.*mu/3. ) / rho)
 
     elif lam and pr and rho:
-        return sqrt( lam * (1. - pr) / (pr*rho))
+        return np.sqrt( lam * (1. - pr) / (pr*rho))
 
     else:
         return None
@@ -327,13 +327,13 @@ def vs(youngs=None, vp=None, rho=None, mu=None, lam=None, bulk=None, pr=None, pm
     '''
 
     if mu and rho:
-        return sqrt( mu / rho )
+        return np.sqrt( mu / rho )
 
     else:
         return None
 
 
-def moduli(vp, vs, rho):
+def moduli_dict(vp, vs, rho):
     '''
     Computes elastic moduli given Vp, Vs, and rho.
 
