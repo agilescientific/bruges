@@ -42,7 +42,6 @@ def scattering_matrix(vp1, vs1, rho1, vp0, vs0, rho0, theta1):
     p = sin(theta1) / vp1  # ray parameter
 
     # Calculate reflection & transmission angles for Zoeppritz
-    theta1 = np.radians(theta1)   # Convert theta1 to radians
     theta2 = np.arcsin(p * vp0)      # Trans. angle of P-wave
     phi1 = np.arcsin(p * vs1)     # Refl. angle of converted S-wave
     phi2 = np.arcsin(p * vs0)      # Trans. angle of converted S-wave
@@ -116,8 +115,34 @@ def zoeppritz(vp1, vs1, rho1, vp0, vs0, rho0, theta1):
 def zoeppritz_rpp(vp1, vs1, rho1, vp2, vs2, rho2, theta1, terms=False):
     """
     Exact Zoeppritz from expression.
+
+    This is useful because we can pass arrays to it, which we can't do to
+    scattering_matrix().
+
+    Dvorkin et al. (2014). Seismic Reflections of Rock Properties. Cambridge.
     """
-    pass
+    theta1 = np.radians(theta1)
+    p = np.sin(theta1) / vp1  # Ray parameter
+    theta2 = np.arcsin(p * vp2)
+    phi1 = np.arcsin(p * vs1)  # Reflected S
+    phi2 = np.arcsin(p * vs2)  # Transmitted S
+
+    a = rho2 * (1 - 2 * np.sin(phi2)**2.) - rho1 * (1 - 2 * np.sin(phi1)**2.)
+    b = rho2 * (1 - 2 * np.sin(phi2)**2.) + 2 * rho1 * np.sin(phi1)**2.
+    c = rho1 * (1 - 2 * np.sin(phi1)**2.) + 2 * rho2 * np.sin(phi2)**2.
+    d = 2 * (rho2 * vs2**2 - rho1 * vs1**2)
+
+    E = (b * np.cos(theta1) / vp1) + (c * np.cos(theta2) / vp2)
+    F = (b * np.cos(phi1) / vs1) + (c * np.cos(phi2) / vs2)
+    G = a - d * np.cos(theta1)/vp1 * np.cos(phi2)/vs2
+    H = a - d * np.cos(theta2)/vp2 * np.cos(phi1)/vs1
+
+    D = E*F + G*H*p**2
+
+    rpp = (1/D) * (F*(b*(np.cos(theta1)/vp1) - c*(np.cos(theta2)/vp2))\
+          - H*p**2 * (a + d*(np.cos(theta1)/vp1)*(np.cos(phi2)/vs2)))
+
+    return rpp
 
 
 def akirichards(vp1, vs1, rho1, vp2, vs2, rho2, theta1, terms=False):

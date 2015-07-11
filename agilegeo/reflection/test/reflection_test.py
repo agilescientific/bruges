@@ -41,6 +41,15 @@ class AvoTest( unittest.TestCase ):
         # spreadsheet from http://tbberge.com/id63.html
         self.assertAlmostEquals( reflect, -0.112236, places=3 )
         
+    def test_zoeppritz_rpp(self):
+
+        theta = 40.
+
+        reflect = avo.zoeppritz(vp1,vs1,rho1,vp2,vs2,rho2,theta)
+        reflect_rpp = avo.zoeppritz_rpp(vp1,vs1,rho1,vp2,vs2,rho2,theta)
+
+        # Should be the same as the exact solution.
+        self.assertAlmostEquals( reflect_rpp, reflect, places=3 )        
     
     def test_akirichards(self):
         
