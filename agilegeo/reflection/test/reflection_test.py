@@ -1,6 +1,7 @@
 import unittest
-import agilegeo.avo as avo
 import numpy as np
+
+from agilegeo.reflection import reflection as avo
 
 vp1 = 12250.
 vp2 = 11600.

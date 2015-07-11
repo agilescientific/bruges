@@ -4,7 +4,8 @@
 Tests.
 """
 import unittest
-import agilegeo.avo as avo
+
+from agilegoe.rockphysics import fluidsub
 
 # Inputs.
 vp_gas = 2429.0
@@ -34,7 +35,7 @@ class FluidsubTest(unittest.TestCase):
         kf1 = 207000000.     # gas
         kf2 = 50000000000.   # brine
 
-        self.assertAlmostEqual(avo.avseth_fluidsub(vp=vp_gas,
+        self.assertAlmostEqual(fluidsub.avseth_fluidsub(vp=vp_gas,
                                                    vs=vs_gas,
                                                    rho=rho_gas,
                                                    phi=phi,
@@ -46,8 +47,8 @@ class FluidsubTest(unittest.TestCase):
                                vp_brine,
                                places=0)
 
-        self.assertAlmostEqual(avo.avseth_fluidsub(vp=vp_gas, vs=vs_gas, rho=rho_gas, phi=phi, rhof1=rhof1, rhof2=rhof2, kmin=kmin, kf1=kf1, kf2=kf2)[1], vs_brine,  places=0 )        
-        self.assertAlmostEqual(avo.avseth_fluidsub(vp=vp_gas, vs=vs_gas, rho=rho_gas, phi=phi, rhof1=rhof1, rhof2=rhof2, kmin=kmin, kf1=kf1, kf2=kf2)[2], rho_brine, places=0 )        
+        self.assertAlmostEqual(fluidsub.avseth_fluidsub(vp=vp_gas, vs=vs_gas, rho=rho_gas, phi=phi, rhof1=rhof1, rhof2=rhof2, kmin=kmin, kf1=kf1, kf2=kf2)[1], vs_brine,  places=0 )        
+        self.assertAlmostEqual(fluidsub.avseth_fluidsub(vp=vp_gas, vs=vs_gas, rho=rho_gas, phi=phi, rhof1=rhof1, rhof2=rhof2, kmin=kmin, kf1=kf1, kf2=kf2)[2], rho_brine, places=0 )        
 
     def test_smith(self):
         # Base case: gas
@@ -64,9 +65,9 @@ class FluidsubTest(unittest.TestCase):
         kqtz = 37000000000.  
         vclay = 0.0
 
-        self.assertAlmostEqual( avo.smith_fluidsub(vp=vp_gas, vs=vs_gas, rho=rho_gas, phi=phi, rhohc=rhohc, rhow=rhow, sw=sw, swnew=swnew, khc=khc, kw=kw, kclay=kclay, kqtz=kqtz, vclay=vclay)[0], vp_brine,  places=0 )        
-        self.assertAlmostEqual( avo.smith_fluidsub(vp=vp_gas, vs=vs_gas, rho=rho_gas, phi=phi, rhohc=rhohc, rhow=rhow, sw=sw, swnew=swnew, khc=khc, kw=kw, kclay=kclay, kqtz=kqtz, vclay=vclay)[1], vs_brine,  places=0 )        
-        self.assertAlmostEqual( avo.smith_fluidsub(vp=vp_gas, vs=vs_gas, rho=rho_gas, phi=phi, rhohc=rhohc, rhow=rhow, sw=sw, swnew=swnew, khc=khc, kw=kw, kclay=kclay, kqtz=kqtz, vclay=vclay)[2], rho_brine, places=0 )        
+        self.assertAlmostEqual( fluidsub.smith_fluidsub(vp=vp_gas, vs=vs_gas, rho=rho_gas, phi=phi, rhohc=rhohc, rhow=rhow, sw=sw, swnew=swnew, khc=khc, kw=kw, kclay=kclay, kqtz=kqtz, vclay=vclay)[0], vp_brine,  places=0 )        
+        self.assertAlmostEqual( fluidsub.smith_fluidsub(vp=vp_gas, vs=vs_gas, rho=rho_gas, phi=phi, rhohc=rhohc, rhow=rhow, sw=sw, swnew=swnew, khc=khc, kw=kw, kclay=kclay, kqtz=kqtz, vclay=vclay)[1], vs_brine,  places=0 )        
+        self.assertAlmostEqual( fluidsub.smith_fluidsub(vp=vp_gas, vs=vs_gas, rho=rho_gas, phi=phi, rhohc=rhohc, rhow=rhow, sw=sw, swnew=swnew, khc=khc, kw=kw, kclay=kclay, kqtz=kqtz, vclay=vclay)[2], rho_brine, places=0 )        
 
 
 if __name__ == '__main__':

@@ -5,6 +5,7 @@ Tests.
 """
 import unittest
 from numpy import linspace, sin, pi, amax
+
 from agilegeo.attribute import energy
 
 

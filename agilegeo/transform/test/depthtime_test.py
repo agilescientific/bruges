@@ -4,12 +4,9 @@
 Tests.
 """
 import unittest
-from agilegeo.avo import time_to_depth, depth_to_time
 import numpy as np
 
-# import matplotlib
-# matplotlib.use("WX")
-# from matplotlib import pyplot as plt
+from agilegeo.transform import time_to_depth, depth_to_time
 
 
 class TimeDepthTest(unittest.TestCase):
@@ -53,8 +50,6 @@ class TimeDepthTest(unittest.TestCase):
 
         output = time_to_depth(data, vmodel, dt, dz, twt=False)
 
-        # plt.imshow(output)
-        # plt.show()
         face_change = np.floor(((49.5 * dt) * 1500.0) / dz)
 
         self.assertTrue((output[face_change+1, 50] -
@@ -77,11 +72,6 @@ class TimeDepthTest(unittest.TestCase):
         v2 = depth_to_time(vmodel, vmodel, dz, dt)
         out2 = time_to_depth(out1, v2, dt, dz)
 
-        # plt.figure()
-        # plt.imshow(data)
-        # plt.figure()
-        # plt.imshow(out2)
-        # plt.show()
 
 if (__name__ == '__main__'):
 

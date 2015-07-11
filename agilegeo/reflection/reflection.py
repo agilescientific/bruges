@@ -9,7 +9,8 @@ Various reflectivity algorithms.
 import numpy as np
 from numpy import tan, sin, cos
 
-from .moduli import pr
+from ..rockphysics import pr
+
 
 def scattering_matrix(vp1, vs1, rho1, vp0, vs0, rho0, theta1):
     '''
@@ -110,6 +111,13 @@ def zoeppritz(vp1, vs1, rho1, vp0, vs0, rho0, theta1):
              value corresponding to each angle.
     '''
     return zoeppritz_element(vp1, vs1, rho1, vp0, vs0, rho0, theta1, 'PdPu')
+
+
+def zoeppritz_rpp(vp1, vs1, rho1, vp2, vs2, rho2, theta1, terms=False):
+    """
+    Exact Zoeppritz from expression.
+    """
+    pass
 
 
 def akirichards(vp1, vs1, rho1, vp2, vs2, rho2, theta1, terms=False):

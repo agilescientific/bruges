@@ -1,6 +1,8 @@
 import unittest
 import numpy
+
 from agilegeo.attribute import similarity
+
 
 class SimilarityTest( unittest.TestCase ):
 

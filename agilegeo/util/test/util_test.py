@@ -8,7 +8,7 @@ Testing util.
 """
 import unittest
 import numpy as np
-from agilegeo.util import next_pow2, rms, noise_db
+from agilegeo.util import next_pow2, rms
 
 
 class UtilTest(unittest.TestCase):

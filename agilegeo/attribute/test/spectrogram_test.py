@@ -1,6 +1,8 @@
 import unittest
 from numpy import  sin, pi, zeros, double, arange, zeros
+
 from agilegeo.attribute import spectra, spectraldecomp
+
 
 class SpectraTest( unittest.TestCase ):
     

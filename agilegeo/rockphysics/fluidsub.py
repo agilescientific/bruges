@@ -24,7 +24,7 @@ http://cseg.ca/symposium/archives/2012/presentations/Biot_Gassmann_and_me.pdf
 '''
 
 import numpy as np
-import moduli
+from . import moduli
 
 
 def avseth_gassmann(ksat1, kf1, kf2, kmin, phi):

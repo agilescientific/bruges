@@ -1,5 +1,5 @@
 
-import numpy 
+import numpy as np
 
 def similarity(traces, duration, dt=1, step_out=1, lag=0 ):
     """
@@ -36,13 +36,13 @@ def similarity(traces, duration, dt=1, step_out=1, lag=0 ):
    
     half_n_samples = int( duration / (2*dt) )
 
-    similarity_cube = numpy.zeros_like(traces, dtype='float32')
-    traces = numpy.nan_to_num(traces)
+    similarity_cube = np.zeros_like(traces, dtype='float32')
+    traces = np.nan_to_num(traces)
 
-    for j in numpy.arange( -lag,lag+1 ):
+    for j in np.arange( -lag,lag+1 ):
         
-        for i in ( numpy.arange( step_out )  ):
-            for idx in xrange(similarity_cube.shape[0]):
+        for i in ( np.arange( step_out )  ):
+            for idx in range(similarity_cube.shape[0]):
 
                 # Get the signal
                 start_sig_idx = max(0, (idx+(j*(i+1))-half_n_samples))
@@ -56,7 +56,6 @@ def similarity(traces, duration, dt=1, step_out=1, lag=0 ):
 
                 if(end_data_idx > traces.shape[0]): break
 
-                
                 signal = traces[start_sig_idx:stop_sig_idx, :]
                 data = traces[start_data_idx:end_data_idx,:]
 
@@ -64,9 +63,8 @@ def similarity(traces, duration, dt=1, step_out=1, lag=0 ):
                 
                 squares_of_diff = ((signal[:,1+i:] -
                                 data[:,:-(1+i)])**2.).sum(axis=0)
-
                 
-                sqrt=numpy.sqrt
+                sqrt=np.sqrt
                 squares[squares==0.0] = 0.001
                 squares_of_diff[squares_of_diff==0.0] = 0.001
                 sim = 1.0 -  sqrt(squares_of_diff) / \
@@ -74,8 +72,6 @@ def similarity(traces, duration, dt=1, step_out=1, lag=0 ):
                                  + sqrt(squares[:-(1+i)]) ))
              
                 similarity_cube[idx,(i+1):] = \
-                      numpy.maximum(sim,similarity_cube[idx, (i+1):])
+                      np.maximum(sim,similarity_cube[idx, (i+1):])
 
     return (similarity_cube)
-    
-

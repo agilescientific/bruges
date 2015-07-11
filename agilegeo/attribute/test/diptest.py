@@ -1,8 +1,10 @@
 import unittest
 import numpy as np
-from agilegeo.attribute import dipsteer
 import pylab as pl
-from agilegeo.wavelet import ricker
+
+from agilegeo.attribute import dipsteer
+from agilegeo.filters import ricker
+
 
 class DipTest( unittest.TestCase ):
 
