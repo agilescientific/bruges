@@ -1,9 +1,17 @@
+#!/usr/bin/env python
+# -*- coding: utf 8 -*-
+"""
+Testing util.
+
+:copyright: 2015 Agile Geoscience
+:license: Apache 2.0
+"""
 import unittest
 import numpy as np
 from agilegeo.util import next_pow2, rms, noise_db
 
 
-class UtilityTest(unittest.TestCase):
+class UtilTest(unittest.TestCase):
 
     def test_nextpow2(self):
         num = 888

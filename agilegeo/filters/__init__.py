@@ -1,4 +1,7 @@
-from .wavelets import ricker, ormsby, sweep, rotate_phase
+from .wavelets import ricker
+from .wavelets import ormsby
+from .wavelets import sweep
+from .wavelets import rotate_phase
 from .kernels import gaussian_kernel
 from .filters import snn
 
