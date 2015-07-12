@@ -7,7 +7,7 @@ from setuptools import setup
 import re
 
 verstr = 'unknown'
-VERSIONFILE = "agilegeo/_version.py"
+VERSIONFILE = "bruges/_version.py"
 with open(VERSIONFILE, "r")as f:
     verstrline = f.read().strip()
     pattern = re.compile(r"__version__ = ['\"](.*)['\"]")
@@ -30,23 +30,23 @@ CLASSIFIERS = ['Development Status :: 4 - Beta',
                'Programming Language :: Python :: 3.4',
                ]
 
-setup(name='agilegeo',
+setup(name='bruges',
       version=verstr,
       author='Agile Geoscience',
       author_email='hello@agilegeoscience.com',
-      packages=['agilegeo',
-                'agilegeo.attribute',
-                'agilegeo.filters',
-                'agilegeo.noise',
-                'agilegeo.reflection',
-                'agilegeo.rockphysics',
-                'agilegeo.transform',
-                'agilegeo.unit',
-                'agilegeo.util',
+      packages=['bruges',
+                'bruges.attribute',
+                'bruges.filters',
+                'bruges.noise',
+                'bruges.reflection',
+                'bruges.rockphysics',
+                'bruges.transform',
+                'bruges.unit',
+                'bruges.util',
                 ],
       description='Useful geophysics functions',
       long_description=open('README.rst').read(),
-      url='http://pypi.python.org/pypi/agilegeo/',
+      url='http://pypi.python.org/pypi/bruges/',
       install_requires=REQUIREMENTS,
       classifiers=CLASSIFIERS,
       license='Apache 2',

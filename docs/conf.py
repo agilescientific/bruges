@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 #
-# agilegeo documentation build configuration file, created by
+# bruges documentation build configuration file, created by
 # sphinx-quickstart on Thu Dec 12 16:14:28 2013.
 #
 # This file is execfile()d with the current directory set to its
@@ -50,7 +50,7 @@ source_suffix = '.rst'
 master_doc = 'index'
 
 # General information about the project.
-project = u'agilegeo'
+project = u'bruges'
 copyright = u'2015, Agile Geoscience'
 
 # The version info for the project you're documenting, acts as replacement for
@@ -183,7 +183,7 @@ html_static_path = ['_static']
 #html_file_suffix = None
 
 # Output file base name for HTML help builder.
-htmlhelp_basename = 'agilegeodoc'
+htmlhelp_basename = 'brugesdoc'
 
 
 # -- Options for LaTeX output ---------------------------------------------
@@ -203,7 +203,7 @@ latex_elements = {
 # (source start file, target name, title,
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
-  ('index', 'agilegeo.tex', u'agilegeo Documentation',
+  ('index', 'bruges.tex', u'bruges Documentation',
    u'Evan Bianco, Ben Bougher, Matt Hall', 'manual'),
 ]
 
@@ -233,7 +233,7 @@ latex_documents = [
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [
-    ('index', 'agilegeo', u'agilegeo Documentation',
+    ('index', 'bruges', u'bruges Documentation',
      [u'Evan Bianco, Ben Bougher, Matt Hall'], 1)
 ]
 
@@ -247,8 +247,8 @@ man_pages = [
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
-  ('index', 'agilegeo', u'agilegeo Documentation',
-   u'Evan Bianco, Ben Bougher, Matt Hall', 'agilegeo', 'One line description of project.',
+  ('index', 'bruges', u'bruges Documentation',
+   u'Evan Bianco, Ben Bougher, Matt Hall', 'bruges', 'One line description of project.',
    'Miscellaneous'),
 ]
 

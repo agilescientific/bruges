@@ -1,7 +1,7 @@
-agilegeo
-========
+bruges
+======
 
 .. toctree::
    :maxdepth: 4
 
-   agilegeo
+   bruges
