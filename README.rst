@@ -1,5 +1,5 @@
 ===========
-bruges
+bruges is a .. image:: http://kwinkunks.pythonanywhere.com/bruges
 ===========
 
 .. image:: https://travis-ci.org/agile-geoscience/bruges.png?branch=master
@@ -14,10 +14,6 @@ bruges
     :target: https://github.com/agile-geoscience/bruges/blob/develop/LICENSE.md
     :alt: Apache 2 license
 
-.. image:: http://img.shields.io/pypi/bruges.svg
-    :target: http://pypi.python.org/pypi/bruges
-    :alt: PyPI downloads
-    
 .. image:: https://img.shields.io/pypi/v/bruges.svg
     :target: http://pypi.python.org/pypi/bruges/
     :alt: PyPI version
