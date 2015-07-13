@@ -13,8 +13,11 @@ from .fluidsub import vrh, rhogas, rhosat
 from .fluidsub import avseth_fluidsub, smith_fluidsub
 
 from .anisotropy import backus_parameters, backus
-from .anisotropy import quality_factor, thomsen_parameters
+from .anisotropy import backus_quality_factor, thomsen_parameters
 from .anisotropy import dispersion_parameter, blangy
+from .anisotropy import crack_density
+from .anisotropy import hudson_delta_M, hudson_delta_G
+from .anisotropy import hudson_quality_factor, hudson_inverse_Q_ratio
 
 from .elastic import elastic_impedance
 
@@ -26,7 +29,10 @@ __all__ = [
            "vrh", "rhogas", "rhosat",
            "avseth_fluidsub", "smith_fluidsub",
            "backus_parameters", "backus",
-           "quality_factor", "thomsen_parameters",
+           "backus_quality_factor", "thomsen_parameters",
            "dispersion_parameter", "blangy",
+           "crack_density"
+           "hudson_delta_M", "hudson_delta_G",
+           "hudson_quality_factor", "hudson_inverse_Q_ratio",
            "elastic_impedance",
            ]

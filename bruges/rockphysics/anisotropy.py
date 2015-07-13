@@ -1,7 +1,11 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 """
-Thin-layer anisotropy.
+Anisotropy effects.
+
+Backus anisotropy is from thin layers.
+
+Hudson anisotropy is from crack defects.
 
 :copyright: 2015 Agile Geoscience
 :license: Apache 2.0
@@ -58,7 +62,7 @@ def backus(vp, vs, rho, lb, dz):
     return vp0, vs0
 
 
-def quality_factor(vp, vs, rho, lb, dz):
+def backus_quality_factor(vp, vs, rho, lb, dz):
     """
     Compute Qp and Qs from Liner (2014) equation 10.
 
@@ -144,3 +148,100 @@ def blangy(vp0, vs0, rho0, d0, e0, vp1, vs1, rho1, d1, e1, theta):
     anisotropic = A - B + C + D - E
 
     return isotropic, anisotropic
+
+
+def crack_density(porosity, aspect):
+    """
+    Returns crack density from porosity and aspect ratio, phi and alpha
+    respectively in the unnumbered equation between 15.40 and 15.41 in
+    Dvorkin et al. 2014.
+
+    Args:
+        porosity (float): Fractional porosity.
+        aspect (float): Aspect ratio.
+
+    Returns:
+        float: Crack density.
+    """
+    if porosity >= 1:
+        porosity /= 100.
+
+    return 3 * porosity / (4 * np.pi * aspect)
+
+
+def hudson_delta_M(porosity, aspect, mu, lam=None, pmod=None):
+    """
+    The approximate reduction in compressional modulus M in the direction
+    normal to a set of aligned cracks. Eqn 15.40 in Dvorkin et al (2014).
+
+    Args:
+        porosity (float): Fractional porosity, phi.
+        aspect (float): Aspect ratio, alpha.
+        mu (float): Shear modulus, sometimes called G.
+        lam (float): Lame's first parameter.
+        pmod (float): Compressional modulus, M.
+
+    Returns:
+        float: M_inf - M_0 = \Delta c_11.
+    """
+    epsilon = crack_density(porosity, aspect)
+    if lam:
+        return epsilon * (lam**2 / mu) * 4*(lam + 2*mu)/(3*lam + 3*mu)
+    else:
+        return (4*epsilon/3) * ((pmod - 2*mu)**2 / mu) * (pmod/(pmod-mu))
+
+
+def hudson_delta_G(porosity, aspect, mu, lam=None, pmod=None):
+    """
+    The approximate reduction in shear modulus G (or mu) in the direction
+    normal to a set of aligned cracks. Eqn 15.42 in Dvorkin et al (2014).
+
+    Args:
+        porosity (float): Fractional porosity, phi.
+        aspect (float): Aspect ratio, alpha.
+        mu (float): Shear modulus, sometimes called G.
+        lam (float): Lame's first parameter, lambda.
+        pmod (float): Compressional modulus, M.
+
+    Returns:
+        float: M_inf - M_0 = \Delta c_11.
+    """
+    epsilon = crack_density(porosity, aspect)
+    if lam:
+        return epsilon * mu * 16*(lam + 2*mu)/(9*lam + 12*mu)
+    else:
+        return (16*mu*epsilon/3) * pmod / (3*pmod - 2*mu)
+
+
+def hudson_quality_factor(porosity, aspect, mu, lam=None, pmod=None):
+    """
+    Returns Q_p and Q_s for cracked media. Equations 15.41 and 15.43 in
+    Dvorkin et al. (2014).
+    """
+    Qp = 2*mu / hudson_delta_M(porosity, aspect, mu, lam, pmod)
+    Qs = 2*mu / hudson_delta_G(porosity, aspect, mu, lam, pmod)
+    return Qp, Qs
+
+
+def hudson_inverse_Q_ratio(mu=None, pmod=None,
+                           pr=None,
+                           vp=None, vs=None,
+                           aligned=True):
+    """
+    Dvorkin et al. (2014), Eq 15.44 (aligned) and 15.48 (not aligned).
+    """
+    if pr:
+        x = (2 - 2*pr) / (1 - 2*pr)
+    elif vp and vs:
+        x = vp**2 / vs**2
+    elif mu and pmod:
+        x = pmod / mu
+    else:
+        raise Exception
+
+    if aligned:
+        return 0.25 * (x - 2)**2 * (3*x - 2) / (x**2 - x)
+    else:
+        a = 2*x / (3*x - 2)
+        b = x / 3*(x - 1)
+        return 1.25 * ((x - 2)**2 / (x - 1)) / (a + b)
