@@ -1,5 +1,6 @@
 ===========
-bruges is a .. image:: http://kwinkunks.pythonanywhere.com/bruges
+bruges is a
+.. image:: http://kwinkunks.pythonanywhere.com/bruges
 ===========
 
 .. image:: https://travis-ci.org/agile-geoscience/bruges.png?branch=master
@@ -17,10 +18,6 @@ bruges is a .. image:: http://kwinkunks.pythonanywhere.com/bruges
 .. image:: https://img.shields.io/pypi/v/bruges.svg
     :target: http://pypi.python.org/pypi/bruges/
     :alt: PyPI version
-    
-.. image:: http://img.shields.io/github/issues/badges/bruges.svg
-    :target: https://github.com/agile-geoscience/bruges
-    :alt: GitHub issues
 
 .. line-block::
    The bruges module contains several common geophysics functions 
