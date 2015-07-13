@@ -1,7 +1,11 @@
 ===========
 bruges is a
-.. image:: http://kwinkunks.pythonanywhere.com/bruges
 ===========
+
+.. image:: http://kwinkunks.pythonanywhere.com/bruges
+
+Status
++++++++
 
 .. image:: https://travis-ci.org/agile-geoscience/bruges.png?branch=master
     :target: https://travis-ci.org/agile-geoscience/bruges
