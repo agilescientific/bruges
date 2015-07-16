@@ -7,12 +7,12 @@
 from .energy import energy
 from .similarity import similarity
 from .dipsteer import dipsteer
-from .spectrogram import spectra
+from .spectrogram import spectrogram
 from .spectraldecomp import spectraldecomp
 
 __all__ = ["energy",
            "similarity",
-	   "dipsteer",
-	   "spectra",
-	   "spectraldecomp",
-	   ]
+           "dipsteer",
+           "spectrogram",
+           "spectraldecomp",
+           ]
