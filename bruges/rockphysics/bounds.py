@@ -18,13 +18,13 @@ def voight_reuss(f, k, mu):
     :param mu: shear moduli of constituents (list or array).
 
     :returns: ku, kl, muu, mul - upper and lower bounds of the bulk
-    and shear moduli, plus ka, mul - arithmetic average of the upper 
+    and shear moduli, plus ka, mul - arithmetic average of the upper
     and lower bounds  (equals the Hill average for Hashin-Shtrikman bounds)
 
     :source: Berryman, J.G., 1993, Mixture theories for rock properties
              Mavko, G., 1993, Rock Physics Formulas.
 
-    : Written originally by Xingzhou 'Frank' Liu, in MATLAB 
+    : Written originally by Xingzhou 'Frank' Liu, in MATLAB
     : modified by Isao Takahashi, 4/27/99,
     : Translated into Python by Evan Bianco
     """
@@ -35,6 +35,10 @@ def voight_reuss(f, k, mu):
     if sum(f) != 1.0:
         print ('F must sum up to 1')
 
+    f = np.array(f)
+    k = np.array(k)
+    mu = np.array(mu)
+
     ku = np.sum(f * k)          # Voight bound
     kl = 1.0 / np.sum(f / k)    # Reuss bound
 
@@ -42,7 +46,7 @@ def voight_reuss(f, k, mu):
     mul = 1.0 / np.sum(f / mu)  # Reuss bound
 
     ka = (ku + kl) / 2.0        # Hill averages
-    mua = (muu + mul) / 2.0 
+    mua = (muu + mul) / 2.0
 
     return ku, kl, muu, mul, ka, mua
 
@@ -73,6 +77,11 @@ def hashin_shtrikman(f, k, mu):
     if sum(f) != 1.0:
         print ('F must sum up to 1')
 
+    f = np.array(f)
+    k = np.array(k)
+    mu = np.array(mu)
+
+    c = 4 / 3
     kmx = max(k)
     kmn = min(k)
     umx = max(k)
