@@ -16,7 +16,7 @@ def voigt_bound(f, m):
     average of the constituents.
 
     Args:
-        f: list or array of N volume fractions (must sum to 1).
+        f: list or array of N volume fractions (must sum to 1 or 100).
         m: elastic modulus of N constituents (list or array).
 
      Returns:
@@ -43,7 +43,7 @@ def reuss_bound(f, m):
     average of the constituents.
 
     Args:
-        f: list or array of N volume fractions (must sum to 1).
+        f: list or array of N volume fractions (must sum to 1 or 100).
         m: elastic modulus of N constituents (list or array).
 
      Returns:
@@ -70,7 +70,7 @@ def hill_average(f, m):
     average of the Reuss (lower) and Voigt (upper) bounds.
 
     Args:
-        f: list or array of N volume fractions (must sum to 1).
+        f: list or array of N volume fractions (must sum to 1 or 100).
         m: elastic modulus of N constituents (list or array).
 
      Returns:
