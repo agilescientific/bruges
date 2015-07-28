@@ -8,14 +8,15 @@ import unittest
 from bruges.rockphysics import bounds as b
 
 # Inputs.
-f = [0.5, 0.5]
-k = [36.0, 4.0]
-mu = [45, 5.0]
+f1 = [0.5, 0.5]
+f2 = [50, 50]
+k1 = [36.0, 4.0]
+
 
 # Expected outputs.
-mv = 20.0
-mr = 7.199
-mh = 13.599
+mv = 20.0    # Voigt average (hand-calculated)
+mr = 7.199   # Reuss average (hand-calculated)
+mh = 13.599  # Voigt-Reuss Hill average (hand-calculated)
 
 
 class BoundsTest(unittest.TestCase):
@@ -24,13 +25,14 @@ class BoundsTest(unittest.TestCase):
     """
 
     def test_voigt(self):
-        self.assertAlmostEqual(b.voight(f, k), mv, places=-2)
+        self.assertAlmostEqual(b.voigt_bound(f1, k1), mv, places=-2)
+        self.assertAlmostEqual(b.voigt_bound(f2, k1), mv, places=-2)
 
     def test_reuss(self):
-        self.assertAlmostEqual(b.reuss(f, k), mr, places=-2)
+        self.assertAlmostEqual(b.reuss_bound(f1, k1), mr, places=-2)
 
     def test_hill_average(self):
-        self.assertAlmostEqual(b.hill_average(f, k), mh, places=-2)
+        self.assertAlmostEqual(b.hill_average(f1, k1), mh, places=-2)
 
 if __name__ == '__main__':
 

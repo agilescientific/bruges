@@ -25,6 +25,11 @@ def voigt_bound(f, m):
     """
 
     f = np.array(f)
+
+    if float(sum(f)) == 100.0:
+        # fractions have been giving in percent: scale to 1.
+        f /= 100.0
+
     m = np.array(m)
     mv = np.sum(f * m)
 
@@ -47,6 +52,11 @@ def reuss_bound(f, m):
     """
 
     f = np.array(f)
+
+    if float(sum(f)) == 100.0:
+        # fractions have been giving in percent: scale to 1.
+        f /= 100.0
+
     m = np.array(m)
     mr = 1.0 / np.sum(f / m)
 
@@ -103,6 +113,11 @@ def hashin_shtrikman(f, k, mu, bound='upper', moduli='bulk'):
     """
 
     f = np.array(f)
+
+    if float(sum(f)) == 100.0:
+        # fractions have been giving in percent: scale to 1.
+        f /= 100.0
+
     k = np.array(k)
     mu = np.array(mu)
 
