@@ -132,7 +132,7 @@ def hashin_shtrikman(f, k, mu, bound='upper', moduli='bulk'):
         if bound == 'upper':
             mhs = 1.0 / np.sum(f / (k + c * umx)) - (c * umx)  # HS upper bound
         if bound == 'lower':
-            mhs = 1.0 / np.sum(f / (k + c * umn)) - (c * umx)  # HS lower bound
+            mhs = 1.0 / np.sum(f / (k + c * umn)) - (c * umn)  # HS lower bound
 
     if moduli == 'shear':
         if bound == 'upper':
