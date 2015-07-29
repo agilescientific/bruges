@@ -114,33 +114,6 @@ def next_pow2(num):
     return int(2**np.ceil(np.log2(num)))
 
 
-def noise_db(a, snr):
-    """
-    Takes an array of seismic amplitudes
-    and SNR in dB.
-
-    Returns an array of noise, the same
-    shape as the input.
-
-    Note it does *not* return the input
-    array with the noise added.
-
-    """
-
-    # Get the amplitude of the signal
-    sigmean = rms(a)
-
-    # Calculate the amp of the noise,
-    # given the desired SNR
-    noisemean = sigmean / 10.0**(snr/20.0)
-
-    # Normal noise, centered on 0,
-    # SD=sqrt(var), same shape as input
-    noise = noisemean * np.random.normal(0.0, 1.0, a.shape)
-
-    return noise
-
-
 def top_and_tail(a, b=np.array([]), c=np.array([])):
     """
     Top and tail up to 3 arrays to the non-NaN extent of the first array.
