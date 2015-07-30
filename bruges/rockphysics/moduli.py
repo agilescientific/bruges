@@ -13,13 +13,15 @@ Created June 2014
 @author: Matt Hall
 
 Using equations http://www.subsurfwiki.org/wiki/Elastic_modulus
-from Mavko, G, T Mukerji and J Dvorkin (2003), The Rock Physics Handbook, Cambridge University Press
+from Mavko, G, T Mukerji and J Dvorkin (2003), The Rock Physics Handbook,
+Cambridge University Press
 
 '''
 import numpy as np
 
 
-def youngs(vp=None, vs=None, rho=None, mu=None, lam=None, bulk=None, pr=None, pmod=None):
+def youngs(vp=None, vs=None, rho=None, mu=None, lam=None, bulk=None, pr=None,
+           pmod=None):
     '''
     Computes Young's modulus given either Vp, Vs, and rho, or
     any two elastic moduli (e.g. lambda and mu, or bulk and P
@@ -35,32 +37,33 @@ def youngs(vp=None, vs=None, rho=None, mu=None, lam=None, bulk=None, pr=None, pm
         Young's modulus in pascals, Pa
 
     '''
-    if vp and vs and rho:
+    if None not in (vp, vs, rho):
         return rho * vs**2 * (3.*vp**2 - 4.*vs**2) / (vp**2 - vs**2)
 
-    elif mu and lam:
+    elif None not in (mu, lam):
         return mu * (3.*lam + 2*mu) / (lam + mu)
 
-    elif bulk and lam:
+    elif None not in (bulk, lam):
         return 9.*bulk * (bulk - lam) / (3.*bulk - lam)
 
-    elif bulk and mu:
+    elif None not in (bulk, mu):
         return 9.*bulk*mu / (3.*bulk + mu)
 
-    elif lam and pr:
+    elif None not in (lam, pr):
         return lam * (1+pr) * (1 - 2*pr) / pr
 
-    elif pr and mu:
+    elif None not in (pr, mu):
         return 2. * mu * (1+pr)
 
-    elif pr and bulk:
+    elif None not in (pr, bulk):
         return 3. * bulk * (1 - 2*pr)
 
     else:
         return None
 
 
-def bulk(vp=None, vs=None, rho=None, mu=None, lam=None, youngs=None, pr=None, pmod=None):
+def bulk(vp=None, vs=None, rho=None, mu=None, lam=None, youngs=None, pr=None,
+         pmod=None):
     '''
     Computes bulk modulus given either Vp, Vs, and rho, or
     any two elastic moduli (e.g. lambda and mu, or Young's
@@ -77,29 +80,30 @@ def bulk(vp=None, vs=None, rho=None, mu=None, lam=None, youngs=None, pr=None, pm
 
     '''
 
-    if vp and vs and rho:
+    if None not in (vp, vs, rho):
         return rho * (vp**2 - (4./3.)*(vs**2))
 
-    elif mu and lam:
+    elif None not in (mu, lam):
         return lam + 2*mu/3.
 
-    elif mu and youngs:
+    elif None not in (mu, youngs):
         return youngs * mu / (9.*mu - 3.*youngs)
 
-    elif lam and pr:
+    elif None not in (lam, pr):
         return lam * (1+pr) / 3.*pr
 
-    elif pr and mu:
+    elif None not in (pr, mu):
         return 2. * mu * (1+pr) / (3. - 6.*pr)
 
-    elif pr and youngs:
+    elif None not in (pr, youngs):
         return youngs / (3. - 6.*pr)
 
     else:
         return None
 
 
-def pr(vp=None, vs=None, rho=None, mu=None, lam=None, youngs=None, bulk=None, pmod=None):
+def pr(vp=None, vs=None, rho=None, mu=None, lam=None, youngs=None, bulk=None,
+       pmod=None):
     '''
     Computes Poisson ratio given either Vp, Vs, and rho, or
     any two elastic moduli (e.g. lambda and mu, or Young's
@@ -116,30 +120,30 @@ def pr(vp=None, vs=None, rho=None, mu=None, lam=None, youngs=None, bulk=None, pm
 
     '''
 
-
-    if vp and vs:
+    if None not in (vp, vs):
         return (vp**2. - 2.*vs**2) / (2. * (vp**2 - vs**2))
 
-    elif mu and lam:
+    elif None not in (mu, lam):
         return lam / (2. * (lam+mu))
 
-    elif mu and youngs:
+    elif None not in (mu, youngs):
         return (youngs / (2.*mu)) - 1
 
-    elif lam and bulk:
+    elif None not in (lam, bulk):
         return lam / (3.*bulk - lam)
 
-    elif bulk and mu:
+    elif None not in (bulk, mu):
         return (3.*bulk - 2*mu) / (6.*bulk + 2*mu)
 
-    elif bulk and youngs:
+    elif None not in (bulk, youngs):
         return (3.*bulk - youngs) / (6.*bulk)
 
     else:
         return None
 
 
-def mu(vp=None, vs=None, rho=None, pr=None, lam=None, youngs=None, bulk=None, pmod=None):
+def mu(vp=None, vs=None, rho=None, pr=None, lam=None, youngs=None, bulk=None,
+       pmod=None):
     '''
     Computes shear modulus given either Vp, Vs, and rho, or
     any two elastic moduli (e.g. lambda and bulk, or Young's
@@ -156,30 +160,30 @@ def mu(vp=None, vs=None, rho=None, pr=None, lam=None, youngs=None, bulk=None, pm
 
     '''
 
-
-    if vs and rho:
+    if None not in (vs, rho):
         return rho * vs**2
 
-    elif bulk and lam:
+    elif None not in (bulk, lam):
         return 3. * (bulk - lam) / 2.
 
-    elif bulk and youngs:
+    elif None not in (bulk, youngs):
         return 3. * bulk * youngs / (9.*bulk - youngs)
 
-    elif lam and pr:
+    elif None not in (lam, pr):
         return lam * (1 - 2.*pr) / (2.*pr)
 
-    elif pr and youngs:
+    elif None not in (pr, youngs):
         return youngs / (2. * (1 + pr))
 
-    elif pr and bulk:
+    elif None not in (pr, bulk):
         return 3. * bulk * (1 - 2*pr) / (2. * (1 + pr))
 
     else:
         return None
 
 
-def lam(vp=None, vs=None, rho=None, pr=None,  mu=None, youngs=None, bulk=None, pmod=None):
+def lam(vp=None, vs=None, rho=None, pr=None,  mu=None, youngs=None, bulk=None,
+        pmod=None):
     '''
     Computes lambda given either Vp, Vs, and rho, or
     any two elastic moduli (e.g. bulk and mu, or Young's
@@ -195,34 +199,33 @@ def lam(vp=None, vs=None, rho=None, pr=None,  mu=None, youngs=None, bulk=None, p
         Lambda in pascals, Pa
 
     '''
-
-
-    if vs and rho:
+    if None not in (vp, vs, rho):
         return rho * (vp**2 - 2.*vs**2.)
 
-    elif youngs and mu:
+    elif None not in (youngs, mu):
         return mu * (youngs - 2.*mu) / (3.*mu - youngs)
 
-    elif bulk and mu:
+    elif None not in (bulk, mu):
         return bulk - (2.*mu/3.)
 
-    elif bulk and youngs:
+    elif None not in (bulk, youngs):
         return 3. * bulk * (3*bulk - youngs) / (9*bulk - youngs)
 
-    elif pr and mu:
+    elif None not in (pr, mu):
         return 2. * pr * mu / (1 - 2.*pr)
 
-    elif pr and youngs:
+    elif None not in (pr, youngs):
         return pr * youngs / ((1+pr) * (1-2*pr))
 
-    elif pr and bulk:
+    elif None not in (pr, bulk):
         return 3. * bulk * pr / (1+pr)
 
     else:
         return None
 
 
-def pmod(vp=None, vs=None, rho=None, pr=None, mu=None, lam=None, youngs=None, bulk=None):
+def pmod(vp=None, vs=None, rho=None, pr=None, mu=None, lam=None, youngs=None,
+         bulk=None):
     '''
     Computes P-wave modulus given either Vp, Vs, and rho, or
     any two elastic moduli (e.g. lambda and mu, or Young's
@@ -239,41 +242,42 @@ def pmod(vp=None, vs=None, rho=None, pr=None, mu=None, lam=None, youngs=None, bu
 
     '''
 
-    if vp and rho:
+    if None not in (vp, rho):
         return rho * vp**2
 
-    elif lam and mu:
+    elif None not in (lam, mu):
         return lam + 2*mu
 
-    elif youngs and mu:
+    elif None not in (youngs, mu):
         return mu * (4.*mu - youngs) / (3.*mu - youngs)
 
-    elif bulk and lam:
+    elif None not in (bulk, lam):
         return 3*bulk - 2.*lam
 
-    elif bulk and mu:
+    elif None not in (bulk, mu):
         return bulk + (4.*mu/3.)
 
-    elif bulk and youngs:
+    elif None not in (bulk, youngs):
         return 3. * bulk * (3*bulk + youngs) / (9*bulk - youngs)
 
-    elif lam and pr:
+    elif None not in (lam, pr):
         return lam * (1 - pr) / pr
 
-    elif pr and mu:
+    elif None not in (pr, mu):
         return 2. * pr * mu * (1-pr) / (1 - 2.*pr)
 
-    elif pr and youngs:
+    elif None not in (pr, youngs):
         return (1-pr) * youngs / ((1+pr) * (1 - 2.*pr))
 
-    elif pr and bulk:
+    elif None not in (pr, bulk):
         return 3. * bulk * (1-pr) / (1+pr)
 
     else:
         return None
 
 
-def vp(youngs=None, vs=None, rho=None, mu=None, lam=None, bulk=None, pr=None, pmod=None):
+def vp(youngs=None, vs=None, rho=None, mu=None, lam=None, bulk=None, pr=None,
+       pmod=None):
     '''
     Computes Vp given bulk density and any two elastic moduli
     (e.g. lambda and mu, or Young's and P moduli).
@@ -289,29 +293,30 @@ def vp(youngs=None, vs=None, rho=None, mu=None, lam=None, bulk=None, pr=None, pm
 
     '''
 
-    if mu and lam and rho:
-        return np.sqrt( (lam + 2.*mu) / rho )
+    if None not in (mu, lam, rho):
+        return np.sqrt((lam + 2.*mu) / rho)
 
-    elif youngs and mu and rho:
-        return np.sqrt( mu * (youngs - 4.*mu) / (rho * (youngs - 3.*mu)) )
+    elif None not in (youngs, mu and rho):
+        return np.sqrt(mu * (youngs - 4.*mu) / (rho * (youngs - 3.*mu)))
 
-    elif youngs and pr and rho:
-        return np.sqrt( youngs * (1 - pr) / (rho * (1+pr)* (1 - 2.*pr)) )
+    elif None not in (youngs, pr and rho):
+        return np.sqrt(youngs * (1 - pr) / (rho * (1+pr) * (1 - 2.*pr)))
 
-    elif bulk and lam and rho:
-        return np.sqrt( (9.*bulk - 2.*lam) / rho )
+    elif None not in (bulk, lam and rho):
+        return np.sqrt((9.*bulk - 2.*lam) / rho)
 
-    elif bulk and mu and rho:
-        return np.sqrt( (bulk + 4.*mu/3. ) / rho)
+    elif None not in (bulk, mu and rho):
+        return np.sqrt((bulk + 4.*mu/3.) / rho)
 
-    elif lam and pr and rho:
-        return np.sqrt( lam * (1. - pr) / (pr*rho))
+    elif None not in (lam, pr and rho):
+        return np.sqrt(lam * (1. - pr) / (pr*rho))
 
     else:
         return None
 
 
-def vs(youngs=None, vp=None, rho=None, mu=None, lam=None, bulk=None, pr=None, pmod=None):
+def vs(youngs=None, vp=None, rho=None, mu=None, lam=None, bulk=None, pr=None,
+       pmod=None):
     '''
     Computes Vs given bulk density and shear modulus.
 
@@ -326,8 +331,8 @@ def vs(youngs=None, vp=None, rho=None, mu=None, lam=None, bulk=None, pr=None, pm
 
     '''
 
-    if mu and rho:
-        return np.sqrt( mu / rho )
+    if None not in (mu, rho):
+        return np.sqrt(mu / rho)
 
     else:
         return None
@@ -346,7 +351,7 @@ def moduli_dict(vp, vs, rho):
         A dict of elastic moduli, plus P-wave impedance.
 
     '''
-    
+
     mod = {}
 
     mod['imp'] = vp * rho
