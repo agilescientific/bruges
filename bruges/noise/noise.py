@@ -6,6 +6,10 @@ Noise.
 :copyright: 2015 Agile Geoscience
 :license: Apache 2.0
 """
+import numpy as np
+
+from bruges.util import rms
+
 
 def noise_db(a, snr):
     """
@@ -32,4 +36,3 @@ def noise_db(a, snr):
     noise = noisemean * np.random.normal(0.0, 1.0, a.shape)
 
     return noise
-

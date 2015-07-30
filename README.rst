@@ -7,41 +7,64 @@ bruges is a
 Status
 +++++++
 
-.. image:: https://travis-ci.org/agile-geoscience/bruges.png?branch=master
+.. image:: https://img.shields.io/travis/agile-geoscience/bruges.svg
     :target: https://travis-ci.org/agile-geoscience/bruges
-    :alt: Build
-
-.. image:: https://www.codacy.com/project/badge/f445542bc50e48c18a0d0e15a2768eb7
-    :target: https://www.codacy.com/public/matt/bruges
-    :alt: Codacy
-
-.. image:: https://img.shields.io/badge/license-Apache-blue.svg
-    :target: https://github.com/agile-geoscience/bruges/blob/develop/LICENSE.md
-    :alt: Apache 2 license
+    :alt: Travis build status
+    
+.. image:: https://img.shields.io/pypi/status/bruges.svg
+    :target: https://pypi.python.org/pypi/bruges/
+    :alt: Development status
 
 .. image:: https://img.shields.io/pypi/v/bruges.svg
-    :target: http://pypi.python.org/pypi/bruges/
-    :alt: PyPI version
+    :target: https://pypi.python.org/pypi/bruges/
+    :alt: Latest version
+    
+.. image:: https://img.shields.io/pypi/pyversions/bruges.svg
+    :target: https://pypi.python.org/pypi/bruges/
+    :alt: Python version
+    
+.. image:: https://img.shields.io/coveralls/agile-geoscience/bruges.svg 
+    :target: https://coveralls.io/r/agile-geoscience/bruges
+    :alt: Coveralls coverage
+
+.. image:: https://img.shields.io/codacy/f445542bc50e48c18a0d0e15a2768eb7.svg 
+    :target: https://www.codacy.com/app/matt/bruges/dashboard
+    :alt: Codacy code review
+
+.. image:: https://img.shields.io/pypi/l/bruges.svg
+    :target: http://www.apache.org/licenses/LICENSE-2.0
+    :alt: License
 
 .. line-block::
    The bruges module contains several common geophysics functions 
    used for modelling and post-processing seismic reflection data.
 
-Prerequisites
-++++++++++++++++
-Requires scipy and numpy.
+
+Installation
+++++++++++++
+Install with
+
+.. code-block:: shell
+
+    pip install bruges
+
+**bruges** requires NumPy and SciPy.
+
 
 Contributors
 ++++++++++++
 * Evan Bianco
 * Ben Bougher
 * Matt Hall
-* Wes Hamlyn, and Sean Ross-Ross
+* Wes Hamlyn
+* Sean Ross-Ross
+
 
 Links
-+++++++
++++++
 * `Agile Geoscience <http://www.agilegeoscience.com>`_
 * `Homepage <http://agile-geoscience.github.com/bruges/>`_
 * `Issue Tracker <https://github.com/agile-geoscience/bruges/issues/>`_
 * `PyPi <http://pypi.python.org/pypi/bruges/>`_
 * `Github <https://github.com/agile-geoscience/bruges>`_
+
