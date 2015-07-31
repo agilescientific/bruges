@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 """
-Bounds on effective elastic moduli.
+Bounds on effective elastic modulus.
 :copyright: 2015 Agile Geoscience
 :license: Apache 2.0
 """
@@ -48,7 +48,6 @@ def reuss_bound(f, m):
 
      Returns:
         mr: Reuss lower bound.
-
     """
 
     f = np.array(f)
@@ -75,7 +74,6 @@ def hill_average(f, m):
 
      Returns:
         mh: Hill average.
-
     """
     mv = voigt_bound(f, m)
     mr = reuss_bound(f, m)
@@ -84,25 +82,22 @@ def hill_average(f, m):
     return mh
 
 
-def hashin_shtrikman(f, k, mu, bound='upper', moduli='bulk'):
-
+def hashin_shtrikman(f, k, mu, modulus='bulk'):
     """
     Hashin-Shtrikman bounds for a mixture of two constituents.
     The best bounds for an isotropic elastic mixture, which give
-    the narrowest possible range of elastic moduli without
+    the narrowest possible range of elastic modulus without
     specifying anything about the geometries of the constituents.
 
     Args:
-        f: list or array of volume fractions (<=1).
-        k: bulk moduli of constituents (list or array).
-        mu: shear moduli of constituents (list or array).
-        moduli: A string specifying whether to return either the
+        f: list or array of volume fractions (must sum to 1.00 or 100%).
+        k: bulk modulus of constituents (list or array).
+        mu: shear modulus of constituents (list or array).
+        modulus: A string specifying whether to return either the
             'bulk' or 'shear' HS bound.
-        bound: A string specifying whether to return either
-            the 'upper' or lower 'bound'.
 
     Returns:
-        The Hashin Shtrikman modulus, mhs
+        tuple: The Hashin Shtrikman (lower, upper) bounds.
 
     :source: Berryman, J.G., 1993, Mixture theories for rock properties
              Mavko, G., 1993, Rock Physics Formulas.
@@ -111,36 +106,24 @@ def hashin_shtrikman(f, k, mu, bound='upper', moduli='bulk'):
     : modified by Isao Takahashi, 4/27/99,
     : Translated into Python by Evan Bianco
     """
+    def z_bulk(k, mu):
+        return (4/3.) * mu
+
+    def z_shear(k, mu):
+        return mu * (9 * k + 8 * mu) / (k + 2 * mu) / 6
+
+    def bound(f, k, z):
+        return 1 / sum(f / (k + z)) - z
 
     f = np.array(f)
-
-    if float(sum(f)) == 100.0:
-        # fractions have been giving in percent: scale to 1.
+    if sum(f) == 100:
         f /= 100.0
 
-    k = np.array(k)
-    mu = np.array(mu)
+    func = {'shear': z_shear,
+            'bulk': z_bulk}
 
-    c = 4.0 / 3
+    k, mu = np.array(k), np.array(mu)
+    z_min = func[modulus](np.amin(k), np.amin(mu))
+    z_max = func[modulus](np.amax(k), np.amax(mu))
 
-    kmx = max(k)
-    kmn = min(k)
-    umx = max(mu)
-    umn = min(mu)
-
-    if moduli == 'bulk':
-        if bound == 'upper':
-            mhs = 1.0 / np.sum(f / (k + c * umx)) - (c * umx)  # HS upper bound
-        if bound == 'lower':
-            mhs = 1.0 / np.sum(f / (k + c * umn)) - (c * umn)  # HS lower bound
-
-    if moduli == 'shear':
-        if bound == 'upper':
-            etamx = umx * (9.0 * kmx + 8.0 * umx) / (kmx + 2.0 * umx) / 6.0
-            mhs = 1.0 / sum(f / (mu + etamx)) - etamx    # HS upper bound
-
-        if bound == 'lower':
-            etamn = umn * (9.0 * kmn + 8.0 * umn) / (kmn + 2.0 * umn) / 6.0
-            mhs = 1.0 / sum(f / (mu + etamn)) - etamn    # HS lower bound
-
-    return mhs
+    return bound(f, k, z_min), bound(f, k, z_max)
