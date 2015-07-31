@@ -9,7 +9,7 @@ Various reflectivity algorithms.
 import numpy as np
 from numpy import tan, sin, cos
 
-from ..rockphysics import pr
+from bruges.rockphysics import moduli
 
 
 def scattering_matrix(vp1, vs1, rho1, vp0, vs0, rho0, theta1):
@@ -139,8 +139,8 @@ def zoeppritz_rpp(vp1, vs1, rho1, vp2, vs2, rho2, theta1, terms=False):
 
     D = E*F + G*H*p**2
 
-    rpp = (1/D) * (F*(b*(np.cos(theta1)/vp1) - c*(np.cos(theta2)/vp2))\
-          - H*p**2 * (a + d*(np.cos(theta1)/vp1)*(np.cos(phi2)/vs2)))
+    rpp = (1/D) * (F*(b*(np.cos(theta1)/vp1) - c*(np.cos(theta2)/vp2)) \
+                   - H*p**2 * (a + d*(np.cos(theta1)/vp1)*(np.cos(phi2)/vs2)))
 
     return rpp
 
@@ -259,6 +259,7 @@ def akirichards_alt(vp1, vs1, rho1, vp2, vs2, rho2, theta1, terms=False):
     else:
         return (term1 + term2 + term3)
 
+
 def fatti(vp1, vs1, rho1, vp2, vs2, rho2, theta1, terms=False):
     """
     Compute reflectivities with Fatti's formulation of the
@@ -307,6 +308,7 @@ def fatti(vp1, vs1, rho1, vp2, vs2, rho2, theta1, terms=False):
     else:
         return (term1 + term2 + term3)
 
+
 def shuey(vp1, vs1, rho1, vp2, vs2, rho2, theta1, terms=False):
     """
     Compute Shuey approximation with 3 terms.
@@ -351,6 +353,7 @@ def shuey(vp1, vs1, rho1, vp2, vs2, rho2, theta1, terms=False):
     else:
         return (term1 + term2 + term3)
 
+
 def shuey2(vp1, vs1, rho1, vp2, vs2, rho2, theta1, terms=False):
     """
     Compute Shuey approximation with 2 terms.
@@ -364,6 +367,7 @@ def shuey2(vp1, vs1, rho1, vp2, vs2, rho2, theta1, terms=False):
     else:
         return r0 + rg
 
+
 def shuey3(vp1, vs1, rho1, vp2, vs2, rho2, theta1, terms=False):
     """
     Compute Shuey approximation with 2 terms.
@@ -371,11 +375,12 @@ def shuey3(vp1, vs1, rho1, vp2, vs2, rho2, theta1, terms=False):
     Wraps shuey().
     """
     r0, rg, rf = shuey(vp1, vs1, rho1, vp2, vs2, rho2, theta1, terms=True)
-    
+
     if terms:
         return r0, rg, rf
     else:
         return r0 + rg + rf
+
 
 def bortfeld2(vp1, vs1, rho1, vp2, vs2, rho2, theta1, terms=False):
     """
@@ -410,6 +415,7 @@ def bortfeld2(vp1, vs1, rho1, vp2, vs2, rho2, theta1, terms=False):
         return term1, term2
     else:
         return (term1 + term2)
+
 
 def bortfeld3(vp1, vs1, rho1, vp2, vs2, rho2, theta1, terms=False):
     """
@@ -452,6 +458,7 @@ def bortfeld3(vp1, vs1, rho1, vp2, vs2, rho2, theta1, terms=False):
     else:
         return (term1 + term2 + term3)
 
+
 def hilterman(vp1, vs1, rho1, vp2, vs2, rho2, theta1, terms=False):
     """
     Hilterman (1989) approximation.
@@ -476,10 +483,10 @@ def hilterman(vp1, vs1, rho1, vp2, vs2, rho2, theta1, terms=False):
     ip1 = vp1 * rho1
     ip2 = vp2 * rho2
     rpp0 = (ip2 - ip1) / (ip2 + ip1)
-    dpr = pr(vp2, vs2) - pr(vp1, vs1)
+    dpr = moduli.pr(vp2, vs2) - moduli.pr(vp1, vs1)
 
-    term1 = rpp0
-    term2 = 2.25*(dpr - rpp0)*np.sin(theta1)**2
+    term1 = rpp0 * np.cos(theta1)**2
+    term2 = 2.25 * dpr * np.sin(theta1)**2
 
     if terms:
         return term1, term2

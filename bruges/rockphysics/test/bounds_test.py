@@ -45,29 +45,30 @@ class BoundsTest(unittest.TestCase):
         self.assertAlmostEqual(b.reuss_bound(f0, k1), mr, places=-2)
         self.assertAlmostEqual(b.reuss_bound(f2, k2), mr2, places=-2)
         self.assertAlmostEqual(b.reuss_bound([0.6, 0.2, 0.2],
-                                             [36.0, 2.2, 0.000131]), 0.00065, places=-2)
+                                             [36.0, 2.2, 0.000131]),
+                               0.00065, places=-2)
 
     def test_hill_average(self):
         self.assertAlmostEqual(b.hill_average(f0, k1), mh, places=-2)
 
     def test_hashin_shtrikman(self):
         self.assertAlmostEqual(
-            b.hashin_shtrikman(fh1, khs, ghs, bound='upper', moduli='bulk'), 
+            b.hashin_shtrikman(fh1, khs, ghs, modulus='bulk')[1],
             mhs1, places=-2)
         self.assertAlmostEqual(
-            b.hashin_shtrikman(fh1, khs, ghs, bound='lower', moduli='bulk'), 
+            b.hashin_shtrikman(fh1, khs, ghs, modulus='bulk')[0],
             mhs1, places=-2)
         self.assertAlmostEqual(
-            b.hashin_shtrikman(fh2, khs, ghs, bound='upper', moduli='bulk'),
+            b.hashin_shtrikman(fh2, khs, ghs, modulus='bulk')[1],
             mhs2, places=-2)
         self.assertAlmostEqual(
-            b.hashin_shtrikman(fh2, khs, ghs, bound='lower', moduli='bulk'),
+            b.hashin_shtrikman(fh2, khs, ghs, modulus='bulk')[0],
             mhs2, places=-2)
         self.assertAlmostEqual(
-            b.hashin_shtrikman(fh3, khs, ghs, bound='upper', moduli='bulk'), 
+            b.hashin_shtrikman(fh3, khs, ghs, modulus='bulk')[1],
             mhs3, places=-2)
         self.assertAlmostEqual(
-            b.hashin_shtrikman(fh3, khs, ghs, bound='lower', moduli='bulk'), 
+            b.hashin_shtrikman(fh3, khs, ghs, modulus='bulk')[0],
             mhs3, places=-2)
 
 if __name__ == '__main__':
