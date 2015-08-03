@@ -37,25 +37,25 @@ def youngs(vp=None, vs=None, rho=None, mu=None, lam=None, bulk=None, pr=None,
         Young's modulus in pascals, Pa
 
     '''
-    if None not in (vp, vs, rho):
+    if (vp is not None) and (vs is not None) and (rho is not None):
         return rho * vs**2 * (3.*vp**2 - 4.*vs**2) / (vp**2 - vs**2)
 
-    elif None not in (mu, lam):
+    elif (mu is not None) and (lam is not None):
         return mu * (3.*lam + 2*mu) / (lam + mu)
 
-    elif None not in (bulk, lam):
+    elif (bulk is not None) and (lam is not None):
         return 9.*bulk * (bulk - lam) / (3.*bulk - lam)
 
-    elif None not in (bulk, mu):
+    elif (bulk is not None) and (mu is not None):
         return 9.*bulk*mu / (3.*bulk + mu)
 
-    elif None not in (lam, pr):
+    elif (lam is not None) and (pr is not None):
         return lam * (1+pr) * (1 - 2*pr) / pr
 
-    elif None not in (pr, mu):
+    elif (pr is not None) and (mu is not None):
         return 2. * mu * (1+pr)
 
-    elif None not in (pr, bulk):
+    elif (pr is not None) and (bulk is not None):
         return 3. * bulk * (1 - 2*pr)
 
     else:
@@ -80,23 +80,31 @@ def bulk(vp=None, vs=None, rho=None, mu=None, lam=None, youngs=None, pr=None,
 
     '''
 
-    if None not in (vp, vs, rho):
+    if (vp is not None) and (vs is not None) and (rho is not None):
         return rho * (vp**2 - (4./3.)*(vs**2))
 
-    elif None not in (mu, lam):
+    elif (mu is not None) and (lam is not None):
         return lam + 2*mu/3.
 
-    elif None not in (mu, youngs):
+    elif (mu is not None) and (youngs is not None):
         return youngs * mu / (9.*mu - 3.*youngs)
 
-    elif None not in (lam, pr):
+    elif (lam is not None) and (pr is not None):
         return lam * (1+pr) / 3.*pr
 
-    elif None not in (pr, mu):
+    elif (pr is not None) and (mu is not None):
         return 2. * mu * (1+pr) / (3. - 6.*pr)
 
-    elif None not in (pr, youngs):
+    elif (pr is not None) and (youngs is not None):
         return youngs / (3. - 6.*pr)
+
+    elif (lam is not None) and (youngs is not None):
+        # Note that this returns a tuple.
+        x = np.sqrt(9*lam**2 + 2*youngs*lam + youngs**2)
+
+        def b(y): return 1/6. * (3*lam + youngs + y)
+
+        return b(x), b(-x)
 
     else:
         return None
@@ -120,23 +128,31 @@ def pr(vp=None, vs=None, rho=None, mu=None, lam=None, youngs=None, bulk=None,
 
     '''
 
-    if None not in (vp, vs):
+    if (vp is not None) and (vs is not None):
         return (vp**2. - 2.*vs**2) / (2. * (vp**2 - vs**2))
 
-    elif None not in (mu, lam):
+    elif (mu is not None) and (lam is not None):
         return lam / (2. * (lam+mu))
 
-    elif None not in (mu, youngs):
+    elif (mu is not None) and (youngs is not None):
         return (youngs / (2.*mu)) - 1
 
-    elif None not in (lam, bulk):
+    elif (lam is not None) and (bulk is not None):
         return lam / (3.*bulk - lam)
 
-    elif None not in (bulk, mu):
+    elif (bulk is not None) and (mu is not None):
         return (3.*bulk - 2*mu) / (6.*bulk + 2*mu)
 
-    elif None not in (bulk, youngs):
+    elif (bulk is not None) and (youngs is not None):
         return (3.*bulk - youngs) / (6.*bulk)
+
+    elif (lam is not None) and (youngs is not None):
+        # Note that this returns a tuple.
+        x = np.sqrt(9*lam**2 + 2*youngs*lam + youngs**2)
+
+        def b(y): return (1/(4*lam)) * (-1*lam - youngs + y)
+
+        return b(x), b(-x)
 
     else:
         return None
@@ -160,23 +176,31 @@ def mu(vp=None, vs=None, rho=None, pr=None, lam=None, youngs=None, bulk=None,
 
     '''
 
-    if None not in (vs, rho):
+    if (vs is not None) and (rho is not None):
         return rho * vs**2
 
-    elif None not in (bulk, lam):
+    elif (bulk is not None) and (lam is not None):
         return 3. * (bulk - lam) / 2.
 
-    elif None not in (bulk, youngs):
+    elif (bulk is not None) and (youngs is not None):
         return 3. * bulk * youngs / (9.*bulk - youngs)
 
-    elif None not in (lam, pr):
+    elif (lam is not None) and (pr is not None):
         return lam * (1 - 2.*pr) / (2.*pr)
 
-    elif None not in (pr, youngs):
+    elif (pr is not None) and (youngs is not None):
         return youngs / (2. * (1 + pr))
 
-    elif None not in (pr, bulk):
+    elif (pr is not None) and (bulk is not None):
         return 3. * bulk * (1 - 2*pr) / (2. * (1 + pr))
+
+    elif (lam is not None) and (youngs is not None):
+        # Note that this returns a tuple.
+        x = np.sqrt(9*lam**2 + 2*youngs*lam + youngs**2)
+
+        def b(y): return 1/4. * (-3*lam + youngs + y)
+
+        return b(x), b(-x)
 
     else:
         return None
@@ -199,25 +223,25 @@ def lam(vp=None, vs=None, rho=None, pr=None,  mu=None, youngs=None, bulk=None,
         Lambda in pascals, Pa
 
     '''
-    if None not in (vp, vs, rho):
+    if (vp is not None) and (vs is not None) and (rho is not None):
         return rho * (vp**2 - 2.*vs**2.)
 
-    elif None not in (youngs, mu):
+    elif (youngs is not None) and (mu is not None):
         return mu * (youngs - 2.*mu) / (3.*mu - youngs)
 
-    elif None not in (bulk, mu):
+    elif (bulk is not None) and (mu is not None):
         return bulk - (2.*mu/3.)
 
-    elif None not in (bulk, youngs):
+    elif (bulk is not None) and (youngs is not None):
         return 3. * bulk * (3*bulk - youngs) / (9*bulk - youngs)
 
-    elif None not in (pr, mu):
+    elif (pr is not None) and (mu is not None):
         return 2. * pr * mu / (1 - 2.*pr)
 
-    elif None not in (pr, youngs):
+    elif (pr is not None) and (youngs is not None):
         return pr * youngs / ((1+pr) * (1-2*pr))
 
-    elif None not in (pr, bulk):
+    elif (pr is not None) and (bulk is not None):
         return 3. * bulk * pr / (1+pr)
 
     else:
@@ -242,35 +266,43 @@ def pmod(vp=None, vs=None, rho=None, pr=None, mu=None, lam=None, youngs=None,
 
     '''
 
-    if None not in (vp, rho):
+    if (vp is not None) and (rho is not None):
         return rho * vp**2
 
-    elif None not in (lam, mu):
+    elif (lam is not None) and (mu is not None):
         return lam + 2*mu
 
-    elif None not in (youngs, mu):
+    elif (youngs is not None) and (mu is not None):
         return mu * (4.*mu - youngs) / (3.*mu - youngs)
 
-    elif None not in (bulk, lam):
+    elif (bulk is not None) and (lam is not None):
         return 3*bulk - 2.*lam
 
-    elif None not in (bulk, mu):
+    elif (bulk is not None) and (mu is not None):
         return bulk + (4.*mu/3.)
 
-    elif None not in (bulk, youngs):
+    elif (bulk is not None) and (youngs is not None):
         return 3. * bulk * (3*bulk + youngs) / (9*bulk - youngs)
 
-    elif None not in (lam, pr):
+    elif (lam is not None) and (pr is not None):
         return lam * (1 - pr) / pr
 
-    elif None not in (pr, mu):
+    elif (pr is not None) and (mu is not None):
         return 2. * pr * mu * (1-pr) / (1 - 2.*pr)
 
-    elif None not in (pr, youngs):
+    elif (pr is not None) and (youngs is not None):
         return (1-pr) * youngs / ((1+pr) * (1 - 2.*pr))
 
-    elif None not in (pr, bulk):
+    elif (pr is not None) and (bulk is not None):
         return 3. * bulk * (1-pr) / (1+pr)
+
+    elif (lam is not None) and (youngs is not None):
+        # Note that this returns a tuple.
+        x = np.sqrt(9*lam**2 + 2*youngs*lam + youngs**2)
+
+        def b(y): return 1/2. * (-1*lam + youngs + y)
+
+        return b(x), b(-x)
 
     else:
         return None
@@ -293,22 +325,22 @@ def vp(youngs=None, vs=None, rho=None, mu=None, lam=None, bulk=None, pr=None,
 
     '''
 
-    if None not in (mu, lam, rho):
+    if (mu is not None) and (lam is not None) and (rho is not None):
         return np.sqrt((lam + 2.*mu) / rho)
 
-    elif None not in (youngs, mu and rho):
+    elif (youngs is not None) and (mu and rho is not None):
         return np.sqrt(mu * (youngs - 4.*mu) / (rho * (youngs - 3.*mu)))
 
-    elif None not in (youngs, pr and rho):
+    elif (youngs is not None) and (pr and rho is not None):
         return np.sqrt(youngs * (1 - pr) / (rho * (1+pr) * (1 - 2.*pr)))
 
-    elif None not in (bulk, lam and rho):
+    elif (bulk is not None) and (lam and rho is not None):
         return np.sqrt((9.*bulk - 2.*lam) / rho)
 
-    elif None not in (bulk, mu and rho):
+    elif (bulk is not None) and (mu and rho is not None):
         return np.sqrt((bulk + 4.*mu/3.) / rho)
 
-    elif None not in (lam, pr and rho):
+    elif (lam is not None) and (pr and rho is not None):
         return np.sqrt(lam * (1. - pr) / (pr*rho))
 
     else:
@@ -331,7 +363,7 @@ def vs(youngs=None, vp=None, rho=None, mu=None, lam=None, bulk=None, pr=None,
 
     '''
 
-    if None not in (mu, rho):
+    if (mu is not None) and (rho is not None):
         return np.sqrt(mu / rho)
 
     else:
