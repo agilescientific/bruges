@@ -300,7 +300,7 @@ def fatti(vp1, vs1, rho1, vp2, vs2, rho2, theta1, terms=False):
 
     # Compute the three terms
     term1 = (1 + tan(theta1)**2) * dip
-    term2 = -8 * (vs/vp)**2 * sin(theta1)**2 * dis
+    term2 = -8 * (vs/vp)**2 * dis * sin(theta1)**2
     term3 = -1 * (0.5 * tan(theta1)**2 - 2 * (vs/vp)**2 * sin(theta1)**2) * d
 
     if terms:

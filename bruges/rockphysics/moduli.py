@@ -104,7 +104,9 @@ def bulk(vp=None, vs=None, rho=None, mu=None, lam=None, youngs=None, pr=None,
 
         def b(y): return 1/6. * (3*lam + youngs + y)
 
-        return b(x), b(-x)
+        # Strictly, we should return b(x), b(-x)
+        # But actually, the answer is:
+        return b(x)
 
     else:
         return None
@@ -152,7 +154,9 @@ def pr(vp=None, vs=None, rho=None, mu=None, lam=None, youngs=None, bulk=None,
 
         def b(y): return (1/(4*lam)) * (-1*lam - youngs + y)
 
-        return b(x), b(-x)
+        # Strictly, we should return b(x), b(-x)
+        # But actually, the answer is:
+        return b(x)
 
     else:
         return None
@@ -200,7 +204,9 @@ def mu(vp=None, vs=None, rho=None, pr=None, lam=None, youngs=None, bulk=None,
 
         def b(y): return 1/4. * (-3*lam + youngs + y)
 
-        return b(x), b(-x)
+        # Strictly, we should return b(x), b(-x)
+        # But actually, the answer is:
+        return b(x)
 
     else:
         return None
@@ -302,7 +308,9 @@ def pmod(vp=None, vs=None, rho=None, pr=None, mu=None, lam=None, youngs=None,
 
         def b(y): return 1/2. * (-1*lam + youngs + y)
 
-        return b(x), b(-x)
+        # Strictly, we should return b(x), b(-x)
+        # But actually, the answer is:
+        return b(x)
 
     else:
         return None

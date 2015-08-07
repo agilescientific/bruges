@@ -25,26 +25,34 @@ class ModuliTest(unittest.TestCase):
     """
 
     def test_vpvs(self):
-        self.assertAlmostEqual(m.youngs(vp=vp, vs=vs, rho=rho), youngs, places=-2)
-        self.assertAlmostEqual(    m.mu(vp=vp, vs=vs, rho=rho), mu, places=-2)
-        self.assertAlmostEqual(    m.pr(vp=vp, vs=vs, rho=rho), pr)
-        self.assertAlmostEqual(   m.lam(vp=vp, vs=vs, rho=rho), lam, places=-2)
-        self.assertAlmostEqual(  m.bulk(vp=vp, vs=vs, rho=rho), bulk, places=-2)
-        self.assertAlmostEqual(  m.pmod(vp=vp, vs=vs, rho=rho), pmod, places=-2)
+        self.assertAlmostEqual(m.youngs(vp=vp, vs=vs, rho=rho),
+                               youngs, places=-2)
+        self.assertAlmostEqual(m.mu(vp=vp, vs=vs, rho=rho), mu, places=-2)
+        self.assertAlmostEqual(m.pr(vp=vp, vs=vs, rho=rho), pr)
+        self.assertAlmostEqual(m.lam(vp=vp, vs=vs, rho=rho), lam, places=-2)
+        self.assertAlmostEqual(m.bulk(vp=vp, vs=vs, rho=rho), bulk, places=-2)
+        self.assertAlmostEqual(m.pmod(vp=vp, vs=vs, rho=rho), pmod, places=-2)
 
     def test_lammu(self):
-        self.assertAlmostEqual(    m.vp(lam=lam, mu=mu, rho=rho), vp, places=2)
+        self.assertAlmostEqual(m.vp(lam=lam, mu=mu, rho=rho), vp, places=2)
         self.assertAlmostEqual(m.youngs(lam=lam, mu=mu), youngs, places=-2)
-        self.assertAlmostEqual(    m.pr(lam=lam, mu=mu), pr)
-        self.assertAlmostEqual(  m.bulk(lam=lam, mu=mu), bulk, places=-2)
-        self.assertAlmostEqual(  m.pmod(lam=lam, mu=mu), pmod, places=-2)
+        self.assertAlmostEqual(m.pr(lam=lam, mu=mu), pr)
+        self.assertAlmostEqual(m.bulk(lam=lam, mu=mu), bulk, places=-2)
+        self.assertAlmostEqual(m.pmod(lam=lam, mu=mu), pmod, places=-2)
 
     def test_youngspr(self):
-        self.assertAlmostEqual(  m.vp(youngs=youngs, pr=pr, rho=rho), vp, places=2)
-        self.assertAlmostEqual(  m.mu(youngs=youngs, pr=pr), mu, places=-2)
-        self.assertAlmostEqual( m.lam(youngs=youngs, pr=pr), lam, places=-2)
+        self.assertAlmostEqual(m.vp(youngs=youngs, pr=pr, rho=rho),
+                               vp, places=2)
+        self.assertAlmostEqual(m.mu(youngs=youngs, pr=pr), mu, places=-2)
+        self.assertAlmostEqual(m.lam(youngs=youngs, pr=pr), lam, places=-2)
         self.assertAlmostEqual(m.bulk(youngs=youngs, pr=pr), bulk, places=-2)
         self.assertAlmostEqual(m.pmod(youngs=youngs, pr=pr), pmod, places=-2)
+
+    def test_youngslam(self):
+        self.assertAlmostEqual(m.mu(youngs=youngs, lam=lam), mu, places=-2)
+        self.assertAlmostEqual(m.pr(youngs=youngs, lam=lam), pr, places=-2)
+        self.assertAlmostEqual(m.bulk(youngs=youngs, lam=lam), bulk, places=-2)
+        self.assertAlmostEqual(m.pmod(youngs=youngs, lam=lam), pmod, places=-2)
 
     def test_moduli(self):
         mod = {'imp': vp * rho}
