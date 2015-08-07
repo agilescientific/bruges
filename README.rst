@@ -4,6 +4,7 @@ bruges is a
 
 .. image:: http://kwinkunks.pythonanywhere.com/bruges
 
+
 Status
 +++++++
 
