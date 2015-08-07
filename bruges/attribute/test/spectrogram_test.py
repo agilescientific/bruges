@@ -1,7 +1,8 @@
 import unittest
 from numpy import  sin, pi, zeros, double, arange, zeros
 
-from bruges.attribute import spectra, spectraldecomp
+from bruges.attribute import spectraldecomp
+from bruges.attribute import spectrogram
 
 
 class SpectraTest( unittest.TestCase ):
@@ -46,7 +47,7 @@ class SpectraTest( unittest.TestCase ):
         window_length = self.fs
         
         # test with 1.0 overlap
-        test1 = spectra( self.data, window_length,overlap=1.0 )
+        test1 = spectrogram( self.data, window_length,overlap=1.0 )
         
 
        
@@ -58,7 +59,7 @@ class SpectraTest( unittest.TestCase ):
                                  places=2 )
         
         # test with 0.5 overlap
-        test2 = spectra( self.data, window_length,overlap=0.5 )
+        test2 = spectrogram( self.data, window_length,overlap=0.5 )
         
         self.assertAlmostEquals( test2[ 0, self.f1 ],
                                  self.a1, places=2 )
