@@ -26,6 +26,6 @@ __all__ = ["attribute",
 
 __version__ = "unknown"
 try:
-    from _version import __version__
+    from ._version import __version__
 except ImportError:
     pass

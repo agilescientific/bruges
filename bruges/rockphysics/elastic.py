@@ -8,6 +8,7 @@ Elastic impedance.
 """
 import numpy as np
 
+
 def elastic_impedance(vp, vs, rho, theta1, normalize=True):
     """
     Returns the elastic impedance (as defined by Connolly, 1999)
@@ -29,7 +30,7 @@ def elastic_impedance(vp, vs, rho, theta1, normalize=True):
     ei = (vp ** a) * (vs ** b) * (rho ** c)
 
     if normalize:
-        n = vp **(1-a) * vs**(-b) * rho**(1-c)
+        n = vp**(1 - a) * vs**(-b) * rho**(1 - c)
         ei = n * ei
 
     return ei
