@@ -1,9 +1,8 @@
-from numpy import zeros
 import numpy as np
-from bruges.attribute import spectra
+from bruges.attribute import spectrogram
 
 
-def spectraldecomp(data, f=(.1,.25,.4),
+def spectraldecomp(data, f=(.1, .25, .4),
                    window_length=32, dt=1,
                    window_type='hann',
                    overlap=1,
@@ -30,7 +29,6 @@ def spectraldecomp(data, f=(.1,.25,.4),
     :returns: an array of shape (samples, traces, f)
     """
 
-    
     # Do the 1D case
     if len(data.shape) == 1:
         ntraces = 1
@@ -38,20 +36,18 @@ def spectraldecomp(data, f=(.1,.25,.4),
         ntraces = data.shape[-1]
 
     if overlap > 1: overlap = 1
-        
 
     zp = 4*window_length
     # TODO We should think about removing these for loops
     for i in range(ntraces):
 
         if(ntraces == 1):
-            spect = spectra(data, window_length, dt=dt,
+            spect = spectrogram(data, window_length, dt=dt,
                             window_type=window_type, overlap=overlap,
                             normalize=normalize, zero_padding=zp)
             if( i == 0 ): output = np.zeros( (spect.shape[0], len(f)))
-            
         else:
-            spect = spectra(data[:,i], window_length, dt=dt,
+            spect = spectrogram(data[:,i], window_length, dt=dt,
                             window_type=window_type, overlap=overlap,
                             normalize=normalize, zero_padding=zp)
             if( i == 0 ):

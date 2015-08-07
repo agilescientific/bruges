@@ -4,6 +4,7 @@ bruges is a
 
 .. image:: http://kwinkunks.pythonanywhere.com/bruges
 
+
 Status
 +++++++
 
@@ -22,7 +23,6 @@ Status
 .. image:: https://img.shields.io/pypi/pyversions/bruges.svg
     :target: https://pypi.python.org/pypi/bruges/
     :alt: Python version
-
 
 .. image:: https://coveralls.io/repos/agile-geoscience/bruges/badge.svg?branch=master&service=github
   :target: https://coveralls.io/github/agile-geoscience/bruges?branch=master
