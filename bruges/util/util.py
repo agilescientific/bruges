@@ -121,6 +121,9 @@ def top_and_tail(*arrays):
     E.g. crop the NaNs from the top and tail of a well log.
 
     """
+    if len(arrays) > 1:
+        for arr in arrays[1:]:
+            assert len(arr) == len(arrays[0])
     nans = np.where(~np.isnan(arrays[0]))[0]
     first, last = nans[0], nans[-1]
     ret_arrays = []
