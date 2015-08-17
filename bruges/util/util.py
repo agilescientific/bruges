@@ -114,26 +114,19 @@ def next_pow2(num):
     return int(2**np.ceil(np.log2(num)))
 
 
-def top_and_tail(a, b=np.array([]), c=np.array([])):
+def top_and_tail(*arrays):
     """
-    Top and tail up to 3 arrays to the non-NaN extent of the first array.
+    Top and tail all arrays to the non-NaN extent of the first array.
 
     E.g. crop the NaNs from the top and tail of a well log.
 
-    TODO:
-        Make this work for an arbitrary number of arrays.
-
     """
-    nans = np.where(~np.isnan(a))[0]
+    nans = np.where(~np.isnan(arrays[0]))[0]
     first, last = nans[0], nans[-1]
-    a = a[first:last]
-    if b.any():
-        b = b[first:last]
-        if c.any():
-            c = c[first:last]
-            return a, b, c
-        return a, b
-    return a
+    ret_arrays = []
+    for array in arrays:
+        ret_arrays.append(array[first:last])
+    return ret_arrays
 
 
 def extrapolate(a):
