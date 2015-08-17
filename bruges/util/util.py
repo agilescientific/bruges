@@ -125,7 +125,7 @@ def top_and_tail(*arrays):
     first, last = nans[0], nans[-1]
     ret_arrays = []
     for array in arrays:
-        ret_arrays.append(array[first:last])
+        ret_arrays.append(array[first:last+1])
     return ret_arrays
 
 
