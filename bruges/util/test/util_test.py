@@ -14,15 +14,13 @@ from bruges.util import next_pow2, rms, top_and_tail
 class UtilTest(unittest.TestCase):
 
     def test_toptail(self):
-        mask = np.asarray([np.nan, np.nan, 3, 4, 5, np.nan])
-        a = np.asarray([1, 2, 3, 4, 5, 6])
+        a = np.asarray([np.nan, np.nan, 3, 4, 5, np.nan])
         b = np.asarray([6, 5, 4, 3, 2, 1])
         c = np.asarray([1, 2, 3, 4, 5, 6])
         d = np.asarray([6, 5, 4, 3, 2, 1])
         A, B, C, D = top_and_tail(a, b, c, d)
         for arr in (A, B, C, D):
-            for item in arr:
-                self.assertFalse(np.isnan(item))
+            self.assertEqual(len(arr), 3)
 
     def test_nextpow2(self):
         num = 888
