@@ -345,7 +345,7 @@ def vp(youngs=None, vs=None, rho=None, mu=None, lam=None, bulk=None, pr=None,
     elif (bulk is not None) and (lam and rho is not None):
         return np.sqrt((9.*bulk - 2.*lam) / rho)
 
-    elif (bulk is not None) and (mu and rho is not None):
+    elif (bulk is not None) and (mu is not None and rho is not None):
         return np.sqrt((bulk + 4.*mu/3.) / rho)
 
     elif (lam is not None) and (pr and rho is not None):
