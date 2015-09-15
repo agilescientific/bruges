@@ -1,107 +1,136 @@
-import numpy as np
-from bruges.attribute import energy 
+#!/usr/bin/env python
+# -*- coding: utf 8 -*-
+"""
+A dip attribute, probably most useful for guiding other attributes.
 
-def dipsteer( data, window_length, stepout,
-              maxlag, overlap=0., dt=1 ):
+:copyright: 2015 Agile Geoscience
+:license: Apache 2.0
+"""
+import numpy as np
+from bruges.attribute import energy
+
+
+def dipsteer(data,
+             window_length,
+             stepout,
+             maxlag,
+             overlap=1,
+             dt=1,
+             return_correlation=False):
     """
     Calculates a dip field by finding the maximum correlation between
     adjacent traces.
 
-    :param data: A 2D seismic section (samples,traces) used to
-                 calculate dip.
-    :param window_length: The length [seconds] of the window to use
+    :param data (ndarray): A 2D seismic section (samples,traces) used to
+        calculate dip.
+    :param window_length: The length [in ms] of the window to use.
     :param dt: The time sample interval of the traces.
-                          
     :param stepout: The number of traces on either side of each point
-                    to average when calculating the dip.
+        to average when calculating the dip.
     :param maxlag: The maximum amount time lag to use when correlating
-                   the traces.
-    :keyword overlap: The fractional overlap for each window.
-                      A value of 0 uses no redudant data, a value of 1
-                      slides the dip correlator one sample at a time.
-                      Defaults to 0.5
-    
+        the traces.
+    :keyword overlap: The fractional overlap for each window. A value of 0
+        uses no redudant data, a value of 1 slides the dip correlator one
+        sample at a time. Defaults to 1.
+    :keyword dt: The time sample interval in ms.
+    :keyword return_correlation (bool): Whether to return the correlation
+        coefficients. If you choose True, you'll get a tuple, not an ndarray.
 
-    :returns: a dip field [samples/trace] of the same shape as the
-             input data, and correlation coefficients corresponding
-             to the data.
+    :returns: a dip field [samples/trace] of the same shape as the input data
+        (and optionally correlation coefficients, in which case you'll get a
+        tuple of ndarrays back).
+
+    Example
+
+        import bruges as b
+        d, c = b.attribute.dipsteer(data,
+                                    window_length=24,
+                                    stepout=1,
+                                    maxlag=16,
+                                    overlap=1,
+                                    dt=4)
     """
 
-    dip = np.zeros( data.shape )
+    dip = np.zeros(data.shape)
+    crcf = np.zeros(data.shape)
 
-    window_length = np.floor( window_length / dt )
-    
-    # Force the window length to be odd for index tracking
-    if not ( window_length % 2 ): window_length+=1
-    
-    # Define time windows
-    stride = window_length * ( 1 - overlap ) 
-    n_windows = np.ceil( ( data.shape[0] - window_length ) /
-                         stride ) + 1
- 
-    # Normalize each trace to the same RMS energy
-    norm_factor = np.sqrt( energy( data, window_length ) )
+    window_length = np.floor(window_length / dt)
+
+    # Force the window length to be odd for index tracking.
+    if not (window_length % 2):
+        window_length += 1
+
+    # Define time windows.
+    if overlap == 1:
+        stride = 1
+    else:
+        stride = window_length * (1 - overlap)
+    n_windows = np.ceil((data.shape[0] - window_length) / stride) + 1
+
+    # Normalize each trace to the same RMS energy.
+    norm_factor = np.sqrt(energy(data, window_length))
     norm_data = data / norm_factor
 
-    # Replace the 0/0 with 0
-    norm_data = np.nan_to_num( norm_data )
+    # Replace the 0/0 with 0.
+    norm_data = np.nan_to_num(norm_data)
 
-    # Mid point in the data which corresponds to zero dip
-    zero_dip = ( np.floor( window_length / 2.0) +  maxlag  )
-    
-    # Loop over each trace we can do a full calculation for
-    for i in np.arange( stepout +1, data.shape[-1] - (stepout +1) ):
-        
-        # Loop over each time window
-        for j in np.arange( 0, n_windows):
+    # Mid point in the data which corresponds to zero dip.
+    zero_dip = (np.floor(window_length / 2.0) + maxlag)
 
-            start = (j * stride) + ( maxlag )
+    s = stepout + 1
+
+    # Loop over each trace we can do a full calculation for.
+    for i in np.arange(s, data.shape[-1] - s):
+
+        # Loop over each time window.
+        for j in np.arange(0, n_windows):
+
+            start = (j * stride) + (maxlag)
             end = start + window_length
 
-            # Do not compute last samples if we don't
-            # have a full window
-            if ( end > (norm_data.shape[0]-maxlag) ): break
-        
-            # Get the  kernel
-            kernel = norm_data[ start : end, i ]
+            # Don't compute last samples if we don't have a full window.
+            if (end > (norm_data.shape[0]-maxlag)):
+                break
 
-            dips_j = 0
-         
-            # Correlate with adjacent traces
-            for k in np.arange( 1, stepout + 1 ):
+            kernel = norm_data[start: end, i]
 
-                # Do the trace on the right
-                r_trace = norm_data[ start - (k*maxlag) : \
-                                     end + (k*maxlag), i+k ]
-               
-                cor_r = np.correlate( kernel, r_trace, mode='same' )
+            dips_j, crcf_j = 0, 0
 
-                if ( np.amax( cor_r ) < .1 ): dip_r = 0
+            # Correlate with adjacent traces.
+            for k in np.arange(1, s):
+
+                # Do the trace on the right.
+                r_trace = norm_data[start - (k*maxlag): end + (k*maxlag), i+k]
+
+                cor_r = np.correlate(kernel, r_trace, mode='same')
+
+                if (np.amax(cor_r) < .1):
+                    dip_r = 0
                 else:
-                    dip_r = (  np.argmax( cor_r ) - zero_dip ) / k
+                    dip_r = (np.argmax(cor_r) - zero_dip) / k
 
-               
-                # Do the left trace
-                l_trace = norm_data[ start - (k*maxlag) : \
-                                     end + (k*maxlag), i-k ]
-                
-                cor_l = np.correlate( kernel, l_trace, mode = 'same' )
+                # Do the left trace.
+                l_trace = norm_data[start - (k*maxlag): end + (k*maxlag), i-k]
 
-                if ( np.amax( cor_l ) < .1 ): dip_l = 0
+                cor_l = np.correlate(kernel, l_trace, mode='same')
+
+                if (np.amax(cor_l) < .1):
+                    dip_l = 0
                 else:
-                    dip_l = -(  np.argmax( cor_l ) - zero_dip ) / k
+                    dip_l = -(np.argmax(cor_l) - zero_dip) / k
 
-          
-                dips_j += dip_r
-                dips_j += dip_l
+                dips_j += dip_r + dip_l
+                crcf_j += np.argmin(cor_l) + np.argmin(cor_r)
 
-              
             # Average the result
-            dips_j /= ( 2. * stepout )
+            dips_j /= (2. * stepout)
+            crcf_j /= (2. * stepout)
 
-            # Update the output 
-            dip[ start : start + stride, i ] = dips_j
-        
-    return dip
+            # Update the output
+            dip[start: start+stride, i] = dips_j
+            crcf[start: start+stride, i] = crcf_j
 
-
+    if return_correlation:
+        return dip, crcf
+    else:
+        return dip
