@@ -6,6 +6,7 @@ python:
    - 2.7
    - 3.3
    - 3.4
+   - 3.5
 
 # Setup anaconda
 before_install:
@@ -13,7 +14,8 @@ before_install:
   - chmod +x miniconda.sh
   - ./miniconda.sh -b
   - export PATH=/home/travis/miniconda/bin:$PATH
-  - conda update --yes conda
+  - conda update -q conda
+  - conda info -a
 
 # Install packages
 install:
