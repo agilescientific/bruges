@@ -152,7 +152,16 @@ def ormsby(duration, dt, f):
 def rotate_phase(w, phi):
     """
     Performs a phase rotation of wavelet using:
-    A = w(t)Cos(phi) + h(t)Sin(phi)
+	
+	The analytic signal can be written in the form S(t) = A(t)exp(j*theta(t))
+	where A(t) = magnitude(hilbert(w(t))) and theta(t) = angle(hilbert(w(t))
+	then a constant phase rotation phi would produce the analytic signal 
+	S(t) = A(t)exp(j*(theta(t) + phi)). To get the non analytic signal 
+	we take real(S(t)) == A(t)cos(theta(t) + phi) 
+	== A(t)(cos(theta(t))cos(phi) - sin(theta(t))sin(phi)) <= trig idenity
+	== w(t)cos(phi) - h(t)sin(phi)
+	
+    A = w(t)Cos(phi) - h(t)Sin(phi)
     Where w(t) is the wavelet and h(t) is it's hilbert transform.
     
     :params w: The wavelet vector.
@@ -164,7 +173,7 @@ def rotate_phase(w, phi):
     # Get the analytic signal for the wavelet
     a = hilbert(w, axis=0)
 
-    A = (np.real(a) * np.cos(phi) +
+    A = (np.real(a) * np.cos(phi) -
          np.imag(a) * np.sin(phi))
 
     return A
