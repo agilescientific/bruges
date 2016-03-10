@@ -14,6 +14,7 @@ from . import noise
 from . import transform
 from . import unit
 from . import util
+from .get_bruges import get_bruges
 
 __all__ = ["attribute",
            "filters",
@@ -22,7 +23,8 @@ __all__ = ["attribute",
            "noise",
            "transform",
            "unit",
-           "util"]
+           "util",
+           "get_bruges"]
 
 __version__ = "unknown"
 try:

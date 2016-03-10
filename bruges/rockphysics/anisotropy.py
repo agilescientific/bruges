@@ -102,8 +102,32 @@ def dispersion_parameter(qp):
     return np.arctan(1/qp) / np.pi
 
 
-def blangy(vp0, vs0, rho0, d0, e0, vp1, vs1, rho1, d1, e1, theta):
+def blangy(vp1, vs1, rho1, d1, e1, vp0, vs0, rho0, d0, e0, theta):
     """
+    Blangy, JP, 1994, AVO in transversely isotrpoic media-An overview.
+    Geophysics 59 (5), 775-781. DOI: 10.1190/1.1443635
+
+    Provide Vp, Vs, rho, delta, epsilon for the upper and lower intervals,
+    and theta, the incidence angle.
+
+    :param vp1: The p-wave velocity of the upper medium.
+    :param vs1: The s-wave velocity of the upper medium.
+    :param rho1: The density of the upper medium.
+    :param d1: Thomsen's delta of the upper medium.
+    :param e1: Thomsen's epsilon of the upper medium.
+
+    :param vp0: The p-wave velocity of the lower medium.
+    :param vs0: The s-wave velocity of the lower medium.
+    :param rho0: The density of the lower medium.
+    :param d0: Thomsen's delta of the lower medium.
+    :param e0: Thomsen's epsilon of the lower medium.
+
+    :param theta1: A scalar [degrees].
+
+    :returns: the isotropic and anisotropic reflectivities in a tuple. The
+        isotropic result is equivalent to Aki-Rochards.
+
+
     TODO
         Use rocks.
     """
