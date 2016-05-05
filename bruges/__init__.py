@@ -8,6 +8,7 @@ Initialize the library.
 """
 from . import attribute
 from . import filters
+from . import petrophysics
 from . import rockphysics
 from . import reflection
 from . import noise
@@ -18,6 +19,7 @@ from .get_bruges import get_bruges
 
 __all__ = ["attribute",
            "filters",
+           "petrophysics",
            "rockphysics",
            "reflection",
            "noise",
