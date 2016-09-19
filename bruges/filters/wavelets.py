@@ -149,17 +149,20 @@ def ormsby(duration, dt, f):
     return A
 
 
-def rotate_phase(w, phi):
+def rotate_phase(w, phi, degrees=False):
     """
     Performs a phase rotation of wavelet using:
     A = w(t)Cos(phi) + h(t)Sin(phi)
     Where w(t) is the wavelet and h(t) is it's hilbert transform.
     
     :params w: The wavelet vector.
-    :params phi: The phase rotation angle (in Radians) to apply.
+    :params phi: The phase rotation angle (in radians) to apply.
+    :params degrees: Boolean, if phi is in degrees not radians.
 
     :returns: The phase rotated signal.
     """
+    if degrees:
+        phi = phi * np.pi / 180.0
 
     # Get the analytic signal for the wavelet
     a = hilbert(w, axis=0)
@@ -168,4 +171,3 @@ def rotate_phase(w, phi):
          np.imag(a) * np.sin(phi))
 
     return A
-    
