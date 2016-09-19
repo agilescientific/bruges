@@ -1,21 +1,32 @@
-sudo: false
+sudo: required
+
 language: python
+
 python:
-   - "2.7"
-   - "3.3"
-   - "3.4"
+   - 2.7
+   - 3.3
+   - 3.4
+   - 3.5
 
-# Setup anaconda
 before_install:
-  - wget http://repo.continuum.io/miniconda/Miniconda-latest-Linux-x86_64.sh -O miniconda.sh
+  - sudo apt-get update
+  - if [[ "$TRAVIS_PYTHON_VERSION" == "2.7" ]]; then
+      wget http://repo.continuum.io/miniconda/Miniconda-latest-Linux-x86_64.sh -O miniconda.sh;
+    else
+      wget https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh -O miniconda.sh;
+    fi
   - chmod +x miniconda.sh
-  - ./miniconda.sh -b
-  - export PATH=/home/travis/miniconda/bin:$PATH
-  - conda update --yes conda
+  - bash miniconda.sh -b -p $HOME/miniconda
+  - export PATH="$HOME/miniconda/bin:$PATH"
+  - hash -r
+  - conda config --set always_yes yes --set changeps1 no
+  - conda update -q conda
+  - conda info -a
+  - conda create -q -n testenv python=$TRAVIS_PYTHON_VERSION numpy scipy
+  - source activate testenv
 
-# Install packages
 install:
-  - conda install --yes python=$TRAVIS_PYTHON_VERSION numpy scipy
   - python setup.py install
 
-script: python run_tests.py
+script:
+  - python run_tests.py

@@ -191,6 +191,8 @@ def smith_fluidsub(vp, vs, rho, phi, rhow, rhohc,
     Returns Vp, Vs, and rho for the substituted case.
     """
 
+    print "Entered bruges.smith_fluidsub"
+
     # Using the workflow in Smith et al., Table 2
     # Using Smith's notation, more or less (not the same
     # as Avseth's notation).
@@ -218,14 +220,15 @@ def smith_fluidsub(vp, vs, rho, phi, rhow, rhohc,
 
     # Step 8: Calculate new fluid properties (K and ρ) at the desired Sw
     # First set the new fluid properties, in case they are unchanged.
-    if not kwnew:
+    if kwnew is None:
         kwnew = kw
-    if not rhownew:
+    if rhownew is None:
         rhownew = rhow
-    if not khcnew:
+    if khcnew is None:
         khcnew = khc
-    if not rhohcnew:
+    if rhohcnew is None:
         rhohcnew = rhohc
+    
     # Now calculate the new fluid properties
     kfl2 = 1 / (swnew/kwnew + (1-swnew)/khcnew)
     rhofl2 = swnew * rhownew + (1-swnew)*rhohcnew
@@ -246,5 +249,5 @@ def smith_fluidsub(vp, vs, rho, phi, rhow, rhohc,
 
     # Step 12: Calculate the new shear velocity.
     vs2 = moduli.vs(mu=g, rho=rhob2)
-
+    print "Done the smith thing"
     return vp2, vs2, rhob2
