@@ -39,7 +39,7 @@ def moving_average(a, length, mode='valid'):
         Other types of average.
 
     """
-    pad = np.floor(length/2)
+    pad = int(np.floor(length/2))
 
     if mode == 'full':
         pad *= 2
