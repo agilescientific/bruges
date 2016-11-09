@@ -20,7 +20,6 @@ Informed by Smith et al, Geophysics 68(2), 2003.
 At some point we should do Biot too, per Russell...
 http://cseg.ca/symposium/archives/2012/presentations/Biot_Gassmann_and_me.pdf
 
-
 '''
 
 import numpy as np
@@ -191,8 +190,6 @@ def smith_fluidsub(vp, vs, rho, phi, rhow, rhohc,
     Returns Vp, Vs, and rho for the substituted case.
     """
 
-    print "Entered bruges.smith_fluidsub"
-
     # Using the workflow in Smith et al., Table 2
     # Using Smith's notation, more or less (not the same
     # as Avseth's notation).
@@ -249,5 +246,4 @@ def smith_fluidsub(vp, vs, rho, phi, rhow, rhohc,
 
     # Step 12: Calculate the new shear velocity.
     vs2 = moduli.vs(mu=g, rho=rhob2)
-    print "Done the smith thing"
     return vp2, vs2, rhob2
