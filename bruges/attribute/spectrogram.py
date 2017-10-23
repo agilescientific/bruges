@@ -45,19 +45,19 @@ def spectrogram(data, window_length,
             ( 2D array for 1D input )
     """
     # Make the base window
-    window_n = np.floor(window_length / dt)
-    pad = np.floor(zero_padding / dt)
+    window_n = int(np.floor(window_length / dt))
+    pad = int(np.floor(zero_padding / dt))
     window = get_window(window_type, window_n)
 
     # Calculate how many STFTs we need to do.
-    stride = window.size * (1 - overlap) + 1
+    stride = int(window.size * (1 - overlap) + 1)
     n_windows = int(np.ceil((data.size - window.size) / stride) + 1)
 
     # Pad window to power of 2
     padded_window = np.zeros(next_pow2(window.size+pad))
 
     # Init the output array
-    output = np.zeros([n_windows, int(padded_window.size)/2])
+    output = np.zeros([n_windows, int(padded_window.size // 2)])
 
     # Do the loop
     for i in range(int(n_windows)):
@@ -71,7 +71,7 @@ def spectrogram(data, window_length,
 
         padded_window[0:window.size] = window*data[start:end]
         spect = (2. * np.absolute(fft(padded_window)) /
-                 window.size)[0:int(padded_window.size / 2.)]
+                 window.size)[0:int(padded_window.size // 2)]
 
         if normalize:
             output[i, :] = spect / np.sum(spect**2)

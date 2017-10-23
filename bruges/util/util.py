@@ -9,6 +9,50 @@ Utility functions.
 import scipy.signal
 import numpy as np
 
+greek = {
+    'Alpha': 'Α',
+    'Beta': 'Β',
+    'Gamma': 'Γ',
+    'Delta': 'Δ',
+    'Epsilon': 'Ε',
+    'Zeta': 'Ζ',
+    'Eta': 'Η',
+    'Kappa': 'Κ',
+    'Lambda': 'Λ',
+    'Mu': 'Μ',
+    'Nu': 'Ν',
+    'Phi': 'Φ',
+    'Pi': 'Π',
+    'Rho': 'Ρ',
+    'Sigma': 'Σ',
+    'Tau': 'Τ',
+    'Upsilon': 'Υ',
+    'Theta': 'Θ',
+    'Chi': 'Χ',
+    'Psi': 'Ψ',
+    'Omega': 'Ω',
+    'alpha': 'α',
+    'beta': 'β',
+    'gamma': 'γ',
+    'delta': 'δ',
+    'epsilon': 'ε',
+    'zeta': 'ζ',
+    'eta': 'η',
+    'theta': 'θ',
+    'kappa': 'κ',
+    'lambda': 'λ',
+    'mu': 'μ',
+    'nu': 'ν',
+    'pi': 'π',
+    'rho': 'ρ',
+    'sigma': 'σ',
+    'tau': 'τ',
+    'upsilon': 'υ',
+    'phi': 'φ',
+    'chi': 'χ',
+    'psi': 'ψ',
+    'omega': 'ω',
+}
 
 def rms(a):
     """
@@ -39,18 +83,21 @@ def moving_average(a, length, mode='valid'):
         Other types of average.
 
     """
+    length = int(length)
     pad = int(np.floor(length/2))
 
     if mode == 'full':
         pad *= 2
 
     # Make a padded version, paddding with first and last values
-    r = np.empty(a.shape[0] + 2*pad)
-    r[:pad] = a[0]
-    r[pad:-pad] = a
-    r[-pad:] = a[-1]
+    # r = np.empty(a.shape[0] + 2*pad)
+    # r[:pad] = a[0]
+    # r[pad:-pad] = a
+    # r[-pad:] = a[-1]
+    r = np.pad(a, pad, mode='edge')
 
-    # Cumsum with shifting trick
+    # Cumsum with shifting trick; first remove NaNs
+    r[np.isnan(r)] = 0
     s = np.cumsum(r, dtype=float)
     s[length:] = s[length:] - s[:-length]
     out = s[length-1:]/length

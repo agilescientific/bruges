@@ -28,7 +28,7 @@ def elastic_impedance(vp, vs, rho, theta1, normalize=True):
     a = 1 + np.tan(theta1)**2
     b = -8 * k * np.sin(theta1)**2
     c = 1 - 4 * k * np.sin(theta1)**2
-    
+
     ei = vp**a * vs**b * rho**c
 
     if normalize:
@@ -36,4 +36,3 @@ def elastic_impedance(vp, vs, rho, theta1, normalize=True):
         return n * ei
     else:
         return ei
-

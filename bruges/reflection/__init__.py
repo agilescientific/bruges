@@ -9,7 +9,7 @@ from .reflection import hilterman
 __all__ = ["zoeppritz",
            "zoeppritz_element",
            "zoeppritz_rpp",
-	   "akirichards",
+           "akirichards",
            "akirichards_alt",
            "fatti",
            "shuey2",

@@ -23,11 +23,10 @@ def voigt_bound(f, m):
         mv: Voigt upper bound.
 
     """
-
-    f = np.array(f)
+    f = np.array(f).astype(float)
 
     if float(sum(f)) == 100.0:
-        # fractions have been giving in percent: scale to 1.
+        # fractions have been given in percent: scale to 1.
         f /= 100.0
 
     m = np.array(m)
@@ -49,11 +48,10 @@ def reuss_bound(f, m):
      Returns:
         mr: Reuss lower bound.
     """
-
-    f = np.array(f)
+    f = np.array(f).astype(float)
 
     if float(sum(f)) == 100.0:
-        # fractions have been giving in percent: scale to 1.
+        # fractions have been given in percent: scale to 1.
         f /= 100.0
 
     m = np.array(m)

@@ -50,11 +50,11 @@ def dipsteer(data,
                                     overlap=1,
                                     dt=4)
     """
-
+    maxlag = int(maxlag)
     dip = np.zeros(data.shape)
     crcf = np.zeros(data.shape)
 
-    window_length = np.floor(window_length / dt)
+    window_length = int(np.floor(window_length / dt))
 
     # Force the window length to be odd for index tracking.
     if not (window_length % 2):
@@ -64,12 +64,12 @@ def dipsteer(data,
     if overlap == 1:
         stride = 1
     else:
-        stride = window_length * (1 - overlap)
+        stride = int(window_length * (1 - overlap))
     n_windows = np.ceil((data.shape[0] - window_length) / stride) + 1
 
     # Normalize each trace to the same RMS energy.
-    norm_factor = np.sqrt(energy(data, window_length))
-    norm_data = data / norm_factor
+    norm_factor = np.sqrt(np.abs(energy(data, window_length)))
+    norm_data = data / (norm_factor + 1e-9)  # To avoid div0 error.
 
     # Replace the 0/0 with 0.
     norm_data = np.nan_to_num(norm_data)
@@ -82,10 +82,12 @@ def dipsteer(data,
     # Loop over each trace we can do a full calculation for.
     for i in np.arange(s, data.shape[-1] - s):
 
+        i = int(i)
+
         # Loop over each time window.
         for j in np.arange(0, n_windows):
 
-            start = (j * stride) + (maxlag)
+            start = int((j * stride) + (maxlag))
             end = start + window_length
 
             # Don't compute last samples if we don't have a full window.
@@ -98,6 +100,8 @@ def dipsteer(data,
 
             # Correlate with adjacent traces.
             for k in np.arange(1, s):
+
+                k = int(k)
 
                 # Do the trace on the right.
                 r_trace = norm_data[start - (k*maxlag): end + (k*maxlag), i+k]

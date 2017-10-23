@@ -10,9 +10,10 @@ import numpy as np
 from numpy import tan, sin, cos
 
 from bruges.rockphysics import moduli
+from bruges.rockphysics import anisotropy
 
 
-def scattering_matrix(vp1, vs1, rho1, vp0, vs0, rho0, theta1):
+def scattering_matrix(vp1, vs1, rho1, vp0, vs0, rho0, theta1=0):
     '''
     Full Zoeppritz solution, considered the definitive solution.
     Calculates the angle dependent p-wave reflectivity of an interface
@@ -79,7 +80,7 @@ def scattering_matrix(vp1, vs1, rho1, vp0, vs0, rho0, theta1):
     return zoep
 
 
-def zoeppritz_element(vp1, vs1, rho1, vp0, vs0, rho0, theta1, element='PdPu'):
+def zoeppritz_element(vp1, vs1, rho1, vp0, vs0, rho0, theta1=0, element='PdPu'):
     """
     Returns any mode reflection coefficients from the Zoeppritz
     scattering matrix. Pass in the mode as element, e.g. 'PdSu' for PS.
@@ -99,7 +100,7 @@ def zoeppritz_element(vp1, vs1, rho1, vp0, vs0, rho0, theta1, element='PdPu'):
     return np.squeeze(Z[np.where(elements == element)])
 
 
-def zoeppritz(vp1, vs1, rho1, vp0, vs0, rho0, theta1):
+def zoeppritz(vp1, vs1, rho1, vp0, vs0, rho0, theta1=0):
     '''
     Returns the PP reflection coefficients from the Zoeppritz
     scattering matrix.
@@ -112,7 +113,7 @@ def zoeppritz(vp1, vs1, rho1, vp0, vs0, rho0, theta1):
     return zoeppritz_element(vp1, vs1, rho1, vp0, vs0, rho0, theta1, 'PdPu')
 
 
-def zoeppritz_rpp(vp1, vs1, rho1, vp2, vs2, rho2, theta1, terms=False):
+def zoeppritz_rpp(vp1, vs1, rho1, vp2, vs2, rho2, theta1=0, terms=False):
     """
     Exact Zoeppritz from expression.
 
@@ -145,7 +146,7 @@ def zoeppritz_rpp(vp1, vs1, rho1, vp2, vs2, rho2, theta1, terms=False):
     return rpp
 
 
-def akirichards(vp1, vs1, rho1, vp2, vs2, rho2, theta1, terms=False):
+def akirichards(vp1, vs1, rho1, vp2, vs2, rho2, theta1=0, terms=False):
     """
     This is the formulation from Avseth et al.,
     Quantitative seismic interpretation,
@@ -207,7 +208,7 @@ def akirichards(vp1, vs1, rho1, vp2, vs2, rho2, theta1, terms=False):
         return (term1 + term2 + term3 + term4)
 
 
-def akirichards_alt(vp1, vs1, rho1, vp2, vs2, rho2, theta1, terms=False):
+def akirichards_alt(vp1, vs1, rho1, vp2, vs2, rho2, theta1=0, terms=False):
     """
     This is another formulation of the Aki-Richards solution.
     See http://subsurfwiki.org/wiki/Aki-Richards_equation
@@ -260,7 +261,7 @@ def akirichards_alt(vp1, vs1, rho1, vp2, vs2, rho2, theta1, terms=False):
         return (term1 + term2 + term3)
 
 
-def fatti(vp1, vs1, rho1, vp2, vs2, rho2, theta1, terms=False):
+def fatti(vp1, vs1, rho1, vp2, vs2, rho2, theta1=0, terms=False):
     """
     Compute reflectivities with Fatti's formulation of the
     Aki-Richards equation, which does not account for the
@@ -309,7 +310,7 @@ def fatti(vp1, vs1, rho1, vp2, vs2, rho2, theta1, terms=False):
         return (term1 + term2 + term3)
 
 
-def shuey(vp1, vs1, rho1, vp2, vs2, rho2, theta1, terms=False):
+def shuey(vp1, vs1, rho1, vp2, vs2, rho2, theta1=0, terms=False):
     """
     Compute Shuey approximation with 3 terms.
     http://subsurfwiki.org/wiki/Shuey_equation
@@ -354,7 +355,7 @@ def shuey(vp1, vs1, rho1, vp2, vs2, rho2, theta1, terms=False):
         return (term1 + term2 + term3)
 
 
-def shuey2(vp1, vs1, rho1, vp2, vs2, rho2, theta1, terms=False):
+def shuey2(vp1, vs1, rho1, vp2, vs2, rho2, theta1=0, terms=False):
     """
     Compute Shuey approximation with 2 terms.
 
@@ -368,7 +369,7 @@ def shuey2(vp1, vs1, rho1, vp2, vs2, rho2, theta1, terms=False):
         return r0 + rg
 
 
-def shuey3(vp1, vs1, rho1, vp2, vs2, rho2, theta1, terms=False):
+def shuey3(vp1, vs1, rho1, vp2, vs2, rho2, theta1=0, terms=False):
     """
     Compute Shuey approximation with 2 terms.
 
@@ -382,7 +383,7 @@ def shuey3(vp1, vs1, rho1, vp2, vs2, rho2, theta1, terms=False):
         return r0 + rg + rf
 
 
-def bortfeld2(vp1, vs1, rho1, vp2, vs2, rho2, theta1, terms=False):
+def bortfeld2(vp1, vs1, rho1, vp2, vs2, rho2, theta1=0, terms=False):
     """
     The 2-term Bortfeld approximation for ava analysis.
 
@@ -417,7 +418,7 @@ def bortfeld2(vp1, vs1, rho1, vp2, vs2, rho2, theta1, terms=False):
         return (term1 + term2)
 
 
-def bortfeld3(vp1, vs1, rho1, vp2, vs2, rho2, theta1, terms=False):
+def bortfeld3(vp1, vs1, rho1, vp2, vs2, rho2, theta1=0, terms=False):
     """
     Compute Bortfeld approximation with three terms.
     http://sepwww.stanford.edu/public/docs/sep111/marie2/paper_html/node2.html
@@ -459,7 +460,7 @@ def bortfeld3(vp1, vs1, rho1, vp2, vs2, rho2, theta1, terms=False):
         return (term1 + term2 + term3)
 
 
-def hilterman(vp1, vs1, rho1, vp2, vs2, rho2, theta1, terms=False):
+def hilterman(vp1, vs1, rho1, vp2, vs2, rho2, theta1=0, terms=False):
     """
     Hilterman (1989) approximation.
     According to Dvorkin: "arguably the simplest and a very convenient
@@ -492,3 +493,39 @@ def hilterman(vp1, vs1, rho1, vp2, vs2, rho2, theta1, terms=False):
         return term1, term2
     else:
         return (term1 + term2)
+
+
+def blangy(vp1, vs1, rho1, vp2, vs2, rho2,
+           d1=0, e1=0, d2=0, e2=0,
+           theta1=0, terms=False):
+    """Implements the Blangy equation with the same interface as the other
+    reflectivity equations. Wraps bruges.anisotropy.blangy().
+
+    Note that the anisotropic parameters come after the other rock properties,
+    and all default to zero.
+
+    :param vp1: The p-wave velocity of the upper medium.
+    :param vs1: The s-wave velocity of the upper medium.
+    :param rho1: The density of the upper medium.
+    :param vp2: The p-wave velocity of the lower medium.
+    :param vs2: The s-wave velocity of the lower medium.
+    :param rho2: The density of the lower medium.
+    :param d1: Thomsen's delta for the upper medium.
+    :param e1: Thomsen's epsilon for the upper medium.
+    :param d2: Thomsen's delta for the upper medium.
+    :param e2: Thomsen's epsilon for the upper medium.
+    :param theta1: An array of incident angles to use for reflectivity
+                   calculation [degrees].
+
+    :returns: a vector of len(theta1) containing the reflectivity
+             value corresponding to each angle.
+    :param theta1: An array of incident angles to use for reflectivity
+                   calculation [degrees].
+
+    :returns: a vector of len(theta1) containing the reflectivity
+             value corresponding to each angle.
+    """
+    _, anisotropic = anisotropy.blangy(vp1, vs1, rho1, d1, e1,  # UPPER
+                                       vp2, vs2, rho2, d2, e2,  # LOWER
+                                       theta1)
+    return anisotropic

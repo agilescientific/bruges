@@ -27,14 +27,15 @@ CLASSIFIERS = ['Development Status :: 4 - Beta',
                'Operating System :: OS Independent',
                'Programming Language :: Python',
                'Programming Language :: Python :: 2.7',
-               'Programming Language :: Python :: 3.3',
                'Programming Language :: Python :: 3.4',
+               'Programming Language :: Python :: 3.5',
+               'Programming Language :: Python :: 3.6',
                ]
 
 setup(name='bruges',
       version=verstr,
-      author='Agile Geoscience',
-      author_email='hello@agilegeoscience.com',
+      author='Agile Scientific',
+      author_email='hello@agilescientific.com',
       packages=['bruges',
                 'bruges.attribute',
                 'bruges.filters',
@@ -53,3 +54,4 @@ setup(name='bruges',
       classifiers=CLASSIFIERS,
       license='Apache 2',
       )
+
