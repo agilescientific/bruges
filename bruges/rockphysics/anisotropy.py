@@ -18,9 +18,21 @@ from bruges.util import moving_average
 
 def backus_parameters(vp, vs, rho, lb, dz):
     """
-    Backus parameters.
+    Intermediate parameters for Backus averaging. This is expected to be a
+    private function. You probably want backus() and not this.
 
-    Liner, C (2014), Long-wave elastic attenuation produced by horizontal
+    Args:
+        vp (ndarray): P-wave interval velocity.
+        vs (ndarray): S-wave interval velocity.
+        rho (ndarray): Bulk density.
+        lb (float): The Backus averaging length in m.
+        dz (float): The depth sample interval in m.
+
+    Returns:
+        tuple: Liner's 5 intermediate parameters: A, C, F, L and M.
+
+    Notes:
+        Liner, C (2014), Long-wave elastic attenuation produced by horizontal
         layering. The Leading Edge, June 2014, p 634-638.
 
     """
@@ -43,11 +55,25 @@ def backus_parameters(vp, vs, rho, lb, dz):
     return A, C, F, L, M
 
 
-def backus(vp, vs, rho, lb, dz):
+def backus(vp, vs, rho, lb, dz, return_rho=False):
     """
-    Backus averaging.
+    Backus averaging. Using Liner's algorithm (2014; see Notes).
 
-    Liner, C (2014), Long-wave elastic attenuation produced by horizontal
+    Args:
+        vp (ndarray): P-wave interval velocity.
+        vs (ndarray): S-wave interval velocity.
+        rho (ndarray): Bulk density.
+        lb (float): The Backus averaging length in m.
+        dz (float): The depth sample interval in m.
+        return_rho (bool): Whether to return the smoothed rho log too.
+
+    Returns:
+        tuple: the smoothed logs. Default: vp and vs. Optional (see flag):
+            vp, vs, plus rho. Useful for computing other elastic parameters
+            at a seismic scale.
+
+    Notes:
+        Liner, C (2014), Long-wave elastic attenuation produced by horizontal
         layering. The Leading Edge, June 2014, p 634-638.
 
     """
@@ -59,7 +85,10 @@ def backus(vp, vs, rho, lb, dz):
     vp0 = np.sqrt(C / R)
     vs0 = np.sqrt(L / R)
 
-    return vp0, vs0
+    if return_rho:
+        return vp0, vs0, R
+    else:
+        return vp0, vs0
 
 
 def backus_quality_factor(vp, vs, rho, lb, dz):
@@ -299,9 +328,11 @@ def hudson_quality_factor(porosity, aspect, mu, lam=None, pmod=None):
     return Qp, Qs
 
 
-def hudson_inverse_Q_ratio(mu=None, pmod=None,
+def hudson_inverse_Q_ratio(mu=None,
+                           pmod=None,
                            pr=None,
-                           vp=None, vs=None,
+                           vp=None,
+                           vs=None,
                            aligned=True):
     """
     Dvorkin et al. (2014), Eq 15.44 (aligned) and 15.48 (not aligned).
