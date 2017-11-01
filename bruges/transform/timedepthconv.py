@@ -65,7 +65,7 @@ def time_to_depth(data, vmodel, dt, dz, twt=True,
 
     :param data: The data to convert, will work with a 1 or 2D numpy
                  numpy array. array(samples,traces).
-    :param vmodel: P-wave velocity model that corresponds to the data.
+    :param vmodel: P-wave interval velocity model that corresponds to the data.
                    Must be the same shape as data.
     :param dt: The sample interval of the input data [s], or an
                array of times.
@@ -92,7 +92,7 @@ def depth_to_time(data, vmodel, dz, dt, twt=True, mode="nearest"):
 
     :param data: The data to convert, will work with a 1 or 2D numpy
                  numpy array. array(samples,traces).
-    :param vmodel: P-wave velocity model that corresponds to the data.
+    :param vmodel: P-wave interval velocity model that corresponds to the data.
                    Must be the same shape as data.
     :param dz: The sample interval of the input data [m].
     :param dt: The sample interval of the output data [s].
