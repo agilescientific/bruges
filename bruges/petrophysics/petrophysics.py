@@ -17,7 +17,7 @@ def gardner(vp, alpha=0.31, beta=0.25):
     SI units only.
 
     Args:
-        vp
+        vp (this is actually slowness in ft / sec)
 
     Returns:
         rhob estimate.
@@ -46,16 +46,18 @@ def rhob(phi_rhob, Rho_matrix= 2650.0, Rho_fluid=1000.0):
 
 def slowness_to_velocity(sonic, imperial=True, nansub=-999.25):
     """
-    This only works for sonic in us/ft
+    This only works for sonic in us/ft, always converts to SI
+    sonic :a numpy array of slowness (us/ft or us/m)
     """
-    if imperial = True:
-    	sonic[sonic == nansub] = np.nan
-    	sonic *= 3.2808  # units in us/m
-    	sonic /= 1e6     # units in s/m
-    	velocity = 1/sonic
+    arr = sonic.as_matrix() 
+    if imperial:
+        arr[arr == nansub] = np.nan
+        arr *= 3.2808  # units in us/m
+        arr /= 1e6     # units in s/m
+        velocity = 1/arr
 
     else:
-    	sonic[sonic == nansub] = np.nan
-    	sonic /= 1e6     # units in s/m
-    	velocity = 1/sonic
+        arr[arr == nansub] = np.nan
+        arr /= 1e6     # units in s/m
+        velocity = 1/sonic
     return velocity
