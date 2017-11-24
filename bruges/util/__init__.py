@@ -15,10 +15,10 @@ from .util import extrapolate
 
 __all__ = ["rms",
            "moving_average",
-	   "moving_avg_conv",
-	   "moving_avg_fft",
-	   "normalize",
-	   "next_pow2",
+           "moving_avg_conv",
+           "moving_avg_fft",
+           "normalize",
+           "next_pow2",
            "top_and_tail",
-	   "extrapolate",
-	   ]
+           "extrapolate",
+           ]
