@@ -11,7 +11,7 @@ import scipy.ndimage
 from bruges.util import nearest
 
 
-def snn(arr, size=5):
+def snn(arr, size=5, include=True):
     """
     Symmetric nearest neighbour, a nonlinear smoothing filter.
     http://subsurfwiki.org/wiki/Symmetric_nearest_neighbour_filter
@@ -20,6 +20,7 @@ def snn(arr, size=5):
         arr (ndarray): a 2D array, such as a seismic horizon.
         size (int): the kernel size, e.g. 5 for 5x5. Should be odd,
             rounded up if not.
+        include (bool): whether to include the central pixel itself.
 
     Returns:
         ndarray: the resulting smoothed array.
@@ -30,6 +31,8 @@ def snn(arr, size=5):
     def func(this, pairs):
         centre = this[this.size // 2]
         select = [nearest(this[p], centre) for p in pairs]
+        if include:
+            select += [centre]
         return np.mean(select)
 
     if not size // 2:
