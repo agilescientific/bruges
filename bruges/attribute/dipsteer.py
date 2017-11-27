@@ -23,32 +23,20 @@ def dipsteer(data,
 
     :param data (ndarray): A 2D seismic section (samples,traces) used to
         calculate dip.
-    :param window_length: The length [in ms] of the window to use.
-    :param dt: The time sample interval of the traces.
-    :param stepout: The number of traces on either side of each point
+    :param window_length (float): The length [in ms] of the window to use.
+    :param stepout (int): The number of traces on either side of each point
         to average when calculating the dip.
-    :param maxlag: The maximum amount time lag to use when correlating
+    :param maxlag (float): The maximum amount time lag to use when correlating
         the traces.
-    :keyword overlap: The fractional overlap for each window. A value of 0
-        uses no redudant data, a value of 1 slides the dip correlator one
+    :keyword overlap (float): The fractional overlap for each window. A value
+        of 0 uses no redudant data, a value of 1 slides the dip correlator one
         sample at a time. Defaults to 1.
-    :keyword dt: The time sample interval in ms.
+    :keyword dt (float): The time sample interval in ms.
     :keyword return_correlation (bool): Whether to return the correlation
         coefficients. If you choose True, you'll get a tuple, not an ndarray.
-
     :returns: a dip field [samples/trace] of the same shape as the input data
         (and optionally correlation coefficients, in which case you'll get a
         tuple of ndarrays back).
-
-    Example
-
-        import bruges as b
-        d, c = b.attribute.dipsteer(data,
-                                    window_length=24,
-                                    stepout=1,
-                                    maxlag=16,
-                                    overlap=1,
-                                    dt=4)
     """
     maxlag = int(maxlag)
     dip = np.zeros(data.shape)
