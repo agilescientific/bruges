@@ -54,6 +54,7 @@ greek = {
     'omega': 'ω',
 }
 
+
 def rms(a):
     """
     Calculates the RMS of an array.
@@ -146,6 +147,13 @@ def normalize(a, new_min=0.0, new_max=1.0):
 
     n = (a - np.amin(a)) / np.amax(a - np.amin(a))
     return n * (new_max - new_min) + new_min
+
+
+def nearest(a, num):
+    """
+    Finds the array's nearest value to a given num.
+    """
+    return a.flat[np.abs(a - num).argmin()]
 
 
 def next_pow2(num):
