@@ -145,6 +145,7 @@ class AvoTest(unittest.TestCase):
                            rtol=self.tolerance)
         self.assertTrue(test)
 
+
 if __name__ == '__main__':
 
     suite = unittest.TestLoader().loadTestsFromTestCase(AvoTest)

@@ -12,6 +12,7 @@ from .util import normalize
 from .util import next_pow2
 from .util import top_and_tail
 from .util import extrapolate
+from .util import nearest
 
 __all__ = ["rms",
            "moving_average",
@@ -21,4 +22,5 @@ __all__ = ["rms",
            "next_pow2",
            "top_and_tail",
            "extrapolate",
+           "nearest",
            ]

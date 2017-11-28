@@ -17,6 +17,7 @@ def run_tests():
     suite = unittest.TestSuite(tests)
     return(suite)
 
+
 if (__name__ == '__main__'):
     suite = run_tests()
     unittest.TextTestRunner(verbosity=2).run(suite)
