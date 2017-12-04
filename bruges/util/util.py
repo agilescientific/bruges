@@ -6,6 +6,10 @@ Utility functions.
 :copyright: 2015 Agile Geoscience
 :license: Apache 2.0
 """
+import functools
+import inspect
+import warnings
+
 import scipy.signal
 import numpy as np
 
@@ -199,3 +203,33 @@ def extrapolate(a):
     a[:first] = a[first]
     a[last + 1:] = a[last]
     return a
+
+
+def deprecated(instructions):
+    """Flags a method as deprecated.
+    Args:
+        instructions: A human-friendly string of instructions, such
+            as: 'Please migrate to add_proxy() ASAP.'
+    """
+    def decorator(func):
+        '''This is a decorator which can be used to mark functions
+        as deprecated. It will result in a warning being emitted
+        when the function is used.'''
+        @functools.wraps(func)
+        def wrapper(*args, **kwargs):
+            message = 'Call to deprecated function {}. {}'.format(
+                func.__name__,
+                instructions)
+
+            frame = inspect.currentframe().f_back
+
+            warnings.warn_explicit(message,
+                                   category=DeprecationWarning,
+                                   filename=inspect.getfile(frame.f_code),
+                                   lineno=frame.f_lineno)
+
+            return func(*args, **kwargs)
+
+        return wrapper
+
+    return decorator

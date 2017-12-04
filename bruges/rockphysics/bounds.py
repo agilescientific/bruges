@@ -5,6 +5,7 @@ Bounds on effective elastic modulus.
 :copyright: 2015 Agile Geoscience
 :license: Apache 2.0
 """
+from collections import namedtuple
 
 import numpy as np
 
@@ -95,7 +96,7 @@ def hashin_shtrikman(f, k, mu, modulus='bulk'):
             'bulk' or 'shear' HS bound.
 
     Returns:
-        tuple: The Hashin Shtrikman (lower, upper) bounds.
+        namedtuple: The Hashin Shtrikman (lower, upper) bounds.
 
     :source: Berryman, J.G., 1993, Mixture theories for rock properties
              Mavko, G., 1993, Rock Physics Formulas.
@@ -124,4 +125,6 @@ def hashin_shtrikman(f, k, mu, modulus='bulk'):
     z_min = func[modulus](np.amin(k), np.amin(mu))
     z_max = func[modulus](np.amax(k), np.amax(mu))
 
-    return bound(f, k, z_min), bound(f, k, z_max)
+    fields = ['lower_bound', 'upper_bound']
+    HashinShtrikman = namedtuple('HashinShtrikman', fields)
+    return HashinShtrikman(bound(f, k, z_min), bound(f, k, z_max))

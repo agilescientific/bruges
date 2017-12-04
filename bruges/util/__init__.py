@@ -13,6 +13,7 @@ from .util import next_pow2
 from .util import top_and_tail
 from .util import extrapolate
 from .util import nearest
+from .util import deprecated
 
 __all__ = ["rms",
            "moving_average",
@@ -23,4 +24,5 @@ __all__ = ["rms",
            "top_and_tail",
            "extrapolate",
            "nearest",
+           "deprecated",
            ]

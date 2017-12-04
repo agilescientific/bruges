@@ -28,7 +28,7 @@ def snn(arr, size=5, include=True):
     TODO:
         See how it handles Nans, consider removing, interpolating, replacing.
     """
-    def func(this, pairs):
+    def func(this, pairs, include):
         """
         Deal with this patch.
         """
@@ -45,7 +45,8 @@ def snn(arr, size=5, include=True):
     return scipy.ndimage.generic_filter(arr,
                                         func,
                                         size=size,
-                                        extra_keywords={'pairs': pairs}
+                                        extra_keywords={'pairs': pairs,
+                                                        'include': include}
                                         )
 
 

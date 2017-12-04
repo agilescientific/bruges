@@ -10,6 +10,8 @@ Hudson anisotropy is from crack defects.
 :copyright: 2015 Agile Geoscience
 :license: Apache 2.0
 """
+from collections import namedtuple
+
 import numpy as np
 
 from bruges.rockphysics import moduli
@@ -52,10 +54,11 @@ def backus_parameters(vp, vs, rho, lb, dz):
     L = 1.0 / moving_average(1.0/mu, lb/dz, mode='same')
     M = moving_average(mu, lb/dz, mode='same')
 
-    return A, C, F, L, M
+    BackusResult = namedtuple('BackusResult', ['A', 'C', 'F', 'L', 'M'])
+    return BackusResult(A, C, F, L, M)
 
 
-def backus(vp, vs, rho, lb, dz, return_rho=False):
+def backus(vp, vs, rho, lb, dz):
     """
     Backus averaging. Using Liner's algorithm (2014; see Notes).
 
@@ -65,12 +68,10 @@ def backus(vp, vs, rho, lb, dz, return_rho=False):
         rho (ndarray): Bulk density.
         lb (float): The Backus averaging length in m.
         dz (float): The depth sample interval in m.
-        return_rho (bool): Whether to return the smoothed rho log too.
 
     Returns:
-        tuple: the smoothed logs. Default: vp and vs. Optional (see flag):
-            vp, vs, plus rho. Useful for computing other elastic parameters
-            at a seismic scale.
+        namedtuple: the smoothed logs: vp, vs, plus rho. Useful for computing
+            other elastic parameters at a seismic scale.
 
     Notes:
         Liner, C (2014), Long-wave elastic attenuation produced by horizontal
@@ -85,10 +86,8 @@ def backus(vp, vs, rho, lb, dz, return_rho=False):
     vp0 = np.sqrt(C / R)
     vs0 = np.sqrt(L / R)
 
-    if return_rho:
-        return vp0, vs0, R
-    else:
-        return vp0, vs0
+    BackusResult = namedtuple('BackusResult', ['Vp', 'Vs', 'rho'])
+    return BackusResult(Vp=vp0, Vs=vs0, rho=R)
 
 
 def backus_quality_factor(vp, vs, rho, lb, dz):
@@ -96,7 +95,7 @@ def backus_quality_factor(vp, vs, rho, lb, dz):
     Compute Qp and Qs from Liner (2014) equation 10.
 
     """
-    vp0, vs0 = backus(vp, vs, rho, lb, dz)
+    vp0, vs0, _ = backus(vp, vs, rho, lb, dz)
 
     ptemp = np.pi * np.log(vp0 / vp) / (np.log(vp0 / vp) + np.log(lb/dz))
     Qp = 1.0 / np.tan(ptemp)
@@ -104,7 +103,8 @@ def backus_quality_factor(vp, vs, rho, lb, dz):
     stemp = np.pi * np.log(vs0 / vs) / (np.log(vs0 / vs) + np.log(lb/dz))
     Qs = 1.0 / np.tan(stemp)
 
-    return Qp, Qs
+    BackusResult = namedtuple('BackusResult', ['Qp', 'Qs'])
+    return BackusResult(Qp=Qp, Qs=Qs)
 
 
 def thomsen_parameters(vp, vs, rho, lb, dz):
@@ -120,7 +120,8 @@ def thomsen_parameters(vp, vs, rho, lb, dz):
     epsilon = (A - C) / (2.0 * C)
     gamma = (M - L) / (2.0 * L)
 
-    return delta, epsilon, gamma
+    ThomsenParameters = namedtuple('ThomsenParameters', ['δ', 'ε', 'γ'])
+    return ThomsenParameters(delta, epsilon, gamma)
 
 
 def dispersion_parameter(qp):
@@ -154,14 +155,12 @@ def blangy(vp1, vs1, rho1, d1, e1, vp0, vs0, rho0, d0, e0, theta):
     :param theta: A scalar [degrees].
 
     :returns: the isotropic and anisotropic reflectivities in a tuple. The
-        isotropic result is equivalent to Aki-Rochards.
+        isotropic result is equivalent to Aki-Richards.
 
 
     TODO
         Use rocks.
     """
-    # I already had code set up like this, so build some convenience dicts.
-    # These should be rock objects.
     lower = {'vp': vp0,
              'vs': vs0,
              'rho': rho0,
@@ -198,9 +197,10 @@ def blangy(vp1, vs1, rho1, d1, e1, vp0, vs0, rho0, d0, e0, theta):
     E = 0.5 * (dd - de) * np.sin(theta)**2 * np.tan(theta)**2
 
     isotropic = A - B + C
-    anisotropic = A - B + C + D - E
+    anisotropic = isotropic + D - E
 
-    return isotropic, anisotropic
+    BlangyResult = namedtuple('BlangyResult', ['isotropic', 'anisotropic'])
+    return BlangyResult(isotropic, anisotropic)
 
 
 def ruger(vp1, vs1, rho1, d1, e1, vp2, vs2, rho2, d2, e2, theta):
@@ -232,16 +232,12 @@ def ruger(vp1, vs1, rho1, d1, e1, vp2, vs2, rho2, d2, e2, theta):
     :returns: anisotropic reflectivity.
 
     """
-
     a = np.radians(theta)
     vp = np.mean([vp1, vp2])
     vs = np.mean([vs1, vs2])
-#    rho = np.mean([rho1, rho2])
     z = np.mean([vp1*rho1, vp2*rho2])
     g = np.mean([rho1*vs1**2, rho2*vs2**2])
     dvp = vp2-vp1
-#    dvs = vs2-vs1
-#    drho = rho2-rho1
     z2, z1 = vp2*rho2, vp1*rho1
     dz = z2-z1
     dg = rho2*vs2**2 - rho1*vs1**2

@@ -5,6 +5,8 @@ Seismic wavelets.
 :copyright: 2015 Agile Geoscience
 :license: Apache 2.0
 """
+from collections import namedtuple
+
 import numpy as np
 from scipy.signal import hilbert
 from scipy.signal import chirp
@@ -50,13 +52,14 @@ def ricker(duration, dt, f, return_t=False):
     w = output / np.amax(output)
 
     if return_t:
-        return w, t
+        RickerWavelet = namedtuple('RickerWavelet', ['amplitude', 'time'])
+        return RickerWavelet(w, t)
     else:
         return w
 
 
 def sweep(duration, dt, f, method='linear', phi=0,
-          vertex_zero=True, autocorrelate=True):
+          vertex_zero=True, autocorrelate=True, return_t=False):
     """
     Generates a linear frequency modulated wavelet (sweep)
     Does a wrapping of scipy.signal.chirp
@@ -99,7 +102,11 @@ def sweep(duration, dt, f, method='linear', phi=0,
                 A = np.correlate(A, A, mode='same')
             output[:, i] = A / np.max(A)
 
-    return output
+    if return_t:
+        Sweep = namedtuple('Sweep', ['amplitude', 'time'])
+        return Sweep(output, t)
+    else:
+        return output
 
 
 def ormsby(duration, dt, f, return_t=False):
@@ -155,7 +162,8 @@ def ormsby(duration, dt, f, return_t=False):
     A /= np.amax(A)
 
     if return_t:
-        return A, t
+        OrmsbyWavelet = namedtuple('OrmsbyWavelet', ['amplitude', 'time'])
+        return OrmsbyWavelet(A, t)
     else:
         return A
 

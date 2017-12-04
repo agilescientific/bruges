@@ -6,6 +6,8 @@ A dip attribute, probably most useful for guiding other attributes.
 :copyright: 2015 Agile Geoscience
 :license: Apache 2.0
 """
+from collections import namedtuple
+
 import numpy as np
 from bruges.attribute import energy
 
@@ -123,6 +125,7 @@ def dipsteer(data,
             crcf[start: start+stride, i] = crcf_j
 
     if return_correlation:
-        return dip, crcf
+        DipSteer = namedtuple('DipSteer', ['dip', 'correlation_coeff'])
+        return DipSteer(dip, crcf)
     else:
         return dip

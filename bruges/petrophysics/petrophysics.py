@@ -7,7 +7,6 @@ petrophysics.py
 :copyright: 2016 Agile Geoscience
 :license: Apache 2.0
 '''
-import numpy as np
 
 
 def gardner(vp, alpha=0.31, beta=0.25):

@@ -21,6 +21,7 @@ At some point we should do Biot too, per Russell...
 http://cseg.ca/symposium/archives/2012/presentations/Biot_Gassmann_and_me.pdf
 
 '''
+from collections import namedtuple
 
 import numpy as np
 from . import moduli
@@ -148,7 +149,8 @@ def avseth_fluidsub(vp, vs, rho, phi, rhof1, rhof2, kmin, kf1, kf2):
     vp2 = moduli.vp(bulk=ksat2, mu=musat2, rho=rho2)
     vs2 = moduli.vs(mu=musat2, rho=rho2)
 
-    return vp2, vs2, rho2
+    FluidSubResult = namedtuple('FluidSubResult', ['Vp', 'Vs', 'rho'])
+    return FluidSubResult(vp2, vs2, rho2)
 
 
 def smith_fluidsub(vp, vs, rho, phi, rhow, rhohc,
@@ -210,7 +212,7 @@ def smith_fluidsub(vp, vs, rho, phi, rhow, rhohc,
     kfl = 1 / (sw/kw + (1-sw)/khc)
     rhofl = sw * rhow + (1-sw)*rhohc
 
-    # Step 7: Calculate K*
+    # Step 7: Calculate K*.
     a = ksat * ((phi*k0/kfl) + 1 - phi) - k0
     b = (phi*k0/kfl) + (ksat/k0) - 1 - phi
     kstar = a / b
@@ -225,8 +227,8 @@ def smith_fluidsub(vp, vs, rho, phi, rhow, rhohc,
         khcnew = khc
     if rhohcnew is None:
         rhohcnew = rhohc
-    
-    # Now calculate the new fluid properties
+
+    # Now calculate the new fluid properties.
     kfl2 = 1 / (swnew/kwnew + (1-swnew)/khcnew)
     rhofl2 = swnew * rhownew + (1-swnew)*rhohcnew
 
@@ -238,12 +240,15 @@ def smith_fluidsub(vp, vs, rho, phi, rhow, rhohc,
     # First we need the grain density...
     rhog = (rho - phi*rhofl) / (1-phi)
     # Now we can find the new bulk density
-    rhob2 = phi*rhofl2 + rhog*(1-phi)
+    rho2 = phi*rhofl2 + rhog*(1-phi)
 
     # Step 11: Calculate the new compressional velocity.
     # Remember, mu (G) is unchanged.
-    vp2 = moduli.vp(bulk=ksat2, mu=g, rho=rhob2)
+    vp2 = moduli.vp(bulk=ksat2, mu=g, rho=rho2)
 
     # Step 12: Calculate the new shear velocity.
-    vs2 = moduli.vs(mu=g, rho=rhob2)
-    return vp2, vs2, rhob2
+    vs2 = moduli.vs(mu=g, rho=rho2)
+
+    # Finish.
+    FluidSubResult = namedtuple('FluidSubResult', ['Vp', 'Vs', 'rho'])
+    return FluidSubResult(vp2, vs2, rho2)

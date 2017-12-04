@@ -9,7 +9,7 @@ vs1 = 6200.
 vs2 = 6650.
 rho1 = 2.66
 rho2 = 2.34
-theta = np.arange(45)
+theta = np.arange(40)
 
 arr_vp1 = np.ones(1000)*2
 arr_vp2 = np.ones(1000)*3
@@ -28,12 +28,10 @@ class AvoTest(unittest.TestCase):
     zoeppritz answer for angles < 45 degrees.
     """
 
-    tolerance = 0.1
+    tolerance = 0.01
 
     def test_zoeppritz(self):
-
         theta = 40.
-
         reflect = avo.zoeppritz(vp1, vs1, rho1, vp2, vs2, rho2, theta)
 
         # Number manually verified using
@@ -41,9 +39,7 @@ class AvoTest(unittest.TestCase):
         self.assertAlmostEquals(reflect, -0.112236, places=3)
 
     def test_zoeppritz_rpp(self):
-
         theta = 40.
-
         reflect = avo.zoeppritz(vp1, vs1, rho1, vp2, vs2, rho2, theta)
         reflect_rpp = avo.zoeppritz_rpp(vp1, vs1, rho1, vp2, vs2, rho2, theta)
 
@@ -51,31 +47,28 @@ class AvoTest(unittest.TestCase):
         self.assertAlmostEquals(reflect_rpp, reflect, places=3)
 
     def test_akirichards(self):
-
         reflect = avo.akirichards(vp1, vs1, rho1, vp2, vs2, rho2, theta)
         reflect_zoep = avo.zoeppritz(vp1, vs1, rho1, vp2,
                                      vs2, rho2, theta)
 
-        # See if it is within .1 of zoep for < 45 deg
+        # See if it is within tol of zoep for < 40 deg.
         test = np.allclose(reflect, reflect_zoep,
                            rtol=self.tolerance)
         self.assertTrue(test)
 
-        # Test it won't complain about arrays
+        # Test it won't complain about arrays.
         reflect = avo.akirichards(arr_vp1, arr_vs1, arr_rho1,
                                   arr_vp2, arr_vs2, arr_rho2,
                                   arr_theta)
 
     def test_akirichards_alt(self):
-
         reflect = avo.akirichards_alt(vp1, vs1, rho1, vp2,
                                       vs2, rho2, theta)
         reflect_zoep = avo.zoeppritz(vp1, vs1, rho1, vp2,
                                      vs2, rho2, theta)
 
-        # See if it is within .1 of zoep for < 45 deg
-        test = np.allclose(reflect, reflect_zoep,
-                           rtol=self.tolerance)
+        # See if it is within tol of zoep for < 40 deg.
+        test = np.allclose(reflect, reflect_zoep, rtol=self.tolerance)
         self.assertTrue(test)
 
         reflect = avo.akirichards_alt(arr_vp1, arr_vs1, arr_rho1,
@@ -87,62 +80,55 @@ class AvoTest(unittest.TestCase):
         reflect_zoep = avo.zoeppritz(vp1, vs1, rho1, vp2,
                                      vs2, rho2, theta)
 
-        # See if it is within .1 of zoep for < 45 deg
-        test = np.allclose(reflect, reflect_zoep,
-                           rtol=self.tolerance)
+        # See if it is within tol of zoep for < 40 deg.
+        test = np.allclose(reflect, reflect_zoep, rtol=self.tolerance)
         self.assertTrue(test)
 
         reflect = avo.fatti(arr_vp1, arr_vs1, arr_rho1,
                             arr_vp2, arr_vs2, arr_rho2, arr_theta)
 
-    def test_shuey2(self):
-        reflect = avo.shuey2(vp1, vs1, rho1, vp2, vs2, rho2, theta)
+    def test_shuey(self):
+        theta = np.arange(30)
+        reflect = avo.shuey(vp1, vs1, rho1, vp2, vs2, rho2, theta)
         reflect_zoep = avo.zoeppritz(vp1, vs1, rho1, vp2,
                                      vs2, rho2, theta)
 
-        # See if it is within .1 of zoep for < 45 deg
-        test = np.allclose(reflect, reflect_zoep,
-                           rtol=self.tolerance)
+        # See if it is within tol of zoep.
+        test = np.allclose(reflect, reflect_zoep, rtol=self.tolerance)
         self.assertTrue(test)
 
+    def test_shuey2(self):
+        with self.assertWarns(DeprecationWarning):
+            _ = avo.shuey2(vp1, vs1, rho1, vp2, vs2, rho2, theta)
+
     def test_shuey3(self):
-        reflect = avo.shuey3(vp1, vs1, rho1, vp2, vs2, rho2, theta)
+        with self.assertWarns(DeprecationWarning):
+            _ = avo.shuey3(vp1, vs1, rho1, vp2, vs2, rho2, theta)
+
+    def test_bortfeld(self):
+        reflect = avo.bortfeld(vp1, vs1, rho1, vp2, vs2, rho2, theta)
         reflect_zoep = avo.zoeppritz(vp1, vs1, rho1, vp2,
                                      vs2, rho2, theta)
 
-        # See if it is within .1 of zoep for < 45 deg
-        test = np.allclose(reflect, reflect_zoep,
-                           rtol=self.tolerance)
+        # See if it is within tol of zoep for < 40 deg.
+        test = np.allclose(reflect, reflect_zoep, rtol=self.tolerance)
         self.assertTrue(test)
 
     def test_bortfeld2(self):
-        reflect = avo.bortfeld2(vp1, vs1, rho1, vp2, vs2, rho2, theta)
-        reflect_zoep = avo.zoeppritz(vp1, vs1, rho1, vp2,
-                                     vs2, rho2, theta)
-
-        # See if it is within .1 of zoep for < 45 deg
-        test = np.allclose(reflect, reflect_zoep,
-                           rtol=self.tolerance)
-        self.assertTrue(test)
+        with self.assertWarns(DeprecationWarning):
+            _ = avo.bortfeld2(vp1, vs1, rho1, vp2, vs2, rho2, theta)
 
     def test_bortfeld3(self):
-        reflect = avo.bortfeld3(vp1, vs1, rho1, vp2, vs2, rho2, theta)
-        reflect_zoep = avo.zoeppritz(vp1, vs1, rho1, vp2,
-                                     vs2, rho2, theta)
-
-        # See if it is within .1 of zoep for < 45 deg
-        test = np.allclose(reflect, reflect_zoep,
-                           rtol=self.tolerance)
-        self.assertTrue(test)
+        with self.assertWarns(DeprecationWarning):
+            _ = avo.bortfeld3(vp1, vs1, rho1, vp2, vs2, rho2, theta)
 
     def test_hilterman(self):
+        theta = np.arange(10)
         reflect = avo.hilterman(vp1, vs1, rho1, vp2, vs2, rho2, theta)
         reflect_zoep = avo.zoeppritz(vp1, vs1, rho1, vp2,
                                      vs2, rho2, theta)
-
-        # See if it is within .1 of zoep for < 45 deg
-        test = np.allclose(reflect, reflect_zoep,
-                           rtol=self.tolerance)
+        # See if it is within tol of zoep.
+        test = np.allclose(reflect, reflect_zoep, rtol=self.tolerance)
         self.assertTrue(test)
 
 
