@@ -1,4 +1,4 @@
-### v0.3.0 — 2018
+### v0.3.0 — January 2018
 - Breaking change: `anisotropy.backus` now always returns `Vp0`, `Vs0`, and `rho`.
 - Non-compatible change: `filters.wavelets.ricker` no longer normalizes the output, to avoid a problem with amplitude dependence on filter length.
 - Functions returning tuples now return a `collections.namedtuple` so it's more obvious what you're getting back.
@@ -8,6 +8,7 @@
 - No more `shuey2()`, `shuey3()`, `bortfeld2()`, `bortfeld3()`. Use `shuey()` and `bortfeld()` instead.
 - Zoeppritz calculation is now fully vectorized and 75% faster.
 - Better tests of the `reflection` algorithms (lower numerical tolerance).
+- Tidied up code.
 
 ### v0.2.3 — 27 November 2017
 - Coordinate transformation for (x,y) and (inline, line).
