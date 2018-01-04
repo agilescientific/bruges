@@ -1,5 +1,6 @@
 ### v0.3.0 — 2018
 - Breaking change: `anisotropy.backus` now always returns `Vp0`, `Vs0`, and `rho`.
+- Non-compatible change: `filters.wavelets.ricker` no longer normalizes the output, to avoid a problem with amplitude dependence on filter length.
 - Functions returning tuples now return a `collections.namedtuple` so it's more obvious what you're getting back.
 - New nonlinear filters (plus tests): `filters.snn()`, `filters.kuwahara()` and `filters.conservative()`.
 - `sweep()` optionally returns time basis, like the other wavelets.

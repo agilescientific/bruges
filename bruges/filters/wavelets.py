@@ -49,13 +49,11 @@ def ricker(duration, dt, f, return_t=False):
     if freq.size == 1:
         output = output.flatten()
 
-    w = output / np.amax(output)
-
     if return_t:
         RickerWavelet = namedtuple('RickerWavelet', ['amplitude', 'time'])
-        return RickerWavelet(w, t)
+        return RickerWavelet(output, t)
     else:
-        return w
+        return output
 
 
 def sweep(duration, dt, f, method='linear', phi=0,
