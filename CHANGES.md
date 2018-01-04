@@ -1,10 +1,12 @@
-### v0.3.0 — 2017
-- New nonlinear filters plus tests.
-- Functions returning tuples now return a `collections.namedtuple` so it's more obvious what you're getting.
+### v0.3.0 — 2018
 - Breaking change: `anisotropy.backus` now always returns `Vp0`, `Vs0`, and `rho`.
-- No more `shuey2()`, `shuey3()`, `bortfeld2()`, `bortfeld3()`.
-- Better tests of the `reflection` algorithms (lower numerical tolerance).
+- Functions returning tuples now return a `collections.namedtuple` so it's more obvious what you're getting back.
+- New nonlinear filters (plus tests): `filters.snn()`, `filters.kuwahara()` and `filters.conservative()`.
 - `sweep()` optionally returns time basis, like the other wavelets.
+- `reflection.shuey()` optionally returns intercept and gradient instead of the terms. Set `return_gradient=True`.
+- No more `shuey2()`, `shuey3()`, `bortfeld2()`, `bortfeld3()`. Use `shuey()` and `bortfeld()` instead.
+- Zoeppritz calculation is now fully vectorized and 75% faster.
+- Better tests of the `reflection` algorithms (lower numerical tolerance).
 
 ### v0.2.3 — 27 November 2017
 - Coordinate transformation for (x,y) and (inline, line).

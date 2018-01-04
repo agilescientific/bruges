@@ -22,7 +22,7 @@ def scattering_matrix(vp1, vs1, rho1, vp0, vs0, rho0, theta1=0):
     Calculates the angle dependent p-wave reflectivity of an interface
     between two mediums.
 
-    Written by: Wes Hamlyn
+    Originally written by: Wes Hamlyn, vectorized by Agile.
 
     :param vp1: The p-wave velocity of the upper medium.
     :param vs1: The s-wave velocity of the upper medium.
@@ -37,20 +37,20 @@ def scattering_matrix(vp1, vs1, rho1, vp0, vs0, rho0, theta1=0):
     :returns: a 4x4 array representing the scattering matrix
                 at the incident angle theta1.
     '''
-    # Make sure theta1 is an array
+    # Make sure theta1 is an array.
     theta1 = np.radians(np.array(theta1))
     if theta1.size == 1:
         theta1 = np.expand_dims(theta1, axis=1)
 
-    # Set the ray paramter, p
-    p = sin(theta1) / vp1  # ray parameter
+    # Set the ray paramter, p.
+    p = sin(theta1) / vp1
 
-    # Calculate reflection & transmission angles for Zoeppritz
-    theta2 = np.arcsin(p * vp0)      # Trans. angle of P-wave
-    phi1 = np.arcsin(p * vs1)     # Refl. angle of converted S-wave
-    phi2 = np.arcsin(p * vs0)      # Trans. angle of converted S-wave
+    # Calculate reflection & transmission angles for Zoeppritz.
+    theta2 = np.arcsin(p * vp0)  # Trans. angle of P-wave.
+    phi1 = np.arcsin(p * vs1)    # Refl. angle of converted S-wave.
+    phi2 = np.arcsin(p * vs0)    # Trans. angle of converted S-wave.
 
-    # Matrix form of Zoeppritz Equations... M & N are matricies
+    # Matrix form of Zoeppritz Equations... M & N are matrices.
     M = np.array([[-sin(theta1), -cos(phi1), sin(theta2), cos(phi2)],
                   [cos(theta1), -sin(phi1), cos(theta2), -sin(phi2)],
                   [2 * rho1 * vs1 * sin(phi1) * cos(theta1),
@@ -73,14 +73,10 @@ def scattering_matrix(vp1, vs1, rho1, vp0, vs0, rho0, theta1=0):
                    - rho0 * vp0 * (1 - 2 * sin(phi2) ** 2),
                    rho0 * vs0 * sin(2 * phi2)]], dtype='float')
 
-    zoep = np.zeros((4, 4, M.shape[-1]))
-    for i in range(M.shape[-1]):
-        Mi = M[..., i]
-        Ni = N[..., i]
-        dt = np.dot(np.linalg.inv(Mi), Ni)
-        zoep[..., i] = dt
+    A = np.linalg.inv(np.rollaxis(M, 2))
+    Z = np.matmul(A, np.rollaxis(N, -1))
 
-    return zoep
+    return np.rollaxis(Z, 0, 3)
 
 
 def zoeppritz_element(vp1, vs1, rho1, vp0, vs0, rho0, theta1=0, element='PdPu'):
@@ -319,7 +315,9 @@ def fatti(vp1, vs1, rho1, vp2, vs2, rho2, theta1=0, terms=False):
         return (term1 + term2 + term3)
 
 
-def shuey(vp1, vs1, rho1, vp2, vs2, rho2, theta1=0, terms=False):
+def shuey(vp1, vs1, rho1, vp2, vs2, rho2, theta1=0,
+          terms=False,
+          return_gradient=False):
     """
     Compute Shuey approximation with 3 terms.
     http://subsurfwiki.org/wiki/Shuey_equation
@@ -327,13 +325,15 @@ def shuey(vp1, vs1, rho1, vp2, vs2, rho2, theta1=0, terms=False):
     :param vp1: The p-wave velocity of the upper medium.
     :param vs1: The s-wave velocity of the upper medium.
     :param rho1: The density of the upper medium.
-
     :param vp2: The p-wave velocity of the lower medium.
     :param vs2: The s-wave velocity of the lower medium.
     :param rho2: The density of the lower medium.
-
     :param theta1: An array of incident angles to use for reflectivity
                    calculation [degrees].
+    :param terms: bool. Whether to return a tuple of the 3 individual terms.
+    :param return_gradient: bool. Whether to return a tuple of the intercept
+                            and gradient (i.e. the second term divided by
+                            sin^2(theta).
 
     :returns: a vector of len(theta1) containing the reflectivity
              value corresponding to each angle.
@@ -358,7 +358,11 @@ def shuey(vp1, vs1, rho1, vp2, vs2, rho2, theta1=0, terms=False):
     term2 = g * np.sin(theta1)**2
     term3 = f * (np.tan(theta1)**2 - np.sin(theta1)**2)
 
-    if terms:
+    if return_gradient:
+        fields = ['intercept', 'gradient']
+        Shuey = namedtuple('Shuey', fields)
+        return Shuey(r0, g)
+    elif terms:
         fields = ['R0', 'Rg', 'Rf']
         Shuey = namedtuple('Shuey', fields)
         return Shuey(term1, term2, term3)
@@ -371,7 +375,7 @@ def shuey2(vp1, vs1, rho1, vp2, vs2, rho2, theta1=0):
     """
     Compute Shuey approximation with 2 terms.
     """
-    r, g = shuey(vp1, vs1, rho1, vp2, vs2, rho2, theta1=theta1, terms=True)[:2]
+    r, g, _ = shuey(vp1, vs1, rho1, vp2, vs2, rho2, theta1=theta1, terms=True)
     return r + g
 
 

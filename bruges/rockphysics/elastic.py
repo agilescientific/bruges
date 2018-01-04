@@ -23,7 +23,7 @@ def elastic_impedance(vp, vs, rho, theta1, normalize=True):
         Whitcombe et. al (2001).
     """
     theta1 = np.radians(theta1)
-    # k = np.mean(vs)**2 / np.mean(vp)**2
+
     k = 0.25
     a = 1 + np.tan(theta1)**2
     b = -8 * k * np.sin(theta1)**2

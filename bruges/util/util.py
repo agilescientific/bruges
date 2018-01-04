@@ -95,10 +95,6 @@ def moving_average(a, length, mode='valid'):
         pad *= 2
 
     # Make a padded version, paddding with first and last values
-    # r = np.empty(a.shape[0] + 2*pad)
-    # r[:pad] = a[0]
-    # r[pad:-pad] = a
-    # r[-pad:] = a[-1]
     r = np.pad(a, pad, mode='edge')
 
     # Cumsum with shifting trick; first remove NaNs
@@ -206,15 +202,18 @@ def extrapolate(a):
 
 
 def deprecated(instructions):
-    """Flags a method as deprecated.
-    Args:
-        instructions: A human-friendly string of instructions, such
+    """
+    Flags a method as deprecated. This decorator can be used to mark functions
+    as deprecated. It will result in a warning being emitted when the function
+    is used.
+
+    :param instructions: (str) A human-friendly string of instructions, such
             as: 'Please migrate to add_proxy() ASAP.'
+
+    :returns: The decorated function.
     """
     def decorator(func):
-        '''This is a decorator which can be used to mark functions
-        as deprecated. It will result in a warning being emitted
-        when the function is used.'''
+
         @functools.wraps(func)
         def wrapper(*args, **kwargs):
             message = 'Call to deprecated function {}. {}'.format(
