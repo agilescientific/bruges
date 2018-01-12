@@ -6,9 +6,11 @@
 - `sweep()` optionally returns time basis, like the other wavelets.
 - `reflection.shuey()` optionally returns intercept and gradient instead of the terms. Set `return_gradient=True`.
 - No more `shuey2()`, `shuey3()`, `bortfeld2()`, `bortfeld3()`. Use `shuey()` and `bortfeld()` instead.
-- Zoeppritz calculation is now fully vectorized and 75% faster.
+- Zoeppritz calculation is now fully vectorized and 75% faster. Also added the full `scattering_matrix()` function to the list of available functions (it was previously a private function).
 - Better tests of the `reflection` algorithms (lower numerical tolerance).
 - Tidied up code.
+
+----
 
 ### v0.2.3 — 27 November 2017
 - Coordinate transformation for (x,y) and (inline, line).
@@ -25,6 +27,8 @@
 
 ### v0.2.0 — 13 July 2015
 - Anisotropy equations.
+
+----
 
 ### v0.1.6 — 11 April 2015
 - Float conversion in reflectivity.
@@ -52,5 +56,3 @@
 
 ### v0.1.0 — 16 October 2013
 - Initial release, a re-write of the agilegeo library.
-
-
