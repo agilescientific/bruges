@@ -28,7 +28,7 @@ class TimeDepthTest(unittest.TestCase):
         dt = 0.001
         dz = 1.0
 
-        face_change = np.floor(((49 * dz) / 1500.0) / dt)
+        face_change = int(np.floor(((49 * dz) / 1500.0) / dt))
 
         output = depth_to_time(data, vmodel, dz, dt, twt=False)
 
@@ -50,7 +50,7 @@ class TimeDepthTest(unittest.TestCase):
 
         output = time_to_depth(data, vmodel, dt, dz, twt=False)
 
-        face_change = np.floor(((49.5 * dt) * 1500.0) / dz)
+        face_change = int(np.floor(((49.5 * dt) * 1500.0) / dz))
 
         self.assertTrue((output[face_change+1, 50] -
                          output[face_change, 50]) == 100)
@@ -71,6 +71,8 @@ class TimeDepthTest(unittest.TestCase):
         out1 = depth_to_time(data, vmodel, dz, dt)
         v2 = depth_to_time(vmodel, vmodel, dz, dt)
         out2 = time_to_depth(out1, v2, dt, dz)
+
+        # This test is not finished!
 
 
 if (__name__ == '__main__'):

@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 # -*- coding: utf 8 -*-
 """
 2D kernels for image processing.
@@ -8,8 +7,11 @@
 """
 import numpy as np
 
-    
-def gaussian_kernel(size, size_y=None):
+
+def gaussian(size, size_y=None):
+    """
+    Returns a Gaussian kernel.
+    """
     size = int(size)
     if not size_y:
         size_y = size
@@ -18,4 +20,6 @@ def gaussian_kernel(size, size_y=None):
     x, y = np.mgrid[-size:size+1, -size_y:size_y+1]
     g = np.exp(-(x**2/float(size)+y**2/float(size_y)))
     return g / g.sum()
- 
+
+
+gaussian_kernel = gaussian

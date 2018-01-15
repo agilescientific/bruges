@@ -31,7 +31,7 @@ __all__ = [
            "backus_parameters", "backus",
            "backus_quality_factor", "thomsen_parameters",
            "dispersion_parameter", "blangy",
-           "crack_density"
+           "crack_density",
            "hudson_delta_M", "hudson_delta_G",
            "hudson_quality_factor", "hudson_inverse_Q_ratio",
            "elastic_impedance",

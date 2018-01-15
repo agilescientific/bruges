@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 # -*- coding: utf-8 -*-
 """
 Anisotropy effects.
@@ -10,6 +9,8 @@ Hudson anisotropy is from crack defects.
 :copyright: 2015 Agile Geoscience
 :license: Apache 2.0
 """
+from collections import namedtuple
+
 import numpy as np
 
 from bruges.rockphysics import moduli
@@ -18,9 +19,21 @@ from bruges.util import moving_average
 
 def backus_parameters(vp, vs, rho, lb, dz):
     """
-    Backus parameters.
+    Intermediate parameters for Backus averaging. This is expected to be a
+    private function. You probably want backus() and not this.
 
-    Liner, C (2014), Long-wave elastic attenuation produced by horizontal
+    Args:
+        vp (ndarray): P-wave interval velocity.
+        vs (ndarray): S-wave interval velocity.
+        rho (ndarray): Bulk density.
+        lb (float): The Backus averaging length in m.
+        dz (float): The depth sample interval in m.
+
+    Returns:
+        tuple: Liner's 5 intermediate parameters: A, C, F, L and M.
+
+    Notes:
+        Liner, C (2014), Long-wave elastic attenuation produced by horizontal
         layering. The Leading Edge, June 2014, p 634-638.
 
     """
@@ -40,14 +53,27 @@ def backus_parameters(vp, vs, rho, lb, dz):
     L = 1.0 / moving_average(1.0/mu, lb/dz, mode='same')
     M = moving_average(mu, lb/dz, mode='same')
 
-    return A, C, F, L, M
+    BackusResult = namedtuple('BackusResult', ['A', 'C', 'F', 'L', 'M'])
+    return BackusResult(A, C, F, L, M)
 
 
 def backus(vp, vs, rho, lb, dz):
     """
-    Backus averaging.
+    Backus averaging. Using Liner's algorithm (2014; see Notes).
 
-    Liner, C (2014), Long-wave elastic attenuation produced by horizontal
+    Args:
+        vp (ndarray): P-wave interval velocity.
+        vs (ndarray): S-wave interval velocity.
+        rho (ndarray): Bulk density.
+        lb (float): The Backus averaging length in m.
+        dz (float): The depth sample interval in m.
+
+    Returns:
+        namedtuple: the smoothed logs: vp, vs, plus rho. Useful for computing
+            other elastic parameters at a seismic scale.
+
+    Notes:
+        Liner, C (2014), Long-wave elastic attenuation produced by horizontal
         layering. The Leading Edge, June 2014, p 634-638.
 
     """
@@ -59,7 +85,8 @@ def backus(vp, vs, rho, lb, dz):
     vp0 = np.sqrt(C / R)
     vs0 = np.sqrt(L / R)
 
-    return vp0, vs0
+    BackusResult = namedtuple('BackusResult', ['Vp', 'Vs', 'rho'])
+    return BackusResult(Vp=vp0, Vs=vs0, rho=R)
 
 
 def backus_quality_factor(vp, vs, rho, lb, dz):
@@ -67,7 +94,7 @@ def backus_quality_factor(vp, vs, rho, lb, dz):
     Compute Qp and Qs from Liner (2014) equation 10.
 
     """
-    vp0, vs0 = backus(vp, vs, rho, lb, dz)
+    vp0, vs0, _ = backus(vp, vs, rho, lb, dz)
 
     ptemp = np.pi * np.log(vp0 / vp) / (np.log(vp0 / vp) + np.log(lb/dz))
     Qp = 1.0 / np.tan(ptemp)
@@ -75,7 +102,8 @@ def backus_quality_factor(vp, vs, rho, lb, dz):
     stemp = np.pi * np.log(vs0 / vs) / (np.log(vs0 / vs) + np.log(lb/dz))
     Qs = 1.0 / np.tan(stemp)
 
-    return Qp, Qs
+    BackusResult = namedtuple('BackusResult', ['Qp', 'Qs'])
+    return BackusResult(Qp=Qp, Qs=Qs)
 
 
 def thomsen_parameters(vp, vs, rho, lb, dz):
@@ -91,7 +119,8 @@ def thomsen_parameters(vp, vs, rho, lb, dz):
     epsilon = (A - C) / (2.0 * C)
     gamma = (M - L) / (2.0 * L)
 
-    return delta, epsilon, gamma
+    ThomsenParameters = namedtuple('ThomsenParameters', ['δ', 'ε', 'γ'])
+    return ThomsenParameters(delta, epsilon, gamma)
 
 
 def dispersion_parameter(qp):
@@ -104,7 +133,7 @@ def dispersion_parameter(qp):
 
 def blangy(vp1, vs1, rho1, d1, e1, vp0, vs0, rho0, d0, e0, theta):
     """
-    Blangy, JP, 1994, AVO in transversely isotrpoic media-An overview.
+    Blangy, JP, 1994, AVO in transversely isotropic media-An overview.
     Geophysics 59 (5), 775-781. DOI: 10.1190/1.1443635
 
     Provide Vp, Vs, rho, delta, epsilon for the upper and lower intervals,
@@ -122,17 +151,15 @@ def blangy(vp1, vs1, rho1, d1, e1, vp0, vs0, rho0, d0, e0, theta):
     :param d0: Thomsen's delta of the lower medium.
     :param e0: Thomsen's epsilon of the lower medium.
 
-    :param theta1: A scalar [degrees].
+    :param theta: A scalar [degrees].
 
     :returns: the isotropic and anisotropic reflectivities in a tuple. The
-        isotropic result is equivalent to Aki-Rochards.
+        isotropic result is equivalent to Aki-Richards.
 
 
     TODO
         Use rocks.
     """
-    # I already had code set up like this, so build some convenience dicts.
-    # These should be rock objects.
     lower = {'vp': vp0,
              'vs': vs0,
              'rho': rho0,
@@ -169,9 +196,58 @@ def blangy(vp1, vs1, rho1, d1, e1, vp0, vs0, rho0, d0, e0, theta):
     E = 0.5 * (dd - de) * np.sin(theta)**2 * np.tan(theta)**2
 
     isotropic = A - B + C
-    anisotropic = A - B + C + D - E
+    anisotropic = isotropic + D - E
 
-    return isotropic, anisotropic
+    BlangyResult = namedtuple('BlangyResult', ['isotropic', 'anisotropic'])
+    return BlangyResult(isotropic, anisotropic)
+
+
+def ruger(vp1, vs1, rho1, d1, e1, vp2, vs2, rho2, d2, e2, theta):
+    """
+    Coded by Alessandro Amato del Monte and (c) 2016 by him
+    https://github.com/aadm/avo_explorer/blob/master/avo_explorer_v2.ipynb
+
+    Rüger, A., 1997, P -wave reflection coefficients for transversely
+    isotropic models with vertical and horizontal axis of symmetry:
+    Geophysics, v. 62, no. 3, p. 713–722.
+
+    Provide Vp, Vs, rho, delta, epsilon for the upper and lower intervals,
+    and theta, the incidence angle.
+
+    :param vp1: The p-wave velocity of the upper medium.
+    :param vs1: The s-wave velocity of the upper medium.
+    :param rho1: The density of the upper medium.
+    :param d1: Thomsen's delta of the upper medium.
+    :param e1: Thomsen's epsilon of the upper medium.
+
+    :param vp0: The p-wave velocity of the lower medium.
+    :param vs0: The s-wave velocity of the lower medium.
+    :param rho0: The density of the lower medium.
+    :param d0: Thomsen's delta of the lower medium.
+    :param e0: Thomsen's epsilon of the lower medium.
+
+    :param theta: A scalar [degrees].
+
+    :returns: anisotropic reflectivity.
+
+    """
+    a = np.radians(theta)
+    vp = np.mean([vp1, vp2])
+    vs = np.mean([vs1, vs2])
+    z = np.mean([vp1*rho1, vp2*rho2])
+    g = np.mean([rho1*vs1**2, rho2*vs2**2])
+    dvp = vp2-vp1
+    z2, z1 = vp2*rho2, vp1*rho1
+    dz = z2-z1
+    dg = rho2*vs2**2 - rho1*vs1**2
+    dd = d2-d1
+    de = e2-e1
+    A = 0.5*(dz/z)
+    B = 0.5*(dvp/vp - (2*vs/vp)**2 * (dg/g) + dd) * np.sin(a)**2
+    C = 0.5*(dvp/vp + de) * np.sin(a)**2 * np.tan(a)**2
+    R = A+B+C
+
+    return R
 
 
 def crack_density(porosity, aspect):
@@ -247,9 +323,11 @@ def hudson_quality_factor(porosity, aspect, mu, lam=None, pmod=None):
     return Qp, Qs
 
 
-def hudson_inverse_Q_ratio(mu=None, pmod=None,
+def hudson_inverse_Q_ratio(mu=None,
+                           pmod=None,
                            pr=None,
-                           vp=None, vs=None,
+                           vp=None,
+                           vs=None,
                            aligned=True):
     """
     Dvorkin et al. (2014), Eq 15.44 (aligned) and 15.48 (not aligned).

@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 # -*- coding: utf 8 -*-
 """
 A dip attribute, probably most useful for guiding other attributes.
@@ -6,6 +5,8 @@ A dip attribute, probably most useful for guiding other attributes.
 :copyright: 2015 Agile Geoscience
 :license: Apache 2.0
 """
+from collections import namedtuple
+
 import numpy as np
 from bruges.attribute import energy
 
@@ -23,38 +24,26 @@ def dipsteer(data,
 
     :param data (ndarray): A 2D seismic section (samples,traces) used to
         calculate dip.
-    :param window_length: The length [in ms] of the window to use.
-    :param dt: The time sample interval of the traces.
-    :param stepout: The number of traces on either side of each point
+    :param window_length (float): The length [in ms] of the window to use.
+    :param stepout (int): The number of traces on either side of each point
         to average when calculating the dip.
-    :param maxlag: The maximum amount time lag to use when correlating
+    :param maxlag (float): The maximum amount time lag to use when correlating
         the traces.
-    :keyword overlap: The fractional overlap for each window. A value of 0
-        uses no redudant data, a value of 1 slides the dip correlator one
+    :keyword overlap (float): The fractional overlap for each window. A value
+        of 0 uses no redudant data, a value of 1 slides the dip correlator one
         sample at a time. Defaults to 1.
-    :keyword dt: The time sample interval in ms.
+    :keyword dt (float): The time sample interval in ms.
     :keyword return_correlation (bool): Whether to return the correlation
         coefficients. If you choose True, you'll get a tuple, not an ndarray.
-
     :returns: a dip field [samples/trace] of the same shape as the input data
         (and optionally correlation coefficients, in which case you'll get a
         tuple of ndarrays back).
-
-    Example
-
-        import bruges as b
-        d, c = b.attribute.dipsteer(data,
-                                    window_length=24,
-                                    stepout=1,
-                                    maxlag=16,
-                                    overlap=1,
-                                    dt=4)
     """
-
+    maxlag = int(maxlag)
     dip = np.zeros(data.shape)
     crcf = np.zeros(data.shape)
 
-    window_length = np.floor(window_length / dt)
+    window_length = int(np.floor(window_length / dt))
 
     # Force the window length to be odd for index tracking.
     if not (window_length % 2):
@@ -64,12 +53,12 @@ def dipsteer(data,
     if overlap == 1:
         stride = 1
     else:
-        stride = window_length * (1 - overlap)
+        stride = int(window_length * (1 - overlap))
     n_windows = np.ceil((data.shape[0] - window_length) / stride) + 1
 
     # Normalize each trace to the same RMS energy.
-    norm_factor = np.sqrt(energy(data, window_length))
-    norm_data = data / norm_factor
+    norm_factor = np.sqrt(np.abs(energy(data, window_length)))
+    norm_data = data / (norm_factor + 1e-9)  # To avoid div0 error.
 
     # Replace the 0/0 with 0.
     norm_data = np.nan_to_num(norm_data)
@@ -82,10 +71,12 @@ def dipsteer(data,
     # Loop over each trace we can do a full calculation for.
     for i in np.arange(s, data.shape[-1] - s):
 
+        i = int(i)
+
         # Loop over each time window.
         for j in np.arange(0, n_windows):
 
-            start = (j * stride) + (maxlag)
+            start = int((j * stride) + (maxlag))
             end = start + window_length
 
             # Don't compute last samples if we don't have a full window.
@@ -98,6 +89,8 @@ def dipsteer(data,
 
             # Correlate with adjacent traces.
             for k in np.arange(1, s):
+
+                k = int(k)
 
                 # Do the trace on the right.
                 r_trace = norm_data[start - (k*maxlag): end + (k*maxlag), i+k]
@@ -131,6 +124,7 @@ def dipsteer(data,
             crcf[start: start+stride, i] = crcf_j
 
     if return_correlation:
-        return dip, crcf
+        DipSteer = namedtuple('DipSteer', ['dip', 'correlation_coeff'])
+        return DipSteer(dip, crcf)
     else:
         return dip

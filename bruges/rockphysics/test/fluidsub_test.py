@@ -15,19 +15,19 @@ rho_gas = 2080.
 # Expected outputs... BRINE case
 vp_brine = 2850.5
 vs_brine = 1416.1
-rho_brine = 2210.
+rho_brine = 2210.0
 
-phi = 0.275          # Don't know this... reading from fig
-rhohc = 250.         # gas
-rhow = 1040.         # brine
-sw = 0.3             # Don't know this... just guessing
-swnew = 1.0          # Don't know this... just guessing
-khc = 207000000.     # gas
-kw = 2950000000.     # brine
-kclay = 25000000000.
-kqtz = 37000000000.
+phi = 0.275           # Don't know this... reading from fig
+rhohc = 250.0         # gas
+rhow = 1040.0         # brine
+sw = 0.3              # Don't know this... just guessing
+swnew = 1.0           # Don't know this... just guessing
+khc = 207000000.0     # gas
+kw = 2950000000.0     # brine
+kclay = 25000000000.0
+kqtz = 37000000000.0
 vclay = 0.05
-kmin = 36266406250.  # Don't know this... reading from fig
+kmin = 36266406250.0  # Don't know this... reading from fig
 
 
 class FluidsubTest(unittest.TestCase):
@@ -50,9 +50,9 @@ class FluidsubTest(unittest.TestCase):
                                        kf1=khc,
                                        kf2=kw)
 
-        self.assertAlmostEqual(sub[0], vp_brine, places=-1)
-        self.assertAlmostEqual(sub[1], vs_brine, places=-1)
-        self.assertAlmostEqual(sub[2], rho_brine, places=-1)
+        self.assertAlmostEqual(sub[0], vp_brine, places=-1)  # Cannot match :(
+        self.assertAlmostEqual(sub[1], vs_brine, places=-1)  # Cannot match :(
+        self.assertAlmostEqual(sub[2], rho_brine, places=-1)  # Cannot match :(
 
     def test_smith(self):
         # Base case: gas
@@ -74,7 +74,7 @@ class FluidsubTest(unittest.TestCase):
 
         self.assertAlmostEqual(sub[0], vp_brine,  places=-1)
         self.assertAlmostEqual(sub[1], vs_brine,  places=-1)
-        self.assertAlmostEqual(sub[2], rho_brine, places=-1)
+        self.assertAlmostEqual(sub[2], rho_brine, places=-1)  # Cannot match :(
 
 
 if __name__ == '__main__':

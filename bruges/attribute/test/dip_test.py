@@ -1,3 +1,4 @@
+# -*- coding: utf 8 -*-
 import unittest
 import numpy as np
 
@@ -61,8 +62,8 @@ class DipTest(unittest.TestCase):
 
         for i in range(dips.size):
 
-            data[:, i] = np.convolve(wavelet, np.roll(data[:, i],
-                                                      dips[i]),
+            data[:, i] = np.convolve(wavelet,
+                                     np.roll(data[:, i], dips[i]),
                                      mode='same')
 
         stepout = 1
@@ -76,12 +77,13 @@ class DipTest(unittest.TestCase):
 
         check = undipped[maxlag*stepout:-maxlag*stepout]
         test = np.zeros(check.shape)
-        test[0: test.size/2 - 1] = -2.0
-        test[(test.size/2) - 1] = -1
-        test[(test.size/2)] = 1
-        test[(test.size/2)+1:] = 2
+        test[0: test.size//2 - 1] = -2.0
+        test[(test.size//2) - 1] = -1
+        test[(test.size//2)] = 1
+        test[(test.size//2)+1:] = 2
 
         self.assertTrue(np.allclose(test, check))
+
 
 if __name__ == '__main__':
     suite = unittest.TestLoader().loadTestsFromTestCase(DipTest)

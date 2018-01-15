@@ -1,6 +1,12 @@
+# -*- coding: utf 8 -*-
+"""
+Time-depth conversion.
+
+:copyright: 2015 Agile Geoscience
+:license: Apache 2.0
+"""
 from scipy.interpolate import interp1d
-from numpy import arange, amax, amin, asarray, zeros, cumsum, \
-     transpose, gradient, mean, size
+import numpy as np
 
 
 def __convert(data, vmodel, interval, interval_new, scale, mode):
@@ -8,81 +14,84 @@ def __convert(data, vmodel, interval, interval_new, scale, mode):
     Generic function for converting between scales. Use either
     time to depth or depth to time
     """
+    data = np.array(data)
 
-    dz = interval
-    dt = interval_new
-
-    if len(data.shape) == 1:
+    if np.ndim(data) == 1:
         ntraces = 1
         nsamps = data.size
-        if size(dz) == 1:
-            depths = arange(nsamps)*dz
+        if np.size(interval) == 1:
+            basis = np.arange(nsamps)*interval
         else:
-            depths = dz
-        v_avg = cumsum(vmodel) / (arange(nsamps) + 1)
-
+            basis = interval
+        v_avg = np.cumsum(vmodel) / (np.arange(nsamps) + 1)
     else:
         ntraces = data.shape[-1]
         nsamps = data.shape[0]
-        if size(dz) == 1:
-            tr = [(arange(nsamps) * dz) for i in range(ntraces)]
-            depths = transpose(asarray(tr))
+        if np.size(interval) == 1:
+            tr = [(np.arange(nsamps) * interval) for i in range(ntraces)]
+            basis = np.transpose(np.asarray(tr))
         else:
-            depths = dz
-        tr = [arange(nsamps) + 1 for i in range(ntraces)]
-        v_avg = cumsum(vmodel, axis=0) / transpose(tr)
+            basis = interval
+        tr = [np.arange(nsamps) + 1 for i in range(ntraces)]
+        v_avg = np.cumsum(vmodel, axis=0) / np.transpose(tr)
 
-    times = depths / v_avg
-    times *= scale
+    new_basis = basis / v_avg
+    new_basis *= scale
 
-    if size(dt) == 1:
-        times_lin = arange(amin(times), amax(times), dt)
+    if np.size(interval_new) == 1:
+        new_basis_lin = np.arange(np.amin(new_basis), np.amax(new_basis), interval_new)
     else:
-        times_lin = dt
+        new_basis_lin = interval_new
 
-    if ntraces == 1:
-        inter = interp1d(times, data,
+    if np.ndim(data) == 1:
+        inter = interp1d(new_basis, data,
                          bounds_error=False,
                          fill_value=data[-1],
-                         kind='nearest')
-        return inter(times_lin)
+                         kind=mode)
+        return inter(new_basis_lin)
     else:
-        output = zeros((times_lin.size, ntraces))
+        output = np.zeros((new_basis_lin.size, ntraces))
         for i in range(ntraces):
-            inter = interp1d(times[:, i], data[:, i],
+            inter = interp1d(new_basis[:, i], data[:, i],
                              bounds_error=False,
                              fill_value=data[-1, i],
                              kind=mode)
-            output[:, i] += inter(times_lin)
+            output[:, i] += inter(new_basis_lin)
         return output
 
 
-def time_to_depth(data, vmodel, dt, dz, twt=True,
-                  mode="nearest"):
+def time_to_depth(data, vmodel, dt, dz, twt=True, mode="nearest"):
     """
     Converts data from the time domain to the depth domain given a
     velocity model.
 
     :param data: The data to convert, will work with a 1 or 2D numpy
                  numpy array. array(samples,traces).
-    :param vmodel: P-wave velocity model that corresponds to the data.
+    :param vmodel: P-wave interval velocity model that corresponds to the data.
                    Must be the same shape as data.
     :param dt: The sample interval of the input data [s], or an
                array of times.
     :param dz: The sample interval of the output data [m], or an
-               array of depths
+               array of depths.
 
-    :keyword twt: Use twt travel time, defaults to true
+    :keyword twt: Use twt travel time, defaults to true.
+    :keyword mode: What kind of interpolation to use, defaults to 'nearest'.
 
     :returns: The data resampled in the depth domain.
     """
-
     if twt:
         scale = 1/2.0
     else:
         scale = 1.0
-    # Do depth to time with inverted velocity profile
-    return __convert(data, 1. / vmodel, dt, dz, scale, mode)
+
+    # Do conversion with inverted velocity profile (slowness).
+    return __convert(data,
+                     vmodel=1. / vmodel,
+                     interval=dt,
+                     interval_new=dz,
+                     scale=scale,
+                     mode=mode
+                     )
 
 
 def depth_to_time(data, vmodel, dz, dt, twt=True, mode="nearest"):
@@ -92,19 +101,25 @@ def depth_to_time(data, vmodel, dz, dt, twt=True, mode="nearest"):
 
     :param data: The data to convert, will work with a 1 or 2D numpy
                  numpy array. array(samples,traces).
-    :param vmodel: P-wave velocity model that corresponds to the data.
+    :param vmodel: P-wave interval velocity model that corresponds to the data.
                    Must be the same shape as data.
     :param dz: The sample interval of the input data [m].
     :param dt: The sample interval of the output data [s].
 
-    :keyword twt: Use twt travel time, defaults to true
+    :keyword twt: Use twt travel time, defaults to true.
+    :keyword mode: What kind of interpolation to use, defaults to 'nearest'.
 
     :returns: The data resampled in the time domain.
     """
-
     if twt:
         scale = 2.0
     else:
         scale = 1.0
-    # Do depth to time with inverted velocity profile
-    return __convert(data, vmodel, dz, dt, scale, mode)
+
+    return __convert(data,
+                     vmodel=vmodel,
+                     interval=dz,
+                     interval_new=dt,
+                     scale=scale,
+                     mode=mode
+                     )

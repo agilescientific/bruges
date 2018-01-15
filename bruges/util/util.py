@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 # -*- coding: utf-8 -*-
 """
 Utility functions.
@@ -6,8 +5,57 @@ Utility functions.
 :copyright: 2015 Agile Geoscience
 :license: Apache 2.0
 """
+import functools
+import inspect
+import warnings
+
 import scipy.signal
 import numpy as np
+
+greek = {
+    'Alpha': 'Α',
+    'Beta': 'Β',
+    'Gamma': 'Γ',
+    'Delta': 'Δ',
+    'Epsilon': 'Ε',
+    'Zeta': 'Ζ',
+    'Eta': 'Η',
+    'Kappa': 'Κ',
+    'Lambda': 'Λ',
+    'Mu': 'Μ',
+    'Nu': 'Ν',
+    'Phi': 'Φ',
+    'Pi': 'Π',
+    'Rho': 'Ρ',
+    'Sigma': 'Σ',
+    'Tau': 'Τ',
+    'Upsilon': 'Υ',
+    'Theta': 'Θ',
+    'Chi': 'Χ',
+    'Psi': 'Ψ',
+    'Omega': 'Ω',
+    'alpha': 'α',
+    'beta': 'β',
+    'gamma': 'γ',
+    'delta': 'δ',
+    'epsilon': 'ε',
+    'zeta': 'ζ',
+    'eta': 'η',
+    'theta': 'θ',
+    'kappa': 'κ',
+    'lambda': 'λ',
+    'mu': 'μ',
+    'nu': 'ν',
+    'pi': 'π',
+    'rho': 'ρ',
+    'sigma': 'σ',
+    'tau': 'τ',
+    'upsilon': 'υ',
+    'phi': 'φ',
+    'chi': 'χ',
+    'psi': 'ψ',
+    'omega': 'ω',
+}
 
 
 def rms(a):
@@ -39,18 +87,17 @@ def moving_average(a, length, mode='valid'):
         Other types of average.
 
     """
-    pad = np.floor(length/2)
+    length = int(length)
+    pad = int(np.floor(length/2))
 
     if mode == 'full':
         pad *= 2
 
     # Make a padded version, paddding with first and last values
-    r = np.empty(a.shape[0] + 2*pad)
-    r[:pad] = a[0]
-    r[pad:-pad] = a
-    r[-pad:] = a[-1]
+    r = np.pad(a, pad, mode='edge')
 
-    # Cumsum with shifting trick
+    # Cumsum with shifting trick; first remove NaNs
+    r[np.isnan(r)] = 0
     s = np.cumsum(r, dtype=float)
     s[length:] = s[length:] - s[:-length]
     out = s[length-1:]/length
@@ -101,6 +148,13 @@ def normalize(a, new_min=0.0, new_max=1.0):
     return n * (new_max - new_min) + new_min
 
 
+def nearest(a, num):
+    """
+    Finds the array's nearest value to a given num.
+    """
+    return a.flat[np.abs(a - num).argmin()]
+
+
 def next_pow2(num):
     """
     Calculates the next nearest power of 2 to the input. Uses
@@ -144,3 +198,36 @@ def extrapolate(a):
     a[:first] = a[first]
     a[last + 1:] = a[last]
     return a
+
+
+def deprecated(instructions):
+    """
+    Flags a method as deprecated. This decorator can be used to mark functions
+    as deprecated. It will result in a warning being emitted when the function
+    is used.
+
+    :param instructions: (str) A human-friendly string of instructions, such
+            as: 'Please migrate to add_proxy() ASAP.'
+
+    :returns: The decorated function.
+    """
+    def decorator(func):
+
+        @functools.wraps(func)
+        def wrapper(*args, **kwargs):
+            message = 'Call to deprecated function {}. {}'.format(
+                func.__name__,
+                instructions)
+
+            frame = inspect.currentframe().f_back
+
+            warnings.warn_explicit(message,
+                                   category=DeprecationWarning,
+                                   filename=inspect.getfile(frame.f_code),
+                                   lineno=frame.f_lineno)
+
+            return func(*args, **kwargs)
+
+        return wrapper
+
+    return decorator
