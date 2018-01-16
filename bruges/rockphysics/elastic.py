@@ -8,7 +8,8 @@ Elastic impedance.
 import numpy as np
 
 
-def elastic_impedance(vp, vs, rho, theta1, k='auto',
+def elastic_impedance(vp, vs, rho, theta1,
+                      k='auto',
                       normalize=False,
                       constants=None,
                       use_sin=False,
@@ -37,6 +38,8 @@ def elastic_impedance(vp, vs, rho, theta1, k='auto',
         density in generating synthetics in other software (see Connolly 1999).
     """
     theta1 = np.array(np.radians(theta1)).reshape((-1, 1))
+    if (np.nan_to_num(theta1) > np.pi/2.).any():
+        raise ValueError("Incidence angle theta1 must be less than 90 deg.")
 
     alpha = np.array(vp, dtype=float)
     beta = np.array(vs, dtype=float)
