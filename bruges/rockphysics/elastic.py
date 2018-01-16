@@ -34,8 +34,8 @@ def elastic_impedance(vp, vs, rho, theta1, k='auto', normalize=False, constants=
     theta1 = np.array(np.radians(theta1)).reshape((-1, 1))
 
     # incidence angle should be between 0 and ninety deg
-    if not (theta1 >= 0.0).all() and (theta1 < 90.0).all():
-        raise ValueError("Incidence angle, theta1, must be between 0 and 90 deg")
+    #if not (theta1 >= 0.0).all() and (theta1 <= 90.0).all():
+    #    raise ValueError("Incidence angle, theta1, must be between 0 and 90 deg")
 
     alpha = np.array(vp)
     beta = np.array(vs)
@@ -53,6 +53,10 @@ def elastic_impedance(vp, vs, rho, theta1, k='auto', normalize=False, constants=
     a = 1 + op(theta1)**2
     b = -8 * k * np.sin(theta1)**2
     c = 1 - 4 * k * np.sin(theta1)**2
+
+    alpha = np.tile(alpha, (len(theta1),1))
+    beta = np.tile(beta, (len(theta1),1))
+    rho = np.tile(rho, (len(theta1),1))
 
     ei = alpha**a * beta**b * rho**c
 
