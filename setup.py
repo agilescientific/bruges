@@ -54,4 +54,3 @@ setup(name='bruges',
       classifiers=CLASSIFIERS,
       license='Apache 2',
       )
-
