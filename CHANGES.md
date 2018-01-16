@@ -1,4 +1,7 @@
-### v0.3.0 — January 2018
+### v0.3.1 — January 2018
+- Repaired the `rockphysics.elastic_impedance()` function, which had various issues, including not applying normalization correctly and not working on vectors.
+
+### v0.3.0 — 12 January 2018
 - Breaking change: `anisotropy.backus` now always returns `Vp0`, `Vs0`, and `rho`.
 - Non-compatible change: `filters.wavelets.ricker` no longer normalizes the output, to avoid a problem with amplitude dependence on filter length.
 - Functions returning tuples now return a `collections.namedtuple` so it's more obvious what you're getting back.
