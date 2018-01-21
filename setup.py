@@ -18,7 +18,9 @@ if mo:
 else:
     raise RuntimeError("Unable to find version string in %s." % (VERSIONFILE,))
 
-REQUIREMENTS = ['numpy', 'scipy']
+REQUIREMENTS = ['numpy', 'scipy', ]
+
+DEV_REQUIREMENTS = ['sphinx', ]
 
 CLASSIFIERS = ['Development Status :: 4 - Beta',
                'Intended Audience :: Science/Research',

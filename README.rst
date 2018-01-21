@@ -4,6 +4,8 @@ bruges is a
 
 .. image:: http://kwinkunks.pythonanywhere.com/bruges
 
+In other words, it's just a load of functions that implement important equations in (mostly seismic) geophysics, from Aki-Richards to Zoeppritz.
+
 
 Status
 +++++++
@@ -56,6 +58,7 @@ Contributors
 * Evan Bianco
 * Ben Bougher
 * Matt Hall
+* Alessandro Amato del Monte
 * Wes Hamlyn
 * Sean Ross-Ross
 
@@ -67,4 +70,3 @@ Links
 * `Issue Tracker <https://github.com/agile-geoscience/bruges/issues/>`_
 * `PyPi <http://pypi.python.org/pypi/bruges/>`_
 * `Agile Geoscience <http://www.agilegeoscience.com>`_
-
