@@ -20,7 +20,7 @@ else:
 
 REQUIREMENTS = ['numpy', 'scipy', ]
 
-DEV_REQUIREMENTS = ['sphinx', ]
+DEV_REQUIREMENTS = ['sphinx', 'twine']
 
 CLASSIFIERS = ['Development Status :: 4 - Beta',
                'Intended Audience :: Science/Research',
