@@ -2,7 +2,7 @@
 """
 Various reflectivity algorithms.
 
-:copyright: 2015 Agile Geoscience
+:copyright: 2018 Agile Geoscience
 :license: Apache 2.0
 """
 from collections import namedtuple
@@ -13,6 +13,25 @@ from numpy import tan, sin, cos
 from bruges.rockphysics import moduli
 from bruges.rockphysics import anisotropy
 from bruges.util import deprecated
+from functools import wraps
+
+
+def vectorize(func):
+    """
+    Decorator to make sure the inputs are arrays. We also add a dimension
+    to theta to make the functions work in an 'outer product' way.
+    """
+    @wraps(func)
+    def wrapper(vp1, vs1, rho1, vp2, vs2, rho2, theta1=0, **kwargs):
+        vp1 = np.array(vp1).astype(float)
+        vp2 = np.array(vp2).astype(float)
+        vs1 = np.array(vs1).astype(float)
+        vs2 = np.array(vs2).astype(float)
+        rho1 = np.array(rho1).astype(float)
+        rho2 = np.array(rho2).astype(float)
+        theta1 = np.array(theta1).reshape((-1, 1))
+        return func(vp1, vs1, rho1, vp2, vs2, rho2, theta1, **kwargs)
+    return wrapper
 
 
 def scattering_matrix(vp1, vs1, rho1, vp0, vs0, rho0, theta1=0):
@@ -36,13 +55,11 @@ def scattering_matrix(vp1, vs1, rho1, vp0, vs0, rho0, theta1=0):
     :returns: a 4x4 array representing the scattering matrix
                 at the incident angle theta1.
     '''
-    # Make sure theta1 is an array.
     theta1 = np.radians(np.array(theta1))
     if theta1.size == 1:
         theta1 = np.expand_dims(theta1, axis=1)
 
-    # Set the ray paramter, p.
-    p = sin(theta1) / vp1
+    p = sin(theta1) / vp1  # Ray parameter.
 
     # Calculate reflection & transmission angles for Zoeppritz.
     theta2 = np.arcsin(p * vp0)  # Trans. angle of P-wave.
@@ -111,6 +128,7 @@ def zoeppritz(vp1, vs1, rho1, vp0, vs0, rho0, theta1=0):
     return zoeppritz_element(vp1, vs1, rho1, vp0, vs0, rho0, theta1, 'PdPu')
 
 
+@vectorize
 def zoeppritz_rpp(vp1, vs1, rho1, vp2, vs2, rho2, theta1=0, terms=False):
     """
     Exact Zoeppritz from expression.
@@ -121,6 +139,7 @@ def zoeppritz_rpp(vp1, vs1, rho1, vp2, vs2, rho2, theta1=0, terms=False):
     Dvorkin et al. (2014). Seismic Reflections of Rock Properties. Cambridge.
     """
     theta1 = np.radians(theta1)
+
     p = np.sin(theta1) / vp1  # Ray parameter
     theta2 = np.arcsin(p * vp2)
     phi1 = np.arcsin(p * vs1)  # Reflected S
@@ -141,9 +160,10 @@ def zoeppritz_rpp(vp1, vs1, rho1, vp2, vs2, rho2, theta1=0, terms=False):
     rpp = (1/D) * (F*(b*(np.cos(theta1)/vp1) - c*(np.cos(theta2)/vp2)) \
                    - H*p**2 * (a + d*(np.cos(theta1)/vp1)*(np.cos(phi2)/vs2)))
 
-    return rpp
+    return np.squeeze(rpp).T
 
 
+@vectorize
 def akirichards(vp1, vs1, rho1, vp2, vs2, rho2, theta1=0, terms=False):
     """
     This is the formulation from Avseth et al.,
@@ -165,21 +185,12 @@ def akirichards(vp1, vs1, rho1, vp2, vs2, rho2, theta1=0, terms=False):
     :returns: a vector of len(theta1) containing the reflectivity
              value corresponding to each angle
     """
-
-    # We are not using this for anything, but will
-    # critical_angle = arcsin(vp1/vp2)
-
-    # Do we need to ensure that we get floats out before
-    # computing sines?
-    if np.ndim(vp1) == 0:
-        vp1 = float(vp1)
-    else:
-        vp1 = np.array(vp1).astype(float)
-
     theta1 = np.radians(theta1)
-    theta2 = np.arcsin(vp2/vp1*sin(theta1))
+    if (np.nan_to_num(theta1) > np.pi/2.).any():
+        raise ValueError("Incidence angle theta1 must be less than 90 deg.")
 
-    # Compute the various parameters
+    # critical_angle = arcsin(vp1/vp2)
+    theta2 = np.arcsin(vp2/vp1*sin(theta1))
     drho = rho2-rho1
     dvp = vp2-vp1
     dvs = vs2-vs1
@@ -195,19 +206,24 @@ def akirichards(vp1, vs1, rho1, vp2, vs2, rho2, theta1=0, terms=False):
     z = 4 * (vs/vp1)**2 * (dvs/vs)
 
     # Compute the terms
-    term1 = w
-    term2 = -1 * x * sin(theta1)**2
-    term3 = y / cos(meantheta)**2
-    term4 = -1 * z * sin(theta1)**2
+    term1 = [w for _ in theta1]
+    term2 = -1 * x * np.sin(theta1)**2
+    term3 = y / np.cos(meantheta)**2
+    term4 = -1 * z * np.sin(theta1)**2
 
     if terms:
         fields = ['term1', 'term2', 'term3', 'term4']
         AkiRichards = namedtuple('AkiRichards', fields)
-        return AkiRichards(term1, term2, term3, term4)
+        return AkiRichards(np.squeeze(term1),
+                           np.squeeze(term2),
+                           np.squeeze(term3),
+                           np.squeeze(term4)
+                          )
     else:
-        return (term1 + term2 + term3 + term4)
+        return np.squeeze(term1 + term2 + term3 + term4).T
 
 
+@vectorize
 def akirichards_alt(vp1, vs1, rho1, vp2, vs2, rho2, theta1=0, terms=False):
     """
     This is another formulation of the Aki-Richards solution.
@@ -227,21 +243,10 @@ def akirichards_alt(vp1, vs1, rho1, vp2, vs2, rho2, theta1=0, terms=False):
     :returns: a vector of len(theta1) containing the reflectivity
              value corresponding to each angle.
     """
-
-    # We are not using this for anything, but will
-    # critical_angle = arcsin(vp1/vp2)
-
-    # Do we need to ensure that we get floats out before
-    # computing sines?
-    if np.ndim(vp1) == 0:
-        vp1 = float(vp1)
-    else:
-        vp1 = np.array(vp1).astype(float)
-
     theta1 = np.radians(theta1)
-    theta2 = np.arcsin(vp2/vp1*sin(theta1))
 
-    # Compute the various parameters
+    # critical_angle = arcsin(vp1/vp2)
+    theta2 = np.arcsin(vp2/vp1*sin(theta1))
     drho = rho2-rho1
     dvp = vp2-vp1
     dvs = vs2-vs1
@@ -258,11 +263,15 @@ def akirichards_alt(vp1, vs1, rho1, vp2, vs2, rho2, theta1=0, terms=False):
     if terms:
         fields = ['term1', 'term2', 'term3']
         AkiRichards = namedtuple('AkiRichards', fields)
-        return AkiRichards(term1, term2, term3)
+        return AkiRichards(np.squeeze(term1),
+                           np.squeeze(term2),
+                           np.squeeze(term3)
+                           )
     else:
-        return (term1 + term2 + term3)
+        return np.squeeze(term1 + term2 + term3).T
 
 
+@vectorize
 def fatti(vp1, vs1, rho1, vp2, vs2, rho2, theta1=0, terms=False):
     """
     Compute reflectivities with Fatti's formulation of the
@@ -283,16 +292,8 @@ def fatti(vp1, vs1, rho1, vp2, vs2, rho2, theta1=0, terms=False):
     :returns: a vector of len(theta1) containing the reflectivity
              value corresponding to each angle.
     """
-    # Do we need to ensure that we get floats out before computing
-    # sines?
-    if np.ndim(vp1) == 0:
-        vp1 = float(vp1)
-    else:
-        vp1 = np.array(vp1).astype(float)
-
     theta1 = np.radians(theta1)
 
-    # Compute the various parameters
     drho = rho2-rho1
     rho = (rho1+rho2) / 2.0
     vp = (vp1+vp2) / 2.0
@@ -309,11 +310,15 @@ def fatti(vp1, vs1, rho1, vp2, vs2, rho2, theta1=0, terms=False):
     if terms:
         fields = ['term1', 'term2', 'term3']
         Fatti = namedtuple('Fatti', fields)
-        return Fatti(term1, term2, term3)
+        return Fatti(np.squeeze(term1),
+                     np.squeeze(term2),
+                     np.squeeze(term3)
+                     )
     else:
-        return (term1 + term2 + term3)
+        return np.squeeze(term1 + term2 + term3).T
 
 
+@vectorize
 def shuey(vp1, vs1, rho1, vp2, vs2, rho2, theta1=0,
           terms=False,
           return_gradient=False):
@@ -339,7 +344,6 @@ def shuey(vp1, vs1, rho1, vp2, vs2, rho2, theta1=0,
     """
     theta1 = np.radians(theta1)
 
-    # Compute some parameters
     drho = rho2-rho1
     dvp = vp2-vp1
     dvs = vs2-vs1
@@ -348,7 +352,6 @@ def shuey(vp1, vs1, rho1, vp2, vs2, rho2, theta1=0,
     vs = (vs1+vs2)/2.0
 
     # Compute three-term reflectivity
-
     r0 = 0.5 * (dvp/vp + drho/rho)
     g = 0.5 * dvp/vp - 2 * (vs**2/vp**2) * (drho/rho + 2 * dvs/vs)
     f = 0.5 * dvp/vp
@@ -360,13 +363,16 @@ def shuey(vp1, vs1, rho1, vp2, vs2, rho2, theta1=0,
     if return_gradient:
         fields = ['intercept', 'gradient']
         Shuey = namedtuple('Shuey', fields)
-        return Shuey(r0, g)
+        return Shuey(np.squeeze(r0), np.squeeze(g))
     elif terms:
         fields = ['R0', 'Rg', 'Rf']
         Shuey = namedtuple('Shuey', fields)
-        return Shuey(term1, term2, term3)
+        return Shuey(np.squeeze(term1),
+                     np.squeeze(term2),
+                     np.squeeze(term3)
+                     )
     else:
-        return (term1 + term2 + term3)
+        return np.squeeze(term1 + term2 + term3).T
 
 
 @deprecated('Please use shuey() instead.')
@@ -427,6 +433,7 @@ def bortfeld3(vp1, vs1, rho1, vp2, vs2, rho2, theta1=0, terms=False):
     return bortfeld(vp1, vs1, rho1, vp2, vs2, rho2, theta1=theta1)
 
 
+@vectorize
 def bortfeld(vp1, vs1, rho1, vp2, vs2, rho2, theta1=0, terms=False):
     """
     Compute Bortfeld approximation with three terms.
@@ -448,7 +455,6 @@ def bortfeld(vp1, vs1, rho1, vp2, vs2, rho2, theta1=0, terms=False):
     """
     theta1 = np.radians(theta1)
 
-    # Compute some parameters
     drho = rho2-rho1
     dvp = vp2-vp1
     dvs = vs2-vs1
@@ -466,11 +472,15 @@ def bortfeld(vp1, vs1, rho1, vp2, vs2, rho2, theta1=0, terms=False):
     if terms:
         fields = ['term1', 'term2', 'term3']
         Bortfeld = namedtuple('Bortfeld', fields)
-        return Bortfeld(term1, term2, term3)
+        return Bortfeld(np.squeeze(term1),
+                        np.squeeze(term2),
+                        np.squeeze(term3)
+                        )
     else:
-        return (term1 + term2 + term3)
+        return np.squeeze(term1 + term2 + term3).T
 
 
+@vectorize
 def hilterman(vp1, vs1, rho1, vp2, vs2, rho2, theta1=0, terms=False):
     """
     Not recommended, only seems to match Zoeppritz to about 10 deg.
@@ -509,9 +519,9 @@ def hilterman(vp1, vs1, rho1, vp2, vs2, rho2, theta1=0, terms=False):
     if terms:
         fields = ['term1', 'term2']
         Hilterman = namedtuple('Hilterman', fields)
-        return Hilterman(term1, term2)
+        return Hilterman(np.squeeze(term1), np.squeeze(term2))
     else:
-        return (term1 + term2)
+        return np.squeeze(term1 + term2).T
 
 
 def blangy(vp1, vs1, rho1, vp2, vs2, rho2,

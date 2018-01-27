@@ -1,4 +1,8 @@
-### v0.3.1 — January 2018
+### v0.3.2 — February 2018 
+- Reflectivity equations now work on vectors. They are about 10 times faster than running a loop over elements.
+- New reflectivity coefficient series function, `reflectivity()` makes it easier to make offset reflectivities from logs.
+
+### v0.3.1 — 21 January 2018
 - Repaired the `rockphysics.elastic_impedance()` function, which had various issues, including not applying normalization correctly and not working on vectors.
 
 ### v0.3.0 — 12 January 2018
