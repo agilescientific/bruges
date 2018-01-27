@@ -5,6 +5,7 @@ Various reflectivity algorithms.
 :copyright: 2018 Agile Geoscience
 :license: Apache 2.0
 """
+from functools import wraps
 from collections import namedtuple
 
 import numpy as np
@@ -13,7 +14,47 @@ from numpy import tan, sin, cos
 from bruges.rockphysics import moduli
 from bruges.rockphysics import anisotropy
 from bruges.util import deprecated
-from functools import wraps
+
+
+def reflectivity(vp, vs, rho, theta, method='zoeppritz_rpp'):
+    """
+    Compute 'upper' and 'lower' intervals from the three provided arrays,
+    then pass the result to the specified method to compute reflection
+    coefficients.
+
+    :param vp: The P-wave velocity 1D array.
+    :param vs: The S-wave velocity 1D array.
+    :param rho: The density 1D array.
+    :param theta: Incidence angle, a scalar or 1D array [degrees].
+    :param method: Which method to use:
+
+        - 'zoeppritz_rpp': zoeppritz_rpp,
+        - 'akirichards': akirichards,
+        - 'akirichards_alt': akirichards_alt,
+        - 'fatti': fatti,
+        - 'shuey': shuey,
+        - 'bortfeld': bortfeld,
+        - 'hilterman': hilterman,
+
+    :returns: the result of running the specified method on the data.
+    """
+    methods = {
+        'zoeppritz_rpp': zoeppritz_rpp,
+        'akirichards': akirichards,
+        'akirichards_alt': akirichards_alt,
+        'fatti': fatti,
+        'shuey': shuey,
+        'bortfeld': bortfeld,
+        'hilterman': hilterman,
+    }
+    func = methods[method]
+    vp = np.array(vp).astype(float)
+    vs = np.array(vs).astype(float)
+    rho = np.array(rho).astype(float)
+    vp1, vp2 = vp[:-1], vp[1:]
+    vs1, vs2 = vs[:-1], vs[1:]
+    rho1, rho2 = rhob[:-1], rhob[1:]
+    return func(vp1, vs1, rho1, vp2, vs2, rho2, theta)
 
 
 def vectorize(func):
@@ -102,6 +143,14 @@ def zoeppritz_element(vp1, vs1, rho1, vp0, vs0, rho0, theta1=0, element='PdPu'):
 
     Wraps scattering_matrix().
 
+    :param vp1: The p-wave velocity of the upper medium.
+    :param vs1: The s-wave velocity of the upper medium.
+    :param rho1: The density of the upper medium.
+
+    :param vp0: The p-wave velocity of the lower medium.
+    :param vs0: The s-wave velocity of the lower medium.
+    :param rho0: The density of the lower medium.
+
     :returns: a vector of len(theta1) containing the reflectivity
              value corresponding to each angle.
     """
@@ -118,9 +167,15 @@ def zoeppritz_element(vp1, vs1, rho1, vp0, vs0, rho0, theta1=0, element='PdPu'):
 def zoeppritz(vp1, vs1, rho1, vp0, vs0, rho0, theta1=0):
     '''
     Returns the PP reflection coefficients from the Zoeppritz
-    scattering matrix.
+    scattering matrix. Wraps zoeppritz_element().
 
-    Wraps zoeppritz_element().
+    :param vp1: The p-wave velocity of the upper medium.
+    :param vs1: The s-wave velocity of the upper medium.
+    :param rho1: The density of the upper medium.
+
+    :param vp0: The p-wave velocity of the lower medium.
+    :param vs0: The s-wave velocity of the lower medium.
+    :param rho0: The density of the lower medium.
 
     :returns: a vector of len(theta1) containing the reflectivity
              value corresponding to each angle.
@@ -137,6 +192,16 @@ def zoeppritz_rpp(vp1, vs1, rho1, vp2, vs2, rho2, theta1=0, terms=False):
     scattering_matrix().
 
     Dvorkin et al. (2014). Seismic Reflections of Rock Properties. Cambridge.
+
+    :param vp1: The p-wave velocity of the upper medium.
+    :param vs1: The s-wave velocity of the upper medium.
+    :param rho1: The density of the upper medium.
+
+    :param vp0: The p-wave velocity of the lower medium.
+    :param vs0: The s-wave velocity of the lower medium.
+    :param rho0: The density of the lower medium.
+
+    :returns: a matrix of length `len(vp1)` whose rows are of length `len(vp[RHOB])`.
     """
     theta1 = np.radians(theta1)
 

@@ -6,6 +6,7 @@ from .reflection import fatti
 from .reflection import shuey, shuey2, shuey3
 from .reflection import bortfeld, bortfeld2, bortfeld3
 from .reflection import hilterman
+from .reflection import reflectivity
 
 __all__ = ["scattering_matrix",
            "zoeppritz",
@@ -21,4 +22,5 @@ __all__ = ["scattering_matrix",
            "bortfeld2",
            "bortfeld3",
            "hilterman",
+           "reflectivity",
            ]
