@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 # -*- coding: utf 8 -*-
 """
 Testing util.
@@ -31,8 +30,11 @@ class UtilTest(unittest.TestCase):
     def test_rms(self):
         l = np.array([2, 3, 4.5])
         ans = 3.329164
-
         self.assertAlmostEqual(ans, rms(l), places=5)
+
+        l = [[[1, 2, 3], [4, 5, 6]], [[2,3,4], [5, 6, 7]]]
+        ans = 2.1602469
+        self.assertAlmostEqual(ans, rms(l, axis=-1)[0, 0], places=5)
 
     def noise_db(self):
         a = np.ones(1000000)

@@ -8,12 +8,111 @@ Smoothers.
 import numpy as np
 import scipy.ndimage
 
+from bruges.bruges import BrugesError
 from bruges.util import nearest
+from bruges.util import rms as rms_
+
+# TODO:
+#     - 1D and 2D Gaussian (or, better, n-D)
+#     - See how these handle Nans, consider removing, interpolating, replacing.
+
+
+def mean(arr, size=5):
+    """
+    A linear n-D smoothing filter. Can be used as a moving average on 1D data.
+
+    Args:
+        arr (ndarray): an n-dimensional array, such as a seismic horizon.
+        size (int): the kernel size, e.g. 5 for 5x5. Should be odd,
+            rounded up if not.
+
+    Returns:
+        ndarray: the resulting smoothed array.
+    """
+    arr = np.array(arr, dtype=np.float)
+
+    if not size // 2:
+        size += 1
+
+    return scipy.ndimage.generic_filter(arr, np.mean, size=size)
+
+
+def rms(arr, size=5):
+    """
+    A linear n-D smoothing filter. Can be used as a moving average on 1D data.
+
+    Args:
+        arr (ndarray): an n-dimensional array, such as a seismic horizon.
+        size (int): the kernel size, e.g. 5 for 5x5. Should be odd,
+            rounded up if not.
+
+    Returns:
+        ndarray: the resulting smoothed array.
+    """
+    arr = np.array(arr, dtype=np.float)
+
+    if not size // 2:
+        size += 1
+
+    return scipy.ndimage.generic_filter(arr, rms_, size=size)
+
+
+def median(arr, size=5):
+    """
+    A nonlinear n-D edge-preserving smoothing filter.
+
+    Args:
+        arr (ndarray): an n-dimensional array, such as a seismic horizon.
+        size (int): the kernel size, e.g. 5 for 5x5. Should be odd,
+            rounded up if not.
+
+    Returns:
+        ndarray: the resulting smoothed array.
+    """
+    arr = np.array(arr, dtype=np.float)
+
+    if not size // 2:
+        size += 1
+
+    return scipy.ndimage.generic_filter(arr, np.median, size=size)
+
+
+def mode(arr, size=5, tie='smallest'):
+    """
+    A nonlinear n-D categorical smoothing filter. Use this to filter non-
+    continuous variables, such as categorical integers, e.g. to label facies.
+
+    Args:
+        arr (ndarray): an n-dimensional array, such as a seismic horizon.
+        size (int): the kernel size, e.g. 5 for 5x5. Should be odd,
+            rounded up if not.
+        tie (str): `'smallest'` or `'largest`'. In the event of a tie (i.e. two
+            or more values having the same count in the kernel), whether to
+            give back the smallest of the tying values, or the largest.
+
+    Returns:
+        ndarray: the resulting smoothed array.
+    """
+    def func(this, tie):
+        if tie == 'smallest':
+            m, _ = scipy.stats.mode(this)
+        else:
+            m, _ = -scipy.stats.mode(-this)
+        return np.squeeze(m)
+
+    arr = np.array(arr, dtype=np.float)
+
+    if not size // 2:
+        size += 1
+
+    return scipy.ndimage.generic_filter(arr, func, size=size,
+                                        extra_keywords={'tie': tie}
+                                        )
 
 
 def snn(arr, size=5, include=True):
     """
-    Symmetric nearest neighbour, a nonlinear smoothing filter.
+    Symmetric nearest neighbour, a nonlinear 2D smoothing filter.
     http://subsurfwiki.org/wiki/Symmetric_nearest_neighbour_filter
 
     Args:
@@ -24,9 +123,6 @@ def snn(arr, size=5, include=True):
 
     Returns:
         ndarray: the resulting smoothed array.
-
-    TODO:
-        See how it handles Nans, consider removing, interpolating, replacing.
     """
     def func(this, pairs, include):
         """
@@ -37,6 +133,10 @@ def snn(arr, size=5, include=True):
         if include:
             select += [centre]
         return np.mean(select)
+
+    arr = np.array(arr, dtype=np.float)
+    if arr.ndim != 2:
+        raise BrugesError("arr must have 2-dimensions")
 
     if not size // 2:
         size += 1
@@ -52,7 +152,7 @@ def snn(arr, size=5, include=True):
 
 def kuwahara(arr, size=5):
     """
-    Kuwahara, a nonlinear smoothing filter.
+    Kuwahara, a nonlinear 2D smoothing filter.
     http://subsurfwiki.org/wiki/Kuwahara_filter
 
     Args:
@@ -62,9 +162,6 @@ def kuwahara(arr, size=5):
 
     Returns:
         ndarray: the resulting smoothed array.
-
-    TODO:
-        See how it handles Nans, consider removing, interpolating, replacing.
     """
     def func(this, s, k):
         """
@@ -78,6 +175,10 @@ def kuwahara(arr, size=5):
                        )
         select = sub[np.argmin(np.var(sub, axis=1))]
         return np.mean(select)
+
+    arr = np.array(arr, dtype=np.float)
+    if arr.ndim != 2:
+        raise BrugesError("arr must have 2-dimensions")
 
     if not size // 2:
         size += 1
@@ -93,27 +194,25 @@ def kuwahara(arr, size=5):
                                         )
 
 
-def conservative(horizon, size=5, supercon=False):
+def conservative(arr, size=5, supercon=False):
     """
-    Conservative, a nonlinear despiking filter. Very conservative! Only changes
-    pixel if it is outside the range of all the pixels in the kernel. Read
-    http://subsurfwiki.org/wiki/Conservative_filter
+    Conservative, a nonlinear n-D despiking filter. Very conservative! Only
+    changes centre value if it is outside the range of all the other values
+    in the kernel. Read http://subsurfwiki.org/wiki/Conservative_filter
 
     Args:
-        arr (ndarray): a 2D array, such as a seismic horizon.
-        size (int): the kernel size, e.g. 5 for 5x5. Should be odd,
-            rounded up if not.
+        arr (ndarray): an n-dimensional array, such as a seismic horizon.
+        size (int): the kernel size, e.g. 5 for 5x5 (in a 2D arr). Should be
+            odd, rounded up if not.
         supercon (bool): whether to be superconservative. If True, replaces
             pixel with min or max of kernel. If False (default), replaces pixel
             with mean of kernel.
 
     Returns:
         ndarray: the resulting smoothed array.
-
-    TODO:
-        See how it handles Nans, consider removing, interpolating, replacing.
     """
     def func(this, k, supercon):
+        this = this.flatten()
         centre = this[k]
         rest = [this[:k], this[-k:]]
         mi, ma = np.nanmin(rest), np.nanmax(rest)
@@ -124,12 +223,14 @@ def conservative(horizon, size=5, supercon=False):
         else:
             return centre
 
+    arr = np.array(arr, dtype=np.float)
+
     if not size // 2:
         size += 1
 
-    k = int(np.floor(size**2 / 2))
+    k = int(np.floor(size**arr.ndim / 2))
 
-    return scipy.ndimage.generic_filter(horizon,
+    return scipy.ndimage.generic_filter(arr,
                                         func,
                                         size=size,
                                         extra_keywords={'k': k,

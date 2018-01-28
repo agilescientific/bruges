@@ -9,12 +9,9 @@ from .kernels import gaussian
 from .filters import snn
 from .filters import kuwahara
 from .filters import conservative
+from .filters import rms
+from .filters import mean
+from .filters import median
+from .filters import mode
 
 from .anisodiff import anisodiff, anisodiff3
-
-__all__ = ["ricker", "ormsby", "sweep",
-           "rotate_phase",
-           "gaussian_kernel", "gaussian",
-           "snn", "kuwahara", "conservative",
-           "anisodiff", "anisodiff3",
-           ]

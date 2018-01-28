@@ -12,6 +12,7 @@ import warnings
 import scipy.signal
 import numpy as np
 
+
 greek = {
     'Alpha': 'Α',
     'Beta': 'Β',
@@ -58,80 +59,92 @@ greek = {
 }
 
 
-def rms(a):
+def deprecated(instructions):
+    """
+    Flags a method as deprecated. This decorator can be used to mark functions
+    as deprecated. It will result in a warning being emitted when the function
+    is used.
+
+    :param instructions: (str) A human-friendly string of instructions, such
+            as: 'Please migrate to add_proxy() ASAP.'
+
+    :returns: The decorated function.
+    """
+    def decorator(func):
+
+        @functools.wraps(func)
+        def wrapper(*args, **kwargs):
+            message = 'Call to deprecated function {}. {}'.format(
+                func.__name__,
+                instructions)
+
+            frame = inspect.currentframe().f_back
+
+            warnings.warn_explicit(message,
+                                   category=DeprecationWarning,
+                                   filename=inspect.getfile(frame.f_code),
+                                   lineno=frame.f_lineno)
+
+            return func(*args, **kwargs)
+
+        return wrapper
+
+    return decorator
+
+
+def rms(a, axis=None):
     """
     Calculates the RMS of an array.
 
     Args:
         a (ndarray). A sequence of numbers to apply the RMS to.
+        axis (int). The axis along which to compute. If not given or None,
+            the RMS for the whole array is computed.
 
     Returns:
-        float: The RMS of the array.
-
+        ndarray: The RMS of the array along the desired axis or axes.
     """
     a = np.array(a)
-    return np.sqrt(np.sum(a**2.0) / a.size)
+    if axis is None:
+        div = a.size
+    else:
+        div = a.shape[axis]
+    ms = np.sum(a**2.0, axis=axis) / div
+    return np.sqrt(ms)
 
 
-def moving_average(a, length, mode='valid'):
+def moving_average(a, length, mode='same'):
     """
-    Computes the mean in a moving window. Naive implementation.
+    Computes the mean in a moving window using convolution. For an alternative,
+    as well as other kinds of average (median, mode, etc.), see bruges.filters.
 
     Example:
-        >>> test = np.array([1,9,9,9,9,9,9,2,3,9,2,2,3,1,1,1,1,3,4,9,9,9,8,3])
-        >>> moving_average(test, 7, mode='same')
-        [ 4.4285714  5.571428  6.7142857  7.8571428  8.         7.1428571
-          7.1428571  6.142857  5.1428571  4.2857142  3.1428571  3.
-          2.7142857  1.571428  1.7142857  2.          2.857142  4.
-          5.1428571  6.142857  6.4285714  6.1428571  5.7142857  4.5714285 ]
-
-    TODO:
-        Other types of average.
-
+        >>> test = np.array([1,1,9,9,9,9,9,2,3,9,2,2,np.nan,1,1,1,1])
+        >>> moving_average(test, 5, mode='same')
+        array([ 2.2,  4. ,  5.8,  7.4,  9. ,  7.6,  6.4,  6.4,  5. ,  3.6,  nan,
+                nan,  nan,  nan,  nan,  0.8,  0.6])
     """
-    length = int(length)
-    pad = int(np.floor(length/2))
-
-    if mode == 'full':
-        pad *= 2
-
-    # Make a padded version, paddding with first and last values
-    r = np.pad(a, pad, mode='edge')
-
-    # Cumsum with shifting trick; first remove NaNs
-    r[np.isnan(r)] = 0
-    s = np.cumsum(r, dtype=float)
-    s[length:] = s[length:] - s[:-length]
-    out = s[length-1:]/length
-
-    # Decide what to return
-    if mode == 'same':
-        if out.shape[0] != a.shape[0]:
-            # If size doesn't match, then interpolate.
-            out = (out[:-1, ...] + out[1:, ...]) / 2
-        return out
-    elif mode == 'valid':
-        return out[pad:-pad]
-    else:  # mode=='full' and we used a double pad
-        return out
+    boxcar = np.ones(length)/length
+    return np.convolve(a, boxcar, mode=mode)
 
 
-def moving_avg_conv(a, length):
+@deprecated("Use bruges.filters() for moving linear and nonlinear statistics")
+def moving_avg_conv(a, length, mode='same'):
     """
-    Moving average via convolution. Seems slower than naive.
+    Moving average via convolution. Keeping it for now for compatibility.
+    """
+    boxcar = np.ones(length)/length
+    return np.convolve(a, boxcar, mode=mode)
+
+
+@deprecated("Use bruges.filters() for moving linear and nonlinear statistics")
+def moving_avg_fft(a, length, mode='same'):
+    """
+    Moving average via FFT convolution. Keeping it for now for compatibility.
 
     """
     boxcar = np.ones(length)/length
-    return np.convolve(a, boxcar, mode="same")
-
-
-def moving_avg_fft(a, length):
-    """
-    Moving average via FFT convolution. Seems slower than naive.
-
-    """
-    boxcar = np.ones(length)/length
-    return scipy.signal.fftconvolve(a, boxcar, mode="same")
+    return scipy.signal.fftconvolve(a, boxcar, mode=mode)
 
 
 def normalize(a, new_min=0.0, new_max=1.0):
@@ -200,36 +213,3 @@ def extrapolate(a):
     a[:first] = a[first]
     a[last + 1:] = a[last]
     return a
-
-
-def deprecated(instructions):
-    """
-    Flags a method as deprecated. This decorator can be used to mark functions
-    as deprecated. It will result in a warning being emitted when the function
-    is used.
-
-    :param instructions: (str) A human-friendly string of instructions, such
-            as: 'Please migrate to add_proxy() ASAP.'
-
-    :returns: The decorated function.
-    """
-    def decorator(func):
-
-        @functools.wraps(func)
-        def wrapper(*args, **kwargs):
-            message = 'Call to deprecated function {}. {}'.format(
-                func.__name__,
-                instructions)
-
-            frame = inspect.currentframe().f_back
-
-            warnings.warn_explicit(message,
-                                   category=DeprecationWarning,
-                                   filename=inspect.getfile(frame.f_code),
-                                   lineno=frame.f_lineno)
-
-            return func(*args, **kwargs)
-
-        return wrapper
-
-    return decorator

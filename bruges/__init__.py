@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 # -*- coding: utf 8 -*-
 """
 Initialize the library.
@@ -16,17 +15,8 @@ from . import transform
 from . import unit
 from . import util
 from .get_bruges import get_bruges
+from .bruges import BrugesError
 
-__all__ = ["attribute",
-           "filters",
-           "petrophysics",
-           "rockphysics",
-           "reflection",
-           "noise",
-           "transform",
-           "unit",
-           "util",
-           "get_bruges"]
 
 __version__ = "unknown"
 try:

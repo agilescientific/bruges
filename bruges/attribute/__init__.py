@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 # -*- coding: utf-8 -*-
 """
 :copyright: 2015 Agile Geoscience
@@ -9,10 +8,3 @@ from .similarity import similarity
 from .dipsteer import dipsteer
 from .spectrogram import spectrogram
 from .spectraldecomp import spectraldecomp
-
-__all__ = ["energy",
-           "similarity",
-           "dipsteer",
-           "spectrogram",
-           "spectraldecomp",
-           ]
