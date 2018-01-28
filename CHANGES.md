@@ -1,6 +1,8 @@
 ### v0.3.2 — February 2018 
-- Reflectivity equations now work on vectors. They are about 10 times faster than running a loop over elements.
-- New reflectivity coefficient series function, `reflectivity()` makes it easier to make offset reflectivities from logs.
+- Reflectivity equations in `reflection` module now work on vectors. They are about 10 times faster than running a loop over elements.
+- New reflection coefficient series function, `reflection.reflectivity()` makes it easier to make offset reflectivities from logs.
+- New acoustic reflection coefficient series function, `acoustic_reflectivity()`.
+- Improvements to `reflection` module docs. 
 
 ### v0.3.1 — 21 January 2018
 - Repaired the `rockphysics.elastic_impedance()` function, which had various issues, including not applying normalization correctly and not working on vectors.

@@ -330,16 +330,17 @@ def hudson_inverse_Q_ratio(mu=None,
                            vs=None,
                            aligned=True):
     """
-    Dvorkin et al. (2014), Eq 15.44 (aligned) and 15.48 (not aligned).
+    Dvorkin et al. (2014), Eq 15.44 (aligned) and 15.48 (not aligned). You must
+    provide one of the following: `pr`, or `vp` and `vs`, or `mu` and `pmod`.
     """
-    if pr:
+    if pr is not None:
         x = (2 - 2*pr) / (1 - 2*pr)
-    elif vp and vs:
+    elif (vp is not None) and (vs is not None):
         x = vp**2 / vs**2
-    elif mu and pmod:
+    elif (mu is not None) and (pmod is not None):
         x = pmod / mu
     else:
-        raise Exception
+        raise TypeError("You must provide pr or (vp and vs) or (mu and pmod)")
 
     if aligned:
         return 0.25 * (x - 2)**2 * (3*x - 2) / (x**2 - x)

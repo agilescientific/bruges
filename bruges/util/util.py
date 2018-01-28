@@ -62,13 +62,15 @@ def rms(a):
     """
     Calculates the RMS of an array.
 
-    :param a: An array.
+    Args:
+        a (ndarray). A sequence of numbers to apply the RMS to.
 
-    :returns: The RMS of the array.
+    Returns:
+        float: The RMS of the array.
 
     """
-
-    return np.sqrt(np.sum(a**2.0)/a.size)
+    a = np.array(a)
+    return np.sqrt(np.sum(a**2.0) / a.size)
 
 
 def moving_average(a, length, mode='valid'):
@@ -78,7 +80,7 @@ def moving_average(a, length, mode='valid'):
     Example:
         >>> test = np.array([1,9,9,9,9,9,9,2,3,9,2,2,3,1,1,1,1,3,4,9,9,9,8,3])
         >>> moving_average(test, 7, mode='same')
-        [ 4.4285714  5.571428  6.7142857  7.8571428  8.          7.1428571
+        [ 4.4285714  5.571428  6.7142857  7.8571428  8.         7.1428571
           7.1428571  6.142857  5.1428571  4.2857142  3.1428571  3.
           2.7142857  1.571428  1.7142857  2.          2.857142  4.
           5.1428571  6.142857  6.4285714  6.1428571  5.7142857  4.5714285 ]

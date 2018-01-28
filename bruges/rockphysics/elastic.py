@@ -9,33 +9,37 @@ import numpy as np
 
 
 def elastic_impedance(vp, vs, rho, theta1,
-                      k='auto',
+                      k=None,
                       normalize=False,
                       constants=None,
                       use_sin=False,
                       rho_term=False):
     """
-    Returns the elastic impedance as defined by Connolly, 1999;
-    we are using the formulation reported in Whitcombe et al. (2001).
-    Inputs should be shape m x 1, angles should be n x 1. The
-    result will be m x n.
+    Returns the elastic impedance as defined by Connolly, 1999; we are using
+    the formulation reported in Whitcombe et al. (2001). Inputs should be
+    shape m x 1, angles should be n x 1. The result will be m x n.
 
-    :param vp1: The P-wave velocity scalar or 1D array.
-    :param vs1: The S-wave velocity scalar or 1D array.
-    :param rho1: The bulk density scalar or 1D array.
-    :param theta1: Incident angle(s), scalar or array [degrees].
-    :param k: A constant, see Connolly (1999). Default is 'auto', which
-        computes it from Vp and Vs
-    :param normalize: if True, returns the normalized form of Whitcombe
-        et. al (2001).
-    :param constants: A sequence of 3 constants to use for normalization. If
-        you don't provide this, then normalization just uses the means of the
-        inputs. If these are scalars, the result will be the acoustic impedance
-        (see Whitcombe, 2001).
-    :param use_sin: Use sin^2 for the first term, instead of tan^2 (see
-        Connolly 1999).
-    :param rho_term: Alternative form, with Vp factored out; use in place of
-        density in generating synthetics in other software (see Connolly 1999).
+    Args:
+        vp (ndarray): The P-wave velocity scalar or 1D array.
+        vs (ndarray): The S-wave velocity scalar or 1D array.
+        rho (ndarray): The bulk density scalar or 1D array.
+        theta1 (ndarray): Incident angle(s) in degrees, scalar or array.
+        k (float): A constant, see Connolly (1999). Default is None, which
+            computes it from Vp and Vs.
+        normalize (bool): if True, returns the normalized form of Whitcombe.
+        constants (tuple): A sequence of 3 constants to use for normalization.
+            If you don't provide this, then normalization just uses the means
+            of the inputs. If these are scalars, the result will be the
+            acoustic impedance (see Whitcombe et al., 2001).
+        use_sin (bool): If True, use sin^2 for the first term, instead of
+            tan^2 (see Connolly).
+        rho_term (bool): If True, provide alternative form, with Vp factored
+            out; use in place of density in generating synthetics in other
+            software (see Connolly). In other words, the result can be
+            multipled with Vp to get the elastic impedance.
+
+    Returns:
+        ndarray: The elastic impedance log at the specficied angle or angles.
     """
     theta1 = np.array(np.radians(theta1)).reshape((-1, 1))
     if (np.nan_to_num(theta1) > np.pi/2.).any():
@@ -44,15 +48,8 @@ def elastic_impedance(vp, vs, rho, theta1,
     alpha = np.array(vp, dtype=float)
     beta = np.array(vs, dtype=float)
     rho = np.array(rho, dtype=float)
-
-    if use_sin:
-        op = np.sin
-    else:
-        op = np.tan
-
-    if k.lower() == 'auto':
-        k = np.mean(beta**2.0 / alpha**2.0)
-    # Otherwise, just use the k we were given.
+    op = np.sin if use_sin else np.tan
+    k = np.mean(beta**2.0 / alpha**2.0) if k is None else k
 
     a = 1 + op(theta1)**2.0
     b = -8 * k * np.sin(theta1)**2.0
