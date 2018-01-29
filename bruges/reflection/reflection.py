@@ -252,7 +252,7 @@ def zoeppritz_rpp(vp1, vs1, rho1, vp2, vs2, rho2, theta1=0):
         ndarray. The exact Zoeppritz solution for P-P reflectivity at the
             interface. Will be a float (for float inputs and one angle), a
             1 x n array (for float inputs and an array of angles), a 1 x m
-            array (for float inputs and one angle), or an m x n array (for
+            array (for float inputs and one angle), or an n x m array (for
             array inputs and an array of angles).
     """
     theta1 = np.radians(theta1)
@@ -277,7 +277,7 @@ def zoeppritz_rpp(vp1, vs1, rho1, vp2, vs2, rho2, theta1=0):
     rpp = (1/D) * (F*(b*(np.cos(theta1)/vp1) - c*(np.cos(theta2)/vp2)) \
                    - H*p**2 * (a + d*(np.cos(theta1)/vp1)*(np.cos(phi2)/vs2)))
 
-    return np.squeeze(rpp).T
+    return np.squeeze(rpp)
 
 
 @vectorize
@@ -304,7 +304,7 @@ def akirichards(vp1, vs1, rho1, vp2, vs2, rho2, theta1=0, terms=False):
         ndarray. The Aki-Richards approximation for P-P reflectivity at the
             interface. Will be a float (for float inputs and one angle), a
             1 x n array (for float inputs and an array of angles), a 1 x m
-            array (for float inputs and one angle), or an m x n array (for
+            array (for float inputs and one angle), or an n x m array (for
             array inputs and an array of angles).
     """
     theta1 = np.radians(theta1)
@@ -342,7 +342,7 @@ def akirichards(vp1, vs1, rho1, vp2, vs2, rho2, theta1=0, terms=False):
                            np.squeeze(term4)
                           )
     else:
-        return np.squeeze(term1 + term2 + term3 + term4).T
+        return np.squeeze(term1 + term2 + term3 + term4)
 
 
 @vectorize
@@ -366,7 +366,7 @@ def akirichards_alt(vp1, vs1, rho1, vp2, vs2, rho2, theta1=0, terms=False):
         ndarray. The Aki-Richards approximation for P-P reflectivity at the
             interface. Will be a float (for float inputs and one angle), a
             1 x n array (for float inputs and an array of angles), a 1 x m
-            array (for float inputs and one angle), or an m x n array (for
+            array (for float inputs and one angle), or an n x m array (for
             array inputs and an array of angles).
     """
     theta1 = np.radians(theta1)
@@ -394,7 +394,7 @@ def akirichards_alt(vp1, vs1, rho1, vp2, vs2, rho2, theta1=0, terms=False):
                            np.squeeze(term3)
                            )
     else:
-        return np.squeeze(term1 + term2 + term3).T
+        return np.squeeze(term1 + term2 + term3)
 
 
 @vectorize
@@ -419,7 +419,7 @@ def fatti(vp1, vs1, rho1, vp2, vs2, rho2, theta1=0, terms=False):
         ndarray. The Fatti approximation for P-P reflectivity at the
             interface. Will be a float (for float inputs and one angle), a
             1 x n array (for float inputs and an array of angles), a 1 x m
-            array (for float inputs and one angle), or an m x n array (for
+            array (for float inputs and one angle), or an n x m array (for
             array inputs and an array of angles).
     """
     theta1 = np.radians(theta1)
@@ -445,7 +445,7 @@ def fatti(vp1, vs1, rho1, vp2, vs2, rho2, theta1=0, terms=False):
                      np.squeeze(term3)
                      )
     else:
-        return np.squeeze(term1 + term2 + term3).T
+        return np.squeeze(term1 + term2 + term3)
 
 
 @vectorize
@@ -473,7 +473,7 @@ def shuey(vp1, vs1, rho1, vp2, vs2, rho2, theta1=0,
         ndarray. The Aki-Richards approximation for P-P reflectivity at the
             interface. Will be a float (for float inputs and one angle), a
             1 x n array (for float inputs and an array of angles), a 1 x m
-            array (for float inputs and one angle), or an m x n array (for
+            array (for float inputs and one angle), or an n x m array (for
             array inputs and an array of angles).
     """
     theta1 = np.radians(theta1)
@@ -506,7 +506,7 @@ def shuey(vp1, vs1, rho1, vp2, vs2, rho2, theta1=0,
                      np.squeeze(term3)
                      )
     else:
-        return np.squeeze(term1 + term2 + term3).T
+        return np.squeeze(term1 + term2 + term3)
 
 
 @deprecated('Please use shuey() instead.')
@@ -549,7 +549,7 @@ def bortfeld(vp1, vs1, rho1, vp2, vs2, rho2, theta1=0, terms=False):
         ndarray. The 3-term Bortfeld approximation for P-P reflectivity at the
             interface. Will be a float (for float inputs and one angle), a
             1 x n array (for float inputs and an array of angles), a 1 x m
-            array (for float inputs and one angle), or an m x n array (for
+            array (for float inputs and one angle), or an n x m array (for
             array inputs and an array of angles).
     """
     theta1 = np.radians(theta1)
@@ -576,7 +576,7 @@ def bortfeld(vp1, vs1, rho1, vp2, vs2, rho2, theta1=0, terms=False):
                         np.squeeze(term3)
                         )
     else:
-        return np.squeeze(term1 + term2 + term3).T
+        return np.squeeze(term1 + term2 + term3)
 
 
 @deprecated('Please use bortfeld() instead.')
@@ -600,7 +600,7 @@ def bortfeld2(vp1, vs1, rho1, vp2, vs2, rho2, theta1=0, terms=False):
         ndarray. The 2-term Bortfeld approximation for P-P reflectivity at the
             interface. Will be a float (for float inputs and one angle), a
             1 x n array (for float inputs and an array of angles), a 1 x m
-            array (for float inputs and one angle), or an m x n array (for
+            array (for float inputs and one angle), or an n x m array (for
             array inputs and an array of angles).
     """
     theta1 = np.radians(theta1)
@@ -645,7 +645,7 @@ def hilterman(vp1, vs1, rho1, vp2, vs2, rho2, theta1=0, terms=False):
         ndarray. The Hilterman approximation for P-P reflectivity at the
             interface. Will be a float (for float inputs and one angle), a
             1 x n array (for float inputs and an array of angles), a 1 x m
-            array (for float inputs and one angle), or an m x n array (for
+            array (for float inputs and one angle), or an n x m array (for
             array inputs and an array of angles).
     """
     theta1 = np.radians(theta1)
@@ -666,7 +666,7 @@ def hilterman(vp1, vs1, rho1, vp2, vs2, rho2, theta1=0, terms=False):
         Hilterman = namedtuple('Hilterman', fields)
         return Hilterman(np.squeeze(term1), np.squeeze(term2))
     else:
-        return np.squeeze(term1 + term2).T
+        return np.squeeze(term1 + term2)
 
 
 def blangy(vp1, vs1, rho1, vp2, vs2, rho2,
