@@ -121,6 +121,8 @@ def scattering_matrix(vp1, vs1, rho1, vp2, vs2, rho2, theta1=0):
 
     Originally written by: Wes Hamlyn, vectorized by Agile.
 
+    Returns the complex reflectivity.
+
     Args:
         vp1 (float): The upper P-wave velocity.
         vs1 (float): The upper S-wave velocity.
@@ -182,6 +184,8 @@ def zoeppritz_element(vp1, vs1, rho1, vp2, vs2, rho2, theta1=0, element='PdPu'):
 
     Wraps scattering_matrix().
 
+    Returns the complex reflectivity.
+
     Args:
         vp1 (float): The upper P-wave velocity.
         vs1 (float): The upper S-wave velocity.
@@ -213,6 +217,8 @@ def zoeppritz(vp1, vs1, rho1, vp2, vs2, rho2, theta1=0):
     Returns the PP reflection coefficients from the Zoeppritz
     scattering matrix. Wraps zoeppritz_element().
 
+    Returns the complex reflectivity.
+
     Args:
         vp1 (float): The upper P-wave velocity.
         vs1 (float): The upper S-wave velocity.
@@ -239,6 +245,8 @@ def zoeppritz_rpp(vp1, vs1, rho1, vp2, vs2, rho2, theta1=0):
 
     Dvorkin et al. (2014). Seismic Reflections of Rock Properties. Cambridge.
 
+    Returns the complex reflectivity.
+
     Args:
         vp1 (ndarray): The upper P-wave velocity; float or 1D array length m.
         vs1 (ndarray): The upper S-wave velocity; float or 1D array length m.
@@ -255,7 +263,7 @@ def zoeppritz_rpp(vp1, vs1, rho1, vp2, vs2, rho2, theta1=0):
             array (for float inputs and one angle), or an n x m array (for
             array inputs and an array of angles).
     """
-    theta1 = np.radians(theta1)
+    theta1 = np.radians(theta1).astype(complex)
 
     p = np.sin(theta1) / vp1  # Ray parameter
     theta2 = np.arcsin(p * vp2)
@@ -289,6 +297,8 @@ def akirichards(vp1, vs1, rho1, vp2, vs2, rho2, theta1=0, terms=False):
     interpretation_, Cambridge University Press, 2006. Adapted for a 4-term
     formula. See http://subsurfwiki.org/wiki/Aki-Richards_equation.
 
+    Returns the complex reflectivity.
+
     Args:
         vp1 (ndarray): The upper P-wave velocity; float or 1D array length m.
         vs1 (ndarray): The upper S-wave velocity; float or 1D array length m.
@@ -307,9 +317,7 @@ def akirichards(vp1, vs1, rho1, vp2, vs2, rho2, theta1=0, terms=False):
             array (for float inputs and one angle), or an n x m array (for
             array inputs and an array of angles).
     """
-    theta1 = np.radians(theta1)
-    if (np.nan_to_num(theta1) > np.pi/2.).any():
-        raise ValueError("Incidence angle theta1 must be less than 90 deg.")
+    theta1 = np.radians(theta1).astype(complex)
 
     # critical_angle = arcsin(vp1/vp2)
     theta2 = np.arcsin(vp2/vp1*np.sin(theta1))
@@ -328,7 +336,7 @@ def akirichards(vp1, vs1, rho1, vp2, vs2, rho2, theta1=0, terms=False):
     z = 4 * (vs/vp1)**2 * (dvs/vs)
 
     # Compute the terms
-    term1 = [w for _ in theta1]
+    term1 = w
     term2 = -1 * x * np.sin(theta1)**2
     term3 = y / np.cos(meantheta)**2
     term4 = -1 * z * np.sin(theta1)**2
@@ -336,7 +344,7 @@ def akirichards(vp1, vs1, rho1, vp2, vs2, rho2, theta1=0, terms=False):
     if terms:
         fields = ['term1', 'term2', 'term3', 'term4']
         AkiRichards = namedtuple('AkiRichards', fields)
-        return AkiRichards(np.squeeze(term1),
+        return AkiRichards(np.squeeze([term1 for _ in theta1]),
                            np.squeeze(term2),
                            np.squeeze(term3),
                            np.squeeze(term4)
@@ -350,6 +358,8 @@ def akirichards_alt(vp1, vs1, rho1, vp2, vs2, rho2, theta1=0, terms=False):
     """
     This is another formulation of the Aki-Richards solution.
     See http://subsurfwiki.org/wiki/Aki-Richards_equation
+
+    Returns the complex reflectivity.
 
     Args:
         vp1 (ndarray): The upper P-wave velocity; float or 1D array length m.
@@ -369,7 +379,7 @@ def akirichards_alt(vp1, vs1, rho1, vp2, vs2, rho2, theta1=0, terms=False):
             array (for float inputs and one angle), or an n x m array (for
             array inputs and an array of angles).
     """
-    theta1 = np.radians(theta1)
+    theta1 = np.radians(theta1).astype(complex)
 
     # critical_angle = arcsin(vp1/vp2)
     theta2 = np.arcsin(vp2/vp1*np.sin(theta1))
@@ -389,7 +399,7 @@ def akirichards_alt(vp1, vs1, rho1, vp2, vs2, rho2, theta1=0, terms=False):
     if terms:
         fields = ['term1', 'term2', 'term3']
         AkiRichards = namedtuple('AkiRichards', fields)
-        return AkiRichards(np.squeeze(term1),
+        return AkiRichards(np.squeeze([term1 for _ in theta1]),
                            np.squeeze(term2),
                            np.squeeze(term3)
                            )
@@ -501,7 +511,7 @@ def shuey(vp1, vs1, rho1, vp2, vs2, rho2, theta1=0,
     elif terms:
         fields = ['R0', 'Rg', 'Rf']
         Shuey = namedtuple('Shuey', fields)
-        return Shuey(np.squeeze(term1),
+        return Shuey(np.squeeze([term1 for _ in theta1]),
                      np.squeeze(term2),
                      np.squeeze(term3)
                      )
@@ -571,7 +581,7 @@ def bortfeld(vp1, vs1, rho1, vp2, vs2, rho2, theta1=0, terms=False):
     if terms:
         fields = ['term1', 'term2', 'term3']
         Bortfeld = namedtuple('Bortfeld', fields)
-        return Bortfeld(np.squeeze(term1),
+        return Bortfeld(np.squeeze([term1 for _ in theta1]),
                         np.squeeze(term2),
                         np.squeeze(term3)
                         )
