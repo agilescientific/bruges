@@ -135,8 +135,8 @@ def scattering_matrix(vp1, vs1, rho1, vp2, vs2, rho2, theta1=0):
             A 4x4 array representing the scattering matrix at the incident
             angle theta1.
     """
-    theta1 = np.radians(np.array(theta1))
-    if theta1.size == 1:
+    theta1 = np.radians(np.array(theta1)).astype(complex)
+    if theta1.ndim == 0:
         theta1 = np.expand_dims(theta1, axis=1)
 
     p = np.sin(theta1) / vp1  # Ray parameter.
@@ -146,7 +146,7 @@ def scattering_matrix(vp1, vs1, rho1, vp2, vs2, rho2, theta1=0):
     phi1 = np.arcsin(p * vs1)    # Refl. angle of converted S-wave.
     phi2 = np.arcsin(p * vs2)    # Trans. angle of converted S-wave.
 
-    # Matrix form of Zoeppritz Equations... M & N are matrices.
+    # Matrix form of Zoeppritz equations... M & N are matrices.
     M = np.array([[-np.sin(theta1),-np.cos(phi1),np.sin(theta2), np.cos(phi2)],
                   [np.cos(theta1),-np.sin(phi1),np.cos(theta2), -np.sin(phi2)],
                   [2 * rho1 * vs1 * np.sin(phi1) * np.cos(theta1),
@@ -156,7 +156,7 @@ def scattering_matrix(vp1, vs1, rho1, vp2, vs2, rho2, theta1=0):
                   [-rho1 * vp1 * (1 - 2 * np.sin(phi1) ** 2),
                    rho1 * vs1 * np.sin(2 * phi1),
                    rho2 * vp2 * (1 - 2 * np.sin(phi2) ** 2),
-                   -rho2 * vs2 * np.sin(2 * phi2)]], dtype='float')
+                   -rho2 * vs2 * np.sin(2 * phi2)]])
 
     N = np.array([[np.sin(theta1),np.cos(phi1),-np.sin(theta2), -np.cos(phi2)],
                   [np.cos(theta1),-np.sin(phi1),np.cos(theta2), -np.sin(phi2)],
@@ -167,7 +167,7 @@ def scattering_matrix(vp1, vs1, rho1, vp2, vs2, rho2, theta1=0):
                   [rho1 * vp1 * (1 - 2 * np.sin(phi1) ** 2),
                    -rho1 * vs1 * np.sin(2 * phi1),
                    - rho2 * vp2 * (1 - 2 * np.sin(phi2) ** 2),
-                   rho2 * vs2 * np.sin(2 * phi2)]], dtype='float')
+                   rho2 * vs2 * np.sin(2 * phi2)]])
 
     A = np.linalg.inv(np.rollaxis(M, 2))
     Z = np.matmul(A, np.rollaxis(N, -1))
