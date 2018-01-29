@@ -32,14 +32,14 @@ def porosity_to_density(phi_rhob, rho_matrix, rho_fluid):
     """
     Get density from a porosity log. Typical values:
 
-        rho_matrix (sandstone) : 2650 g/cc
-        rho_matrix (Limestome): 2710 g/cc
-        rho_matrix (Dolomite): 2876 g/cc
-        rho_matrix (Anyhydrite): 2977 g/cc
-        rho_matrix (Salt): 20320 g/cc
+        rho_matrix (sandstone) : 2650 kg/m^3
+        rho_matrix (limestome): 2710 kg/m^3
+        rho_matrix (dolomite): 2876 kg/m^3
+        rho_matrix (anyhydrite): 2977 kg/m^3
+        rho_matrix (salt): 20320 kg/m^3
 
-        rho_fluid (fresh water): 1000 g/cc (is this more mud-like?)
-        rho_fluid (salt water): 1100 g/cc
+        rho_fluid (fresh water): 1000 kg/m^3
+        rho_fluid (salt water): 1100 kg/m^3
 
     See wiki.aapg.org/Density-neutron_log_porosity.
 
@@ -51,7 +51,33 @@ def porosity_to_density(phi_rhob, rho_matrix, rho_fluid):
     Returns:
         Estimate of RHOB.
     """
-    return rho_matrix*(1 - phi_rhob) + rho_fluid*phi_rhob
+    return rho_matrix * (1 - phi_rhob) + rho_fluid * phi_rhob
+
+
+def density_to_porosity(density, rho_matrix, rho_fluid):
+    """
+    Get density from a porosity log. Typical values:
+
+        rho_matrix (sandstone) : 2650 kg/m^3
+        rho_matrix (limestome): 2710 kg/m^3
+        rho_matrix (dolomite): 2876 kg/m^3
+        rho_matrix (anyhydrite): 2977 kg/m^3
+        rho_matrix (salt): 20320 kg/m^3
+
+        rho_fluid (fresh water): 1000 kg/m^3
+        rho_fluid (salt water): 1100 kg/m^3
+
+    See wiki.aapg.org/Density-neutron_log_porosity.
+
+    Args:
+        density (ndarray): The density log or RHOB.
+        rho_matrix (float)
+        rho_fluid (float)
+
+    Returns:
+        Estimate of porosity as a volume fraction.
+    """
+    return (rho_matrix - density) / (rho_matrix - rho_fluid)
 
 
 def slowness_to_velocity(slowness):
