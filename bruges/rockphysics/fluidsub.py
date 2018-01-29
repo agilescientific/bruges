@@ -7,9 +7,7 @@ fluidsub.py
 Calculates various parameters for fluid substitution
 from Vp, Vs, and rho
 
-Created July 2014
-
-@author: Matt Hall, Evan Bianco
+Matt Hall, Evan Bianco, July 2014
 
 Using http://www.subsurfwiki.org/wiki/Gassmann_equation
 
@@ -28,10 +26,17 @@ from . import moduli
 
 def avseth_gassmann(ksat1, kf1, kf2, kmin, phi):
     """
-    Applies the Gassmann equation. Takes Ksat1,
-    Kfluid1, Kfluid2, Kmineral, and phi.
+    Applies the Gassmann equation.
 
-    Returns Ksat2.
+    Args:
+        ksat1 (float): Ksat1.
+        kf1 (float): Kfluid1.
+        kf2 (float): Kfluid2.
+        kmin (float): Kmineral.
+        phi (float): Porosity.
+
+    Returns:
+        float: Ksat2.
     """
 
     s = ksat1 / (kmin - ksat1)
@@ -66,7 +71,13 @@ def vrh(kclay, kqtz, vclay):
 
     Works for any two components.
 
-    Returns Kvrh, AKA Kmatrix.
+    Args:
+        kclay (float): K_clay.
+        kqtz (float): K_quartz.
+        vclay (float): V_clay.
+
+    Returns:
+        Kvrh, also known as Kmatrix.
     """
 
     vqtz = 1 - vclay
@@ -102,7 +113,6 @@ def rhogas(gravity, temp, pressure):
 def rhosat(phi, sw, rhomin, rhow, rhohc):
     """
     Density of partially saturated rock.
-
     """
     a = rhomin * (1 - phi)        # grains
     b = rhow * sw * phi           # brine
@@ -113,22 +123,22 @@ def rhosat(phi, sw, rhomin, rhow, rhohc):
 
 def avseth_fluidsub(vp, vs, rho, phi, rhof1, rhof2, kmin, kf1, kf2):
     """
-    Naive fluid substitution from Avseth et al.
-    No pressure/temperature correction.
+    Naive fluid substitution from Avseth et al. No pressure/temperature
+    correction. Only works for SI units right now.
 
-    :param vp: P-wave velocity
-    :param vs: S-wave velocity
-    :param rho: bulk density
-    :param phi: porosity (i.e. 0.20)
-    :param rhof1: bulk density of original fluid (base case)
-    :param rhof2: bulk density of substitute fluid (subbed case)
-    :param kmin: bulk modulus of solid mineral(s)
-    :param kf1: bulk modulus of original fluid
-    :param kf2: bulk modulus of substitue fluid
+    Args:
+        vp (float): P-wave velocity
+        vs (float): S-wave velocity
+        rho (float): bulk density
+        phi (float): porosity (i.e. 0.20)
+        rhof1 (float): bulk density of original fluid (base case)
+        rhof2 (float): bulk density of substitute fluid (subbed case)
+        kmin (float): bulk modulus of solid mineral(s)
+        kf1 (float): bulk modulus of original fluid
+        kf2 (float): bulk modulus of substitue fluid
 
-    Only works for SI units right now.
-
-    Returns Vp, Vs, and rho for the substituted case
+    Returns:
+        Tuple: Vp, Vs, and rho for the substituted case
     """
 
     # Step 1: Extract the dynamic bulk and shear moduli
@@ -159,36 +169,36 @@ def smith_fluidsub(vp, vs, rho, phi, rhow, rhohc,
                    kwnew=None, khcnew=None
                    ):
     """
-    Naive fluid substitution from Smith et al. 2003
-    No pressure/temperature correction.
+    Naive fluid substitution from Smith et al. 2003. No pressure/temperature
+    correction. Only works for SI units right now.
 
-    :param vp: P-wave velocity
-    :param vs: S-wave velocity
+    Args:
+        vp (float): P-wave velocity
+        vs (float): S-wave velocity
 
-    :param rho: bulk density
-    :param rhow: density of water
-    :param rhohc: density of HC
-    :param rhownew: density of water in subbed case (optional)
-    :param rhohcnew: density of HC in subbed case (optional)
+        rho (float): bulk density
+        rhow (float): density of water
+        rhohc (float): density of HC
+        rhownew (float): density of water in subbed case (optional)
+        rhohcnew (float): density of HC in subbed case (optional)
 
-    :param phi: porosity (fraction)
+        phi (float): porosity (fraction)
 
-    :param sw: water saturation in base case
-    :param swnew: water saturation in subbed case
+        sw (float): water saturation in base case
+        swnew (float): water saturation in subbed case
 
-    :param kw:  bulk modulus of water
-    :param khc: bulk modulus of hydrocarbon
-    :param kwnew:  bulk modulus of water in subbed case (optional)
-    :param khcnew: bulk modulus of hydrocarbon in subbed case (optional)
+        kw (float):  bulk modulus of water
+        khc (float): bulk modulus of hydrocarbon
+        kwnew (float):  bulk modulus of water in subbed case (optional)
+        khcnew (float): bulk modulus of hydrocarbon in subbed case (optional)
 
-    :param vclay: Vclay (give this or vsh)
-    :param vsh: Vsh (or give vclay; vclay = 0.7 * vsh)
-    :param kclay: bulk modulus of clay (DEFAULT?)
-    :param kqtz:  bulk modulus of quartz (DEFAULT?)
+        vclay (float): Vclay (give this or vsh)
+        vsh (float): Vsh (or give vclay; vclay = 0.7 * vsh)
+        kclay (float): bulk modulus of clay (DEFAULT?)
+        kqtz (float):  bulk modulus of quartz (DEFAULT?)
 
-    Only works for SI units right now.
-
-    Returns Vp, Vs, and rho for the substituted case.
+    Returns:
+        Tuple: Vp, Vs, and rho for the substituted case.
     """
 
     # Using the workflow in Smith et al., Table 2

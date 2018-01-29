@@ -10,6 +10,7 @@
 - You can no longer import 'all' from a module. This is a bad idea anyway,
 so I'm not calling it a breaking change.
 - The wavelets `ricker()` and `sweep()` now return transposed matrices if you ask for a wavelet bank by providing several frequencies. This is so the wavelets are in the first dimension, so you get get one by simply indexing.
+- Added `inverse_gardner`, and other density and velocity transforms, to `petrophysics`.
 
 ### v0.3.1 — 21 January 2018
 - Repaired the `rockphysics.elastic_impedance()` function, which had various issues, including not applying normalization correctly and not working on vectors.
