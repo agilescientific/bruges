@@ -1,11 +1,7 @@
-### Future: v0.4.0 — These may or may not happen
-- Remove `moving_avg_conv` and `moving_avg_fft`, and try to speed up `moving_average()`.
-
-----
-
 ### v0.3.2 — February 2018 
 - Fixed a bug in `bruges.filters` that was returning the results from integer arrays as integers, giving incorrect results in those cases. Fixed tests.
-- Reflectivity equations in `reflection` module now work on vectors. They are about 10 times faster than running a loop over elements.
+- Reflectivity equations in `reflection` module now work on vectors. They are about 10 times faster than running a loop over elements. The results put the angles in the first dimension, so you can simply index in to get one offset.
+- The Zoeppritz solutions and the Aki–Richards approximations now return the complex reflectivity and therefore show post-critical behaviour.
 - New reflection coefficient series function, `reflection.reflectivity()` makes it easier to make offset reflectivities from logs.
 - New acoustic reflection coefficient series function, `acoustic_reflectivity()`.
 - Improvements to `reflection` module docs. 
@@ -13,6 +9,7 @@
 - Several more simple linear and non-linear filters in `bruges.filters`. They are n-dimensional where possible. (One day maybe I'll have a crack at n-D SNN and Kuwahara filters.)
 - You can no longer import 'all' from a module. This is a bad idea anyway,
 so I'm not calling it a breaking change.
+- The wavelets `ricker()` and `sweep()` now return transposed matrices if you ask for a wavelet bank by providing several frequencies. This is so the wavelets are in the first dimension, so you get get one by simply indexing.
 
 ### v0.3.1 — 21 January 2018
 - Repaired the `rockphysics.elastic_impedance()` function, which had various issues, including not applying normalization correctly and not working on vectors.
