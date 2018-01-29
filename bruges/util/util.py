@@ -65,10 +65,12 @@ def deprecated(instructions):
     as deprecated. It will result in a warning being emitted when the function
     is used.
 
-    :param instructions: (str) A human-friendly string of instructions, such
+    Args:
+        instructions (str): A human-friendly string of instructions, such
             as: 'Please migrate to add_proxy() ASAP.'
 
-    :returns: The decorated function.
+    Returns:
+        The decorated function.
     """
     def decorator(func):
 
@@ -149,24 +151,33 @@ def moving_avg_fft(a, length, mode='same'):
 
 def normalize(a, new_min=0.0, new_max=1.0):
     """
-    Normalize an array to [0,1] or to
-    arbitrary new min and max.
+    Normalize an array to [0,1] or to arbitrary new min and max.
 
-    :param a: An array.
-    :param new_min: A float to be the new min, default 0.
-    :param new_max: A float to be the new max, default 1.
+    Args:
+        a (ndarray): An array.
+        new_min (float): The new min to scale to, default 0.
+        new_max (float): The new max to scale to, default 1.
 
-    :returns: The normalized array.
+    Returns:
+        ndarray. The normalized array.
     """
-
-    n = (a - np.amin(a)) / np.amax(a - np.amin(a))
+    a = np.array(a, dtype=np.float)
+    n = (a - np.nanmin(a)) / np.nanmax(a - np.nanmin(a))
     return n * (new_max - new_min) + new_min
 
 
 def nearest(a, num):
     """
     Finds the array's nearest value to a given num.
+
+    Args:
+        a (ndarray): An array.
+        num (float): The value to find the nearest to.
+
+    Returns:
+        float. The normalized array.
     """
+    a = np.array(a, dtype=float)
     return a.flat[np.abs(a - num).argmin()]
 
 
@@ -175,9 +186,11 @@ def next_pow2(num):
     Calculates the next nearest power of 2 to the input. Uses
       2**ceil( log2( num ) ).
 
-    :param num: The number to round to the next power if two.
+    Args:
+        num (number): The number to round to the next power if two.
 
-    :returns: the next power of 2 closest to num.
+    Returns:
+        number. The next power of 2 closest to num.
     """
 
     return int(2**np.ceil(np.log2(num)))
@@ -189,16 +202,18 @@ def top_and_tail(*arrays):
 
     E.g. crop the NaNs from the top and tail of a well log.
 
+    Args:
+        arrays (list): A list of arrays to treat.
+
+    Returns:
+        list: A list of treated arrays.
     """
     if len(arrays) > 1:
         for arr in arrays[1:]:
             assert len(arr) == len(arrays[0])
     nans = np.where(~np.isnan(arrays[0]))[0]
     first, last = nans[0], nans[-1]
-    ret_arrays = []
-    for array in arrays:
-        ret_arrays.append(array[first:last+1])
-    return ret_arrays
+    return [array[first:last+1] for array in arrays]
 
 
 def extrapolate(a):
@@ -207,7 +222,13 @@ def extrapolate(a):
 
     E.g. Continue the first and last non-NaN values of a log up and down.
 
+    Args:
+        a (ndarray): The array to treat.
+
+    Returns:
+        ndarray: The treated array.
     """
+    a = np.array(a)
     nans = np.where(~np.isnan(a))[0]
     first, last = nans[0], nans[-1]
     a[:first] = a[first]

@@ -12,17 +12,12 @@ from bruges.util import rms
 
 def noise_db(a, snr):
     """
-    Takes an array of seismic amplitudes
-    and SNR in dB.
+    Takes an array of seismic amplitudes and SNR in dB.
 
-    Returns an array of noise, the same
-    shape as the input.
+    Returns an array of noise, the same shape as the input.
 
-    Note it does *not* return the input
-    array with the noise added.
-
+    Note it does *not* return the input array with the noise added.
     """
-
     # Get the amplitude of the signal
     sigmean = rms(a)
 

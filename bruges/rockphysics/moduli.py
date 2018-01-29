@@ -1,33 +1,27 @@
 # -*- coding: utf-8 -*-
-'''
+"""
 ===================
 moduli.py
 ===================
 
-Converts between various acoustic/eslatic parameters,
-and provides a way to calculate all the elastic moduli
-from Vp, Vs, and rho
+Converts between various acoustic/eslatic parameters, and provides a way to
+calculate all the elastic moduli from Vp, Vs, and rho.
 
-Created June 2014
-
-@author: Matt Hall
+Created June 2014, Matt Hall
 
 Using equations http://www.subsurfwiki.org/wiki/Elastic_modulus
 from Mavko, G, T Mukerji and J Dvorkin (2003), The Rock Physics Handbook,
-Cambridge University Press
-
-'''
+Cambridge University Press.
+"""
 import numpy as np
 
 
 def youngs(vp=None, vs=None, rho=None, mu=None, lam=None, bulk=None, pr=None,
            pmod=None):
-    '''
+    """
     Computes Young's modulus given either Vp, Vs, and rho, or
     any two elastic moduli (e.g. lambda and mu, or bulk and P
-    moduli).
-
-    SI units only.
+    moduli). SI units only.
 
     Args:
         vp, vs, and rho
@@ -35,8 +29,7 @@ def youngs(vp=None, vs=None, rho=None, mu=None, lam=None, bulk=None, pr=None,
 
     Returns:
         Young's modulus in pascals, Pa
-
-    '''
+    """
     if (vp is not None) and (vs is not None) and (rho is not None):
         return rho * vs**2 * (3.*vp**2 - 4.*vs**2) / (vp**2 - vs**2)
 
@@ -64,12 +57,10 @@ def youngs(vp=None, vs=None, rho=None, mu=None, lam=None, bulk=None, pr=None,
 
 def bulk(vp=None, vs=None, rho=None, mu=None, lam=None, youngs=None, pr=None,
          pmod=None):
-    '''
+    """
     Computes bulk modulus given either Vp, Vs, and rho, or
     any two elastic moduli (e.g. lambda and mu, or Young's
-    and P moduli).
-
-    SI units only.
+    and P moduli). SI units only.
 
     Args:
         vp, vs, and rho
@@ -77,9 +68,7 @@ def bulk(vp=None, vs=None, rho=None, mu=None, lam=None, youngs=None, pr=None,
 
     Returns:
         Bulk modulus in pascals, Pa
-
-    '''
-
+    """
     if (vp is not None) and (vs is not None) and (rho is not None):
         return rho * (vp**2 - (4./3.)*(vs**2))
 
@@ -114,12 +103,10 @@ def bulk(vp=None, vs=None, rho=None, mu=None, lam=None, youngs=None, pr=None,
 
 def pr(vp=None, vs=None, rho=None, mu=None, lam=None, youngs=None, bulk=None,
        pmod=None):
-    '''
+    """
     Computes Poisson ratio given either Vp, Vs, and rho, or
     any two elastic moduli (e.g. lambda and mu, or Young's
-    and P moduli).
-
-    SI units only.
+    and P moduli). SI units only.
 
     Args:
         vp, vs, and rho
@@ -127,9 +114,7 @@ def pr(vp=None, vs=None, rho=None, mu=None, lam=None, youngs=None, bulk=None,
 
     Returns:
         Poisson's ratio, dimensionless
-
-    '''
-
+    """
     if (vp is not None) and (vs is not None):
         return (vp**2. - 2.*vs**2) / (2. * (vp**2 - vs**2))
 
@@ -164,12 +149,10 @@ def pr(vp=None, vs=None, rho=None, mu=None, lam=None, youngs=None, bulk=None,
 
 def mu(vp=None, vs=None, rho=None, pr=None, lam=None, youngs=None, bulk=None,
        pmod=None):
-    '''
+    """
     Computes shear modulus given either Vp, Vs, and rho, or
     any two elastic moduli (e.g. lambda and bulk, or Young's
-    and P moduli).
-
-    SI units only.
+    and P moduli). SI units only.
 
     Args:
         vp, vs, and rho
@@ -177,9 +160,7 @@ def mu(vp=None, vs=None, rho=None, pr=None, lam=None, youngs=None, bulk=None,
 
     Returns:
         Shear modulus in pascals, Pa
-
-    '''
-
+    """
     if (vs is not None) and (rho is not None):
         return rho * vs**2
 
@@ -214,12 +195,10 @@ def mu(vp=None, vs=None, rho=None, pr=None, lam=None, youngs=None, bulk=None,
 
 def lam(vp=None, vs=None, rho=None, pr=None,  mu=None, youngs=None, bulk=None,
         pmod=None):
-    '''
+    """
     Computes lambda given either Vp, Vs, and rho, or
     any two elastic moduli (e.g. bulk and mu, or Young's
-    and P moduli).
-
-    SI units only.
+    and P moduli). SI units only.
 
     Args:
         vp, vs, and rho
@@ -227,8 +206,7 @@ def lam(vp=None, vs=None, rho=None, pr=None,  mu=None, youngs=None, bulk=None,
 
     Returns:
         Lambda in pascals, Pa
-
-    '''
+    """
     if (vp is not None) and (vs is not None) and (rho is not None):
         return rho * (vp**2 - 2.*vs**2.)
 
@@ -256,12 +234,10 @@ def lam(vp=None, vs=None, rho=None, pr=None,  mu=None, youngs=None, bulk=None,
 
 def pmod(vp=None, vs=None, rho=None, pr=None, mu=None, lam=None, youngs=None,
          bulk=None):
-    '''
+    """
     Computes P-wave modulus given either Vp, Vs, and rho, or
     any two elastic moduli (e.g. lambda and mu, or Young's
-    and bulk moduli).
-
-    SI units only.
+    and bulk moduli). SI units only.
 
     Args:
         vp, vs, and rho
@@ -269,9 +245,7 @@ def pmod(vp=None, vs=None, rho=None, pr=None, mu=None, lam=None, youngs=None,
 
     Returns:
         P-wave modulus in pascals, Pa
-
-    '''
-
+    """
     if (vp is not None) and (rho is not None):
         return rho * vp**2
 
@@ -318,11 +292,9 @@ def pmod(vp=None, vs=None, rho=None, pr=None, mu=None, lam=None, youngs=None,
 
 def vp(youngs=None, vs=None, rho=None, mu=None, lam=None, bulk=None, pr=None,
        pmod=None):
-    '''
+    """
     Computes Vp given bulk density and any two elastic moduli
-    (e.g. lambda and mu, or Young's and P moduli).
-
-    SI units only.
+    (e.g. lambda and mu, or Young's and P moduli). SI units only.
 
     Args:
         Any 2 from lam, mu, youngs, pr, pmod, bulk
@@ -330,9 +302,7 @@ def vp(youngs=None, vs=None, rho=None, mu=None, lam=None, bulk=None, pr=None,
 
     Returns:
         Vp in m/s
-
-    '''
-
+    """
     if (mu is not None) and (lam is not None) and (rho is not None):
         return np.sqrt((lam + 2.*mu) / rho)
 
@@ -357,10 +327,8 @@ def vp(youngs=None, vs=None, rho=None, mu=None, lam=None, bulk=None, pr=None,
 
 def vs(youngs=None, vp=None, rho=None, mu=None, lam=None, bulk=None, pr=None,
        pmod=None):
-    '''
-    Computes Vs given bulk density and shear modulus.
-
-    SI units only.
+    """
+    Computes Vs given bulk density and shear modulus. SI units only.
 
     Args:
         Mu
@@ -368,9 +336,7 @@ def vs(youngs=None, vp=None, rho=None, mu=None, lam=None, bulk=None, pr=None,
 
     Returns:
         Vs in m/s
-
-    '''
-
+    """
     if (mu is not None) and (rho is not None):
         return np.sqrt(mu / rho)
 
@@ -379,19 +345,15 @@ def vs(youngs=None, vp=None, rho=None, mu=None, lam=None, bulk=None, pr=None,
 
 
 def moduli_dict(vp, vs, rho):
-    '''
-    Computes elastic moduli given Vp, Vs, and rho.
-
-    SI units only.
+    """
+    Computes elastic moduli given Vp, Vs, and rho. SI units only.
 
     Args:
         Vp, Vs, and rho
 
     Returns:
         A dict of elastic moduli, plus P-wave impedance.
-
-    '''
-
+    """
     mod = {}
 
     mod['imp'] = vp * rho

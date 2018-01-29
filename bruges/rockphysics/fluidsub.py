@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-'''
+"""
 ===================
 fluidsub.py
 ===================
@@ -19,8 +19,7 @@ Informed by Smith et al, Geophysics 68(2), 2003.
 
 At some point we should do Biot too, per Russell...
 http://cseg.ca/symposium/archives/2012/presentations/Biot_Gassmann_and_me.pdf
-
-'''
+"""
 from collections import namedtuple
 
 import numpy as np

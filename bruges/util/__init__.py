@@ -1,8 +1,4 @@
 # -*- coding: utf 8 -*-
-"""
-:copyright: 2015 Agile Geoscience
-:license: Apache 2.0
-"""
 from .util import rms
 from .util import moving_average
 from .util import moving_avg_conv

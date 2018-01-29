@@ -1,8 +1,5 @@
 # -*- coding: utf-8 -*-
-"""
-:copyright: 2015 Agile Geoscience
-:license: Apache 2.0
-"""
+
 from .moduli import youngs, bulk, pr
 from .moduli import mu, lam, pmod
 from .moduli import vp, vs, moduli_dict

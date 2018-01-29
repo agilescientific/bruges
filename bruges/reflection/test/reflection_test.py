@@ -55,7 +55,7 @@ class AvoTest(unittest.TestCase):
         reflect = avo.akirichards(arr_vp1, arr_vs1, arr_rho1,
                                   arr_vp2, arr_vs2, arr_rho2,
                                   arr_theta)
-        self.assertTrue(reflect.shape == (1000, 40))
+        self.assertTrue(reflect.shape == (40, 1000))
 
     def test_akirichards_alt(self):
         reflect = avo.akirichards_alt(vp1, vs1, rho1, vp2,
@@ -66,7 +66,7 @@ class AvoTest(unittest.TestCase):
         reflect = avo.akirichards_alt(arr_vp1, arr_vs1, arr_rho1,
                                       arr_vp2, arr_vs2, arr_rho2,
                                       arr_theta)
-        self.assertTrue(reflect.shape == (1000, 40))
+        self.assertTrue(reflect.shape == (40, 1000))
 
     def test_fatti(self):
         reflect = avo.fatti(vp1, vs1, rho1, vp2, vs2, rho2, theta)
