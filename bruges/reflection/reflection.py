@@ -15,6 +15,49 @@ from bruges.rockphysics import anisotropy
 from bruges.util import deprecated
 
 
+def critical_angles(vp1, vp2, vs2=None):
+    """
+    Compute critical angle at an interface, given the upper (vp1) and
+    lower (vp2) velocities. If you want the PS-wave critical angle as well,
+    pass vs2 as well.
+
+    Args:
+        vp1 (ndarray): The upper layer P-wave velocity.
+        vp2 (ndarray): The lower layer P-wave velocity.
+
+    Returns:
+        tuple: The first and second critical angles at the interface, in
+            degrees. If there isn't a critical angle, it is set to np.nan.
+    """
+    ca1 = ca2 = np.nan
+
+    if vp1 > vp2:
+        ca1 = np.degrees(arcsin(vp1/vp2))
+
+    if (vs2 is not None) and (vp1 > vs2):
+        ca2 = np.degrees(arcsin(vp1/vs2))
+
+    return ca1, ca2
+
+
+def reflection_phase(reflectivity):
+    """
+    Compute the phase of the reflectivity. Returns an array (or float) of
+    the phase, in positive multiples of 180 deg or pi rad. So 1 is opposite
+    phase. A value of 1.1 would be +1.1 \times \pi rad. 
+
+    Args:
+        reflectivity (ndarray): The reflectivity, eg from `zoeppritz()`. 
+
+    Returns:
+        ndarray: The phase, strictly positive
+    """
+    ph = np.arctan2(np.imag(z), np.real(z)) / np.pi
+    ph[ph == 1] = 0
+    ph[ph <  0] = 2 + ph[ph < 0]
+    return ph
+
+
 def acoustic_reflectivity(vp, rho):
     """
     The acoustic reflectivity, given Vp and RHOB logs.
