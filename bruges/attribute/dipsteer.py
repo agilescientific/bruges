@@ -1,4 +1,4 @@
-# -*- coding: utf 8 -*-
+# -*- coding: utf-8 -*-
 """
 A dip attribute, probably most useful for guiding other attributes.
 

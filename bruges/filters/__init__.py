@@ -1,4 +1,4 @@
-# -*- coding: utf 8 -*-
+# -*- coding: utf-8 -*-
 from .wavelets import ricker
 from .wavelets import ormsby
 from .wavelets import sweep

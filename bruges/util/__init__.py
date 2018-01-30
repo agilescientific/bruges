@@ -1,4 +1,4 @@
-# -*- coding: utf 8 -*-
+# -*- coding: utf-8 -*-
 from .util import rms
 from .util import moving_average
 from .util import moving_avg_conv

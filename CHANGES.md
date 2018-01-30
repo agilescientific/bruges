@@ -11,6 +11,7 @@
 so I'm not calling it a breaking change.
 - The wavelets `ricker()` and `sweep()` now return transposed matrices if you ask for a wavelet bank by providing several frequencies. This is so the wavelets are in the first dimension, so you get get one by simply indexing.
 - Added `inverse_gardner`, and other density and velocity transforms, to `petrophysics`.
+- Added `transform.v_rms()` (RMS velocity), `transform.v_avg()` (average velocity) and `transform.v_bac()` (naïve Backus average). These all operate in a 'cumulative' average-down-to sense, per Liner (2004), Elements of 3D Seismology.
 
 ### v0.3.1 — 21 January 2018
 - Repaired the `rockphysics.elastic_impedance()` function, which had various issues, including not applying normalization correctly and not working on vectors.

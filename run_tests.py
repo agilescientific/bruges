@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-# -*- coding: utf 8 -*-
+# -*- coding: utf-8 -*-
 """
 Find and run tests.
 """
@@ -18,6 +18,6 @@ def run_tests():
     return(suite)
 
 
-if (__name__ == '__main__'):
+if __name__ == '__main__':
     suite = run_tests()
     unittest.TextTestRunner(verbosity=2).run(suite)
