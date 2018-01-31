@@ -123,7 +123,8 @@ def sweep(duration, dt, f,
     Returns:
         ndarray: The waveform.
     """
-    t = np.arange(-duration/2, duration/2, dt)
+    t0, t1 = -duration/2, duration/2
+    t = np.arange(t0, t1, dt)
 
     f = np.expand_dims(f, 0)
     f1, f2 = f.T

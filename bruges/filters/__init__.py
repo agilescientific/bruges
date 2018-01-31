@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+from .wavelets import sinc
 from .wavelets import ricker
 from .wavelets import ormsby
 from .wavelets import sweep
