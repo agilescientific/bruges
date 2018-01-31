@@ -35,8 +35,10 @@ def sinc(duration, dt, f, return_t=False, taper='blackman'):
     Returns:
         ndarray. sinc wavelet(s) with centre frequency f sampled on t.
     """
-    f = np.array(f).reshape((-1, 1))
-    t = np.arange(-duration/2, duration/2, dt)
+    f = np.array(f, dtype=np.float).reshape((-1, 1))
+    t = np.arange(-duration/2., duration/2., dt)
+    t[t == 0] = 1e-12  # Avoid division by zero.
+    f[f == 0] = 1e-12  # Avoid division by zero.
     w = np.squeeze(np.sin(2*np.pi*f*t) / (2*np.pi*f*t))
     
     if taper:
@@ -47,7 +49,7 @@ def sinc(duration, dt, f, return_t=False, taper='blackman'):
             'hanning': np.hanning,
             'none': lambda x: x,
         }
-        func = funcs.get(taper.lower(), taper)
+        func = funcs.get(taper, taper)
         w *= func(t.size)
 
     if return_t:
@@ -89,75 +91,85 @@ def ricker(duration, dt, f, return_t=False):
         return w
 
 
-def sweep(duration, dt, f, method='linear', phi=0,
-          vertex_zero=True, autocorrelate=True, return_t=False):
+def sweep(duration, dt, f,
+          autocorrelate=True,
+          return_t=False,
+          taper='blackman',
+          **kwargs):
     """
-    Generates a linear frequency modulated wavelet (sweep)
-    Does a wrapping of scipy.signal.chirp
+    Generates a linear frequency modulated wavelet (sweep). Wraps
+    scipy.signal.chirp, adding dimensions as necessary.
 
-    :param duration: The length in seconds of the wavelet.
-    :param dt: is the sample interval in seconds (usually 0.001, 0.002, 0.004)
-    :param f: Tuple of (f1, f2), or a similar list. A list of lists
-              will create a wavelet bank.
-    :keyword method: {'linear','quadratic','logarithmic'}, optional
-    :keyword phi: float, phase offset in degrees
-    :keyword vertex_zero: bool, optional
-        This parameter is only used when method is 'quadratic'.
-        It determines whether the vertex of the parabola that
-        is the graph of the frequency is at t=0 or t=t1.
+    Args:
+        duration (float): The length in seconds of the wavelet.
+        dt (float): is the sample interval in seconds (usually 0.001, 0.002,
+            or 0.004)
+        f (ndarray): Any sequence like (f1, f2). A list of lists will create a
+            wavelet bank.
+        autocorrelate (bool): Whether to autocorrelate the sweep(s) to create
+            a wavelet. Default is `True`.
+        return_t (bool): If True, then the function returns a tuple of
+            wavelet, time-basis, where time is the range from -duration/2 to
+            duration/2 in steps of dt.
+        taper (str or function): The window or tapering function to apply.
+            To use one of NumPy's functions, pass 'bartlett', 'blackman' (the
+            default), 'hamming', or 'hanning'; to apply no tapering, pass
+            'none'. To apply your own function, pass a function taking only
+            the length of the window and returning the window function.
+        **kwargs: Further arguments are passed to scipy.signal.chirp. They are
+            `method` ('linear','quadratic','logarithmic'), `phi` (phase offset
+            in degrees), and `vertex_zero`.
 
-    :returns: An LFM waveform.
+    Returns:
+        ndarray: The waveform.
     """
+    t = np.arange(-duration/2, duration/2, dt)
 
-    t0 = -duration/2.
-    t1 = duration/2.
-    t = np.arange(t0, t1, dt)
+    f = np.expand_dims(f, 0)
+    f1, f2 = f.T
 
-    freq = np.array(f)
+    c = [chirp(t, f1_+(f2_-f1_)/2., t1, f2_, **kwargs)
+         for f1_, f2_
+         in zip(f1, f2)]
 
-    if freq.size == 2:
-        A = chirp(t, freq[0], t1, freq[1],
-                  method, phi, vertex_zero)
-        if autocorrelate:
-            A = np.correlate(A, A, mode='same')
-        output = A / np.amax(A)
+    if autocorrelate:
+        w = [np.correlate(c_, c_, mode='same') for c_ in c]
 
-    else:
-        output = np.zeros((t.size, freq.shape[1]))
+    w = np.squeeze(w) / np.amax(w)
 
-        for i in range(freq.shape[1]):
-            A = chirp(t, freq[0, i], t1, freq[1, i],
-                      method, phi, vertex_zero)
-
-            if autocorrelate:
-                A = np.correlate(A, A, mode='same')
-            output[:, i] = A / np.max(A)
+    if taper:
+        funcs = {
+            'bartlett': np.bartlett,
+            'blackman': np.blackman,
+            'hamming': np.hamming,
+            'hanning': np.hanning,
+            'none': lambda x: x,
+        }
+        func = funcs.get(taper, taper)
+        w *= func(t.size)
 
     if return_t:
         Sweep = namedtuple('Sweep', ['amplitude', 'time'])
-        return Sweep(output.T, t)
+        return Sweep(w, t)
     else:
-        return output.T
+        return w
 
 
 def ormsby(duration, dt, f, return_t=False):
     """
-    The Ormsby wavelet requires four frequencies:
-    f1 = low-cut frequency
-    f2 = low-pass frequency
-    f3 = high-pass frequency
-    f4 = hi-cut frequency
-    Together, the frequencies define a trapezoid shape in the
-    spectrum.
-    The Ormsby wavelet has several sidelobes, unlike Ricker wavelets
-    which only have two, one either side.
+    The Ormsby wavelet requires four frequencies which together define a
+    trapezoid shape in the spectrum. The Ormsby wavelet has several sidelobes,
+    unlike Ricker wavelets.
 
-    :param duration: The length in seconds of the wavelet.
-    :param dt: is the sample interval in seconds (usually 0.001,
-               0.002, 0.004)
-    :params f: Tuple of form (f1,f2,f3,f4), or a similar list.
+    Args:
+        duration (float): The length in seconds of the wavelet.
+        dt (float): The sample interval in seconds (usually 0.001, 0.002,
+            or 0.004).
+        f (ndarray): Sequence of form (f1, f2, f3, f4), or list of lists of
+            frequencies, which will return a 2D wavelet bank.
 
-    :returns: A vector containing the ormsby wavelet
+    Returns:
+        ndarray: A vector containing the Ormsby wavelet, or a bank of them.
     """
     f = np.expand_dims(f, 0)
 
@@ -174,16 +186,16 @@ def ormsby(duration, dt, f, return_t=False):
 
     t = np.arange(-duration/2, duration/2, dt)
 
-    A = ((numerator(f4, t)/pf43) - (numerator(f3, t)/pf43) -
+    w = ((numerator(f4, t)/pf43) - (numerator(f3, t)/pf43) -
          (numerator(f2, t)/pf21) + (numerator(f1, t)/pf21))
 
-    A = np.squeeze(A) / np.amax(A)
+    w = np.squeeze(w) / np.amax(w)
 
     if return_t:
         OrmsbyWavelet = namedtuple('OrmsbyWavelet', ['amplitude', 'time'])
-        return OrmsbyWavelet(A, t)
+        return OrmsbyWavelet(w, t)
     else:
-        return A
+        return w
 
 
 def rotate_phase(w, phi, degrees=False):
@@ -212,10 +224,6 @@ def rotate_phase(w, phi, degrees=False):
     """
     if degrees:
         phi = phi * np.pi / 180.0
-
     a = hilbert(w, axis=0)
-
-    A = (np.real(a) * np.cos(phi) -
-         np.imag(a) * np.sin(phi))
-
-    return A
+    w = (np.real(a) * np.cos(phi) - np.imag(a) * np.sin(phi))
+    return w
