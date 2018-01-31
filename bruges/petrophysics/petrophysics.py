@@ -24,7 +24,7 @@ def gardner(vp, alpha=310, beta=0.25, fps=False):
     Returns:
         ndarray: RHOB estimate in kg/m^3.
     """
-    alpha = 230 if fps or alpha
+    alpha = 230 if fps else alpha
     return alpha * vp ** beta
 
 
@@ -43,7 +43,7 @@ def inverse_gardner(rho, alpha=310, beta=0.25, fps=False):
     Returns:
         ndarray: Vp estimate in m/s.
     """
-    alpha = 230 if fps or alpha
+    alpha = 230 if fps else alpha
     exponent = 1 / beta
     factor = 1 / alpha**exponent
     return factor * rho**exponent

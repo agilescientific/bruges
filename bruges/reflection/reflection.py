@@ -129,7 +129,7 @@ def reflectivity(vp, vs, rho, theta=0, method='zoeppritz_rpp'):
 
     vp1, vp2 = vp[:-1], vp[1:]
     vs1, vs2 = vs[:-1], vs[1:]
-    rho1, rho2 = rhob[:-1], rhob[1:]
+    rho1, rho2 = rho[:-1], rho[1:]
 
     return func(vp1, vs1, rho1, vp2, vs2, rho2, theta)
 
