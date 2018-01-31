@@ -12,6 +12,51 @@ from scipy.signal import hilbert
 from scipy.signal import chirp
 
 
+def sinc(duration, dt, f, return_t=False, taper='blackman'):
+    """
+    sinc function centered on t=0, with a dominant frequency of f Hz.
+
+    If you pass a 1D array of frequencies, you get a wavelet bank in return.
+    Args:
+        duration (float): The length in seconds of the wavelet.
+        dt (float): The sample interval in seconds (often one of  0.001, 0.002,
+            or 0.004).
+        f (ndarray): Dominant frequency of the wavelet in Hz. If a sequence is
+            passed, you will get a 2D array in return, one row per frequency.
+        return_t (bool): If True, then the function returns a tuple of
+            wavelet, time-basis, where time is the range from -duration/2 to
+            duration/2 in steps of dt.
+        taper (str or function): The window or tapering function to apply.
+            To use one of NumPy's functions, pass 'bartlett', 'blackman' (the
+            default), 'hamming', or 'hanning'; to apply no tapering, pass
+            'none'. To apply your own function, pass a function taking only
+            the length of the window and returning the window function.
+
+    Returns:
+        ndarray. sinc wavelet(s) with centre frequency f sampled on t.
+    """
+    f = np.array(f).reshape((-1, 1))
+    t = np.arange(-duration/2, duration/2, dt)
+    w = np.squeeze(np.sin(2*np.pi*f*t) / (2*np.pi*f*t))
+    
+    if taper:
+        funcs = {
+            'bartlett': np.bartlett,
+            'blackman': np.blackman,
+            'hamming': np.hamming,
+            'hanning': np.hanning,
+            'none': lambda x: x,
+        }
+        func = funcs.get(taper.lower(), taper)
+        w *= func(t.size)
+
+    if return_t:
+        RickerWavelet = namedtuple('RickerWavelet', ['amplitude', 'time'])
+        return RickerWavelet(w, t)
+    else:
+        return w
+
+
 def ricker(duration, dt, f, return_t=False):
     """
     Also known as the mexican hat wavelet, models the function:
@@ -114,7 +159,7 @@ def ormsby(duration, dt, f, return_t=False):
 
     :returns: A vector containing the ormsby wavelet
     """
-    f = np.array(f)
+    f = np.expand_dims(f, 0)
 
     try:
         f1, f2, f3, f4 = f.T
@@ -123,7 +168,7 @@ def ormsby(duration, dt, f, return_t=False):
 
     def numerator(f, t):
         return (np.sinc(f * t)**2) * ((np.pi * f) ** 2)
-
+    
     pf43 = (np.pi * f4) - (np.pi * f3)
     pf21 = (np.pi * f2) - (np.pi * f1)
 
@@ -132,7 +177,7 @@ def ormsby(duration, dt, f, return_t=False):
     A = ((numerator(f4, t)/pf43) - (numerator(f3, t)/pf43) -
          (numerator(f2, t)/pf21) + (numerator(f1, t)/pf21))
 
-    A /= np.amax(A)
+    A = np.squeeze(A) / np.amax(A)
 
     if return_t:
         OrmsbyWavelet = namedtuple('OrmsbyWavelet', ['amplitude', 'time'])
