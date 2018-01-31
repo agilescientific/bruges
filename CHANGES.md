@@ -4,12 +4,16 @@
 - The Zoeppritz solutions and the Aki–Richards approximations now return the complex reflectivity and therefore show post-critical behaviour.
 - New reflection coefficient series function, `reflection.reflectivity()` makes it easier to make offset reflectivities from logs.
 - New acoustic reflection coefficient series function, `acoustic_reflectivity()`.
+- Added `critical_angles()` and `relflection_phase()` functions to make it easier to compute the PP and PS critical angle(s), and to get the phase of a post-critical reflection.
 - Improvements to `reflection` module docs. 
 - Deprecating  `moving_avg_conv` and `moving_avg_fft`, and for now the function `moving_average()` will return the convolutional solution.
 - Several more simple linear and non-linear filters in `bruges.filters`. They are n-dimensional where possible. (One day maybe I'll have a crack at n-D SNN and Kuwahara filters.)
 - You can no longer import 'all' from a module. This is a bad idea anyway,
 so I'm not calling it a breaking change.
 - The wavelets `ricker()` and `sweep()` now return transposed matrices if you ask for a wavelet bank by providing several frequencies. This is so the wavelets are in the first dimension, so you get get one by simply indexing.
+- The `ormsby()` wavelet now also works for a sequence of frequency tuples, returning a wavelet bank.
+- Fixed a bug in the `sweep()` wavelet that caused a time shift in the sweep function. Also added the taper option to the `sweep()` wavelet.
+- Added a `sinc()` wavelet, with a taper option to attenuate the sidelobes.
 - Added `inverse_gardner`, and other density and velocity transforms, to `petrophysics`.
 - Added `transform.v_rms()` (RMS velocity), `transform.v_avg()` (average velocity) and `transform.v_bac()` (naïve Backus average). These all operate in a 'cumulative' average-down-to sense, per Liner (2004), Elements of 3D Seismology.
 

@@ -146,10 +146,10 @@ def vectorize(func):
     @wraps(func)
     def wrapper(vp1, vs1, rho1, vp2, vs2, rho2, theta1=0, **kwargs):
         vp1 = np.array(vp1).astype(float)
-        vs1 = np.array(vs1).astype(float)
+        vs1 = np.array(vs1).astype(float) + 1e-12  # Prevent singular matrix.
         rho1 = np.array(rho1).astype(float)
         vp2 = np.array(vp2).astype(float)
-        vs2 = np.array(vs2).astype(float)
+        vs2 = np.array(vs2).astype(float) + 1e-12  # Prevent singular matrix.
         rho2 = np.array(rho2).astype(float)
         theta1 = np.array(theta1).reshape((-1, 1))
         return func(vp1, vs1, rho1, vp2, vs2, rho2, theta1, **kwargs)
