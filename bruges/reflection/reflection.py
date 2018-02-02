@@ -156,6 +156,7 @@ def vectorize(func):
     return wrapper
 
 
+@vectorize
 def scattering_matrix(vp1, vs1, rho1, vp2, vs2, rho2, theta1=0):
     """
     Full Zoeppritz solution, considered the definitive solution.
@@ -180,20 +181,15 @@ def scattering_matrix(vp1, vs1, rho1, vp2, vs2, rho2, theta1=0):
             A 4x4 array representing the scattering matrix at the incident
             angle theta1.
     """
-    theta1 = np.radians(np.array(theta1)).astype(complex)
-    if theta1.ndim == 0:
-        theta1 = np.expand_dims(theta1, axis=1)
-
+    theta1 = np.radians(theta1).astype(complex) * np.ones_like(vp1)
     p = np.sin(theta1) / vp1  # Ray parameter.
-
-    # Calculate reflection & transmission angles for Zoeppritz.
     theta2 = np.arcsin(p * vp2)  # Trans. angle of P-wave.
     phi1 = np.arcsin(p * vs1)    # Refl. angle of converted S-wave.
     phi2 = np.arcsin(p * vs2)    # Trans. angle of converted S-wave.
 
     # Matrix form of Zoeppritz equations... M & N are matrices.
-    M = np.array([[-np.sin(theta1),-np.cos(phi1),np.sin(theta2), np.cos(phi2)],
-                  [np.cos(theta1),-np.sin(phi1),np.cos(theta2), -np.sin(phi2)],
+    M = np.array([[-np.sin(theta1), -np.cos(phi1), np.sin(theta2), np.cos(phi2)],
+                  [np.cos(theta1), -np.sin(phi1), np.cos(theta2), -np.sin(phi2)],
                   [2 * rho1 * vs1 * np.sin(phi1) * np.cos(theta1),
                    rho1 * vs1 * (1 - 2 * np.sin(phi1) ** 2),
                    2 * rho2 * vs2 * np.sin(phi2) * np.cos(theta2),
@@ -203,8 +199,8 @@ def scattering_matrix(vp1, vs1, rho1, vp2, vs2, rho2, theta1=0):
                    rho2 * vp2 * (1 - 2 * np.sin(phi2) ** 2),
                    -rho2 * vs2 * np.sin(2 * phi2)]])
 
-    N = np.array([[np.sin(theta1),np.cos(phi1),-np.sin(theta2), -np.cos(phi2)],
-                  [np.cos(theta1),-np.sin(phi1),np.cos(theta2), -np.sin(phi2)],
+    N = np.array([[np.sin(theta1), np.cos(phi1), -np.sin(theta2), -np.cos(phi2)],
+                  [np.cos(theta1), -np.sin(phi1), np.cos(theta2), -np.sin(phi2)],
                   [2 * rho1 * vs1 * np.sin(phi1) * np.cos(theta1),
                    rho1 * vs1 * (1 - 2 * np.sin(phi1) ** 2),
                    2 * rho2 * vs2 * np.sin(phi2) * np.cos(theta2),
@@ -214,10 +210,12 @@ def scattering_matrix(vp1, vs1, rho1, vp2, vs2, rho2, theta1=0):
                    - rho2 * vp2 * (1 - 2 * np.sin(phi2) ** 2),
                    rho2 * vs2 * np.sin(2 * phi2)]])
 
-    A = np.linalg.inv(np.rollaxis(M, 2))
-    Z = np.matmul(A, np.rollaxis(N, -1))
+    M_ = np.moveaxis(np.squeeze(M), [0, 1], [-2, -1])
+    A = np.linalg.inv(M_)
+    N_ = np.moveaxis(np.squeeze(N), [0, 1], [-2, -1])
+    Z_ = np.matmul(A, N_)
 
-    return np.rollaxis(Z, 0, 3).T
+    return np.transpose(Z_, axes=list(range(Z_.ndim - 2)) + [-1, -2])
 
 
 def zoeppritz_element(vp1, vs1, rho1, vp2, vs2, rho2, theta1=0, element='PdPu'):
@@ -252,7 +250,7 @@ def zoeppritz_element(vp1, vs1, rho1, vp2, vs2, rho2, theta1=0, element='PdPu'):
 
     Z = scattering_matrix(vp1, vs1, rho1, vp2, vs2, rho2, theta1).T
 
-    return np.squeeze(Z[np.where(elements == element)])
+    return np.squeeze(Z[np.where(elements == element)].T)
 
 
 def zoeppritz(vp1, vs1, rho1, vp2, vs2, rho2, theta1=0):
