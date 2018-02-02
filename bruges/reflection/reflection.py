@@ -98,13 +98,23 @@ def reflectivity(vp, vs, rho, theta=0, method='zoeppritz_rpp'):
         theta (ndarray): The incidence angle; float or 1D array length n.
         method (str): The reflectivity equation to use; one of:
 
-                - 'zoeppritz_rpp': zoeppritz_rpp,
-                - 'akirichards': akirichards,
-                - 'akirichards_alt': akirichards_alt,
-                - 'fatti': fatti,
-                - 'shuey': shuey,
-                - 'bortfeld': bortfeld,
-                - 'hilterman': hilterman,
+                - 'scattering_matrix': scattering_matrix
+                - 'zoeppritz_element': zoeppritz_element
+                - 'zoeppritz': zoeppritz
+                - 'zoeppritz_rpp': zoeppritz_rpp
+                - 'akirichards': akirichards
+                - 'akirichards_alt': akirichards_alt
+                - 'fatti': fatti
+                - 'shuey': shuey
+                - 'bortfeld': bortfeld
+                - 'hilterman': hilterman
+
+        Notes:
+
+                - scattering_matrix gives the full solution
+                - zoeppritz_element gives a single element which you specify
+                - zoeppritz gives the RPP (aka PdPu) element only; use zoeppritz_rpp instead
+                - zoeppritz_rpp is faster than zoeppritz or zoeppritz_element for Rpp
 
     Returns:
         ndarray. The result of running the specified method on the inputs.
@@ -114,6 +124,9 @@ def reflectivity(vp, vs, rho, theta=0, method='zoeppritz_rpp'):
             and an array of angles).
     """
     methods = {
+        'scattering_matrix': scattering_matrix,
+        'zoeppritz_element': zoeppritz_element,
+        'zoeppritz': zoeppritz,
         'zoeppritz_rpp': zoeppritz_rpp,
         'akirichards': akirichards,
         'akirichards_alt': akirichards_alt,
