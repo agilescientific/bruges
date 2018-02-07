@@ -74,23 +74,23 @@ def time_to_depth(data, vmodel, dt, dz, twt=True, mode="nearest", return_z=False
     velocity model.
 
     Args:
-        data: The data to convert, will work with a 1 or 2D numpy
-                 numpy array. array(samples,traces).
-        vmodel: P-wave interval velocity model that corresponds to the data.
-                   Must be the same shape as data.
-        dt: The sample interval of the input data [s], or an
-               array of times.
-        dz: The sample interval of the output data [m], or an
-               array of depths.
-
-        twt: Use twt travel time, defaults to true.
-        mode: What kind of interpolation to use, defaults to 'nearest'.
+        data (ndarray): The data to convert, will work with a 1 or 2D numpy
+            numpy array. array(samples,traces).
+        vmodel (ndarray): P-wave interval velocity model that corresponds to
+            the data. Must be the same shape as data.
+        dt (float): The sample interval of the input data [s], or an
+            array of times.
+        dz (float): The sample interval of the output data [m], or an
+            array of depths.
+        twt (bool): Use twt travel time, defaults to true.
+        mode (str): What kind of interpolation to use, defaults to 'nearest'.
+        return_z (bool): Whether to also return the new time basis.
 
     Returns
         ndarray: The data resampled in the depth domain.
     """
     if twt:
-        scale = 1/2.0
+        scale = 0.5
     else:
         scale = 1.0
 
@@ -110,17 +110,19 @@ def depth_to_time(data, vmodel, dz, dt, twt=True, mode="nearest", return_t=False
     Converts data from the depth domain to the time domain given a
     velocity model.
 
-    :param data: The data to convert, will work with a 1 or 2D numpy
-                 numpy array. array(samples,traces).
-    :param vmodel: P-wave interval velocity model that corresponds to the data.
-                   Must be the same shape as data.
-    :param dz: The sample interval of the input data [m].
-    :param dt: The sample interval of the output data [s].
+    Args:
+        data (ndarray): The data to convert, will work with a 1 or 2D numpy
+            numpy array. array(samples,traces).
+        vmodel (ndarray): P-wave interval velocity model that corresponds to
+            the data. Must be the same shape as data.
+        dz (float): The sample interval of the input data [m].
+        dt (float): The sample interval of the output data [s].
+        twt (bool): Use twt travel time, defaults to true.
+        mode (str): What kind of interpolation to use, defaults to 'nearest'.
+        return_z (bool): Whether to also return the new time basis.
 
-    :keyword twt: Use twt travel time, defaults to true.
-    :keyword mode: What kind of interpolation to use, defaults to 'nearest'.
-
-    :returns: The data resampled in the time domain.
+    Returns:
+        The data resampled in the time domain.
     """
     if twt:
         scale = 2.0
