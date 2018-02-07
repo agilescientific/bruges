@@ -1,15 +1,14 @@
 ### v0.3.2 — February 2018 
 - Fixed a bug in `bruges.filters` that was returning the results from integer arrays as integers, giving incorrect results in those cases. Fixed tests.
-- Reflectivity equations in `reflection` module now work on vectors. They are about 10 times faster than running a loop over elements. The results put the angles in the first dimension, so you can simply index in to get one offset.
+- Reflectivity equations in `reflection` module now work on vectors, so you can use ndarrays for both the Vp, Vs, and rho values, and the theta values. They are about 10 times faster than running a loop over elements; the Zoeppritz is over 100 times faster. The results put the angles in the first dimension, so you can simply index in to get one offset.
 - The Zoeppritz solutions and the Aki–Richards approximations now return the complex reflectivity and therefore show post-critical behaviour.
 - New reflection coefficient series function, `reflection.reflectivity()` makes it easier to make offset reflectivities from logs.
 - New acoustic reflection coefficient series function, `acoustic_reflectivity()`.
-- Added `critical_angles()` and `relflection_phase()` functions to make it easier to compute the PP and PS critical angle(s), and to get the phase of a post-critical reflection.
+- Added `critical_angles()` and `reflection_phase()` functions to make it easier to compute the PP and PS critical angle(s), and to get the phase of a post-critical reflection.
 - Improvements to `reflection` module docs. 
 - Deprecating  `moving_avg_conv` and `moving_avg_fft`, and for now the function `moving_average()` will return the convolutional solution.
-- Several more simple linear and non-linear filters in `bruges.filters`. They are n-dimensional where possible. (One day maybe I'll have a crack at n-D SNN and Kuwahara filters.)
-- You can no longer import 'all' from a module. This is a bad idea anyway,
-so I'm not calling it a breaking change.
+- Several more simple linear and non-linear filters in `bruges.filters`, including `median` (good for seismic horizons) and `mode` (good for waveform classification).
+- You can no longer import 'all' from a module. This is a bad idea anyway, so I'm not calling it a breaking change.
 - The wavelets `ricker()` and `sweep()` now return transposed matrices if you ask for a wavelet bank by providing several frequencies. This is so the wavelets are in the first dimension, so you get get one by simply indexing.
 - The `ormsby()` wavelet now also works for a sequence of frequency tuples, returning a wavelet bank.
 - Fixed a bug in the `sweep()` wavelet that caused a time shift in the sweep function. Also added the taper option to the `sweep()` wavelet.

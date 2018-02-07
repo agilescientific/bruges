@@ -35,12 +35,12 @@ def sinc(duration, dt, f, return_t=False, taper='blackman'):
     Returns:
         ndarray. sinc wavelet(s) with centre frequency f sampled on t.
     """
-    f = np.array(f, dtype=np.float).reshape((-1, 1))
+    f = np.asanyarray(f).reshape(-1, 1)
     t = np.arange(-duration/2., duration/2., dt)
     t[t == 0] = 1e-12  # Avoid division by zero.
     f[f == 0] = 1e-12  # Avoid division by zero.
     w = np.squeeze(np.sin(2*np.pi*f*t) / (2*np.pi*f*t))
-    
+
     if taper:
         funcs = {
             'bartlett': np.bartlett,
@@ -79,7 +79,7 @@ def ricker(duration, dt, f, return_t=False):
     Returns:
         ndarray. Ricker wavelet(s) with centre frequency f sampled on t.
     """
-    f = np.array(f).reshape((-1, 1))
+    f = np.asanyarray(f).reshape(-1, 1)
     t = np.arange(-duration/2, duration/2, dt)
     pft2 = (np.pi * f * t)**2
     w = np.squeeze((1 - (2 * pft2)) * np.exp(-pft2))
@@ -126,8 +126,8 @@ def sweep(duration, dt, f,
     t0, t1 = -duration/2, duration/2
     t = np.arange(t0, t1, dt)
 
-    f = np.expand_dims(f, 0)
-    f1, f2 = f.T
+    f = np.asanyarray(f).reshape(-1, 1)
+    f1, f2 = f
 
     c = [chirp(t, f1_+(f2_-f1_)/2., t1, f2_, **kwargs)
          for f1_, f2_
@@ -172,16 +172,16 @@ def ormsby(duration, dt, f, return_t=False):
     Returns:
         ndarray: A vector containing the Ormsby wavelet, or a bank of them.
     """
-    f = np.expand_dims(f, 0)
+    f = np.asanyarray(f).reshape(-1, 1)
 
     try:
-        f1, f2, f3, f4 = f.T
+        f1, f2, f3, f4 = f
     except ValueError:
         raise ValueError("The last dimension must be 4")
 
     def numerator(f, t):
         return (np.sinc(f * t)**2) * ((np.pi * f) ** 2)
-    
+
     pf43 = (np.pi * f4) - (np.pi * f3)
     pf21 = (np.pi * f2) - (np.pi * f1)
 

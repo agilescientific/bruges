@@ -41,13 +41,13 @@ def elastic_impedance(vp, vs, rho, theta1,
     Returns:
         ndarray: The elastic impedance log at the specficied angle or angles.
     """
-    theta1 = np.array(np.radians(theta1)).reshape((-1, 1))
+    theta1 = np.radians(theta1).reshape(-1, 1)
     if (np.nan_to_num(theta1) > np.pi/2.).any():
         raise ValueError("Incidence angle theta1 must be less than 90 deg.")
 
-    alpha = np.array(vp, dtype=float)
-    beta = np.array(vs, dtype=float)
-    rho = np.array(rho, dtype=float)
+    alpha = np.asanyarray(vp, dtype=float)
+    beta = np.asanyarray(vs, dtype=float)
+    rho = np.asanyarray(rho, dtype=float)
     op = np.sin if use_sin else np.tan
     k = np.mean(beta**2.0 / alpha**2.0) if k is None else k
 

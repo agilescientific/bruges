@@ -32,10 +32,10 @@ def critical_angles(vp1, vp2, vs2=None):
     ca1 = ca2 = np.nan
 
     if vp1 > vp2:
-        ca1 = np.degrees(arcsin(vp1/vp2))
+        ca1 = np.degrees(np.arcsin(vp1/vp2))
 
     if (vs2 is not None) and (vp1 > vs2):
-        ca2 = np.degrees(arcsin(vp1/vs2))
+        ca2 = np.degrees(np.arcsin(vp1/vs2))
 
     return ca1, ca2
 
@@ -44,17 +44,17 @@ def reflection_phase(reflectivity):
     """
     Compute the phase of the reflectivity. Returns an array (or float) of
     the phase, in positive multiples of 180 deg or pi rad. So 1 is opposite
-    phase. A value of 1.1 would be +1.1 \times \pi rad. 
+    phase. A value of 1.1 would be +1.1 \times \pi rad.
 
     Args:
-        reflectivity (ndarray): The reflectivity, eg from `zoeppritz()`. 
+        reflectivity (ndarray): The reflectivity, eg from `zoeppritz()`.
 
     Returns:
         ndarray: The phase, strictly positive
     """
-    ph = np.arctan2(np.imag(z), np.real(z)) / np.pi
+    ph = np.arctan2(np.imag(reflectivity), np.real(reflectivity)) / np.pi
     ph[ph == 1] = 0
-    ph[ph <  0] = 2 + ph[ph < 0]
+    ph[ph < 0] = 2 + ph[ph < 0]
     return ph
 
 
@@ -113,8 +113,8 @@ def reflectivity(vp, vs, rho, theta=0, method='zoeppritz_rpp'):
 
                 - scattering_matrix gives the full solution
                 - zoeppritz_element gives a single element which you specify
-                - zoeppritz gives the RPP (aka PdPu) element only; use zoeppritz_rpp instead
-                - zoeppritz_rpp is faster than zoeppritz or zoeppritz_element for Rpp
+                - zoeppritz returns RPP element only; use zoeppritz_rpp instead
+                - zoeppritz_rpp is faster than zoeppritz or zoeppritz_element
 
     Returns:
         ndarray. The result of running the specified method on the inputs.
@@ -136,9 +136,9 @@ def reflectivity(vp, vs, rho, theta=0, method='zoeppritz_rpp'):
         'hilterman': hilterman,
     }
     func = methods[method]
-    vp = np.array(vp).astype(float)
-    vs = np.array(vs).astype(float)
-    rho = np.array(rho).astype(float)
+    vp = np.asanyarray(vp, dtype=float)
+    vs = np.asanyarray(vs, dtype=float)
+    rho = np.asanyarray(rho, dtype=float)
 
     vp1, vp2 = vp[:-1], vp[1:]
     vs1, vs2 = vs[:-1], vs[1:]
@@ -158,13 +158,13 @@ def vectorize(func):
     """
     @wraps(func)
     def wrapper(vp1, vs1, rho1, vp2, vs2, rho2, theta1=0, **kwargs):
-        vp1 = np.array(vp1).astype(float)
-        vs1 = np.array(vs1).astype(float) + 1e-12  # Prevent singular matrix.
-        rho1 = np.array(rho1).astype(float)
-        vp2 = np.array(vp2).astype(float)
-        vs2 = np.array(vs2).astype(float) + 1e-12  # Prevent singular matrix.
-        rho2 = np.array(rho2).astype(float)
-        theta1 = np.array(theta1).reshape((-1, 1))
+        vp1 = np.asanyarray(vp1, dtype=float)
+        vs1 = np.asanyarray(vs1, dtype=float) + 1e-12  # Prevent singular matrix.
+        rho1 = np.asanyarray(rho1, dtype=float)
+        vp2 = np.asanyarray(vp2, dtype=float)
+        vs2 = np.asanyarray(vs2, dtype=float) + 1e-12  # Prevent singular matrix.
+        rho2 = np.asanyarray(rho2, dtype=float)
+        theta1 = np.asanyarray(theta1).reshape((-1, 1))
         return func(vp1, vs1, rho1, vp2, vs2, rho2, theta1, **kwargs)
     return wrapper
 
@@ -402,7 +402,7 @@ def akirichards(vp1, vs1, rho1, vp2, vs2, rho2, theta1=0, terms=False):
                            np.squeeze(term2),
                            np.squeeze(term3),
                            np.squeeze(term4)
-                          )
+                           )
     else:
         return np.squeeze(term1 + term2 + term3 + term4)
 
