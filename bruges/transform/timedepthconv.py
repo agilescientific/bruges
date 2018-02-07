@@ -5,14 +5,16 @@ Time-depth conversion.
 :copyright: 2015 Agile Geoscience
 :license: Apache 2.0
 """
+from collections import namedtuple
+
 from scipy.interpolate import interp1d
 import numpy as np
 
 
-def __convert(data, vmodel, interval, interval_new, scale, mode):
+def __convert(data, vmodel, interval, interval_new, scale, mode, return_basis=False):
     """
     Generic function for converting between scales. Use either
-    time to depth or depth to time
+    time to depth or depth to time.
     """
     data = np.array(data)
 
@@ -48,36 +50,44 @@ def __convert(data, vmodel, interval, interval_new, scale, mode):
                          bounds_error=False,
                          fill_value=data[-1],
                          kind=mode)
-        return inter(new_basis_lin)
+        result = inter(new_basis_lin)
     else:
-        output = np.zeros((new_basis_lin.size, ntraces))
+        result = np.zeros((new_basis_lin.size, ntraces))
         for i in range(ntraces):
             inter = interp1d(new_basis[:, i], data[:, i],
                              bounds_error=False,
                              fill_value=data[-1, i],
                              kind=mode)
-            output[:, i] += inter(new_basis_lin)
-        return output
+            result[:, i] += inter(new_basis_lin)
+
+    if return_basis:
+        field_names = ['data', 'basis']
+        Conversion = namedtuple('Conversion', field_names)
+        return Conversion(result, new_basis_lin)
+    else:
+        return result
 
 
-def time_to_depth(data, vmodel, dt, dz, twt=True, mode="nearest"):
+def time_to_depth(data, vmodel, dt, dz, twt=True, mode="nearest", return_z=False):
     """
     Converts data from the time domain to the depth domain given a
     velocity model.
 
-    :param data: The data to convert, will work with a 1 or 2D numpy
+    Args:
+        data: The data to convert, will work with a 1 or 2D numpy
                  numpy array. array(samples,traces).
-    :param vmodel: P-wave interval velocity model that corresponds to the data.
+        vmodel: P-wave interval velocity model that corresponds to the data.
                    Must be the same shape as data.
-    :param dt: The sample interval of the input data [s], or an
+        dt: The sample interval of the input data [s], or an
                array of times.
-    :param dz: The sample interval of the output data [m], or an
+        dz: The sample interval of the output data [m], or an
                array of depths.
 
-    :keyword twt: Use twt travel time, defaults to true.
-    :keyword mode: What kind of interpolation to use, defaults to 'nearest'.
+        twt: Use twt travel time, defaults to true.
+        mode: What kind of interpolation to use, defaults to 'nearest'.
 
-    :returns: The data resampled in the depth domain.
+    Returns
+        ndarray: The data resampled in the depth domain.
     """
     if twt:
         scale = 1/2.0
@@ -90,11 +100,12 @@ def time_to_depth(data, vmodel, dt, dz, twt=True, mode="nearest"):
                      interval=dt,
                      interval_new=dz,
                      scale=scale,
-                     mode=mode
+                     mode=mode,
+                     return_basis=return_z,
                      )
 
 
-def depth_to_time(data, vmodel, dz, dt, twt=True, mode="nearest"):
+def depth_to_time(data, vmodel, dz, dt, twt=True, mode="nearest", return_t=False):
     """
     Converts data from the depth domain to the time domain given a
     velocity model.
@@ -121,5 +132,6 @@ def depth_to_time(data, vmodel, dz, dt, twt=True, mode="nearest"):
                      interval=dz,
                      interval_new=dt,
                      scale=scale,
-                     mode=mode
+                     mode=mode,
+                     return_basis=return_t,
                      )

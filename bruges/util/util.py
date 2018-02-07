@@ -126,8 +126,10 @@ def moving_average(a, length, mode='same'):
         array([ 2.2,  4. ,  5.8,  7.4,  9. ,  7.6,  6.4,  6.4,  5. ,  3.6,  nan,
                 nan,  nan,  nan,  nan,  0.8,  0.6])
     """
-    boxcar = np.ones(length)/length
-    return np.convolve(a, boxcar, mode=mode)
+    padded = np.pad(a, int(length/2), mode='edge')
+    boxcar = np.ones(int(length))/length
+    smooth = np.convolve(padded, boxcar, mode='same')
+    return smooth[int(length/2):-int(length/2)]
 
 
 @deprecated("Use bruges.filters() for moving linear and nonlinear statistics")

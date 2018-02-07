@@ -1,4 +1,7 @@
-### v0.3.2 — February 2018 
+### v0.3.3 — February 2018 
+- One 
+
+### v0.3.2 — 7 February 2018 
 - Fixed a bug in `bruges.filters` that was returning the results from integer arrays as integers, giving incorrect results in those cases. Fixed tests.
 - Reflectivity equations in `reflection` module now work on vectors, so you can use ndarrays for both the Vp, Vs, and rho values, and the theta values. They are about 10 times faster than running a loop over elements; the Zoeppritz is over 100 times faster. The results put the angles in the first dimension, so you can simply index in to get one offset.
 - The Zoeppritz solutions and the Aki–Richards approximations now return the complex reflectivity and therefore show post-critical behaviour.

@@ -135,7 +135,7 @@ def reflectivity(vp, vs, rho, theta=0, method='zoeppritz_rpp'):
         'bortfeld': bortfeld,
         'hilterman': hilterman,
     }
-    func = methods[method]
+    func = methods[method.lower()]
     vp = np.asanyarray(vp, dtype=float)
     vs = np.asanyarray(vs, dtype=float)
     rho = np.asanyarray(rho, dtype=float)
