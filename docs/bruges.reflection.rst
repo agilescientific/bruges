@@ -1,7 +1,7 @@
 bruges\.reflection package
 ==========================
 
-.. automodule:: bruges.reflection.reflection
+.. automodule:: bruges.reflection
     :members:
     :undoc-members:
     :show-inheritance:

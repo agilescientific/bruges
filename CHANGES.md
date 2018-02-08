@@ -1,3 +1,6 @@
+### v0.3.4 — February 2018 
+- Fixed up the documentation.  
+
 ### v0.3.3 — 7 February 2018 
 - Fixed some bugs in v0.3.2, including a problem with non-integer indices in the windowed mean that `backus()` uses.
 - Improved the time and depth conversion functions by adding the ability to return the new basis array (i.e. the new time or depth vector).
