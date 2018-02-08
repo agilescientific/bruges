@@ -17,7 +17,6 @@ from . import util
 from .get_bruges import get_bruges
 from .bruges import BrugesError
 
-
 __version__ = "unknown"
 try:
     from ._version import __version__

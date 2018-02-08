@@ -1,10 +1,7 @@
-bruges.reflection package
-=========================
+bruges\.reflection package
+==========================
 
-Module contents
----------------
-
-.. automodule:: bruges.reflection
+.. automodule:: bruges.reflection.reflection
     :members:
     :undoc-members:
     :show-inheritance:

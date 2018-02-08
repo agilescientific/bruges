@@ -1,13 +1,12 @@
 Welcome to bruges's documentation!
-====================================
+==================================
 .. include:: ../README.rst
 
-Contents:
-===========
+Contents
+========
 
 .. toctree::
    :maxdepth: 2
-   :caption: Contents:
 
    bruges.attribute.rst
    bruges.filters.rst

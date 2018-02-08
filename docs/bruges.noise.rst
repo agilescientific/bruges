@@ -1,10 +1,7 @@
-bruges.noise package
-====================
+bruges\.noise package
+=====================
 
-Module contents
----------------
-
-.. automodule:: bruges.noise
+.. automodule:: bruges.noise.noise
     :members:
     :undoc-members:
     :show-inheritance:

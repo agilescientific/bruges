@@ -51,7 +51,7 @@ master_doc = 'index'
 
 # General information about the project.
 project = u'bruges'
-copyright = u'2015, Agile Geoscience'
+copyright = u'2018, Agile Scientific'
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
@@ -97,7 +97,7 @@ exclude_patterns = ['_build']
 
 # If true, the current module name will be prepended to all description
 # unit titles (such as .. function::).
-#add_module_names = True
+add_module_names = True
 
 # If true, sectionauthor and moduleauthor directives will be shown in the
 # output. They are ignored by default.

@@ -1,10 +1,23 @@
-bruges.transform package
-========================
+bruges\.transform package
+=========================
 
-Module contents
----------------
+coordinates
+-----------
+.. automodule:: bruges.transform.coordinates
+    :members:
+    :undoc-members:
+    :show-inheritance:
 
-.. automodule:: bruges.transform
+cumavg
+------
+.. automodule:: bruges.transform.cumavg
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+timedepthconv
+-------------
+.. automodule:: bruges.transform.timedepthconv
     :members:
     :undoc-members:
     :show-inheritance:

@@ -347,8 +347,8 @@ def akirichards(vp1, vs1, rho1, vp2, vs2, rho2, theta1=0, terms=False):
     """
     The Aki-Richards approximation to the reflectivity.
 
-    This is the formulation from Avseth et al., _Quantitative seismic
-    interpretation_, Cambridge University Press, 2006. Adapted for a 4-term
+    This is the formulation from Avseth et al., Quantitative seismic
+    interpretation, Cambridge University Press, 2006. Adapted for a 4-term
     formula. See http://subsurfwiki.org/wiki/Aki-Richards_equation.
 
     Returns the complex reflectivity.

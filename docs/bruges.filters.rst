@@ -1,10 +1,30 @@
-bruges.filters package
-======================
+bruges\.filters package
+=======================
 
-Module contents
----------------
+filters
+-------
+.. automodule:: bruges.filters.filters
+    :members:
+    :undoc-members:
+    :show-inheritance:
 
-.. automodule:: bruges.filters
+wavelets
+--------
+.. automodule:: bruges.filters.wavelets
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+kernels
+-------
+.. automodule:: bruges.filters.kernels
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+anisotropic diffusion
+---------------------
+.. automodule:: bruges.filters.anisodiff
     :members:
     :undoc-members:
     :show-inheritance:

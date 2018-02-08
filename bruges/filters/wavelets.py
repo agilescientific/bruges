@@ -17,6 +17,7 @@ def sinc(duration, dt, f, return_t=False, taper='blackman'):
     sinc function centered on t=0, with a dominant frequency of f Hz.
 
     If you pass a 1D array of frequencies, you get a wavelet bank in return.
+
     Args:
         duration (float): The length in seconds of the wavelet.
         dt (float): The sample interval in seconds (often one of  0.001, 0.002,

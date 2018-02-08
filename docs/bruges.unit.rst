@@ -1,10 +1,7 @@
-bruges.unit package
-===================
+bruges\.unit package
+====================
 
-Module contents
----------------
-
-.. automodule:: bruges.unit
+.. automodule:: bruges.unit.unit
     :members:
     :undoc-members:
     :show-inheritance:
