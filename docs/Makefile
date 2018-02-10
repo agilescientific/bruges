@@ -4,6 +4,7 @@
 # You can set these variables from the command line.
 SPHINXOPTS    =
 SPHINXBUILD   = sphinx-build
+SPHINXAUTOGEN = sphinx-autogen
 PAPER         =
 BUILDDIR      = _build
 
@@ -18,6 +19,15 @@ PAPEROPT_letter = -D latex_paper_size=letter
 ALLSPHINXOPTS   = -d $(BUILDDIR)/doctrees $(PAPEROPT_$(PAPER)) $(SPHINXOPTS) .
 # the i18n builder cannot share the environment and doctrees with the others
 I18NSPHINXOPTS  = $(PAPEROPT_$(PAPER)) $(SPHINXOPTS) .
+
+# Setup for the Python HTTP server for viewing the docs
+PYTHON_VERSION = $(shell python -c "import sys; v=sys.version_info.major; sys.stdout.write(str(v))")
+PORT = 8015
+ifeq ($(PYTHON_VERSION), 2)
+	HTTP_SERVER = "SimpleHTTPServer"
+else
+	HTTP_SERVER = "http.server"
+endif
 
 .PHONY: help clean html dirhtml singlehtml pickle json htmlhelp qthelp devhelp epub latex latexpdf text man changes linkcheck doctest gettext
 
@@ -47,12 +57,19 @@ help:
 	@echo "  doctest    to run all doctests embedded in the documentation (if enabled)"
 
 clean:
-	rm -rf $(BUILDDIR)/*
+	rm -rf $(BUILDDIR)/html/*
+	rm -rf generated
 
-html:
+html: api
 	$(SPHINXBUILD) -b html $(ALLSPHINXOPTS) $(BUILDDIR)/html
 	@echo
 	@echo "Build finished. The HTML pages are in $(BUILDDIR)/html."
+
+api:
+	$(SPHINXAUTOGEN) --imported-members -t _templates -o generated index.rst
+	@echo
+	@echo "Built API docs."
+	@echo
 
 dirhtml:
 	$(SPHINXBUILD) -b dirhtml $(ALLSPHINXOPTS) $(BUILDDIR)/dirhtml
@@ -175,3 +192,6 @@ pseudoxml:
 	$(SPHINXBUILD) -b pseudoxml $(ALLSPHINXOPTS) $(BUILDDIR)/pseudoxml
 	@echo
 	@echo "Build finished. The pseudo-XML files are in $(BUILDDIR)/pseudoxml."
+
+serve:
+	cd $(BUILDDIR)/html && python -m $(HTTP_SERVER) $(PORT)

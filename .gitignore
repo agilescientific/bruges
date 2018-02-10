@@ -19,6 +19,7 @@ lib
 lib64
 
 docs/_build/
+docs/generated
 
 # Installer logs
 pip-log.txt

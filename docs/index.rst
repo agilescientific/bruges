@@ -5,17 +5,17 @@ Welcome to bruges's documentation!
 Contents
 ========
 
-.. toctree::
-   :maxdepth: 2
+.. autosummary::
+    :toctree: generated/
 
-   bruges.attribute.rst
-   bruges.filters.rst
-   bruges.noise.rst
-   bruges.reflection.rst
-   bruges.rockphysics.rst
-   bruges.transform.rst
-   bruges.unit.rst
-   bruges.util.rst
+    bruges.attribute
+    bruges.filters
+    bruges.noise
+    bruges.reflection
+    bruges.rockphysics
+    bruges.transform
+    bruges.unit
+    bruges.util
 
 
 Indices and tables
