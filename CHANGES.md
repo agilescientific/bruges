@@ -1,4 +1,5 @@
 ### v0.3.4 — February 2018 
+- Fixed a bug in `CoordTransform` that broke Python 2.7 compatibility.
 - Fixed up the documentation.  
 
 ### v0.3.3 — 7 February 2018 

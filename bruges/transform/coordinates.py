@@ -20,11 +20,13 @@ class CoordTransform(object):
         self.A = affine_matrix_from_points(ix, xy)
 
     def __call__(self, p):
-        return (self.A @ np.append(p, [1]))[:2]
+        p = np.asanyarray(p)
+        return np.dot(self.A, np.append(p, [1]))[:2]
 
     def forward(self, p):
+        p = np.asanyarray(p)
         return self(p)
 
     def reverse(self, q):
-        p = (np.linalg.pinv(self.A) @ np.append(q, [1]))[:2]
+        p = np.dot(np.linalg.pinv(self.A), np.append(q, [1]))[:2]
         return np.rint(p).astype(np.int)
