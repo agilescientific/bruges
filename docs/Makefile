@@ -58,7 +58,7 @@ help:
 
 clean:
 	rm -rf $(BUILDDIR)/html/*
-	rm -rf generated
+	rm -rf _generated
 
 html: api
 	$(SPHINXBUILD) -b html $(ALLSPHINXOPTS) $(BUILDDIR)/html
@@ -66,7 +66,7 @@ html: api
 	@echo "Build finished. The HTML pages are in $(BUILDDIR)/html."
 
 api:
-	$(SPHINXAUTOGEN) --imported-members -t _templates -o generated index.rst
+	$(SPHINXAUTOGEN) --imported-members -t _templates -o _generated index.rst
 	@echo
 	@echo "Built API docs."
 	@echo
