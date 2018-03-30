@@ -31,10 +31,10 @@ def critical_angles(vp1, vp2, vs2=None):
     """
     ca1 = ca2 = np.nan
 
-    if vp1 > vp2:
+    if vp1 < vp2:
         ca1 = np.degrees(np.arcsin(vp1/vp2))
 
-    if (vs2 is not None) and (vp1 > vs2):
+    if (vs2 is not None) and (vp1 < vs2):
         ca2 = np.degrees(np.arcsin(vp1/vs2))
 
     return ca1, ca2
@@ -373,7 +373,6 @@ def akirichards(vp1, vs1, rho1, vp2, vs2, rho2, theta1=0, terms=False):
     """
     theta1 = np.radians(theta1).astype(complex)
 
-    # critical_angle = arcsin(vp1/vp2)
     theta2 = np.arcsin(vp2/vp1*np.sin(theta1))
     drho = rho2-rho1
     dvp = vp2-vp1
@@ -435,7 +434,6 @@ def akirichards_alt(vp1, vs1, rho1, vp2, vs2, rho2, theta1=0, terms=False):
     """
     theta1 = np.radians(theta1).astype(complex)
 
-    # critical_angle = arcsin(vp1/vp2)
     theta2 = np.arcsin(vp2/vp1*np.sin(theta1))
     drho = rho2-rho1
     dvp = vp2-vp1
