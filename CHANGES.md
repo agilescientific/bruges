@@ -1,4 +1,7 @@
-### v0.3.4 — February 2018 
+### v0.3.4 — February 2018
+- Implemented `generic` (a windowed function), `cosine`, and `gabor` wavelets in `filters`. The `cosine` and `gabor` filters are implemented via `generic`.
+- Fixed a bug in `filters.sinc` that caused the wavelet to have the wrong amplitude with no taper. Implemented `sinc` using `generic`.
+- Fixed a bug in `reflection.critical_angles` that was preventing valid values from being computed.
 - Fixed a bug in `CoordTransform` that broke Python 2.7 compatibility.
 - Fixed up the documentation.  
 

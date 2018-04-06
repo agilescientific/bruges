@@ -8,8 +8,55 @@ Seismic wavelets.
 from collections import namedtuple
 
 import numpy as np
-from scipy.signal import hilbert
-from scipy.signal import chirp
+import scipy.signal
+
+
+def generic(func, duration, dt, f, return_t=False, taper='blackman'):
+    """
+    Generic wavelet generator: applies a window to a continuous function.
+
+    Args:
+        func (function): The continuous function, taking t, f as arguments.
+        duration (float): The length in seconds of the wavelet.
+        dt (float): The sample interval in seconds (often one of  0.001, 0.002,
+            or 0.004).
+        f (ndarray): Dominant frequency of the wavelet in Hz. If a sequence is
+            passed, you will get a 2D array in return, one row per frequency.
+        return_t (bool): If True, then the function returns a tuple of
+            wavelet, time-basis, where time is the range from -duration/2 to
+            duration/2 in steps of dt.
+        taper (str or function): The window or tapering function to apply.
+            To use one of NumPy's functions, pass 'bartlett', 'blackman' (the
+            default), 'hamming', or 'hanning'; to apply no tapering, pass
+            'none'. To apply your own function, pass a function taking only
+            the length of the window and returning the window function.
+
+    Returns:
+        ndarray. wavelet(s) with centre frequency f sampled on t.
+    """
+    f = np.asanyarray(f).reshape(-1, 1)
+    t = np.arange(-duration/2., duration/2., dt)
+    t[t == 0] = 1e-12  # Avoid division by zero.
+    f[f == 0] = 1e-12  # Avoid division by zero.
+    
+    w = np.squeeze(func(t, f))
+
+    if taper:
+        tapers = {
+            'bartlett': np.bartlett,
+            'blackman': np.blackman,
+            'hamming': np.hamming,
+            'hanning': np.hanning,
+            'none': lambda _: 1,
+        }
+        taper = tapers.get(taper, taper)
+        w *= taper(t.size)
+
+    if return_t:
+        Wavelet = namedtuple('Wavelet', ['amplitude', 'time'])
+        return Wavelet(w, t)
+    else:
+        return w
 
 
 def sinc(duration, dt, f, return_t=False, taper='blackman'):
@@ -36,34 +83,75 @@ def sinc(duration, dt, f, return_t=False, taper='blackman'):
     Returns:
         ndarray. sinc wavelet(s) with centre frequency f sampled on t.
     """
-    f = np.asanyarray(f).reshape(-1, 1)
-    t = np.arange(-duration/2., duration/2., dt)
-    t[t == 0] = 1e-12  # Avoid division by zero.
-    f[f == 0] = 1e-12  # Avoid division by zero.
-    w = np.squeeze(np.sin(2*np.pi*f*t) / (2*np.pi*f*t))
+    func = lambda t_, f_: np.sin(2*np.pi*f_*t_) / (2*np.pi*f_*t_)
+    return generic(func, duration, dt, f, return_t, taper)
 
-    if taper:
-        funcs = {
-            'bartlett': np.bartlett,
-            'blackman': np.blackman,
-            'hamming': np.hamming,
-            'hanning': np.hanning,
-            'none': lambda x: x,
-        }
-        func = funcs.get(taper, taper)
-        w *= func(t.size)
 
-    if return_t:
-        RickerWavelet = namedtuple('RickerWavelet', ['amplitude', 'time'])
-        return RickerWavelet(w, t)
-    else:
-        return w
+def cosine(duration, dt, f, return_t=False, taper='gaussian', sigma=None):
+    """
+    With the default Gaussian window, equivalent to a 'modified Morlet'
+    also sometimes called a 'Gabor' wavelet. The `bruges.filters.gabor`
+    function returns a similar shape, but with a higher mean frequancy,
+    somewhere between a Ricker and a cosine (pure tone).
+
+    If you pass a 1D array of frequencies, you get a wavelet bank in return.
+
+    Args:
+        duration (float): The length in seconds of the wavelet.
+        dt (float): The sample interval in seconds (often one of  0.001, 0.002,
+            or 0.004).
+        f (ndarray): Dominant frequency of the wavelet in Hz. If a sequence is
+            passed, you will get a 2D array in return, one row per frequency.
+        return_t (bool): If True, then the function returns a tuple of
+            wavelet, time-basis, where time is the range from -duration/2 to
+            duration/2 in steps of dt.
+        taper (str or function): The window or tapering function to apply.
+            To use one of NumPy's functions, pass 'bartlett', 'blackman' (the
+            default), 'hamming', or 'hanning'; to apply no tapering, pass
+            'none'. To apply your own function, pass a function taking only
+            the length of the window and returning the window function.
+        sigma (float): Width of the default Gaussian window, in seconds.
+            Defaults to 1/8 of the duration.
+
+    Returns:
+        ndarray. sinc wavelet(s) with centre frequency f sampled on t.
+    """
+    if sigma is None:
+        sigma = duration / 8
+    func = lambda t_, f_: np.cos(2 * np.pi * f_ * t_)
+    taper = lambda length: scipy.signal.gaussian(length, sigma/dt)
+    return generic(func, duration, dt, f, return_t, taper)
+
+
+def gabor(duration, dt, f, return_t=False):
+    """
+    Generates a Gabor wavelet with a peak frequency f0 at time t.
+
+    https://en.wikipedia.org/wiki/Gabor_wavelet
+
+    If you pass a 1D array of frequencies, you get a wavelet bank in return.
+
+    Args:
+        duration (float): The length in seconds of the wavelet.
+        dt (float): The sample interval in seconds (often one of  0.001, 0.002,
+            or 0.004).
+        f (ndarray): Centre frequency of the wavelet in Hz. If a sequence is
+            passed, you will get a 2D array in return, one row per frequency.
+        return_t (bool): If True, then the function returns a tuple of
+            wavelet, time-basis, where time is the range from -duration/2 to
+            duration/2 in steps of dt.
+
+    Returns:
+        ndarray. Gabor wavelet(s) with centre frequency f sampled on t.
+    """
+    func = lambda t_, f_: np.exp(-2 * ft**2) * np.cos(2 * np.pi * ft)
+    return generic(func, duration, dt, f, return_t, taper)
 
 
 def ricker(duration, dt, f, return_t=False):
     """
     Also known as the mexican hat wavelet, models the function:
-    A =  (1-2 \pi^2 f^2 t^2) e^{-\pi^2 f^2 t^2}
+    A =  (1 - 2 \pi^2 f^2 t^2) e^{-\pi^2 f^2 t^2}
 
     If you pass a 1D array of frequencies, you get a wavelet bank in return.
 
@@ -130,7 +218,7 @@ def sweep(duration, dt, f,
     f = np.asanyarray(f).reshape(-1, 1)
     f1, f2 = f
 
-    c = [chirp(t, f1_+(f2_-f1_)/2., t1, f2_, **kwargs)
+    c = [scipy.signal.chirp(t, f1_+(f2_-f1_)/2., t1, f2_, **kwargs)
          for f1_, f2_
          in zip(f1, f2)]
 
@@ -226,6 +314,6 @@ def rotate_phase(w, phi, degrees=False):
     """
     if degrees:
         phi = phi * np.pi / 180.0
-    a = hilbert(w, axis=0)
+    a = scipy.signal.hilbert(w, axis=0)
     w = (np.real(a) * np.cos(phi) - np.imag(a) * np.sin(phi))
     return w

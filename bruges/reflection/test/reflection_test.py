@@ -95,6 +95,18 @@ class AvoTest(unittest.TestCase):
         test = np.allclose(reflect, reflect_rpp, rtol=self.tolerance)
         self.assertTrue(test)
 
+    def test_ca(self):
+        """
+        Test critical angles.
+        """
+        ca1, ca2 = avo.critical_angles(vp1=2300, vp2=2400, vs2=None)
+        self.assertAlmostEquals(ca1, 73.40215786, places=5)
+        self.assertTrue(np.isnan(ca2))
+
+        ca1, ca2 = avo.critical_angles(vp1=1500, vp2=3200, vs2=1600)
+        self.assertAlmostEquals(ca1, 27.9531869, places=5)
+        self.assertAlmostEquals(ca2, 69.6358652, places=5)
+
 
 if __name__ == '__main__':
 
