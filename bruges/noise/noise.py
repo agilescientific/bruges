@@ -14,9 +14,14 @@ def noise_db(a, snr):
     """
     Takes an array of seismic amplitudes and SNR in dB.
 
-    Returns an array of noise, the same shape as the input.
+     Args:
+        a (array) : seismic amplitude array.
+        snr (int): signal to noise ratio.
 
-    Note it does *not* return the input array with the noise added.
+    Returns:  Noise array, the same shape as the input.
+
+     Note: it does *not* return the input array with the noise added.
+
     """
     # Get the amplitude of the signal
     sigmean = rms(a)
