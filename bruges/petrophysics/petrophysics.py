@@ -38,7 +38,7 @@ def inverse_gardner(rho, alpha=310, beta=0.25, fps=False):
         beta (float): The exponent, usually 0.25.
         fps (bool): Set to true for FPS and the equation will use the typical
             value for alpha. Overrides value for alpha, so if you want to use
-            you own alpha, regardless of units, set this to False.
+            your own alpha, regardless of units, set this to False.
 
     Returns:
         ndarray: Vp estimate in m/s.

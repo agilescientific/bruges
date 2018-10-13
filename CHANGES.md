@@ -1,4 +1,6 @@
-### v0.3.4 — February 2018
+### v0.3.4 — 13 October 2018
+- Added the NMO equation from Leo Uieda's TLE tutorial. This is a work in
+  progress.
 - Implemented `generic` (a windowed function), `cosine`, and `gabor` wavelets in `filters`. The `cosine` and `gabor` filters are implemented via `generic`.
 - Fixed a bug in `filters.sinc` that caused the wavelet to have the wrong amplitude with no taper. Implemented `sinc` using `generic`.
 - Fixed a bug in `reflection.critical_angles` that was preventing valid values from being computed.

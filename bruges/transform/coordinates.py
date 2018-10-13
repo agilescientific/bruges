@@ -1,8 +1,10 @@
 # -*- coding: utf-8 -*-
 """
-Seismic wavelets.
+Coordinate transformation. A class for converting between
+seismic survey inline-xline coordinates and real-world UTM
+coordinates.
 
-:copyright: 2015 Agile Geoscience
+:copyright: 2018 Agile Geoscience
 :license: Apache 2.0
 """
 import numpy as np

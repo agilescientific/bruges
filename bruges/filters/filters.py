@@ -107,7 +107,7 @@ def mode(arr, size=5, tie='smallest'):
 
     return scipy.ndimage.generic_filter(arr, func, size=size,
                                         extra_keywords={'tie': tie}
-                                        )
+                                       )
 
 
 def snn(arr, size=5, include=True):
@@ -147,7 +147,7 @@ def snn(arr, size=5, include=True):
                                         size=size,
                                         extra_keywords={'pairs': pairs,
                                                         'include': include}
-                                        )
+                                       )
 
 
 def kuwahara(arr, size=5):
@@ -172,7 +172,7 @@ def kuwahara(arr, size=5):
                         t[:k, k-1:].flatten(),
                         t[k-1:, :k].flatten(),
                         t[k-1:, k-1:].flatten()]
-                       )
+                      )
         select = sub[np.argmin(np.var(sub, axis=1))]
         return np.mean(select)
 
@@ -190,8 +190,8 @@ def kuwahara(arr, size=5):
                                         size=size,
                                         extra_keywords={'s': size,
                                                         'k': k,
-                                                        }
-                                        )
+                                                       }
+                                       )
 
 
 def conservative(arr, size=5, supercon=False):
@@ -235,5 +235,5 @@ def conservative(arr, size=5, supercon=False):
                                         size=size,
                                         extra_keywords={'k': k,
                                                         'supercon': supercon,
-                                                        }
-                                        )
+                                                       }
+                                       )

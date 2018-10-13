@@ -38,7 +38,7 @@ def generic(func, duration, dt, f, return_t=False, taper='blackman'):
     t = np.arange(-duration/2., duration/2., dt)
     t[t == 0] = 1e-12  # Avoid division by zero.
     f[f == 0] = 1e-12  # Avoid division by zero.
-    
+
     w = np.squeeze(func(t, f))
 
     if taper:
@@ -83,7 +83,9 @@ def sinc(duration, dt, f, return_t=False, taper='blackman'):
     Returns:
         ndarray. sinc wavelet(s) with centre frequency f sampled on t.
     """
-    func = lambda t_, f_: np.sin(2*np.pi*f_*t_) / (2*np.pi*f_*t_)
+    def func(t_, f_):
+        return np.sin(2*np.pi*f_*t_) / (2*np.pi*f_*t_)
+
     return generic(func, duration, dt, f, return_t, taper)
 
 
@@ -118,8 +120,13 @@ def cosine(duration, dt, f, return_t=False, taper='gaussian', sigma=None):
     """
     if sigma is None:
         sigma = duration / 8
-    func = lambda t_, f_: np.cos(2 * np.pi * f_ * t_)
-    taper = lambda length: scipy.signal.gaussian(length, sigma/dt)
+
+    def func(t_, f_):
+        return np.cos(2 * np.pi * f_ * t_)
+
+    def taper(length):
+        return scipy.signal.gaussian(length, sigma/dt)
+
     return generic(func, duration, dt, f, return_t, taper)
 
 
@@ -144,8 +151,10 @@ def gabor(duration, dt, f, return_t=False):
     Returns:
         ndarray. Gabor wavelet(s) with centre frequency f sampled on t.
     """
-    func = lambda t_, f_: np.exp(-2 * ft**2) * np.cos(2 * np.pi * ft)
-    return generic(func, duration, dt, f, return_t, taper)
+    def func(t_, f_):
+        return np.exp(-2 * f_**2 * t_**2) * np.cos(2 * np.pi * f_ * t_)
+
+    return generic(func, duration, dt, f, return_t)
 
 
 def ricker(duration, dt, f, return_t=False):
