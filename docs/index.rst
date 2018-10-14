@@ -20,7 +20,7 @@ Content
    Links <source/links>
    Index <source/indices>
 
-.. include:: source/contributors.rst
+.. include:: ../contributors.rst
 
 .. include:: source/links.rst
 
