@@ -181,7 +181,7 @@ def ricker(duration, dt, f, return_t=False):
 
     .. plot::
 
-    plt.plot(bruges.filters.ricker(1, 0.02, 40))
+        plt.plot(bruges.filters.ricker(1, 0.02, 40))
      
     """
     f = np.asanyarray(f).reshape(-1, 1)
