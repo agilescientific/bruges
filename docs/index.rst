@@ -16,7 +16,7 @@ Content
    Home <source/intro>
    Install <source/install>    
    API <api/api_toc>
-   Contributors <source/contributors>
+   Contributors <../contributors>
    Links <source/links>
    Index <source/indices>
 
