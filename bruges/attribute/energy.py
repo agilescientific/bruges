@@ -1,4 +1,11 @@
 # -*- coding: utf-8 -*-
+"""
+Mean-suared energy measurement.
+
+:copyright: 2015 Agile Geoscience
+:license: Apache 2.0
+"""
+
 import numpy as np
 from scipy.signal import fftconvolve
 
