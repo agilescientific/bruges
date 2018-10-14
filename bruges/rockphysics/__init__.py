@@ -7,6 +7,7 @@ from .moduli import vp, vs, moduli_dict
 from .fluidsub import avseth_gassmann, smith_gassmann
 from .fluidsub import vrh, rhogas, rhosat
 from .fluidsub import avseth_fluidsub, smith_fluidsub
+from .fluidsub import vels, gassmann_approx
 
 from .anisotropy import backus_parameters, backus
 from .anisotropy import backus_quality_factor, thomsen_parameters
@@ -16,3 +17,7 @@ from .anisotropy import hudson_delta_M, hudson_delta_G
 from .anisotropy import hudson_quality_factor, hudson_inverse_Q_ratio
 
 from .elastic import elastic_impedance
+
+from .rpm import critpor, hertzmindlin
+from .rpm import softsand, stiffsand, contactcement
+from .rpt import vrh, rpt

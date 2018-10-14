@@ -261,3 +261,45 @@ def smith_fluidsub(vp, vs, rho, phi, rhow, rhohc,
     # Finish.
     FluidSubResult = namedtuple('FluidSubResult', ['Vp', 'Vs', 'rho'])
     return FluidSubResult(vp2, vs2, rho2)
+
+
+def vels(K_DRY,G_DRY,K0,D0,Kf,Df,phi):
+    '''
+    vels (C) Alessandro Amato del Monte, 2015
+    Calculates velocities and densities of saturated rock via Gassmann equation.
+    INPUT
+    K_DRY,G_DRY: dry rock bulk & shear modulus in GPa
+    K0, D0: mineral bulk modulus and density in GPa
+    Kf, Df: fluid bulk modulus and density in GPa
+    phi: porosity
+    '''
+    rho  = D0*(1-phi)+Df*phi
+    K = K_DRY + (1-K_DRY/K0)**2 / ( (phi/Kf) + ((1-phi)/K0) - (K_DRY/K0**2) )
+    vp   = np.sqrt((K+4./3*G_DRY)/rho)*1e3
+    vs   = np.sqrt(G_DRY/rho)*1e3
+    return vp, vs, rho, K
+
+
+def gassmann_approx(vp1, rho1, rho_fl1, k_fl1, rho_fl2, k_fl2, M0, phi):
+    '''
+    gassmann_approx (C) Alessandro Amato del Monte, 2016
+    Mavko-Mukerji linear approximation of Gassmann's equation.
+    INPUT
+    vp1: P-wave velocity in m/s
+    rho1: density in g/cc
+    rho_fl1, k_fl1: initial fluid elastic properties in g/cc and GPa
+    rho_fl2, k_fl2: final fluid elastic properties in g/cc and GPa
+    M0: rock matrix P-wave modulus (Vp**2*rho)
+    phi: porosity
+    OUTPUT
+    vp2: P-wave velocity in m/s after replacing fluid 1 with fluid 2
+    rho2: density in g/cc after replacing fluid 1 with fluid 2
+    '''
+
+    vp1=vp1/1000
+    rho2 = rho1-phi*rho_fl1+phi*rho_fl2
+    M1=vp1**2*rho1
+    uu = M1/(M0-M1) - k_fl1/(phi*(M0-k_fl1)) + k_fl2/(phi*(M0-k_fl2))
+    M2 = (uu*M0)/(1+uu)
+    vp2 = np.sqrt(M2/rho2)
+    return vp2*1000, rho2
