@@ -47,6 +47,10 @@ apidoc_excluded_paths = ['tests']
 apidoc_toc_file = 'api_toc'
 apidoc_separate_modules = True
 
+# Matplotlib Plot Directive
+plot_include_source = True
+plot_pre_code = "import bruges\nimport numpy as np\nimport matplotlib.pyplot as plt\n"
+
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
 

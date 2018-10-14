@@ -179,11 +179,8 @@ def ricker(duration, dt, f, return_t=False):
 
     .. plot::
 
-     from bruges.filters import ricker
-     import matplotlib.pyplot as plt
-     ricker40 = ricker(1, 0.02, 40)
-     plt.plot(ricker40)
-     plt.show()
+     plt.plot(bruges.filters.ricker(1, 0.02, 40))
+     
     """
     f = np.asanyarray(f).reshape(-1, 1)
     t = np.arange(-duration/2, duration/2, dt)
