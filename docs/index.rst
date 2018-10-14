@@ -4,7 +4,7 @@ Welcome to bruges's documentation!
 
 .. include:: source/status.rst
 
-.. include:: sourcec/install.rst
+.. include:: source/install.rst
 
 Content
 -------
