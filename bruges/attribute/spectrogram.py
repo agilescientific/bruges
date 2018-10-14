@@ -42,6 +42,11 @@ def spectrogram(data, window_length,
 
     :returns: A spectrogram of the data ([time, freq]).
             ( 2D array for 1D input )
+    
+     See Also
+    --------
+    spectraldecomp : Spectral decomposition
+    
     """
     # Make the base window
     window_n = int(np.floor(window_length / dt))
