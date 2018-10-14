@@ -122,3 +122,22 @@ def slowness_to_velocity(slowness):
 
 
 velocity_to_slowness = slowness_to_velocity
+
+def gardner_param(vp,rhob):
+     """
+     Finds optimal alpha and beta parameters for the gardner
+
+     Volodymyr Vragov, October 2018
+
+
+     Args:
+         rho(ndarray): Density.
+         vp (ndarray): P-wave velocity.
+
+     Returns:
+         alpha (float): The factor.
+         beta (float): The exponent, usually 0.25.
+     """
+     params,_ = curve_fit(optimizer_gardner,rhob,vp)
+     return params[0], params[1]
+
