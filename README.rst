@@ -14,6 +14,10 @@ Status
     :target: https://travis-ci.org/agile-geoscience/bruges
     :alt: Travis build status
     
+.. image:: https://readthedocs.org/projects/bruges/badge/?version=latest
+    :target: https://bruges.readthedocs.io/?badge=latest
+    :alt: Documentation Status    
+    
 .. image:: https://img.shields.io/pypi/status/bruges.svg
     :target: https://pypi.python.org/pypi/bruges/
     :alt: Development status
