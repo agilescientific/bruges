@@ -270,3 +270,21 @@ def error_flag(pred, actual, dev = 1.0, method = 1):
      # add methods 2 and 3
      ###
     return flag
+
+def optimizer_gardner(rho,alpha,beta):
+     """
+     Computes inverse Gardner for petrophysics function `gardner_param`
+     that optimizes direct gardner parameters calculation
+
+
+     Volodymyr Vragov, October 2018
+
+     Args:
+         rho(ndarray): Density.
+         alpha (float): The factor.
+         beta (float): The exponent.
+
+     Returns:
+         ndarray: Vp estimate in m/s.
+     """
+     return (rho/alpha)**(1/beta)
