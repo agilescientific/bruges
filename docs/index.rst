@@ -6,7 +6,7 @@ Contents
 ========
 
 .. autosummary::
-    :toctree: generated/
+    :toctree: _generated/
 
     bruges.attribute
     bruges.filters

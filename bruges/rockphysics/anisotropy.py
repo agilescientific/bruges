@@ -93,6 +93,15 @@ def backus_quality_factor(vp, vs, rho, lb, dz):
     """
     Compute Qp and Qs from Liner (2014) equation 10.
 
+    Args:
+        vp (ndarray): P-wave interval velocity.
+        vs (ndarray): S-wave interval velocity.
+        rho (ndarray): Bulk density.
+        lb (float): The Backus averaging length in m.
+        dz (float): The depth sample interval in m.
+
+    Returns:
+        namedtuple: Qp and Qs. 
     """
     vp0, vs0, _ = backus(vp, vs, rho, lb, dz)
 
@@ -111,6 +120,16 @@ def thomsen_parameters(vp, vs, rho, lb, dz):
     Liner, C, and T Fei (2006). Layer-induced seismic anisotropy from
     full-wave sonic logs: Theory, application, and validation.
     Geophysics 71 (6), p D183–D190. DOI:10.1190/1.2356997
+
+    Args:
+        vp (ndarray): P-wave interval velocity.
+        vs (ndarray): S-wave interval velocity.
+        rho (ndarray): Bulk density.
+        lb (float): The Backus averaging length in m.
+        dz (float): The depth sample interval in m.
+
+    Returns:
+        namedtuple: delta, epsilon and gamma. 
 
     """
     A, C, F, L, M = backus_parameters(vp, vs, rho, lb, dz)

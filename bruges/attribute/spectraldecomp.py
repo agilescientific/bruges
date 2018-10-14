@@ -1,4 +1,10 @@
 # -*- coding: utf-8 -*-
+"""
+Spectral decomposition
+
+:copyright: 2015 Agile Geoscience
+:license: Apache 2.0
+"""
 import numpy as np
 from bruges.attribute import spectrogram
 

@@ -10,7 +10,14 @@ import numpy as np
 
 def gaussian(size, size_y=None):
     """
-    Returns a Gaussian kernel.
+    2D Gaussian Kernel
+
+    Args:
+        size (int): the kernel size, e.g. 5 for 5x5 (in a 2D arr). Should be
+            odd, rounded up if not.
+        size_y (int): similar to size. If not provided, uses size as default. 
+
+    Returns: a Gaussian kernel.
     """
     size = int(size)
     if not size_y:
