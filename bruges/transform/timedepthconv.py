@@ -15,6 +15,19 @@ def __convert(data, vmodel, interval, interval_new, scale, mode, return_basis=Fa
     """
     Generic function for converting between scales. Use either
     time to depth or depth to time.
+
+        Args:
+        data (ndarray): The data to convert, will work with a 1 or 2D numpy
+            numpy array. array(samples,traces).
+        vmodel (ndarray): P-wave interval velocity model that corresponds to
+            the data. Must be the same shape as data.
+       interval (float): The sample interval of the input data [s] or [m].
+       interval_new (float): The sample interval of the output data [m] or [s].
+       mode (str): What kind of interpolation to use, defaults to 'nearest'.
+        return_basis (bool): Whether to also return the new time basis.
+
+    Returns
+        ndarray: The data resampled in the depth domain.
     """
     data = np.array(data)
 
@@ -119,7 +132,7 @@ def depth_to_time(data, vmodel, dz, dt, twt=True, mode="nearest", return_t=False
         dt (float): The sample interval of the output data [s].
         twt (bool): Use twt travel time, defaults to true.
         mode (str): What kind of interpolation to use, defaults to 'nearest'.
-        return_z (bool): Whether to also return the new time basis.
+        return_t (bool): Whether to also return the new time basis.
 
     Returns:
         The data resampled in the time domain.
