@@ -1,26 +1,28 @@
 Welcome to bruges's documentation!
 ==================================
-.. include:: ../README.rst
+.. include:: source/intro.rst
 
-Contents
-========
+.. include:: source/status.rst
 
-.. autosummary::
-    :toctree: _generated/
+.. include:: source/install.rst
 
-    bruges.attribute
-    bruges.filters
-    bruges.noise
-    bruges.reflection
-    bruges.rockphysics
-    bruges.transform
-    bruges.unit
-    bruges.util
+Content
+-------
 
+.. toctree::
+   :caption: Table of Contents
+   :name: mastertoc
 
-Indices and tables
-==================
+   Home <source/intro>
+   Install <source/install>    
+   API <api/api_toc>
+   Contributors <../contributors>
+   Links <source/links>
+   Index <source/indices>
 
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`
+.. include:: ../contributors.rst
+
+.. include:: source/links.rst
+
+.. include:: source/indices.rst
+

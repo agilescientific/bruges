@@ -160,7 +160,9 @@ def gabor(duration, dt, f, return_t=False):
 def ricker(duration, dt, f, return_t=False):
     """
     Also known as the mexican hat wavelet, models the function:
-    A =  (1 - 2 \pi^2 f^2 t^2) e^{-\pi^2 f^2 t^2}
+    
+    .. math::
+        A =  (1 - 2 \pi^2 f^2 t^2) e^{-\pi^2 f^2 t^2}
 
     If you pass a 1D array of frequencies, you get a wavelet bank in return.
 
@@ -176,6 +178,11 @@ def ricker(duration, dt, f, return_t=False):
 
     Returns:
         ndarray. Ricker wavelet(s) with centre frequency f sampled on t.
+
+    .. plot::
+
+        plt.plot(bruges.filters.ricker(.5, 0.002, 40))
+     
     """
     f = np.asanyarray(f).reshape(-1, 1)
     t = np.arange(-duration/2, duration/2, dt)

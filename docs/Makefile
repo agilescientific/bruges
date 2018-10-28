@@ -4,7 +4,7 @@
 # You can set these variables from the command line.
 SPHINXOPTS    =
 SPHINXBUILD   = sphinx-build
-SPHINXAUTOGEN = sphinx-autogen
+SPHINXAUTOGEN = sphinx-apidoc
 PAPER         =
 BUILDDIR      = _build
 
@@ -60,13 +60,13 @@ clean:
 	rm -rf $(BUILDDIR)/html/*
 	rm -rf _generated
 
-html: api
+html:
 	$(SPHINXBUILD) -b html $(ALLSPHINXOPTS) $(BUILDDIR)/html
 	@echo
 	@echo "Build finished. The HTML pages are in $(BUILDDIR)/html."
 
 api:
-	$(SPHINXAUTOGEN) --imported-members -t _templates -o _generated index.rst
+	$(SPHINXAUTOGEN) -f ../bruges -o _generated
 	@echo
 	@echo "Built API docs."
 	@echo

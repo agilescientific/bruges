@@ -1,0 +1,3 @@
+matplotlib
+sphinx>=1.8
+sphinxcontrib-apidoc

@@ -16,18 +16,19 @@ from bruges.util import deprecated
 
 
 def critical_angles(vp1, vp2, vs2=None):
-    """
-    Compute critical angle at an interface, given the upper (vp1) and
-    lower (vp2) velocities. If you want the PS-wave critical angle as well,
+    """Compute critical angle at an interface
+
+    Given the upper (vp1) and lower (vp2) velocities at an interface. If you want the PS-wave critical angle as well,
     pass vs2 as well.
 
     Args:
-        vp1 (ndarray): The upper layer P-wave velocity.
-        vp2 (ndarray): The lower layer P-wave velocity.
+        vp1 (ndarray): Upper layer P-wave velocity.
+        vp2 (ndarray): Lower layer P-wave velocity.
+        vs2 (ndarray): Lower layer S-wave velocity (optional).
 
     Returns:
         tuple: The first and second critical angles at the interface, in
-            degrees. If there isn't a critical angle, it is set to np.nan.
+            degrees. If there isn't a critical angle, it returns np.nan.
     """
     ca1 = ca2 = np.nan
 

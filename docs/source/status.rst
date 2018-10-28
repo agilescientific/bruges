@@ -1,12 +1,3 @@
-===========
-bruges is a
-===========
-
-.. image:: http://kwinkunks.pythonanywhere.com/bruges
-
-In other words, it's just a load of functions that implement important equations in (mostly seismic) geophysics, from Aki-Richards to Zoeppritz.
-
-
 Status
 +++++++
 
@@ -16,7 +7,7 @@ Status
     
 .. image:: https://readthedocs.org/projects/bruges/badge/?version=latest
     :target: https://bruges.readthedocs.io/?badge=latest
-    :alt: Documentation Status    
+    :alt: Documentation Status
     
 .. image:: https://img.shields.io/pypi/status/bruges.svg
     :target: https://pypi.python.org/pypi/bruges/
@@ -44,33 +35,3 @@ Status
 .. line-block::
    The bruges module contains several common geophysics functions 
    used for modelling and post-processing seismic reflection data.
-
-
-Installation
-++++++++++++
-Install with
-
-.. code-block:: shell
-
-    pip install bruges
-
-**bruges** requires NumPy and SciPy.
-
-
-Contributors
-++++++++++++
-* Evan Bianco
-* Ben Bougher
-* Matt Hall
-* Alessandro Amato del Monte
-* Wes Hamlyn
-* Sean Ross-Ross
-
-
-Links
-+++++
-* `Documentation <https://bruges.readthedocs.org/en/latest/>`_
-* `Project page <http://agile-geoscience.github.com/bruges/>`_
-* `Issue Tracker <https://github.com/agile-geoscience/bruges/issues/>`_
-* `PyPi <http://pypi.python.org/pypi/bruges/>`_
-* `Agile Geoscience <http://www.agilegeoscience.com>`_
