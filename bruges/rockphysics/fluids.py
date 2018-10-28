@@ -16,6 +16,8 @@ def rho_water(temperature, pressure):
     The density of pure water, as a function of temperature and pressure.
     Implements equation 27a from Batzle and Wang (1992).
 
+    Use scalars or arrays; if you use arrays, they must be the same size.
+
     Args:
         temperature (array): The temperature in degrees Celsius.
         pressure (array): The pressure in pascals.
@@ -37,6 +39,8 @@ def rho_brine(temperature, pressure, salinity):
     The density of NaCl brine, given temperature, pressure, and salinity.
     The density of pure water is computed from rho_water(). Implements
     equation 27b from Batzle and Wang (1992).
+
+    Use scalars or arrays; if you use arrays, they must be the same size.
 
     Args:
         temperature (array): The temperature in degrees Celsius.
@@ -65,6 +69,8 @@ def v_water(temperature, pressure):
 
     Note that this function does not work at pressures above about 100 MPa.
 
+    Use scalars or arrays; if you use arrays, they must be the same size.
+
     Args:
         temperature (array): The temperature in degrees Celsius.
         pressure (array): The pressure in pascals.
@@ -80,3 +86,35 @@ def v_water(temperature, pressure):
 
     T, P = np.asanyarray(temperature), np.asanyarray(pressure) * 1e-6
     return sum(w[i, j] * T**i * P**j for i in range(5) for j in range(4))
+
+
+def v_brine(temperature, pressure, salinity):
+    """
+    The acoustic velocity of brine, as a function of temperature (deg C),
+    pressure (Pa), and salinity (weight fraction). Implements equation 29
+    from Batzle and Wang (1992).
+
+    Note that this function does not work at pressures above about 100 MPa.
+
+    Use scalars or arrays; if you use arrays, they must be the same size.
+
+    Args:
+        temperature (array): The temperature in degrees Celsius.
+        pressure (array): The pressure in pascals.
+        salinity (array): The weight fraction of NaCl, e.g. 35e-3
+            for 35 parts per thousand, or 3.5% (the salinity of
+            seawater).
+
+    Returns:
+        array: The velocity in m/s.
+    """
+    # Align with the symbols and units in Batzle & Wang.
+    T, P = np.asanyarray(temperature), np.asanyarray(pressure)*1e-6
+    S = np.asanyarray(salinity)
+
+    v_w = v_water(temperature, pressure)
+    s1 = 1170 - 9.6*T + 0.055*T**2 - 8.5e-5*T**3 + 2.6*P - 0.0029*T*P - 0.0476*P**2
+    s15 = 780 - 10*P + 0.16*P**2
+    s2 = -820
+
+    return v_w + s1 * S + s15 * S**1.5 + s2 * S**2

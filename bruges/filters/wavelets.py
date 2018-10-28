@@ -308,7 +308,7 @@ def berlage(duration, dt, f, n=2, alpha=180, phi=-np.pi/2, return_t=False):
 
     as described in Aldridge, DF (1990), The Berlage wavelet, GEOPHYSICS
     55 (11), p 1508-1511. Berlage wavelets are causal, minimum phase and
-    useful for modeling marine airgun sources. 
+    useful for modeling marine airgun sources.
 
     If you pass a 1D array of frequencies, you get a wavelet bank in return.
 
@@ -352,7 +352,7 @@ def rotate_phase(w, phi, degrees=False):
     then a constant phase rotation phi would produce the analytic signal
     S(t) = A(t)exp(j*(theta(t) + phi)). To get the non analytic signal
     we take real(S(t)) == A(t)cos(theta(t) + phi)
-    == A(t)(cos(theta(t))cos(phi) - sin(theta(t))sin(phi)) <= trig idenity
+    == A(t)(cos(theta(t))cos(phi) - sin(theta(t))sin(phi)) <= trig identity
     == w(t)cos(phi) - h(t)sin(phi)
 
     A = w(t)Cos(phi) - h(t)Sin(phi)

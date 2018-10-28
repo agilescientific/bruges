@@ -9,6 +9,9 @@ from .fluidsub import vrh, rhogas, rhosat
 from .fluidsub import avseth_fluidsub, smith_fluidsub
 from .fluidsub import vels, gassmann_approx
 
+from .fluids import rho_water, rho_brine
+from .fluids import v_water, v_brine
+
 from .anisotropy import backus_parameters, backus
 from .anisotropy import backus_quality_factor, thomsen_parameters
 from .anisotropy import dispersion_parameter, blangy
@@ -20,4 +23,5 @@ from .elastic import elastic_impedance
 
 from .rpm import critpor, hertzmindlin
 from .rpm import softsand, stiffsand, contactcement
+
 from .rpt import vrh, rpt
