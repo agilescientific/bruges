@@ -1,6 +1,10 @@
+### v0.4 — October 2018
+- Multiple fixes to the documentation, thanks especially to Jesper Dramsch and Adriana Gordon.
+- Added the `filters.berlage` wavelet, a causal, minimum phase wavelet good for marine airgun sources.
+- Added `fluids.rho_water()`, `fluids.rho_brine()`, `fluids.v_water()`, and `fluids.v_brine()`, implementing equations from Batzle & Wang (1992).
+
 ### v0.3.4 — 13 October 2018
-- Added the NMO equation from Leo Uieda's TLE tutorial. This is a work in
-  progress.
+- Added the NMO equation from Leo Uieda's TLE tutorial. This is a work in progress.
 - Implemented `generic` (a windowed function), `cosine`, and `gabor` wavelets in `filters`. The `cosine` and `gabor` filters are implemented via `generic`.
 - Fixed a bug in `filters.sinc` that caused the wavelet to have the wrong amplitude with no taper. Implemented `sinc` using `generic`.
 - Fixed a bug in `reflection.critical_angles` that was preventing valid values from being computed.
@@ -18,7 +22,7 @@
 - New reflection coefficient series function, `reflection.reflectivity()` makes it easier to make offset reflectivities from logs.
 - New acoustic reflection coefficient series function, `acoustic_reflectivity()`.
 - Added `critical_angles()` and `reflection_phase()` functions to make it easier to compute the PP and PS critical angle(s), and to get the phase of a post-critical reflection.
-- Improvements to `reflection` module docs. 
+- Improvements to `reflection` module docs.
 - Deprecating  `moving_avg_conv` and `moving_avg_fft`, and for now the function `moving_average()` will return the convolutional solution.
 - Several more simple linear and non-linear filters in `bruges.filters`, including `median` (good for seismic horizons) and `mode` (good for waveform classification).
 - You can no longer import 'all' from a module. This is a bad idea anyway, so I'm not calling it a breaking change.

@@ -6,23 +6,24 @@ import unittest
 
 from bruges.rockphysics import fluidsub
 
-# Inputs... GAS case
-vp_gas = 2429.0
-vs_gas = 1462.4
-rho_gas = 2080.
+# Inputs... GAS case.
+vp_gas = 2428.95
+vs_gas = 1462.43
+rho_gas = 2080.00
 
-# Expected outputs... BRINE case
-vp_brine = 2850.5
-vs_brine = 1416.1
-rho_brine = 2210.0
+# Expected outputs... BRINE case.
+vp_brine = 2850.49
+vs_brine = 1416.10
+rho_brine = 2210.00
 
+# Known parameters.
 phi = 0.275           # Don't know this... reading from fig
-rhohc = 250.0         # gas
-rhow = 1040.0         # brine
+rhohc = 250.0         # gas, from Fig 5
+rhow = 1040.0         # brine, from Fig 5
 sw = 0.3              # Don't know this... just guessing
 swnew = 1.0           # Don't know this... just guessing
-khc = 207000000.0     # gas
-kw = 2950000000.0     # brine
+khc = 207000000.0     # gas, from Fig 5
+kw = 2950000000.0     # brine, from Fig 5
 kclay = 25000000000.0
 kqtz = 37000000000.0
 vclay = 0.05

@@ -10,6 +10,7 @@ Hudson anisotropy is from crack defects.
 :license: Apache 2.0
 """
 from collections import namedtuple
+#from functools import wraps
 
 import numpy as np
 
@@ -56,6 +57,26 @@ def backus_parameters(vp, vs, rho, lb, dz):
     BackusResult = namedtuple('BackusResult', ['A', 'C', 'F', 'L', 'M'])
     return BackusResult(A, C, F, L, M)
 
+#
+# def vectorize(func):
+#     """
+#     Decorator to make sure the inputs are arrays. We also add a dimension
+#     to theta to make the functions work in an 'outer product' way.
+#
+#     Takes a reflectivity function requiring Vp, Vs, and RHOB for 2 rocks
+#     (upper and lower), plus incidence angle theta, plus kwargs. Returns
+#     that function with the arguments transformed to ndarrays.
+#     """
+#     @wraps(func)
+#     def wrapper(vp1, vs1, rho1, vp2, vs2, rho2, theta1=0, **kwargs):
+#         vp = np.asanyarray(vp, dtype=float)
+#         vs = np.asanyarray(vs, dtype=float) + 1e-12  # Prevent singular matrix.
+#         rho = np.asanyarray(rho, dtype=float)
+#         lb = np.asanyarray(lb, dtype=float).reshape((-1, 1))
+#         dz = np.asanyarray(dz, dtype=float)
+#         return func(vp, vs, rho, lb, dz)
+#     return wrapper
+
 
 def backus(vp, vs, rho, lb, dz):
     """
@@ -101,7 +122,7 @@ def backus_quality_factor(vp, vs, rho, lb, dz):
         dz (float): The depth sample interval in m.
 
     Returns:
-        namedtuple: Qp and Qs. 
+        namedtuple: Qp and Qs.
     """
     vp0, vs0, _ = backus(vp, vs, rho, lb, dz)
 
@@ -129,7 +150,7 @@ def thomsen_parameters(vp, vs, rho, lb, dz):
         dz (float): The depth sample interval in m.
 
     Returns:
-        namedtuple: delta, epsilon and gamma. 
+        namedtuple: delta, epsilon and gamma.
 
     """
     A, C, F, L, M = backus_parameters(vp, vs, rho, lb, dz)

@@ -189,21 +189,21 @@ def ricker(duration, dt, f, return_t=False):
         return w
 
 
-def sweep(duration, dt, f,
-          autocorrelate=True,
-          return_t=False,
-          taper='blackman',
-          **kwargs):
+def klauder(duration, dt, f,
+            autocorrelate=True,
+            return_t=False,
+            taper='blackman',
+            **kwargs):
     """
-    Generates a linear frequency modulated wavelet (sweep). Wraps
-    scipy.signal.chirp, adding dimensions as necessary.
+    By default, gives the autocorrelation of a linear frequency modulated
+    wavelet (sweep). Uses scipy.signal.chirp, adding dimensions as necessary.
 
     Args:
         duration (float): The length in seconds of the wavelet.
         dt (float): is the sample interval in seconds (usually 0.001, 0.002,
             or 0.004)
-        f (ndarray): Any sequence like (f1, f2). A list of lists will create a
-            wavelet bank.
+        f (ndarray): Upper and lower frequencies. Any sequence like (f1, f2).
+            A list of lists will create a wavelet bank.
         autocorrelate (bool): Whether to autocorrelate the sweep(s) to create
             a wavelet. Default is `True`.
         return_t (bool): If True, then the function returns a tuple of
@@ -254,6 +254,9 @@ def sweep(duration, dt, f,
         return w
 
 
+sweep = klauder
+
+
 def ormsby(duration, dt, f, return_t=False):
     """
     The Ormsby wavelet requires four frequencies which together define a
@@ -293,6 +296,49 @@ def ormsby(duration, dt, f, return_t=False):
     if return_t:
         OrmsbyWavelet = namedtuple('OrmsbyWavelet', ['amplitude', 'time'])
         return OrmsbyWavelet(w, t)
+    else:
+        return w
+
+
+def berlage(duration, dt, f, n=2, alpha=180, phi=-np.pi/2, return_t=False):
+    """
+    Generates a Berlage wavelet with a peak frequency f. Implements
+
+    w(t) = AH(t) t^n \mathrm{e}^{-\alpha t} \cos(2 \pi f_0 t + \phi_0)
+
+    as described in Aldridge, DF (1990), The Berlage wavelet, GEOPHYSICS
+    55 (11), p 1508-1511. Berlage wavelets are causal, minimum phase and
+    useful for modeling marine airgun sources. 
+
+    If you pass a 1D array of frequencies, you get a wavelet bank in return.
+
+    Args:
+        duration (float): The length in seconds of the wavelet.
+        dt (float): The sample interval in seconds (often one of  0.001, 0.002,
+            or 0.004).
+        f (ndarray): Centre frequency of the wavelet in Hz. If a sequence is
+            passed, you will get a 2D array in return, one row per frequency.
+        n (float): The time exponent; non-negative and real.
+        alpha(float): The exponential decay factor; non-negative and real.
+        return_t (bool): If True, then the function returns a tuple of
+            wavelet, time-basis, where time is the range from -duration/2 to
+            duration/2 in steps of dt.
+
+    Returns:
+        ndarray. Gabor wavelet(s) with centre frequency f sampled on t.
+    """
+
+    f = np.asanyarray(f).reshape(-1, 1)
+    t = np.arange(-duration/2, duration/2, dt)
+
+    H = np.heaviside(t, 0)
+    w = H * t**n * np.exp(-alpha * t) * np.cos(2 * np.pi * f * t + phi)
+
+    w = np.squeeze(w) / np.max(np.abs(w))
+
+    if return_t:
+        BerlageWavelet = namedtuple('BerlageWavelet', ['amplitude', 'time'])
+        return BerlageWavelet(w, t)
     else:
         return w
 
