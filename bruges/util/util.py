@@ -256,8 +256,8 @@ def error_flag(pred, actual, dev = 1.0, method = 1):
     
 
     Returns:
-    flag (ndarray) =  error flag curve"""
-    
+    flag (ndarray) =  error flag curve
+    """   
     flag = np.zeros(len(pred))
     err = np.abs(pred-actual)
     err_mean = np.mean(err)
@@ -271,13 +271,13 @@ def error_flag(pred, actual, dev = 1.0, method = 1):
      ###
     return flag
 
-def optimizer_gardner(rho,alpha,beta):
-     """
-     Computes inverse Gardner for petrophysics function `gardner_param`
-     that optimizes direct gardner parameters calculation
+
+def optimize_inverse_gardner(rho, alpha, beta):
+     """ Wrapper function to pass inverse_gardner to scipy.curve_fit
+     to get optimal alpha and beta parameters
 
 
-     Volodymyr Vragov, October 2018
+     Matteo Niccoli and Volodymyr Vragov, October 2018
 
      Args:
          rho(ndarray): Density.
@@ -285,6 +285,9 @@ def optimizer_gardner(rho,alpha,beta):
          beta (float): The exponent.
 
      Returns:
-         ndarray: Vp estimate in m/s.
+         inverse_gardner: this is passed to scipy.curve_fit as, for example:
+         popt_synt, pcov = scipy.curve_fit(optimize_inverse_gardner, rho, vp)
+         For a ull example, please read:
+         mycarta.wordpress.com/2018/10/28/geophysics-python-sprint-2018-day-2-and-beyond-part-i
      """
-     return (rho/alpha)**(1/beta)
+     return inverse_gardner(rho, alpha=alpha, beta=beta)
