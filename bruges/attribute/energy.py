@@ -37,9 +37,10 @@ def energy(traces, duration, dt=1):
 
     elif np.ndim(signal) == 2:
         for trace in range(signal.shape[1]):
-            energy_data[:, trace] = (fftconvolve(signal[:, trace],
+            energy_data[:, trace] = fftconvolve(signal[:, trace],
                                                  window,
-                                                 mode='same'))
+                                                 mode='same') \
+                                     / n_samples
 
     else:
         raise ValueError('Array must be 1D or 2D')
