@@ -61,6 +61,26 @@ def rho_brine(temperature, pressure, salinity):
     return rho_w + S*(0.668 + 0.44*S + 1e-6 * x)
 
 
+def rho_gas(temperature, pressure, molecular_weight):
+    """
+    Gas density, given temperature (in deg C), pressure (in Pa), and molecular
+    weight.
+
+    Args:
+        temperature (array): The temperature in degrees Celsius.
+        pressure (array): The pressure in pascals.
+        molecular_weight (array): The molecular weight.
+    Returns:
+        array: The density in kg/m3.
+    """
+    # Align with the symbols and units in Batzle & Wang.
+    T, P = np.asanyarray(temperature), np.asanyarray(pressure)*1e-6
+    M = np.asanyarray(molecular_weight)
+    R = 8.3144598
+
+    return M * P / (R * (T + 273.15))
+
+
 def v_water(temperature, pressure):
     """
     The acoustic velocity of pure water, as a function of temperature

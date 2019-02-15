@@ -169,7 +169,37 @@ def vectorize(func):
         return func(vp1, vs1, rho1, vp2, vs2, rho2, theta1, **kwargs)
     return wrapper
 
+def preprocess(func):
+    """
+    Decorator to preprocess arguments for the reflectivity equations.
 
+    Takes a reflectivity function requiring Vp, Vs, and RHOB for 2 rocks
+    (upper and lower), plus incidence angle theta, plus kwargs. Returns
+    that function with some arguments transformed.
+    """
+    @wraps(func)
+    def wrapper(vp1, vs1, rho1, vp2, vs2, rho2, theta1=0, **kwargs):
+
+        # Interpret tuple for theta1 as a linspace.
+        if isinstance(theta1, tuple):
+            if len(theta1) == 2:
+                start, stop = theta1
+                theta1 = np.linspace(start, stop, num=stop+1)
+            elif len(theta1) == 3:
+                start, stop, step = theta1
+                steps = (stop / step) + 1
+                theta1 = np.linspace(start, stop, num=steps)
+            else:
+                raise TypeError("Expected 2 or 3 parameters for theta1 expressed as range.")
+
+        # Convert theta1 to radians and complex numbers.
+        theta1 = np.radians(theta1).astype(complex)
+
+        return func(vp1, vs1, rho1, vp2, vs2, rho2, theta1, **kwargs)
+    return wrapper
+
+
+@preprocess
 @vectorize
 def scattering_matrix(vp1, vs1, rho1, vp2, vs2, rho2, theta1=0):
     """
@@ -195,7 +225,7 @@ def scattering_matrix(vp1, vs1, rho1, vp2, vs2, rho2, theta1=0):
             A 4x4 array representing the scattering matrix at the incident
             angle theta1.
     """
-    theta1 = np.radians(theta1).astype(complex) * np.ones_like(vp1)
+    theta1 *= np.ones_like(vp1)
     p = np.sin(theta1) / vp1  # Ray parameter.
     theta2 = np.arcsin(p * vp2)  # Trans. angle of P-wave.
     phi1 = np.arcsin(p * vs1)    # Refl. angle of converted S-wave.
@@ -290,6 +320,7 @@ def zoeppritz(vp1, vs1, rho1, vp2, vs2, rho2, theta1=0):
     return zoeppritz_element(vp1, vs1, rho1, vp2, vs2, rho2, theta1, 'PdPu')
 
 
+@preprocess
 @vectorize
 def zoeppritz_rpp(vp1, vs1, rho1, vp2, vs2, rho2, theta1=0):
     """
@@ -318,8 +349,6 @@ def zoeppritz_rpp(vp1, vs1, rho1, vp2, vs2, rho2, theta1=0):
             array (for float inputs and one angle), or an n x m array (for
             array inputs and an array of angles).
     """
-    theta1 = np.radians(theta1).astype(complex)
-
     p = np.sin(theta1) / vp1  # Ray parameter
     theta2 = np.arcsin(p * vp2)
     phi1 = np.arcsin(p * vs1)  # Reflected S
@@ -343,6 +372,7 @@ def zoeppritz_rpp(vp1, vs1, rho1, vp2, vs2, rho2, theta1=0):
     return np.squeeze(rpp)
 
 
+@preprocess
 @vectorize
 def akirichards(vp1, vs1, rho1, vp2, vs2, rho2, theta1=0, terms=False):
     """
@@ -372,8 +402,6 @@ def akirichards(vp1, vs1, rho1, vp2, vs2, rho2, theta1=0, terms=False):
             array (for float inputs and one angle), or an n x m array (for
             array inputs and an array of angles).
     """
-    theta1 = np.radians(theta1).astype(complex)
-
     theta2 = np.arcsin(vp2/vp1*np.sin(theta1))
     drho = rho2-rho1
     dvp = vp2-vp1
@@ -407,6 +435,7 @@ def akirichards(vp1, vs1, rho1, vp2, vs2, rho2, theta1=0, terms=False):
         return np.squeeze(term1 + term2 + term3 + term4)
 
 
+@preprocess
 @vectorize
 def akirichards_alt(vp1, vs1, rho1, vp2, vs2, rho2, theta1=0, terms=False):
     """
@@ -433,8 +462,6 @@ def akirichards_alt(vp1, vs1, rho1, vp2, vs2, rho2, theta1=0, terms=False):
             array (for float inputs and one angle), or an n x m array (for
             array inputs and an array of angles).
     """
-    theta1 = np.radians(theta1).astype(complex)
-
     theta2 = np.arcsin(vp2/vp1*np.sin(theta1))
     drho = rho2-rho1
     dvp = vp2-vp1
@@ -460,12 +487,13 @@ def akirichards_alt(vp1, vs1, rho1, vp2, vs2, rho2, theta1=0, terms=False):
         return np.squeeze(term1 + term2 + term3)
 
 
+@preprocess
 @vectorize
 def fatti(vp1, vs1, rho1, vp2, vs2, rho2, theta1=0, terms=False):
     """
     Compute reflectivities with Fatti's formulation of the Aki-Richards
     equation, which does not account for the critical angle. See Fatti et al.
-    (1994), Geophysics 59 (9).
+    (1994), Geophysics 59 (9). Real numbers only.
 
     Args:
         vp1 (ndarray): The upper P-wave velocity; float or 1D array length m.
@@ -485,7 +513,7 @@ def fatti(vp1, vs1, rho1, vp2, vs2, rho2, theta1=0, terms=False):
             array (for float inputs and one angle), or an n x m array (for
             array inputs and an array of angles).
     """
-    theta1 = np.radians(theta1)
+    theta1 = np.real(theta1)
 
     drho = rho2-rho1
     rho = (rho1+rho2) / 2.0
@@ -511,6 +539,7 @@ def fatti(vp1, vs1, rho1, vp2, vs2, rho2, theta1=0, terms=False):
         return np.squeeze(term1 + term2 + term3)
 
 
+@preprocess
 @vectorize
 def shuey(vp1, vs1, rho1, vp2, vs2, rho2, theta1=0,
           terms=False,
@@ -539,7 +568,7 @@ def shuey(vp1, vs1, rho1, vp2, vs2, rho2, theta1=0,
             array (for float inputs and one angle), or an n x m array (for
             array inputs and an array of angles).
     """
-    theta1 = np.radians(theta1)
+    theta1 = np.real(theta1)
 
     drho = rho2-rho1
     dvp = vp2-vp1
@@ -591,11 +620,13 @@ def shuey3(vp1, vs1, rho1, vp2, vs2, rho2, theta1=0, terms=False):
     return shuey(vp1, vs1, rho1, vp2, vs2, rho2, theta1=theta1)
 
 
+@preprocess
 @vectorize
 def bortfeld(vp1, vs1, rho1, vp2, vs2, rho2, theta1=0, terms=False):
     """
     Compute Bortfeld approximation with three terms.
     http://sepwww.stanford.edu/public/docs/sep111/marie2/paper_html/node2.html
+    Real numbers only.
 
     Args:
         vp1 (ndarray): The upper P-wave velocity; float or 1D array length m.
@@ -615,7 +646,7 @@ def bortfeld(vp1, vs1, rho1, vp2, vs2, rho2, theta1=0, terms=False):
             array (for float inputs and one angle), or an n x m array (for
             array inputs and an array of angles).
     """
-    theta1 = np.radians(theta1)
+    theta1 = np.real(theta1)
 
     drho = rho2-rho1
     dvp = vp2-vp1
@@ -684,6 +715,7 @@ def bortfeld3(vp1, vs1, rho1, vp2, vs2, rho2, theta1=0, terms=False):
     return bortfeld(vp1, vs1, rho1, vp2, vs2, rho2, theta1=theta1)
 
 
+@preprocess
 @vectorize
 def hilterman(vp1, vs1, rho1, vp2, vs2, rho2, theta1=0, terms=False):
     """
@@ -691,7 +723,8 @@ def hilterman(vp1, vs1, rho1, vp2, vs2, rho2, theta1=0, terms=False):
 
     Hilterman (1989) approximation from Mavko et al. Rock Physics Handbook.
     According to Dvorkin: "arguably the simplest and a very convenient
-    [approximation]." At least for small angles and small contrasts.
+    [approximation]." At least for small angles and small contrasts. Real
+    numbers only.
 
     Args:
         vp1 (ndarray): The upper P-wave velocity; float or 1D array length m.
@@ -711,7 +744,7 @@ def hilterman(vp1, vs1, rho1, vp2, vs2, rho2, theta1=0, terms=False):
             array (for float inputs and one angle), or an n x m array (for
             array inputs and an array of angles).
     """
-    theta1 = np.radians(theta1)
+    theta1 = np.real(theta1)
 
     ip1 = vp1 * rho1
     ip2 = vp2 * rho2

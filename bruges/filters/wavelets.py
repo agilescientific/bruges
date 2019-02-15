@@ -2,7 +2,7 @@
 """
 Seismic wavelets.
 
-:copyright: 2015 Agile Geoscience
+:copyright: 2019 Agile Geoscience
 :license: Apache 2.0
 """
 from collections import namedtuple
@@ -311,6 +311,8 @@ def berlage(duration, dt, f, n=2, alpha=180, phi=-np.pi/2, return_t=False):
     """
     Generates a Berlage wavelet with a peak frequency f. Implements
 
+    .. math::
+
     w(t) = AH(t) t^n \mathrm{e}^{-\alpha t} \cos(2 \pi f_0 t + \phi_0)
 
     as described in Aldridge, DF (1990), The Berlage wavelet, GEOPHYSICS
@@ -318,6 +320,11 @@ def berlage(duration, dt, f, n=2, alpha=180, phi=-np.pi/2, return_t=False):
     useful for modeling marine airgun sources.
 
     If you pass a 1D array of frequencies, you get a wavelet bank in return.
+
+    .. plot::
+
+        plt.plot(bruges.filters.berlage(0.5, 0.002, 40))
+
 
     Args:
         duration (float): The length in seconds of the wavelet.
@@ -354,6 +361,12 @@ def rotate_phase(w, phi, degrees=False):
     """
     Performs a phase rotation of wavelet or wavelet bank using:
 
+    ..math::
+
+        A = w(t)\cos(\phi) - h(t)\sin(\phi)
+
+    where w(t) is the wavelet and h(t) is its Hilbert transform.
+
     The analytic signal can be written in the form S(t) = A(t)exp(j*theta(t))
     where A(t) = magnitude(hilbert(w(t))) and theta(t) = angle(hilbert(w(t))
     then a constant phase rotation phi would produce the analytic signal
@@ -361,10 +374,6 @@ def rotate_phase(w, phi, degrees=False):
     we take real(S(t)) == A(t)cos(theta(t) + phi)
     == A(t)(cos(theta(t))cos(phi) - sin(theta(t))sin(phi)) <= trig identity
     == w(t)cos(phi) - h(t)sin(phi)
-
-    A = w(t)Cos(phi) - h(t)Sin(phi)
-
-    Where w(t) is the wavelet and h(t) is its Hilbert transform.
 
     Args:
         w (ndarray): The wavelet vector, can be a 2D wavelet bank.
@@ -377,5 +386,5 @@ def rotate_phase(w, phi, degrees=False):
     if degrees:
         phi = phi * np.pi / 180.0
     a = scipy.signal.hilbert(w, axis=0)
-    w = (np.real(a) * np.cos(phi) - np.imag(a) * np.sin(phi))
+    w = np.real(a) * np.cos(phi)  -  np.imag(a) * np.sin(phi)
     return w

@@ -9,7 +9,7 @@ import os
 
 def run_tests():
     tests = []
-    for root, dirs, files in os.walk('bruges'):
+    for root, _, _ in os.walk('bruges'):
         if 'test' in root:
             tests.append(
                 unittest.TestLoader().discover(root,

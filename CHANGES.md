@@ -1,7 +1,11 @@
-### v0.4 — October 2018
+### v0.4 — Spring 2019
+- **Breaking change:** fixed numerous minor issues with `attribute.energy()`, see [issue 78](https://github.com/agile-geoscience/bruges/issues/78). Note that it now expects time to be in the last dimension of the array. The function now runs on n-D data and is also about 15 times faster.
 - Multiple fixes to the documentation, thanks especially to Jesper Dramsch and Adriana Gordon.
-- Added the `filters.berlage` wavelet, a causal, minimum phase wavelet good for marine airgun sources.
+- Added the `filters.berlage()` wavelet, a causal, minimum phase wavelet good for marine airgun sources.
 - Added `fluids.rho_water()`, `fluids.rho_brine()`, `fluids.v_water()`, and `fluids.v_brine()`, implementing equations from Batzle & Wang (1992).
+- Added `filters.convolve()`, which implements multi-dimensional convolution for 1D and 2D reflectivities and wavelets (or wavelet banks), and for 3D reflectivity with 1D wavelets. `convolve(rc_panel, wavelet_bank)` results in a 3D synthetic, with axes of frequency, offset, and time.
+- Added `util.convolve_many()` to implement a fast way to convolve a 1D kernel over multiple signals whose domain (time or distance) is in the last axis.
+- The reflectivity equations now accept a tuple for `theta1`, as well as a scalar value (interpreted as one angle, in degrees), or a list or array (interpreted as an array of angles). If you pass a 2-tuple, it is interpreted as a start and stop for a linear space; the step size will be 1.0 degrees. A 3-tuple is interpreted as a start, stop, and step size (note, not number of steps). The intervals specified will be open; the end-points will be included. So `theta1=(0, 5)` is equivalent to `theta1=[0,1,2,3,4,5]` and `theta1=(0, 10, 2)` is the same as `theta1=[0,2,4,6]`.
 
 ### v0.3.4 — 13 October 2018
 - Added the NMO equation from Leo Uieda's TLE tutorial. This is a work in progress.
@@ -37,7 +41,7 @@
 - Repaired the `rockphysics.elastic_impedance()` function, which had various issues, including not applying normalization correctly and not working on vectors.
 
 ### v0.3.0 — 12 January 2018
-- Breaking change: `anisotropy.backus` now always returns `Vp0`, `Vs0`, and `rho`.
+- **Breaking change:** `anisotropy.backus` now always returns `Vp0`, `Vs0`, and `rho`.
 - Non-compatible change: `filters.wavelets.ricker` no longer normalizes the output, to avoid a problem with amplitude dependence on filter length.
 - Functions returning tuples now return a `collections.namedtuple` so it's more obvious what you're getting back.
 - New nonlinear filters (plus tests): `filters.snn()`, `filters.kuwahara()` and `filters.conservative()`.
