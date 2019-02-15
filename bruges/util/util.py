@@ -237,6 +237,7 @@ def extrapolate(a):
     a[last + 1:] = a[last]
     return a
 
+
 def error_flag(pred, actual, dev = 1.0, method = 1):
     """Calculate the difference between a predicted and an actual curve 
     and return a log flagging large differences based on a user-defined distance 
@@ -271,20 +272,14 @@ def error_flag(pred, actual, dev = 1.0, method = 1):
      ###
     return flag
 
-def optimizer_gardner(rho,alpha,beta):
-     """
-     Computes inverse Gardner for petrophysics function `gardner_param`
-     that optimizes direct gardner parameters calculation
 
+def convolve_many(signal, kernel):
+    """
+    Convolve 2d array with a 1d signal, row-wise.
 
-     Volodymyr Vragov, October 2018
-
-     Args:
-         rho(ndarray): Density.
-         alpha (float): The factor.
-         beta (float): The exponent.
-
-     Returns:
-         ndarray: Vp estimate in m/s.
-     """
-     return (rho/alpha)**(1/beta)
+    Args:
+        signal (ndarray): a 2-dimensional array. E.g. a seismic section.
+        kernel (ndarray): a 1-dimensional array. E.g. a wavelet or window.
+    """
+    mapobj = map(lambda tr: np.convolve(tr, kernel, mode='same'), signal)
+    return np.array(list(mapobj))
