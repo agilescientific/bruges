@@ -19,6 +19,8 @@ from .anisotropy import crack_density
 from .anisotropy import hudson_delta_M, hudson_delta_G
 from .anisotropy import hudson_quality_factor, hudson_inverse_Q_ratio
 
+from .bounds import voigt_bound, reuss_bound, hill_average, hashin_shtrikman
+
 from .elastic import elastic_impedance
 
 from .rpm import critpor, hertzmindlin
