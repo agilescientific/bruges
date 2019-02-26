@@ -1,45 +1,31 @@
 # -*- coding: utf-8 -*-
 """
-Various convolution algorithms.
+Convolution in n-dimensions.
 
 :copyright: 2019 Agile Geoscience
 :license: Apache 2.0
 """
 import numpy as np
-from util import convolve_many
+from util import apply_along_axis
 
 
 def convolve(reflectivity, wavelet):
     """
-    Kep trying to convolve traces to handle different shaped
-    inputs. There is certainly a better way to do this.
-
-    TODO
-    - Find a better way to do this!
-    - Handle the case of a 3D RC series with a wavelet bank
-        to give a 5D result.
+    Convolve n-dimensional reflectivity with a 1D wavelet or 2D wavelet bank.
+    
+    Args
+    reflectivity (ndarray): The reflectivity trace, or 2D section, or volume.
+    wavelet (ndarray): The wavelet, must be 1D function or a 2D wavelet 'bank'.
+        If a wavelet bank, time should be on the last axis.
     """
-    if wavelet.ndim == 1:
-        try:
-            # 1D reflectivity -> 1D synthetic.
-            syn = np.convolve(reflectivity, wavelet, mode='same')
+    # Compute the target shape of the final synthetic.
+    outshape = wavelet.shape[:-1] + reflectivity.shape
 
-        except ValueError:
-            try:
-                # 2D reflectivity -> 2D synthetic.
-                syn = convolve_many(reflectivity, wavelet)
+    # Force wavelet and reflectivity to both be 2D.
+    bank = np.atleast_2d(wavelet)   
+    reflectivity_2d = reflectivity.reshape((-1, reflectivity.shape[-1]))
 
-            except ValueError:
-                    # 3D reflectivity -> 3D synthetic.
-                    syn = np.array([convolve_many(tr, wavelet) for tr in reflectivity])
-    elif wavelet.ndim == 2:
-        try:
-            # 1D reflectivity, 2D wavelet bank -> 2D synthetic.
-            syn = convolve_many(wavelet, reflectivity)
-        except ValueError:
-            # 2D reflectivity, 2D wavelet bank -> 3D synthetic.
-            syn = np.array([convolve_many(reflectivity, w) for w in bank])
-    else:
-        raise NotImplementedError("Wavelets must be 1d or 2d arrays.")
+    # Compute synthetic, which will always be 3D.
+    syn = np.array([apply_along_axes(np.convolve, reflectivity_2d, w, mode='same') for w in bank])
 
-    return syn
+    return syn.reshape(outshape)

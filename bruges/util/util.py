@@ -273,13 +273,19 @@ def error_flag(pred, actual, dev = 1.0, method = 1):
     return flag
 
 
-def convolve_many(signal, kernel):
+def apply_along_axis(func_1d, arr, kernel, **kwargs):
     """
-    Convolve 2d array with a 1d signal, row-wise.
+    Apply 1D function across 2D slice as efficiently as possible.
+
+    Although `np.apply_along_axis` seems to do well enough, map usually
+    seems to end up beig a bit faster.
 
     Args:
-        signal (ndarray): a 2-dimensional array. E.g. a seismic section.
-        kernel (ndarray): a 1-dimensional array. E.g. a wavelet or window.
+        func_1d (function): the 1D function to apply, e.g. np.convolve. Should
+            take 2 or more arguments: the
+
+    Example
+    >>> apply_along_axes(np.convolve, reflectivity_2d, wavelet, mode='same') 
     """
-    mapobj = map(lambda tr: np.convolve(tr, kernel, mode='same'), signal)
+    mapobj = map(lambda tr: func_1d(tr, kernel, **kwargs), arr)
     return np.array(list(mapobj))

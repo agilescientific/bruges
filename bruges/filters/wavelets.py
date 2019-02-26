@@ -20,7 +20,7 @@ def generic(func, duration, dt, f, return_t=False, taper='blackman'):
         duration (float): The length in seconds of the wavelet.
         dt (float): The sample interval in seconds (often one of  0.001, 0.002,
             or 0.004).
-        f (ndarray): Dominant frequency of the wavelet in Hz. If a sequence is
+        f (array-like): Dominant frequency of the wavelet in Hz. If a sequence is
             passed, you will get a 2D array in return, one row per frequency.
         return_t (bool): If True, then the function returns a tuple of
             wavelet, time-basis, where time is the range from -duration/2 to
@@ -69,7 +69,7 @@ def sinc(duration, dt, f, return_t=False, taper='blackman'):
         duration (float): The length in seconds of the wavelet.
         dt (float): The sample interval in seconds (often one of  0.001, 0.002,
             or 0.004).
-        f (ndarray): Dominant frequency of the wavelet in Hz. If a sequence is
+        f (array-like): Dominant frequency of the wavelet in Hz. If a sequence is
             passed, you will get a 2D array in return, one row per frequency.
         return_t (bool): If True, then the function returns a tuple of
             wavelet, time-basis, where time is the range from -duration/2 to
@@ -102,7 +102,7 @@ def cosine(duration, dt, f, return_t=False, taper='gaussian', sigma=None):
         duration (float): The length in seconds of the wavelet.
         dt (float): The sample interval in seconds (often one of  0.001, 0.002,
             or 0.004).
-        f (ndarray): Dominant frequency of the wavelet in Hz. If a sequence is
+        f (array-like): Dominant frequency of the wavelet in Hz. If a sequence is
             passed, you will get a 2D array in return, one row per frequency.
         return_t (bool): If True, then the function returns a tuple of
             wavelet, time-basis, where time is the range from -duration/2 to
@@ -142,7 +142,7 @@ def gabor(duration, dt, f, return_t=False):
         duration (float): The length in seconds of the wavelet.
         dt (float): The sample interval in seconds (often one of  0.001, 0.002,
             or 0.004).
-        f (ndarray): Centre frequency of the wavelet in Hz. If a sequence is
+        f (array-like): Centre frequency of the wavelet in Hz. If a sequence is
             passed, you will get a 2D array in return, one row per frequency.
         return_t (bool): If True, then the function returns a tuple of
             wavelet, time-basis, where time is the range from -duration/2 to
@@ -160,7 +160,7 @@ def gabor(duration, dt, f, return_t=False):
 def ricker(duration, dt, f, return_t=False):
     """
     Also known as the mexican hat wavelet, models the function:
-    
+
     .. math::
         A =  (1 - 2 \pi^2 f^2 t^2) e^{-\pi^2 f^2 t^2}
 
@@ -170,7 +170,7 @@ def ricker(duration, dt, f, return_t=False):
         duration (float): The length in seconds of the wavelet.
         dt (float): The sample interval in seconds (often one of  0.001, 0.002,
             or 0.004).
-        f (ndarray): Centre frequency of the wavelet in Hz. If a sequence is
+        f (array-like): Centre frequency of the wavelet in Hz. If a sequence is
             passed, you will get a 2D array in return, one row per frequency.
         return_t (bool): If True, then the function returns a tuple of
             wavelet, time-basis, where time is the range from -duration/2 to
@@ -182,7 +182,6 @@ def ricker(duration, dt, f, return_t=False):
     .. plot::
 
         plt.plot(bruges.filters.ricker(.5, 0.002, 40))
-     
     """
     f = np.asanyarray(f).reshape(-1, 1)
     t = np.arange(-duration/2, duration/2, dt)
@@ -209,7 +208,7 @@ def klauder(duration, dt, f,
         duration (float): The length in seconds of the wavelet.
         dt (float): is the sample interval in seconds (usually 0.001, 0.002,
             or 0.004)
-        f (ndarray): Upper and lower frequencies. Any sequence like (f1, f2).
+        f (array-like): Upper and lower frequencies. Any sequence like (f1, f2).
             A list of lists will create a wavelet bank.
         autocorrelate (bool): Whether to autocorrelate the sweep(s) to create
             a wavelet. Default is `True`.
@@ -274,7 +273,7 @@ def ormsby(duration, dt, f, return_t=False):
         duration (float): The length in seconds of the wavelet.
         dt (float): The sample interval in seconds (usually 0.001, 0.002,
             or 0.004).
-        f (ndarray): Sequence of form (f1, f2, f3, f4), or list of lists of
+        f (array-like): Sequence of form (f1, f2, f3, f4), or list of lists of
             frequencies, which will return a 2D wavelet bank.
 
     Returns:
@@ -285,7 +284,7 @@ def ormsby(duration, dt, f, return_t=False):
     try:
         f1, f2, f3, f4 = f
     except ValueError:
-        raise ValueError("The last dimension must be 4")
+        raise ValueError("The last dimension of the frequency array must be 4")
 
     def numerator(f, t):
         return (np.sinc(f * t)**2) * ((np.pi * f) ** 2)
@@ -330,7 +329,7 @@ def berlage(duration, dt, f, n=2, alpha=180, phi=-np.pi/2, return_t=False):
         duration (float): The length in seconds of the wavelet.
         dt (float): The sample interval in seconds (often one of  0.001, 0.002,
             or 0.004).
-        f (ndarray): Centre frequency of the wavelet in Hz. If a sequence is
+        f (array-like): Centre frequency of the wavelet in Hz. If a sequence is
             passed, you will get a 2D array in return, one row per frequency.
         n (float): The time exponent; non-negative and real.
         alpha(float): The exponential decay factor; non-negative and real.
@@ -339,7 +338,7 @@ def berlage(duration, dt, f, n=2, alpha=180, phi=-np.pi/2, return_t=False):
             duration/2 in steps of dt.
 
     Returns:
-        ndarray. Gabor wavelet(s) with centre frequency f sampled on t.
+        ndarray. Berlage wavelet(s) with centre frequency f sampled on t.
     """
 
     f = np.asanyarray(f).reshape(-1, 1)
