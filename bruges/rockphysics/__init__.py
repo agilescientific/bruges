@@ -16,3 +16,8 @@ from .anisotropy import hudson_delta_M, hudson_delta_G
 from .anisotropy import hudson_quality_factor, hudson_inverse_Q_ratio
 
 from .elastic import elastic_impedance
+
+from .rpmodels import critpor, hertzmindlin,softsand,stiffsand
+from .rpmodels import contactcement,constantcement,inccement
+from .rpmodels import vernik_csm,vernik_sdm,vernik_shale
+from .rpmodels import vernik_ssm1,vernik_ssm2
