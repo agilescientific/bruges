@@ -16,10 +16,45 @@ Alessandro Amato del Monte, October 2019
 import numpy as np
 
 
+def vels(Kdry,Gdry,K0,D0,Kf,Df,phi):
+    '''
+    Calculate velocities and densities of saturated rock via Gassmann equation.
+
+    Parameters
+    ----------   
+    Kdry, Gdry : float or array_like
+        Dry rock bulk & shear modulus in GPa.
+    K0, G0 : float or array_like
+        Mineral bulk & shear modulus in GPa.
+    Kf, Df : float or array_like
+        Fluid bulk modulus in GPa and density in g/cc.
+    phi : float or array_like
+        Porosity.
+
+    Returns
+    -------
+    vp,vs,rho : float or array_like
+        P-wave, S-wave velocities and density of saturated rock,
+        in m/s and g/cc.
+    '''
+    # converts all inputs to SI (density in kg/m3 and moduli in Pa)
+    Kdry *=1e9
+    Gdry *=1e9
+    K0 *=1e9
+    D0 *=1e3
+    Kf *=1e9
+    Df *=1e3
+    rho = D0*(1-phi)+Df*phi
+    with np.errstate(divide='ignore', invalid='ignore'):
+        K = Kdry + (1-Kdry/K0)**2 / ( (phi/Kf) + ((1-phi)/K0) - (Kdry/K0**2) )
+        vp = np.sqrt((K+4/3*Gdry)/rho)
+        vs = np.sqrt(Gdry/rho)
+    return vp, vs, rho/1e3, K/1e9
+
+
 def critpor(K0, G0, phi, phi_c=0.4):
     '''
     Critical porosity model, Nur et al. (1991, 1995).
-    (aadm 2015)   
 
     Parameters
     ----------   
@@ -32,22 +67,21 @@ def critpor(K0, G0, phi, phi_c=0.4):
 
     Returns
     -------
-    K_DRY, G_DRY : float or array_like
+    Kdry, Gdry : float or array_like
         Dry rock bulk & shear modulus in GPa.
 
     References
     ----------
-    Mavko et al. (2009), The Rock Physics Handbook, Cambridge University Press (p.353)
+    Mavko et al. (2009), The Rock Physics Handbook, Cambridge University Press (p.370)
     '''
-    K_DRY = K0 * (1-phi/phi_c)
-    G_DRY = G0 * (1-phi/phi_c)
-    return K_DRY, G_DRY
+    Kdry = K0 * (1-phi/phi_c)
+    Gdry = G0 * (1-phi/phi_c)
+    return Kdry, Gdry
 
 
 def hertzmindlin(K0, G0, sigma, phi_c=0.4, Cn=8.6, f=1):
     '''
     Hertz-Mindlin model.
-    (aadm 2015)
 
     Parameters
     ----------   
@@ -56,7 +90,7 @@ def hertzmindlin(K0, G0, sigma, phi_c=0.4, Cn=8.6, f=1):
     phi : float or array_like
         Porosity.
     sigma : float
-        ??Effective stress or confining pressure in MPa.
+        Effective stress in MPa.
     phi_c : float, optional
         Critical porosity. Default: 0.4
     Cn : float, optional
@@ -68,7 +102,7 @@ def hertzmindlin(K0, G0, sigma, phi_c=0.4, Cn=8.6, f=1):
 
     Returns
     -------
-    K_DRY, G_DRY : float or array_like
+    Kdry, Gdry : float or array_like
         Dry rock bulk & shear modulus in GPa.
 
     References
@@ -76,16 +110,15 @@ def hertzmindlin(K0, G0, sigma, phi_c=0.4, Cn=8.6, f=1):
     Mavko et al. (2009), The Rock Physics Handbook, Cambridge University Press (p.246)
     '''
     sigma /= 1e3 # converts pressure in same units as solid moduli (GPa)
-    PR0 =(3*K0-2*G0)/(6*K0+2*G0) # poisson's ratio of mineral mixture
-    K_HM = (sigma*(Cn**2*(1-phi_c)**2*G0**2) / (18*np.pi**2*(1-PR0)**2))**(1/3)
-    G_HM = ((2+3*f-PR0*(1+3*f))/(5*(2-PR0))) * ((sigma*(3*Cn**2*(1-phi_c)**2*G0**2)/(2*np.pi**2*(1-PR0)**2)))**(1/3)
-    return K_HM, G_HM
+    pr0 =(3*K0-2*G0)/(6*K0+2*G0) # poisson's ratio of mineral mixture
+    Khm = (sigma*(Cn**2*(1-phi_c)**2*G0**2) / (18*np.pi**2*(1-pr0)**2))**(1/3)
+    Ghm = ((2+3*f-pr0*(1+3*f))/(5*(2-pr0))) * ((sigma*(3*Cn**2*(1-phi_c)**2*G0**2)/(2*np.pi**2*(1-pr0)**2)))**(1/3)
+    return Khm, Ghm
 
 
 def softsand(K0, G0, phi, sigma, phi_c=0.4, Cn=8.6, f=1):
     '''
     Soft-sand, or uncemented) model.
-    (aadm 2015)
 
     Parameters
     ----------   
@@ -94,7 +127,7 @@ def softsand(K0, G0, phi, sigma, phi_c=0.4, Cn=8.6, f=1):
     phi : float or array_like
         Porosity.
     sigma : float
-        ??Effective stress or confining pressure in MPa.
+        Effective stress in MPa.
     phi_c : float, optional
         Critical porosity. Default: 0.4
     Cn : float, optional
@@ -106,24 +139,23 @@ def softsand(K0, G0, phi, sigma, phi_c=0.4, Cn=8.6, f=1):
 
     Returns
     -------
-    K_DRY, G_DRY : float or array_like
+    Kdry, Gdry : float or array_like
         Dry rock bulk & shear modulus in GPa.
 
     References
     ----------
     Mavko et al. (2009), The Rock Physics Handbook, Cambridge University Press (p.258)
     '''
-    K_HM, G_HM = hertzmindlin(K0, G0, sigma, phi_c, Cn, f)
-    K_DRY = -4/3*G_HM + (((phi/phi_c)/(K_HM+4/3*G_HM)) + ((1-phi/phi_c)/(K0+4/3*G_HM)))**-1
-    tmp = G_HM/6*((9*K_HM+8*G_HM) / (K_HM+2*G_HM))
-    G_DRY = -tmp + ((phi/phi_c)/(G_HM+tmp) + ((1-phi/phi_c)/(G0+tmp)))**-1
-    return K_DRY, G_DRY
+    Khm, Ghm = hertzmindlin(K0, G0, sigma, phi_c, Cn, f)
+    Kdry = -4/3*Ghm + (((phi/phi_c)/(Khm+4/3*Ghm)) + ((1-phi/phi_c)/(K0+4/3*Ghm)))**-1
+    tmp = Ghm/6*((9*Khm+8*Ghm) / (Khm+2*Ghm))
+    Gdry = -tmp + ((phi/phi_c)/(Ghm+tmp) + ((1-phi/phi_c)/(G0+tmp)))**-1
+    return Kdry, Gdry
 
 
 def stiffsand(K0, G0, phi, sigma, phi_c=0.4, Cn=8.6, f=1):
     '''
     Stiff-sand model.
-    (aadm 2015)
 
     Parameters
     ----------   
@@ -132,7 +164,7 @@ def stiffsand(K0, G0, phi, sigma, phi_c=0.4, Cn=8.6, f=1):
     phi : float or array_like
         Porosity.
     sigma : float
-        ??Effective stress or confining pressure in MPa.
+        Effective stress in MPa.
     phi_c : float, optional
         Critical porosity. Default: 0.4
     Cn : float, optional
@@ -144,24 +176,23 @@ def stiffsand(K0, G0, phi, sigma, phi_c=0.4, Cn=8.6, f=1):
     
     Returns
     -------
-    K_DRY, G_DRY : float or array_like
+    Kdry, Gdry : float or array_like
         Dry rock bulk & shear modulus in GPa
 
     References
     ----------
     Mavko et al. (2009), The Rock Physics Handbook, Cambridge University Press (p.260)
     '''
-    K_HM, G_HM = hertzmindlin(K0, G0, sigma, phi_c, Cn, f)
-    K_DRY = -4/3*G0 + (((phi/phi_c)/(K_HM+4/3*G0)) + ((1-phi/phi_c)/(K0+4/3*G0)))**-1
+    Khm, Ghm = hertzmindlin(K0, G0, sigma, phi_c, Cn, f)
+    Kdry = -4/3*G0 + (((phi/phi_c)/(Khm+4/3*G0)) + ((1-phi/phi_c)/(K0+4/3*G0)))**-1
     tmp = G0/6*((9*K0+8*G0) / (K0+2*G0))
-    G_DRY = -tmp + ((phi/phi_c)/(G_HM+tmp) + ((1-phi/phi_c)/(G0+tmp)))**-1
-    return K_DRY, G_DRY
+    Gdry = -tmp + ((phi/phi_c)/(Ghm+tmp) + ((1-phi/phi_c)/(G0+tmp)))**-1
+    return Kdry, Gdry
 
 
 def contactcement(K0, G0, phi, phi_c=0.4, Cn=8.6, Kc=37, Gc=45, scheme=2):
     '''
     Contact cement a.k.. cemented sand model, Dvorkin-Nur (1996).
-    (aadm 2015)
 
     Parameters
     ----------
@@ -183,38 +214,37 @@ def contactcement(K0, G0, phi, phi_c=0.4, Cn=8.6, Kc=37, Gc=45, scheme=2):
 
     Returns
     -------
-    K_DRY, G_DRY : float or array_like
+    Kdry, Gdry : float or array_like
         Dry rock bulk & shear modulus in GPa.
 
     References
     ----------
     Mavko et al. (2009), The Rock Physics Handbook, Cambridge University Press (p.255)
     '''
-    PR0=(3*K0-2*G0)/(6*K0+2*G0)
+    pr0=(3*K0-2*G0)/(6*K0+2*G0)
     PRc = (3*Kc-2*Gc)/(6*Kc+2*Gc)
     if scheme == 1: # scheme 1: cement deposited at grain contacts
         alpha = ((phi_c-phi)/(3*Cn*(1-phi_c))) ** (1/4)
     else: # scheme 2: cement evenly deposited on grain surface
         alpha = ((2*(phi_c-phi))/(3*(1-phi_c)))**(1/2)
-    LambdaN = (2*Gc*(1-PR0)*(1-PRc)) / (np.pi*G0*(1-2*PRc))
+    LambdaN = (2*Gc*(1-pr0)*(1-PRc)) / (np.pi*G0*(1-2*PRc))
     N1 = -0.024153*LambdaN**-1.3646
     N2 = 0.20405*LambdaN**-0.89008
     N3 = 0.00024649*LambdaN**-1.9864
     Sn = N1*alpha**2 + N2*alpha + N3
     LambdaT = Gc/(np.pi*G0)
-    T1 = -10**-2*(2.26*PR0**2+2.07*PR0+2.3)*LambdaT**(0.079*PR0**2+0.1754*PR0-1.342)
-    T2 = (0.0573*PR0**2+0.0937*PR0+0.202)*LambdaT**(0.0274*PR0**2+0.0529*PR0-0.8765)
-    T3 = 10**-4*(9.654*PR0**2+4.945*PR0+3.1)*LambdaT**(0.01867*PR0**2+0.4011*PR0-1.8186)
+    T1 = -10**-2*(2.26*pr0**2+2.07*pr0+2.3)*LambdaT**(0.079*pr0**2+0.1754*pr0-1.342)
+    T2 = (0.0573*pr0**2+0.0937*pr0+0.202)*LambdaT**(0.0274*pr0**2+0.0529*pr0-0.8765)
+    T3 = 10**-4*(9.654*pr0**2+4.945*pr0+3.1)*LambdaT**(0.01867*pr0**2+0.4011*pr0-1.8186)
     St = T1*alpha**2 + T2*alpha + T3
-    K_DRY = 1/6*Cn*(1-phi_c)*(Kc+(4/3)*Gc)*Sn
-    G_DRY = 3/5*K_DRY+3/20*Cn*(1-phi_c)*Gc*St
-    return K_DRY, G_DRY
+    Kdry = 1/6*Cn*(1-phi_c)*(Kc+(4/3)*Gc)*Sn
+    Gdry = 3/5*Kdry+3/20*Cn*(1-phi_c)*Gc*St
+    return Kdry, Gdry
 
 
 def constantcement(K0, G0, phi, phi_cem=0.38, phi_c=0.4, Cn=8.6, Kc=37, Gc=45, scheme=2):
     '''
     Constant cement model, Avseth et al. (2000).
-    (aadm 2015)
 
     Parameters
     ----------
@@ -238,7 +268,7 @@ def constantcement(K0, G0, phi, phi_cem=0.38, phi_c=0.4, Cn=8.6, Kc=37, Gc=45, s
 
     Returns
     -------
-    K_DRY, G_DRY : float or array_like
+    Kdry, Gdry : float or array_like
         Dry rock bulk & shear modulus in GPa.
     
     References
@@ -246,22 +276,22 @@ def constantcement(K0, G0, phi, phi_cem=0.38, phi_c=0.4, Cn=8.6, Kc=37, Gc=45, s
     Dvorkin et al. (2014), Seismic Reflections of Rock Properties, Cambridge University Press (p.30-31)
     '''
     # contact cement model
-    K_HI, G_HI = contactcement(K0, G0, phi, phi_c=phi_c, Cn=Cn, Kc=Kc, Gc=Gc, scheme=scheme)
+    Khi, Ghi = contactcement(K0, G0, phi, phi_c=phi_c, Cn=Cn, Kc=Kc, Gc=Gc, scheme=scheme)
     # lower bound Hashin-Shtrikman starting from phi_cem
     Kcc, Gcc = contactcement(K0, G0, phi_cem, phi_c=phi_c, Cn=Cn, Kc=Kc, Gc=Gc, scheme=scheme)
-    K_LO = -4/3*Gcc + (((phi/phi_cem)/(Kcc+4/3*Gcc)) + ((1-phi/phi_cem)/(K0+4/3*Gcc)))**-1
+    Klo = -4/3*Gcc + (((phi/phi_cem)/(Kcc+4/3*Gcc)) + ((1-phi/phi_cem)/(K0+4/3*Gcc)))**-1
     tmp = Gcc/6*((9*Kcc+8*Gcc) / (Kcc+2*Gcc))
-    G_LO= -tmp + ((phi/phi_cem)/(Gcc+tmp) + ((1-phi/phi_cem)/(G0+tmp)))**-1
+    Glo= -tmp + ((phi/phi_cem)/(Gcc+tmp) + ((1-phi/phi_cem)/(G0+tmp)))**-1
    
     # initialize empty vectors for K and G dry
-    K_DRY, G_DRY=(np.full(phi.size, np.nan) for _ in range(2))
+    Kdry, Gdry=(np.full(phi.size, np.nan) for _ in range(2))
     # for porosities>phi_cem use [K,G]_HI = contact cement model
     # for porosities<=phi_cem use [K,G]_LO = constant cement model
-    K_DRY[phi>phi_cem]=K_HI[phi>phi_cem]
-    K_DRY[phi<=phi_cem]=K_LO[phi<=phi_cem]
-    G_DRY[phi>phi_cem]=G_HI[phi>phi_cem]
-    G_DRY[phi<=phi_cem]=G_LO[phi<=phi_cem]
-    return K_DRY, G_DRY
+    Kdry[phi>phi_cem]=Khi[phi>phi_cem]
+    Kdry[phi<=phi_cem]=Klo[phi<=phi_cem]
+    Gdry[phi>phi_cem]=Ghi[phi>phi_cem]
+    Gdry[phi<=phi_cem]=Glo[phi<=phi_cem]
+    return Kdry, Gdry
 
 
 def inccement(K0, G0, phi, phi_cem=0.38, phi_c=0.4, Cn=8.6, Kc=37, Gc=45, scheme=2):
@@ -269,7 +299,6 @@ def inccement(K0, G0, phi, phi_cem=0.38, phi_c=0.4, Cn=8.6, Kc=37, Gc=45, scheme
     Increasing cement model (Modified Hashin-Shtrikman upper bound).
     From Per Avseth's code. Need to check references.
     Probably best to avoid using if for porosities>phi_cem.
-    (aadm 2019)
 
     Parameters
     ----------
@@ -293,20 +322,19 @@ def inccement(K0, G0, phi, phi_cem=0.38, phi_c=0.4, Cn=8.6, Kc=37, Gc=45, scheme
 
     Returns
     -------
-    K_DRY, G_DRY : float or array_like
+    Kdry, Gdry : float or array_like
         dry rock bulk & shear modulus in GPa.
     '''
     Kcc, Gcc = contactcement(K0, G0, phi_cem, phi_c=phi_c, Cn=Cn, Kc=Kc, Gc=Gc, scheme=scheme)
-    K_DRY = -4/3*G0 + (((phi/phi_cem)/(Kcc+4/3*G0)) + ((1-phi/phi_cem)/(K0+4/3*G0)))**-1
+    Kdry = -4/3*G0 + (((phi/phi_cem)/(Kcc+4/3*G0)) + ((1-phi/phi_cem)/(K0+4/3*G0)))**-1
     tmp = G0/6*((9*K0+8*G0) / (K0+2*G0))
-    G_DRY = -tmp + ((phi/phi_cem)/(Gcc+tmp) + ((1-phi/phi_cem)/(G0+tmp)))**-1
-    return K_DRY, G_DRY
+    Gdry = -tmp + ((phi/phi_cem)/(Gcc+tmp) + ((1-phi/phi_cem)/(G0+tmp)))**-1
+    return Kdry, Gdry
 
 
 def vernik_csm(K0, G0, phi, sigma, b=10):
     '''
     Vernik & Kachanov Consolidated Sand Model.
-    (aadm 2017)
     
     Parameters
     ----------
@@ -315,14 +343,14 @@ def vernik_csm(K0, G0, phi, sigma, b=10):
     phi : float or array_like
         Porosity.
     sigma : float
-        ??Effective stress or confining pressure in MPa.
+        Effective stress in MPa.
     b : float, optional
         Slope parameter in pore shape empirical equation, range: 8-12.
         Default: 10.
 
     Returns
     -------
-    K_DRY, G_DRY : float or array_like
+    Kdry, Gdry : float or array_like
         Dry rock bulk & shear modulus in GPa.
     
     References
@@ -360,7 +388,6 @@ def vernik_ssm1(K0, G0, phi, sigma, phi_c=0.36, phi_con=0.26, b=10, n=2.00, m=2.
     '''
     Vernik & Kachanov Soft Sand Model 1.
     Only applicable for sands with porosity between phi_c and phi_con.
-    (aadm 2017)
 
     Parameters
     ----------
@@ -369,7 +396,7 @@ def vernik_ssm1(K0, G0, phi, sigma, phi_c=0.36, phi_con=0.26, b=10, n=2.00, m=2.
     phi : float or array_like
         Porosity.
     sigma : float
-        ??Effective stress or confining pressure in MPa.
+        Effective stress in MPa.
     phi_c : float, optional
         Critical porosity, range 0.30-0.42. Default: 0.36.
     phi_con : float, optional
@@ -382,7 +409,7 @@ def vernik_ssm1(K0, G0, phi, sigma, phi_c=0.36, phi_con=0.26, b=10, n=2.00, m=2.
 
     Returns
     -------
-    K_DRY, G_DRY : float or array_like
+    Kdry, Gdry : float or array_like
         Dry rock bulk & shear modulus in GPa.
     
     References
@@ -409,7 +436,6 @@ def vernik_ssm1(K0, G0, phi, sigma, phi_c=0.36, phi_con=0.26, b=10, n=2.00, m=2.
 def vernik_ssm2(K0, G0, phi, p=20, q=20):
     '''
     Vernik & Kachanov Soft Sand Model 2.
-    (aadm 2017)
 
     Parameters
     ----------
@@ -423,7 +449,7 @@ def vernik_ssm2(K0, G0, phi, p=20, q=20):
 
     Returns
     -------
-    K_DRY, G_DRY : float or array_like
+    Kdry, Gdry : float or array_like
         Dry rock bulk & shear modulus in GPa.
     
     References
@@ -442,7 +468,6 @@ def vernik_sdm(K0, G0, phi, sigma, phi_c=0.36, phi_con=0.26, b=10, n=2.00, m=2.0
     '''
     Vernik & Kachanov Sandstone Diagenesis Model.
     Combination of CSM and SSM1 (for porosity>phi_con) models.
-    (aadm 2017)
 
     Parameters
     ----------
@@ -451,7 +476,7 @@ def vernik_sdm(K0, G0, phi, sigma, phi_c=0.36, phi_con=0.26, b=10, n=2.00, m=2.0
     phi : float or array_like
         Porosity.
     sigma : float
-        ??Effective stress or confining pressure in MPa.
+        Effective stress in MPa.
     phi_c : float, optional
         Critical porosity, range 0.30-0.42. Default: 0.36.
     phi_con : float, optional
@@ -464,7 +489,7 @@ def vernik_sdm(K0, G0, phi, sigma, phi_c=0.36, phi_con=0.26, b=10, n=2.00, m=2.0
 
     Returns
     -------
-    K_DRY, G_DRY : float or array_like
+    Kdry, Gdry : float or array_like
         Dry rock bulk & shear modulus in GPa.
 
     References
@@ -488,7 +513,6 @@ def vernik_sdm(K0, G0, phi, sigma, phi_c=0.36, phi_con=0.26, b=10, n=2.00, m=2.0
 def vernik_shale(vclay, phi, rhom=2.73, rhob=1, Mqz=96, c33_clay=33.4, A=0.00284):
     '''
     Vernik & Kachanov Shale Model.
-    (aadm 2017)
    
     Parameters
     ----------
