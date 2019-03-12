@@ -38,17 +38,15 @@ def vels(Kdry,Gdry,K0,D0,Kf,Df,phi):
         in m/s and g/cc.
     '''
     # converts all inputs to SI (density in kg/m3 and moduli in Pa)
-    Kdry *=1e9
-    Gdry *=1e9
-    K0 *=1e9
-    D0 *=1e3
-    Kf *=1e9
-    Df *=1e3
-    rho = D0*(1-phi)+Df*phi
+    Kd = Kdry*1e9
+    Gd = Gdry*1e9
+    Km = K0*1e9
+    Kfl = Kf*1e9
+    rho = D0*1e3*(1-phi)+Df*1e3*phi
     with np.errstate(divide='ignore', invalid='ignore'):
-        K = Kdry + (1-Kdry/K0)**2 / ( (phi/Kf) + ((1-phi)/K0) - (Kdry/K0**2) )
-        vp = np.sqrt((K+4/3*Gdry)/rho)
-        vs = np.sqrt(Gdry/rho)
+        K = Kd + (1-Kd/Km)**2 / ( (phi/Kfl) + ((1-phi)/Km) - (Kd/Km**2) )
+        vp = np.sqrt((K+4/3*Gd)/rho)
+        vs = np.sqrt(Gd/rho)
     return vp, vs, rho/1e3, K/1e9
 
 
@@ -109,16 +107,16 @@ def hertzmindlin(K0, G0, sigma, phi_c=0.4, Cn=8.6, f=1):
     ----------
     Mavko et al. (2009), The Rock Physics Handbook, Cambridge University Press (p.246)
     '''
-    sigma /= 1e3 # converts pressure in same units as solid moduli (GPa)
+    sigma0 = sigma/1e3 # converts pressure in same units as solid moduli (GPa)
     pr0 =(3*K0-2*G0)/(6*K0+2*G0) # poisson's ratio of mineral mixture
-    Khm = (sigma*(Cn**2*(1-phi_c)**2*G0**2) / (18*np.pi**2*(1-pr0)**2))**(1/3)
-    Ghm = ((2+3*f-pr0*(1+3*f))/(5*(2-pr0))) * ((sigma*(3*Cn**2*(1-phi_c)**2*G0**2)/(2*np.pi**2*(1-pr0)**2)))**(1/3)
+    Khm = (sigma0*(Cn**2*(1-phi_c)**2*G0**2) / (18*np.pi**2*(1-pr0)**2))**(1/3)
+    Ghm = ((2+3*f-pr0*(1+3*f))/(5*(2-pr0))) * ((sigma0*(3*Cn**2*(1-phi_c)**2*G0**2)/(2*np.pi**2*(1-pr0)**2)))**(1/3)
     return Khm, Ghm
 
 
 def softsand(K0, G0, phi, sigma, phi_c=0.4, Cn=8.6, f=1):
     '''
-    Soft-sand, or uncemented) model.
+    Soft-sand, or uncemented model.
 
     Parameters
     ----------   
@@ -455,7 +453,6 @@ def vernik_ssm2(K0, G0, phi, p=20, q=20):
     References
     ----------
     Vernik & Kachanov (2010), Modeling elastic properties of siliciclastic rocks, Geophysics v.75 n.6
-
     '''
     M0 = K0+4/3*G0
     Mdry = M0*(1+p*(phi/(1-phi)))**-1
