@@ -17,7 +17,7 @@ from .anisotropy import hudson_quality_factor, hudson_inverse_Q_ratio
 
 from .elastic import elastic_impedance
 
-from .rpmodels import critpor, hertzmindlin,softsand,stiffsand
-from .rpmodels import contactcement,constantcement,inccement
-from .rpmodels import vernik_csm,vernik_sdm,vernik_shale
-from .rpmodels import vernik_ssm1,vernik_ssm2,vels
+from .rockphysicsmodels import critical_porosity, hertz_mindlin, soft_sand, stiff_sand
+from .rockphysicsmodels import contact_cement, constant_cement, increasing_cement
+from .rockphysicsmodels import vernik_consol_sand, vernik_sand_diagenesis, vernik_shale
+from .rockphysicsmodels import vernik_soft_sand_1, vernik_soft_sand_2, vels
