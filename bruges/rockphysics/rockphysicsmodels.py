@@ -5,53 +5,13 @@
 rockphysicsmodels.py
 ====================
 
-Rock physics models.
+A bunch of rock physics models.
 References are mentioned in docstrings of individual functions.
-Docstrings follow numpy/scipy convention, can be changed
-to be consistent with the rest of bruges, if needed.
+Docstrings follow numpy/scipy convention.
 
-Alessandro Amato del Monte, October 2019
+Alessandro Amato del Monte, March 2019
 """
 import numpy as np
-
-
-def vels(Kdry, Gdry, K0, D0, Kf, Df, phi):
-    '''
-    Calculate velocities and densities of saturated rock
-    via Gassmann equation.
-
-    Parameters
-    ----------   
-    Kdry, Gdry : float or array_like
-        Dry rock bulk & shear modulus in GPa.
-    K0, G0 : float or array_like
-        Mineral bulk & shear modulus in GPa.
-    Kf, Df : float or array_like
-        Fluid bulk modulus in GPa and density in g/cc.
-    phi : float or array_like
-        Porosity.
-
-    Returns
-    -------
-    vp,vs : float or array_like
-        Saturated rock P- and S-wave velocities in m/s.
-    rho: float or array_like
-        Saturated rock density in g/cc.
-    K : float or array_like
-        Saturated rock bulk modulus in GPa.
-    '''
-    # converts all inputs to SI (density in kg/m3 and moduli in Pa)
-    Kd = Kdry * 1e9
-    Gd = Gdry * 1e9
-    Km = K0 * 1e9
-    Kfl = Kf * 1e9
-    rho = D0 * 1e3 * (1 - phi) + Df * 1e3 * phi
-    with np.errstate(divide='ignore', invalid='ignore'):
-        K = Kd + (1 - Kd / Km)**2 / ( (phi / Kfl)
-            + ((1 - phi) / Km) - (Kd / Km**2) )
-        vp = np.sqrt((K + 4/3 * Gd) / rho)
-        vs = np.sqrt(Gd / rho)
-    return vp, vs, rho / 1e3, K / 1e9
 
 
 def critical_porosity(K0, G0, phi, phi_c=0.4):

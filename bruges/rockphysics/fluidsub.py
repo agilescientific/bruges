@@ -27,43 +27,56 @@ import numpy as np
 from . import moduli
 
 
-def avseth_gassmann(ksat1, kf1, kf2, kmin, phi):
+def avseth_gassmann(ksat1, kf1, kf2, k0, phi):
     """
-    Applies the Gassmann equation.
+    Applies the inverse Gassmann's equation 
+    to calculate the rock bulk modulus
+    saturated with fluid with bulk modulus.
+    Requires as inputs the insitu fluid bulk modulus,
+    the insitu saturated rock bulk modulus,
+    the mineral matrix bulk modulus and the porosity.
 
     Args:
-        ksat1 (float): Ksat1.
-        kf1 (float): Kfluid1.
-        kf2 (float): Kfluid2.
-        kmin (float): Kmineral.
+        ksat1 (float): initial saturated rock bulk modulus.
+        kf1 (float): initial fluid bulk modulus.
+        kf2 (float): final fluid bulk modulus.
+        k0 (float): mineral bulk modulus.
+        phi (float): porosity.
+
+    Returns:
+        ksat2 (float): final saturated rock bulk modulus.
+    """
+
+    s = ksat1 / (k0 - ksat1)
+    f1 = kf1 / (phi * (k0 - kf1))
+    f2 = kf2 / (phi * (k0 - kf2))
+    ksat2 = k0 / ((1/(s - f1 + f2)) + 1)
+
+    return ksat2
+
+
+def smith_gassmann(kdry, k0, kf, phi):
+    """
+    Applies the direct Gassmann's equation to
+    calculate the saturated rock bulk modulus from
+    porosity and the dry-rock, mineral and fluid
+    bulk moduli.
+
+    Args:
+        kdry (float): dry-rock bulk modulus.
+        k0 (float): mineral bulk modulus.
+        kf (float): fluid bulk modulus.
         phi (float): Porosity.
 
     Returns:
-        float: Ksat2.
+        ksat (float): saturated rock bulk modulus.
     """
 
-    s = ksat1 / (kmin - ksat1)
-    f1 = kf1 / (phi * (kmin - kf1))
-    f2 = kf2 / (phi * (kmin - kf2))
+    a = (1 - kdry/k0)**2.0
+    b = phi/kf + (1-phi)/k0 - (kdry/k0**2.0)
+    ksat = kdry + (a/b)
 
-    ksat2 = kmin / ((1/(s - f1 + f2)) + 1)
-
-    return ksat2
-
-
-def smith_gassmann(kstar, k0, kfl2, phi):
-    """
-    Applies the Gassmann equation.
-
-    Returns Ksat2.
-    """
-
-    a = (1 - kstar/k0)**2.0
-    b = phi/kfl2 + (1-phi)/k0 - (kstar/k0**2.0)
-
-    ksat2 = kstar + (a/b)
-
-    return ksat2
+    return ksat
 
 
 def vrh(kclay, kqtz, vclay):
@@ -264,3 +277,41 @@ def smith_fluidsub(vp, vs, rho, phi, rhow, rhohc,
     # Finish.
     FluidSubResult = namedtuple('FluidSubResult', ['Vp', 'Vs', 'rho'])
     return FluidSubResult(vp2, vs2, rho2)
+
+def vels(Kdry, Gdry, K0, D0, Kf, Df, phi):
+    '''
+    Calculate velocities and densities of saturated rock
+    via Gassmann equation.
+
+    Parameters
+    ----------   
+    Kdry, Gdry : float or array_like
+        Dry rock bulk & shear modulus in GPa.
+    K0, G0 : float or array_like
+        Mineral bulk & shear modulus in GPa.
+    Kf, Df : float or array_like
+        Fluid bulk modulus in GPa and density in g/cc.
+    phi : float or array_like
+        Porosity.
+
+    Returns
+    -------
+    vp,vs : float or array_like
+        Saturated rock P- and S-wave velocities in m/s.
+    rho: float or array_like
+        Saturated rock density in g/cc.
+    K : float or array_like
+        Saturated rock bulk modulus in GPa.
+    '''
+    # converts all inputs to SI (density in kg/m3 and moduli in Pa)
+    Kd = Kdry * 1e9
+    Gd = Gdry * 1e9
+    Km = K0 * 1e9
+    Kfl = Kf * 1e9
+    rho = D0 * 1e3 * (1 - phi) + Df * 1e3 * phi
+    with np.errstate(divide='ignore', invalid='ignore'):
+        K = Kd + (1 - Kd / Km)**2 / ( (phi / Kfl)
+            + ((1 - phi) / Km) - (Kd / Km**2) )
+        vp = np.sqrt((K + 4/3 * Gd) / rho)
+        vs = np.sqrt(Gd / rho)
+    return vp, vs, rho / 1e3, K / 1e9

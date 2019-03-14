@@ -7,6 +7,7 @@ from .moduli import vp, vs, moduli_dict
 from .fluidsub import avseth_gassmann, smith_gassmann
 from .fluidsub import vrh, rhogas, rhosat
 from .fluidsub import avseth_fluidsub, smith_fluidsub
+from .fluidsub import vels
 
 from .anisotropy import backus_parameters, backus
 from .anisotropy import backus_quality_factor, thomsen_parameters
@@ -20,4 +21,4 @@ from .elastic import elastic_impedance
 from .rockphysicsmodels import critical_porosity, hertz_mindlin, soft_sand, stiff_sand
 from .rockphysicsmodels import contact_cement, constant_cement, increasing_cement
 from .rockphysicsmodels import vernik_consol_sand, vernik_sand_diagenesis, vernik_shale
-from .rockphysicsmodels import vernik_soft_sand_1, vernik_soft_sand_2, vels
+from .rockphysicsmodels import vernik_soft_sand_1, vernik_soft_sand_2
