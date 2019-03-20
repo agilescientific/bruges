@@ -6,7 +6,7 @@ Mean-squared energy measurement.
 :license: Apache 2.0
 """
 import numpy as np
-from util import convolve_many
+from bruges.filters import convolve
 
 
 def energy(traces, duration, dt=1):
@@ -29,5 +29,5 @@ def energy(traces, duration, dt=1):
     data = traces.astype(np.float).reshape(-1, traces.shape[-1])
     n_samples = int(duration / dt)
     window = np.ones(n_samples) / n_samples
-    energy = convolve_many(data**2, window)
+    energy = convolve(data**2, window)
     return energy.reshape(traces.shape)

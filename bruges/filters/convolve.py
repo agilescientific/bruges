@@ -6,7 +6,7 @@ Convolution in n-dimensions.
 :license: Apache 2.0
 """
 import numpy as np
-from util import apply_along_axis
+from bruges.util import apply_along_axis
 
 
 def convolve(reflectivity, wavelet):
@@ -26,6 +26,6 @@ def convolve(reflectivity, wavelet):
     reflectivity_2d = reflectivity.reshape((-1, reflectivity.shape[-1]))
 
     # Compute synthetic, which will always be 3D.
-    syn = np.array([apply_along_axes(np.convolve, reflectivity_2d, w, mode='same') for w in bank])
+    syn = np.array([apply_along_axis(np.convolve, reflectivity_2d, w, mode='same') for w in bank])
 
     return syn.reshape(outshape)
