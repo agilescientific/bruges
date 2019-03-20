@@ -31,3 +31,4 @@ def energy(traces, duration, dt=1):
     window = np.ones(n_samples) / n_samples
     energy = convolve(data**2, window)
     return energy.reshape(traces.shape)
+  
