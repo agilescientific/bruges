@@ -155,8 +155,7 @@ def error_flag(pred, actual, dev = 1.0, method = 1):
         dev  (float) = standard deviations to use, default 1
         error calcluation method (int), default 1
             1: difference between curves larger than mean difference plus dev
-            
-            2: curve slopes have opposite sign. Will require depth log for .diff method
+            2: curve slopes have opposite sign
             3: curve slopes of opposite sign OR difference larger than mean plus dev
     
 
@@ -167,13 +166,15 @@ def error_flag(pred, actual, dev = 1.0, method = 1):
     err = np.abs(pred-actual)
     err_mean = np.mean(err)
     err_std = np.std(err)
+    ss = np.sign(pred.diff().fillna(pred))
+    ls = np.sign(actual.diff().fillna(actual))
 
     if method == 1:
         flag[np.where(err>(err_mean + (dev*err_std)))] = 1
-     
-     ###
-     # add methods 2 and 3
-     ###
+    elif method == 2:      
+        flag[np.where((ss + ls)==0 )]= 1
+    elif method == 3:
+        flag[np.where(np.logical_or(err>(err_mean + (dev*err_std)), (ss+ls)==0 ))]= 1
     return flag
 
 
