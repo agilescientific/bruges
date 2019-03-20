@@ -278,6 +278,7 @@ def smith_fluidsub(vp, vs, rho, phi, rhow, rhohc,
     FluidSubResult = namedtuple('FluidSubResult', ['Vp', 'Vs', 'rho'])
     return FluidSubResult(vp2, vs2, rho2)
 
+
 def vels(Kdry, Gdry, K0, D0, Kf, Df, phi):
     '''
     Calculate velocities and densities of saturated rock
@@ -315,3 +316,4 @@ def vels(Kdry, Gdry, K0, D0, Kf, Df, phi):
         vp = np.sqrt((K + 4/3 * Gd) / rho)
         vs = np.sqrt(Gd / rho)
     return vp, vs, rho / 1e3, K / 1e9
+

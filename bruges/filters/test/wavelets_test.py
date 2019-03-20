@@ -6,6 +6,7 @@ from numpy import array
 from bruges.filters import sinc
 from bruges.filters import ricker
 from bruges.filters import sweep
+from bruges.filters import berlage
 from bruges.filters import ormsby
 
 
@@ -41,6 +42,14 @@ class WaveletTest(unittest.TestCase):
                    -8.30581776e-03,  -1.39615614e-02,  -6.55916221e-04,
                    -2.28078034e-18])
         y = sweep(0.064, 0.004, [10, 100])
+        self.assertTrue(np.allclose(x, y))
+
+    def test_berlage(self):
+        x = array([ 0.00000000e+00,  0.00000000e+00,  0.00000000e+00, -0.00000000e+00,
+                   -0.00000000e+00, -0.00000000e+00, -0.00000000e+00, -0.00000000e+00,
+                    0.00000000e+00,  2.89837052e-01,  9.13081427e-01,  1.00000000e+00,
+                    5.34807890e-01, -5.72248038e-16, -2.85099378e-01, -3.05622598e-01])
+        y = berlage(0.064, 0.004, 25)
         self.assertTrue(np.allclose(x, y))
 
     def test_ormsby(self):

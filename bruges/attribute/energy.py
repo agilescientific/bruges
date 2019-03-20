@@ -1,48 +1,34 @@
 # -*- coding: utf-8 -*-
 """
-Mean-suared energy measurement.
+Mean-squared energy measurement.
 
-:copyright: 2015 Agile Geoscience
+:copyright: 2019 Agile Geoscience
 :license: Apache 2.0
 """
-
 import numpy as np
-from scipy.signal import fftconvolve
+from bruges.filters import convolve
 
 
 def energy(traces, duration, dt=1):
     """
-    Compute an mean-squared energy measurement for each point of a
-    seismic section.
+    Compute an mean-squared energy measurement on seismic data.
 
-    :param traces: The data array to use for calculating MS energy.
-                   Must be 1D or 2D numpy array.
-    :param duration: the time duration of the window (in seconds), or
-                     samples if dt=1.
-    :param dt: the sample interval of the data (in seconds). Defaults
-               to 1 so duration can be in samples.
-    :returns: An array the same dimensions as the input array.
+    The attribute is computed over the last dimension. That is, time should
+    be in the last dimension, so a 100 inline, 100 crossline seismic volume
+    with 250 time slices would have shape (100, 100, 250).
+
+    Args:
+        traces (ndarray): The data array to use for calculating energy.
+        duration (float): the time duration of the window (in seconds), or
+            samples if dt=1.
+        dt (float): the sample interval of the data (in seconds). Defaults
+            to 1 so duration can be in samples.
+    Returns:
+        ndarray: An array the same dimensions as the input array.
     """
-
-    energy_data = np.zeros(traces.shape)
-    signal = traces * traces
+    data = traces.astype(np.float).reshape(-1, traces.shape[-1])
     n_samples = int(duration / dt)
-
-    window = np.ones(n_samples)
-
-    if np.ndim(signal) == 1:
-        # Compute the sliding average using a convolution
-        energy_data = fftconvolve(signal, window, mode='same') \
-                     / n_samples
-
-    elif np.ndim(signal) == 2:
-        for trace in range(signal.shape[1]):
-            energy_data[:, trace] = fftconvolve(signal[:, trace],
-                                                 window,
-                                                 mode='same') \
-                                     / n_samples
-
-    else:
-        raise ValueError('Array must be 1D or 2D')
-
-    return energy_data
+    window = np.ones(n_samples) / n_samples
+    energy = convolve(data**2, window)
+    return energy.reshape(traces.shape)
+  

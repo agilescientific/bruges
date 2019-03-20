@@ -1,8 +1,12 @@
 # -*- coding: utf-8 -*-
+from .convolve import convolve
+
 from .wavelets import sinc
 from .wavelets import ricker
-from .wavelets import ormsby
 from .wavelets import sweep
+from .wavelets import klauder
+from .wavelets import berlage
+from .wavelets import ormsby
 from .wavelets import rotate_phase
 
 from .kernels import gaussian_kernel

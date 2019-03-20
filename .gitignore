@@ -21,6 +21,7 @@ lib
 lib64
 
 docs/_build/
+docs/_generated
 docs/api
 
 # Installer logs

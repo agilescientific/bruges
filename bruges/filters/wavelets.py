@@ -2,7 +2,7 @@
 """
 Seismic wavelets.
 
-:copyright: 2015 Agile Geoscience
+:copyright: 2019 Agile Geoscience
 :license: Apache 2.0
 """
 from collections import namedtuple
@@ -20,7 +20,7 @@ def generic(func, duration, dt, f, return_t=False, taper='blackman'):
         duration (float): The length in seconds of the wavelet.
         dt (float): The sample interval in seconds (often one of  0.001, 0.002,
             or 0.004).
-        f (ndarray): Dominant frequency of the wavelet in Hz. If a sequence is
+        f (array-like): Dominant frequency of the wavelet in Hz. If a sequence is
             passed, you will get a 2D array in return, one row per frequency.
         return_t (bool): If True, then the function returns a tuple of
             wavelet, time-basis, where time is the range from -duration/2 to
@@ -69,7 +69,7 @@ def sinc(duration, dt, f, return_t=False, taper='blackman'):
         duration (float): The length in seconds of the wavelet.
         dt (float): The sample interval in seconds (often one of  0.001, 0.002,
             or 0.004).
-        f (ndarray): Dominant frequency of the wavelet in Hz. If a sequence is
+        f (array-like): Dominant frequency of the wavelet in Hz. If a sequence is
             passed, you will get a 2D array in return, one row per frequency.
         return_t (bool): If True, then the function returns a tuple of
             wavelet, time-basis, where time is the range from -duration/2 to
@@ -102,7 +102,7 @@ def cosine(duration, dt, f, return_t=False, taper='gaussian', sigma=None):
         duration (float): The length in seconds of the wavelet.
         dt (float): The sample interval in seconds (often one of  0.001, 0.002,
             or 0.004).
-        f (ndarray): Dominant frequency of the wavelet in Hz. If a sequence is
+        f (array-like): Dominant frequency of the wavelet in Hz. If a sequence is
             passed, you will get a 2D array in return, one row per frequency.
         return_t (bool): If True, then the function returns a tuple of
             wavelet, time-basis, where time is the range from -duration/2 to
@@ -142,7 +142,7 @@ def gabor(duration, dt, f, return_t=False):
         duration (float): The length in seconds of the wavelet.
         dt (float): The sample interval in seconds (often one of  0.001, 0.002,
             or 0.004).
-        f (ndarray): Centre frequency of the wavelet in Hz. If a sequence is
+        f (array-like): Centre frequency of the wavelet in Hz. If a sequence is
             passed, you will get a 2D array in return, one row per frequency.
         return_t (bool): If True, then the function returns a tuple of
             wavelet, time-basis, where time is the range from -duration/2 to
@@ -160,7 +160,7 @@ def gabor(duration, dt, f, return_t=False):
 def ricker(duration, dt, f, return_t=False):
     """
     Also known as the mexican hat wavelet, models the function:
-    
+
     .. math::
         A =  (1 - 2 \pi^2 f^2 t^2) e^{-\pi^2 f^2 t^2}
 
@@ -170,7 +170,7 @@ def ricker(duration, dt, f, return_t=False):
         duration (float): The length in seconds of the wavelet.
         dt (float): The sample interval in seconds (often one of  0.001, 0.002,
             or 0.004).
-        f (ndarray): Centre frequency of the wavelet in Hz. If a sequence is
+        f (array-like): Centre frequency of the wavelet in Hz. If a sequence is
             passed, you will get a 2D array in return, one row per frequency.
         return_t (bool): If True, then the function returns a tuple of
             wavelet, time-basis, where time is the range from -duration/2 to
@@ -182,7 +182,6 @@ def ricker(duration, dt, f, return_t=False):
     .. plot::
 
         plt.plot(bruges.filters.ricker(.5, 0.002, 40))
-     
     """
     f = np.asanyarray(f).reshape(-1, 1)
     t = np.arange(-duration/2, duration/2, dt)
@@ -196,21 +195,21 @@ def ricker(duration, dt, f, return_t=False):
         return w
 
 
-def sweep(duration, dt, f,
-          autocorrelate=True,
-          return_t=False,
-          taper='blackman',
-          **kwargs):
+def klauder(duration, dt, f,
+            autocorrelate=True,
+            return_t=False,
+            taper='blackman',
+            **kwargs):
     """
-    Generates a linear frequency modulated wavelet (sweep). Wraps
-    scipy.signal.chirp, adding dimensions as necessary.
+    By default, gives the autocorrelation of a linear frequency modulated
+    wavelet (sweep). Uses scipy.signal.chirp, adding dimensions as necessary.
 
     Args:
         duration (float): The length in seconds of the wavelet.
         dt (float): is the sample interval in seconds (usually 0.001, 0.002,
             or 0.004)
-        f (ndarray): Any sequence like (f1, f2). A list of lists will create a
-            wavelet bank.
+        f (array-like): Upper and lower frequencies. Any sequence like (f1, f2).
+            A list of lists will create a wavelet bank.
         autocorrelate (bool): Whether to autocorrelate the sweep(s) to create
             a wavelet. Default is `True`.
         return_t (bool): If True, then the function returns a tuple of
@@ -261,6 +260,9 @@ def sweep(duration, dt, f,
         return w
 
 
+sweep = klauder
+
+
 def ormsby(duration, dt, f, return_t=False):
     """
     The Ormsby wavelet requires four frequencies which together define a
@@ -271,7 +273,7 @@ def ormsby(duration, dt, f, return_t=False):
         duration (float): The length in seconds of the wavelet.
         dt (float): The sample interval in seconds (usually 0.001, 0.002,
             or 0.004).
-        f (ndarray): Sequence of form (f1, f2, f3, f4), or list of lists of
+        f (array-like): Sequence of form (f1, f2, f3, f4), or list of lists of
             frequencies, which will return a 2D wavelet bank.
 
     Returns:
@@ -282,7 +284,7 @@ def ormsby(duration, dt, f, return_t=False):
     try:
         f1, f2, f3, f4 = f
     except ValueError:
-        raise ValueError("The last dimension must be 4")
+        raise ValueError("The last dimension of the frequency array must be 4")
 
     def numerator(f, t):
         return (np.sinc(f * t)**2) * ((np.pi * f) ** 2)
@@ -304,21 +306,73 @@ def ormsby(duration, dt, f, return_t=False):
         return w
 
 
+def berlage(duration, dt, f, n=2, alpha=180, phi=-np.pi/2, return_t=False):
+    """
+    Generates a Berlage wavelet with a peak frequency f. Implements
+
+    .. math::
+
+    w(t) = AH(t) t^n \mathrm{e}^{-\alpha t} \cos(2 \pi f_0 t + \phi_0)
+
+    as described in Aldridge, DF (1990), The Berlage wavelet, GEOPHYSICS
+    55 (11), p 1508-1511. Berlage wavelets are causal, minimum phase and
+    useful for modeling marine airgun sources.
+
+    If you pass a 1D array of frequencies, you get a wavelet bank in return.
+
+    .. plot::
+
+        plt.plot(bruges.filters.berlage(0.5, 0.002, 40))
+
+
+    Args:
+        duration (float): The length in seconds of the wavelet.
+        dt (float): The sample interval in seconds (often one of  0.001, 0.002,
+            or 0.004).
+        f (array-like): Centre frequency of the wavelet in Hz. If a sequence is
+            passed, you will get a 2D array in return, one row per frequency.
+        n (float): The time exponent; non-negative and real.
+        alpha(float): The exponential decay factor; non-negative and real.
+        return_t (bool): If True, then the function returns a tuple of
+            wavelet, time-basis, where time is the range from -duration/2 to
+            duration/2 in steps of dt.
+
+    Returns:
+        ndarray. Berlage wavelet(s) with centre frequency f sampled on t.
+    """
+
+    f = np.asanyarray(f).reshape(-1, 1)
+    t = np.arange(-duration/2, duration/2, dt)
+
+    H = np.heaviside(t, 0)
+    w = H * t**n * np.exp(-alpha * t) * np.cos(2 * np.pi * f * t + phi)
+
+    w = np.squeeze(w) / np.max(np.abs(w))
+
+    if return_t:
+        BerlageWavelet = namedtuple('BerlageWavelet', ['amplitude', 'time'])
+        return BerlageWavelet(w, t)
+    else:
+        return w
+
+
 def rotate_phase(w, phi, degrees=False):
     """
     Performs a phase rotation of wavelet or wavelet bank using:
+
+    ..math::
+
+        A = w(t)\cos(\phi) - h(t)\sin(\phi)
+
+    where w(t) is the wavelet and h(t) is its Hilbert transform.
 
     The analytic signal can be written in the form S(t) = A(t)exp(j*theta(t))
     where A(t) = magnitude(hilbert(w(t))) and theta(t) = angle(hilbert(w(t))
     then a constant phase rotation phi would produce the analytic signal
     S(t) = A(t)exp(j*(theta(t) + phi)). To get the non analytic signal
     we take real(S(t)) == A(t)cos(theta(t) + phi)
-    == A(t)(cos(theta(t))cos(phi) - sin(theta(t))sin(phi)) <= trig idenity
+    == A(t)(cos(theta(t))cos(phi) - sin(theta(t))sin(phi)) <= trig identity
     == w(t)cos(phi) - h(t)sin(phi)
-
-    A = w(t)Cos(phi) - h(t)Sin(phi)
-
-    Where w(t) is the wavelet and h(t) is its Hilbert transform.
 
     Args:
         w (ndarray): The wavelet vector, can be a 2D wavelet bank.
@@ -331,5 +385,5 @@ def rotate_phase(w, phi, degrees=False):
     if degrees:
         phi = phi * np.pi / 180.0
     a = scipy.signal.hilbert(w, axis=0)
-    w = (np.real(a) * np.cos(phi) - np.imag(a) * np.sin(phi))
+    w = np.real(a) * np.cos(phi)  -  np.imag(a) * np.sin(phi)
     return w
