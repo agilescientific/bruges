@@ -27,43 +27,56 @@ import numpy as np
 from . import moduli
 
 
-def avseth_gassmann(ksat1, kf1, kf2, kmin, phi):
+def avseth_gassmann(ksat1, kf1, kf2, k0, phi):
     """
-    Applies the Gassmann equation.
+    Applies the inverse Gassmann's equation 
+    to calculate the rock bulk modulus
+    saturated with fluid with bulk modulus.
+    Requires as inputs the insitu fluid bulk modulus,
+    the insitu saturated rock bulk modulus,
+    the mineral matrix bulk modulus and the porosity.
 
     Args:
-        ksat1 (float): Ksat1.
-        kf1 (float): Kfluid1.
-        kf2 (float): Kfluid2.
-        kmin (float): Kmineral.
+        ksat1 (float): initial saturated rock bulk modulus.
+        kf1 (float): initial fluid bulk modulus.
+        kf2 (float): final fluid bulk modulus.
+        k0 (float): mineral bulk modulus.
+        phi (float): porosity.
+
+    Returns:
+        ksat2 (float): final saturated rock bulk modulus.
+    """
+
+    s = ksat1 / (k0 - ksat1)
+    f1 = kf1 / (phi * (k0 - kf1))
+    f2 = kf2 / (phi * (k0 - kf2))
+    ksat2 = k0 / ((1/(s - f1 + f2)) + 1)
+
+    return ksat2
+
+
+def smith_gassmann(kdry, k0, kf, phi):
+    """
+    Applies the direct Gassmann's equation to
+    calculate the saturated rock bulk modulus from
+    porosity and the dry-rock, mineral and fluid
+    bulk moduli.
+
+    Args:
+        kdry (float): dry-rock bulk modulus.
+        k0 (float): mineral bulk modulus.
+        kf (float): fluid bulk modulus.
         phi (float): Porosity.
 
     Returns:
-        float: Ksat2.
+        ksat (float): saturated rock bulk modulus.
     """
 
-    s = ksat1 / (kmin - ksat1)
-    f1 = kf1 / (phi * (kmin - kf1))
-    f2 = kf2 / (phi * (kmin - kf2))
+    a = (1 - kdry/k0)**2.0
+    b = phi/kf + (1-phi)/k0 - (kdry/k0**2.0)
+    ksat = kdry + (a/b)
 
-    ksat2 = kmin / ((1/(s - f1 + f2)) + 1)
-
-    return ksat2
-
-
-def smith_gassmann(kstar, k0, kfl2, phi):
-    """
-    Applies the Gassmann equation.
-
-    Returns Ksat2.
-    """
-
-    a = (1 - kstar/k0)**2.0
-    b = phi/kfl2 + (1-phi)/k0 - (kstar/k0**2.0)
-
-    ksat2 = kstar + (a/b)
-
-    return ksat2
+    return ksat
 
 
 def vrh(kclay, kqtz, vclay):
@@ -266,43 +279,41 @@ def smith_fluidsub(vp, vs, rho, phi, rhow, rhohc,
     return FluidSubResult(vp2, vs2, rho2)
 
 
-def vels(K_DRY,G_DRY,K0,D0,Kf,Df,phi):
+def vels(Kdry, Gdry, K0, D0, Kf, Df, phi):
     '''
-    vels (C) Alessandro Amato del Monte, 2015
-    Calculates velocities and densities of saturated rock via Gassmann equation.
-    INPUT
-    K_DRY,G_DRY: dry rock bulk & shear modulus in GPa
-    K0, D0: mineral bulk modulus and density in GPa
-    Kf, Df: fluid bulk modulus and density in GPa
-    phi: porosity
-    '''
-    rho  = D0*(1-phi)+Df*phi
-    K = K_DRY + (1-K_DRY/K0)**2 / ( (phi/Kf) + ((1-phi)/K0) - (K_DRY/K0**2) )
-    vp   = np.sqrt((K+4./3*G_DRY)/rho)*1e3
-    vs   = np.sqrt(G_DRY/rho)*1e3
-    return vp, vs, rho, K
+    Calculate velocities and densities of saturated rock
+    via Gassmann equation.
 
+    Parameters
+    ----------   
+    Kdry, Gdry : float or array_like
+        Dry rock bulk & shear modulus in GPa.
+    K0, G0 : float or array_like
+        Mineral bulk & shear modulus in GPa.
+    Kf, Df : float or array_like
+        Fluid bulk modulus in GPa and density in g/cc.
+    phi : float or array_like
+        Porosity.
 
-def gassmann_approx(vp1, rho1, rho_fl1, k_fl1, rho_fl2, k_fl2, M0, phi):
+    Returns
+    -------
+    vp,vs : float or array_like
+        Saturated rock P- and S-wave velocities in m/s.
+    rho: float or array_like
+        Saturated rock density in g/cc.
+    K : float or array_like
+        Saturated rock bulk modulus in GPa.
     '''
-    gassmann_approx (C) Alessandro Amato del Monte, 2016
-    Mavko-Mukerji linear approximation of Gassmann's equation.
-    INPUT
-    vp1: P-wave velocity in m/s
-    rho1: density in g/cc
-    rho_fl1, k_fl1: initial fluid elastic properties in g/cc and GPa
-    rho_fl2, k_fl2: final fluid elastic properties in g/cc and GPa
-    M0: rock matrix P-wave modulus (Vp**2*rho)
-    phi: porosity
-    OUTPUT
-    vp2: P-wave velocity in m/s after replacing fluid 1 with fluid 2
-    rho2: density in g/cc after replacing fluid 1 with fluid 2
-    '''
+    # converts all inputs to SI (density in kg/m3 and moduli in Pa)
+    Kd = Kdry * 1e9
+    Gd = Gdry * 1e9
+    Km = K0 * 1e9
+    Kfl = Kf * 1e9
+    rho = D0 * 1e3 * (1 - phi) + Df * 1e3 * phi
+    with np.errstate(divide='ignore', invalid='ignore'):
+        K = Kd + (1 - Kd / Km)**2 / ( (phi / Kfl)
+            + ((1 - phi) / Km) - (Kd / Km**2) )
+        vp = np.sqrt((K + 4/3 * Gd) / rho)
+        vs = np.sqrt(Gd / rho)
+    return vp, vs, rho / 1e3, K / 1e9
 
-    vp1=vp1/1000
-    rho2 = rho1-phi*rho_fl1+phi*rho_fl2
-    M1=vp1**2*rho1
-    uu = M1/(M0-M1) - k_fl1/(phi*(M0-k_fl1)) + k_fl2/(phi*(M0-k_fl2))
-    M2 = (uu*M0)/(1+uu)
-    vp2 = np.sqrt(M2/rho2)
-    return vp2*1000, rho2

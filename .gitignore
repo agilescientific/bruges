@@ -1,6 +1,7 @@
 *.py[cod]
 
 .DS_Store
+*.code-workspace
 
 # C extensions
 *.so

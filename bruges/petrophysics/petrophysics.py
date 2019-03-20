@@ -140,4 +140,61 @@ def gardner_param(vp,rhob):
      """
      params,_ = curve_fit(optimizer_gardner,rhob,vp)
      return params[0], params[1]
+     
+
+def error_flag(pred, actual, dev = 1.0, method = 1):
+    """Calculate the difference between a predicted and an actual curve 
+    and return a log flagging large differences based on a user-defined distance 
+    (in standard deviation units) from the mean difference
+
+    Matteo Niccoli, October 2018
+    
+    Args:
+        predicted (ndarray) = predicted log
+        actual (ndarray) =  original log  
+        dev  (float) = standard deviations to use, default 1
+        error calcluation method (int), default 1
+            1: difference between curves larger than mean difference plus dev
+            
+            2: curve slopes have opposite sign. Will require depth log for .diff method
+            3: curve slopes of opposite sign OR difference larger than mean plus dev
+    
+
+    Returns:
+    flag (ndarray) =  error flag curve
+    """   
+    flag = np.zeros(len(pred))
+    err = np.abs(pred-actual)
+    err_mean = np.mean(err)
+    err_std = np.std(err)
+
+    if method == 1:
+        flag[np.where(err>(err_mean + (dev*err_std)))] = 1
+     
+     ###
+     # add methods 2 and 3
+     ###
+    return flag
+
+
+def optimize_inverse_gardner(rho, alpha, beta):
+     """ Wrapper function to pass inverse_gardner to scipy.curve_fit
+     to get optimal alpha and beta parameters
+
+
+     Matteo Niccoli and Volodymyr Vragov, October 2018
+
+     Args:
+         rho(ndarray): Density.
+         alpha (float): The factor.
+         beta (float): The exponent.
+
+     Returns:
+         inverse_gardner: this is passed to scipy.curve_fit as, for example:
+         popt_synt, pcov = scipy.curve_fit(optimize_inverse_gardner, rho, vp)
+         For a ull example, please read:
+         mycarta.wordpress.com/2018/10/28/geophysics-python-sprint-2018-day-2-and-beyond-part-i
+     """
+     return inverse_gardner(rho, alpha=alpha, beta=beta)
+
 
