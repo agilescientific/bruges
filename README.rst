@@ -30,13 +30,6 @@ Status
     :target: https://pypi.python.org/pypi/bruges/
     :alt: Python version
 
-.. image:: https://coveralls.io/repos/agile-geoscience/bruges/badge.svg?branch=master&service=github
-  :target: https://coveralls.io/github/agile-geoscience/bruges?branch=master
-
-.. image:: https://img.shields.io/codacy/f445542bc50e48c18a0d0e15a2768eb7.svg 
-    :target: https://www.codacy.com/app/matt/bruges/dashboard
-    :alt: Codacy code review
-
 .. image:: https://img.shields.io/pypi/l/bruges.svg
     :target: http://www.apache.org/licenses/LICENSE-2.0
     :alt: License
