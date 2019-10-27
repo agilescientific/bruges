@@ -37,9 +37,9 @@ def voigt_bound(f, m):
 
 def reuss_bound(f, m):
     """
-    The lower bound on the effective elastic modulus, mv of a
+    The lower bound on the effective elastic modulus of a
     mixture of N material phases. This is defined at the harmonic
-    average of the constituents.
+    average of the constituents. Same as Wood's equation for homogeneous mixed fluids.
 
     Args:
         f: list or array of N volume fractions (must sum to 1 or 100).
