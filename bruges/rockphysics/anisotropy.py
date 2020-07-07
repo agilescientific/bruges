@@ -336,6 +336,17 @@ def hudson_quality_factor(porosity, aspect, mu, lam=None, pmod=None):
     """
     Returns Q_p and Q_s for cracked media. Equations 15.41 and 15.43 in
     Dvorkin et al. (2014).
+
+    Args:
+        porosity (float): Fractional porosity, phi.
+        aspect (float): Aspect ratio, alpha.
+        mu (float): Shear modulus, sometimes called G.
+        lam (float): Lame's first parameter, lambda.
+        pmod (float): Compressional modulus, M.
+
+    Returns:
+        float: Q_p
+        float: Q_s
     """
     Qp = 2*mu / hudson_delta_M(porosity, aspect, mu, lam, pmod)
     Qs = 2*mu / hudson_delta_G(porosity, aspect, mu, lam, pmod)
@@ -351,6 +362,18 @@ def hudson_inverse_Q_ratio(mu=None,
     """
     Dvorkin et al. (2014), Eq 15.44 (aligned) and 15.48 (not aligned). You must
     provide one of the following: `pr`, or `vp` and `vs`, or `mu` and `pmod`.
+
+    Args:
+        mu (float): Shear modulus, sometimes called G.
+        pmod (float): Compressional modulus, M.
+        pr (float): Poisson's ratio, somtimes called v.
+        vp (ndarray): P-wave interval velocity.
+        vs (ndarray): S-wave interval velocity.
+        aligned (bool): Either treats cracks as alligned (Default, True)
+                        or assumes defects are randomly oriented (False)
+
+    Returns:
+        float: 2Q_s^-1
     """
     if pr is not None:
         x = (2 - 2*pr) / (1 - 2*pr)
