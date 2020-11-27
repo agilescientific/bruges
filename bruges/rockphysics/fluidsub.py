@@ -162,7 +162,7 @@ def avseth_fluidsub(vp, vs, rho, phi, rhof1, rhof2, kmin, kf1, kf2):
     musat1 = moduli.mu(vp=vp, vs=vs, rho=rho)
 
     # Step 2: Apply Gassmann's relation
-    ksat2 = avseth_gassmann(ksat1=ksat1, kf1=kf1, kf2=kf2, kmin=kmin, phi=phi)
+    ksat2 = avseth_gassmann(ksat1=ksat1, kf1=kf1, kf2=kf2, k0=kmin, phi=phi)
 
     # Step 3: Leave the shear modulus unchanged
     musat2 = musat1
@@ -259,7 +259,7 @@ def smith_fluidsub(vp, vs, rho, phi, rhow, rhohc,
 
     # Step 9: Calculate the new saturated bulk modulus of the rock
     # using Gassmann.
-    ksat2 = smith_gassmann(kstar=kstar, k0=k0, kfl2=kfl2, phi=phi)
+    ksat2 = smith_gassmann(kdry=kstar, k0=k0, kf=kfl2, phi=phi)
 
     # Step 10: Calculate the new bulk density.
     # First we need the grain density...
