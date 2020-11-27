@@ -1,7 +1,9 @@
-### v0.4 — Spring 2019
+### v0.4 — November 2020
 - **Breaking change:** fixed numerous minor issues with `attribute.energy()`, see [issue 78](https://github.com/agile-geoscience/bruges/issues/78). Note that it now expects time to be in the last dimension of the array. The function now runs on n-D data and is also about 15 times faster.
 - Multiple fixes to the documentation, thanks especially to Jesper Dramsch and Adriana Gordon.
 - Added the `filters.berlage()` wavelet, a causal, minimum phase wavelet good for marine airgun sources.
+- Added the `filters.generalized()` wavelet, of which the Ricker is a special case, as defined by Wang 2015, Geophys J Int 203, p1172ff.
+- Added a FutureWarning that wavelets in the next release will have `return_t=True` by default. In a later release, the option will likely disappear completely.
 - Added `fluids.rho_water()`, `fluids.rho_brine()`, `fluids.v_water()`, and `fluids.v_brine()`, implementing equations from Batzle & Wang (1992).
 - Added `filters.convolve()`, which implements multi-dimensional convolution for 1D and 2D reflectivities and wavelets (or wavelet banks), and for 3D reflectivity with 1D wavelets. `convolve(rc_panel, wavelet_bank)` results in a 3D synthetic, with axes of frequency, offset, and time.
 - Added `util.convolve_many()` to implement a fast way to convolve a 1D kernel over multiple signals whose domain (time or distance) is in the last axis.

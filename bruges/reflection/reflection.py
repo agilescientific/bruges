@@ -169,6 +169,7 @@ def vectorize(func):
         return func(vp1, vs1, rho1, vp2, vs2, rho2, theta1, **kwargs)
     return wrapper
 
+
 def preprocess(func):
     """
     Decorator to preprocess arguments for the reflectivity equations.

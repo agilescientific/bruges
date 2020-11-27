@@ -7,9 +7,8 @@ from .wavelets import sweep
 from .wavelets import klauder
 from .wavelets import berlage
 from .wavelets import ormsby
+from .wavelets import generalized
 from .wavelets import rotate_phase
-
-from .generalized_wavelet import generalized_wavelet
 
 from .kernels import gaussian_kernel
 from .kernels import gaussian

@@ -6,6 +6,7 @@ Seismic wavelets.
 :license: Apache 2.0
 """
 from collections import namedtuple
+import warnings
 
 import numpy as np
 import scipy.signal
@@ -32,8 +33,12 @@ def generic(func, duration, dt, f, return_t=False, taper='blackman'):
             the length of the window and returning the window function.
 
     Returns:
-        ndarray. wavelet(s) with centre frequency f sampled on t.
+        ndarray. wavelet(s) with centre frequency f sampled on t. If you
+            passed `return_t=True` then a tuple of (wavelet, t) is returned.
     """
+    if not return_t:
+        warnings.warn("In future releases, return_t will be True by default.", FutureWarning)
+
     f = np.asanyarray(f).reshape(-1, 1)
     t = np.arange(-duration/2., duration/2., dt)
     t[t == 0] = 1e-12  # Avoid division by zero.
@@ -65,6 +70,9 @@ def sinc(duration, dt, f, return_t=False, taper='blackman'):
 
     If you pass a 1D array of frequencies, you get a wavelet bank in return.
 
+    .. plot::
+        plt.plot(bruges.filters.sinc(.5, 0.002, 40))
+
     Args:
         duration (float): The length in seconds of the wavelet.
         dt (float): The sample interval in seconds (often one of  0.001, 0.002,
@@ -81,7 +89,8 @@ def sinc(duration, dt, f, return_t=False, taper='blackman'):
             the length of the window and returning the window function.
 
     Returns:
-        ndarray. sinc wavelet(s) with centre frequency f sampled on t.
+        ndarray. sinc wavelet(s) with centre frequency f sampled on t. If
+            you passed `return_t=True` then a tuple of (wavelet, t) is returned.
     """
     def func(t_, f_):
         return np.sin(2*np.pi*f_*t_) / (2*np.pi*f_*t_)
@@ -97,6 +106,9 @@ def cosine(duration, dt, f, return_t=False, taper='gaussian', sigma=None):
     somewhere between a Ricker and a cosine (pure tone).
 
     If you pass a 1D array of frequencies, you get a wavelet bank in return.
+
+    .. plot::
+        plt.plot(bruges.filters.cosine(.5, 0.002, 40))
 
     Args:
         duration (float): The length in seconds of the wavelet.
@@ -116,7 +128,8 @@ def cosine(duration, dt, f, return_t=False, taper='gaussian', sigma=None):
             Defaults to 1/8 of the duration.
 
     Returns:
-        ndarray. sinc wavelet(s) with centre frequency f sampled on t.
+        ndarray. sinc wavelet(s) with centre frequency f sampled on t. If
+            you passed `return_t=True` then a tuple of (wavelet, t) is returned.
     """
     if sigma is None:
         sigma = duration / 8
@@ -138,6 +151,9 @@ def gabor(duration, dt, f, return_t=False):
 
     If you pass a 1D array of frequencies, you get a wavelet bank in return.
 
+    .. plot::
+        plt.plot(bruges.filters.gabor(.5, 0.002, 40))
+
     Args:
         duration (float): The length in seconds of the wavelet.
         dt (float): The sample interval in seconds (often one of  0.001, 0.002,
@@ -149,7 +165,8 @@ def gabor(duration, dt, f, return_t=False):
             duration/2 in steps of dt.
 
     Returns:
-        ndarray. Gabor wavelet(s) with centre frequency f sampled on t.
+        ndarray. Gabor wavelet(s) with centre frequency f sampled on t. If
+            you passed `return_t=True` then a tuple of (wavelet, t) is returned.
     """
     def func(t_, f_):
         return np.exp(-2 * f_**2 * t_**2) * np.cos(2 * np.pi * f_ * t_)
@@ -166,6 +183,9 @@ def ricker(duration, dt, f, return_t=False):
 
     If you pass a 1D array of frequencies, you get a wavelet bank in return.
 
+    .. plot::
+        plt.plot(bruges.filters.ricker(.5, 0.002, 40))
+
     Args:
         duration (float): The length in seconds of the wavelet.
         dt (float): The sample interval in seconds (often one of  0.001, 0.002,
@@ -177,12 +197,12 @@ def ricker(duration, dt, f, return_t=False):
             duration/2 in steps of dt.
 
     Returns:
-        ndarray. Ricker wavelet(s) with centre frequency f sampled on t.
-
-    .. plot::
-
-        plt.plot(bruges.filters.ricker(.5, 0.002, 40))
+        ndarray. Ricker wavelet(s) with centre frequency f sampled on t. If
+            you passed `return_t=True` then a tuple of (wavelet, t) is returned.
     """
+    if not return_t:
+        warnings.warn("In future releases, return_t will be True by default.", FutureWarning)
+
     f = np.asanyarray(f).reshape(-1, 1)
     t = np.arange(-duration/2, duration/2, dt)
     pft2 = (np.pi * f * t)**2
@@ -203,6 +223,9 @@ def klauder(duration, dt, f,
     """
     By default, gives the autocorrelation of a linear frequency modulated
     wavelet (sweep). Uses scipy.signal.chirp, adding dimensions as necessary.
+
+    .. plot::
+        plt.plot(bruges.filters.klauder(.5, 0.002, [10, 80]))
 
     Args:
         duration (float): The length in seconds of the wavelet.
@@ -225,8 +248,12 @@ def klauder(duration, dt, f,
             in degrees), and `vertex_zero`.
 
     Returns:
-        ndarray: The waveform.
+        ndarray: The waveform. If you passed `return_t=True` then a tuple of
+            (wavelet, t) is returned.
     """
+    if not return_t:
+        warnings.warn("In future releases, return_t will be True by default.", FutureWarning)
+
     t0, t1 = -duration/2, duration/2
     t = np.arange(t0, t1, dt)
 
@@ -269,6 +296,9 @@ def ormsby(duration, dt, f, return_t=False):
     trapezoid shape in the spectrum. The Ormsby wavelet has several sidelobes,
     unlike Ricker wavelets.
 
+    .. plot::
+        plt.plot(bruges.filters.ormsby(.5, 0.002, [5, 10, 40, 80]))
+
     Args:
         duration (float): The length in seconds of the wavelet.
         dt (float): The sample interval in seconds (usually 0.001, 0.002,
@@ -277,8 +307,13 @@ def ormsby(duration, dt, f, return_t=False):
             frequencies, which will return a 2D wavelet bank.
 
     Returns:
-        ndarray: A vector containing the Ormsby wavelet, or a bank of them.
+        ndarray: A vector containing the Ormsby wavelet, or a bank of them. If
+            you passed `return_t=True` then a tuple of (wavelet, t) is returned.
+
     """
+    if not return_t:
+        warnings.warn("In future releases, return_t will be True by default.", FutureWarning)
+
     f = np.asanyarray(f).reshape(-1, 1)
 
     try:
@@ -321,9 +356,7 @@ def berlage(duration, dt, f, n=2, alpha=180, phi=-np.pi/2, return_t=False):
     If you pass a 1D array of frequencies, you get a wavelet bank in return.
 
     .. plot::
-
         plt.plot(bruges.filters.berlage(0.5, 0.002, 40))
-
 
     Args:
         duration (float): The length in seconds of the wavelet.
@@ -338,8 +371,11 @@ def berlage(duration, dt, f, n=2, alpha=180, phi=-np.pi/2, return_t=False):
             duration/2 in steps of dt.
 
     Returns:
-        ndarray. Berlage wavelet(s) with centre frequency f sampled on t.
+        ndarray. Berlage wavelet(s) with centre frequency f sampled on t. If
+            you passed `return_t=True` then a tuple of (wavelet, t) is returned.
     """
+    if not return_t:
+        warnings.warn("In future releases, return_t will be True by default.", FutureWarning)
 
     f = np.asanyarray(f).reshape(-1, 1)
     t = np.arange(-duration/2, duration/2, dt)
@@ -352,6 +388,80 @@ def berlage(duration, dt, f, n=2, alpha=180, phi=-np.pi/2, return_t=False):
     if return_t:
         BerlageWavelet = namedtuple('BerlageWavelet', ['amplitude', 'time'])
         return BerlageWavelet(w, t)
+    else:
+        return w
+
+
+def generalized(duration, dt, f, u=2, return_t=False, center=True, imag=False):
+    """
+    Wang's generalized wavelet, of which the Ricker is a special case where
+    u = 2. The parameter u is the order of the time-domain derivative, which
+    can be a fractional derivative.
+
+    As given by Wang (2015), Generalized seismic wavelets. GJI 203, p 1172-78.
+    DOI: https://doi.org/10.1093/gji/ggv346. I am using the (more accurate)
+    frequency domain method (eq 4 in that paper).
+
+    .. plot::
+        plt.plot(bruges.filters.generalized(.5, 0.002, 40, u=1.0))
+
+    Args:
+        duration (float): The length of the wavelet, in s.
+        dt (float): The time sample interval in s.
+        f (float or array-like): The frequency or frequencies, in Hertz.
+        u (float or array-like): The fractional derivative parameter u.
+        return_t (bool): Whether to return the time basis array.
+        center (bool): Whether to center the wavelet on time 0.
+        imag (bool): Whether to return the imaginary component as well.
+
+    Returns:
+        ndarray. If f and u are floats, the resulting wavelet has duration/dt
+            = A samples. If you give f as an array of length M and u as an
+            array of length N, then the resulting wavelet bank will have shape
+            (M, N, A). If f or u are floats, their size will be 1, and they
+            will be squeezed out: the bank is always squeezed to its minimum
+            number of dimensions. If you passed `return_t=True` then a tuple
+            of (wavelet, t) is returned.
+    """
+    if not return_t:
+        warnings.warn("In future releases, return_t will be True by default.", FutureWarning)
+
+    # Make sure we can do banks.
+    f = np.asanyarray(f).reshape(-1, 1)
+    u = np.asanyarray(u).reshape(-1, 1, 1)
+
+    # Basics.
+    om0 = f * 2 * np.pi
+    u2 = u / 2
+    df = 1 / duration
+    nyquist = (1 / dt) / 2
+    nf = 1 + nyquist / df
+    t0 = duration / 2
+    om = 2 * np.pi * np.arange(0, nyquist, df)
+
+    # Compute the spectrum from Wang's eq 4.
+    exp1 = np.exp((-om**2 / om0**2) + u2)
+    exp2 = np.exp(-1j*om*t0 + 1j*np.pi * (1 + u2))
+    W = (u2**(-u2)) * (om**u / om0**u) * exp1 * exp2
+
+    # Compute time domain response.
+    if center:
+        t = np.arange(-duration/2, duration/2, dt)
+    else:
+        t = np.arange(0, duration, dt)
+    w = np.fft.ifft(W, t.size)
+    if not imag:
+        w = w.real
+
+    # At this point the wavelet bank has the shape (u, f, a),
+    # where u is the size of u, f is the size of f, and a is
+    # the number of amplitude samples we generated.
+    w_max = np.max(np.abs(w), axis=-1)[:, :, None]
+    w = np.squeeze(w / w_max)
+
+    if return_t:
+        GeneralizedWavelet = namedtuple('GeneralizedWavelet', ['amplitude', 'time'])
+        return GeneralizedWavelet(w, t)
     else:
         return w
 
