@@ -1,4 +1,7 @@
-### v0.4 — November 2020
+### v0.4.1 — winter 2021
+- New things...
+
+### v0.4 — 27 November 2020
 - **Breaking change:** fixed numerous minor issues with `attribute.energy()`, see [issue 78](https://github.com/agile-geoscience/bruges/issues/78). Note that it now expects time to be in the last dimension of the array. The function now runs on n-D data and is also about 15 times faster.
 - Multiple fixes to the documentation, thanks especially to Jesper Dramsch and Adriana Gordon.
 - Added the `filters.berlage()` wavelet, a causal, minimum phase wavelet good for marine airgun sources.
