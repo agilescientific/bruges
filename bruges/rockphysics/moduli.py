@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 """
 ===================
 moduli.py
@@ -320,6 +319,9 @@ def vp(youngs=None, vs=None, rho=None, mu=None, lam=None, bulk=None, pr=None,
 
     elif (lam is not None) and (pr and rho is not None):
         return np.sqrt(lam * (1. - pr) / (pr*rho))
+
+    elif (bulk is not None) and (vs and rho is not None):
+        return np.sqrt((bulk / rho) + (4/3)*(vs**2))
 
     else:
         return None

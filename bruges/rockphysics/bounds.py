@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 """
 Bounds on effective elastic modulus.
 :copyright: 2015 Agile Geoscience

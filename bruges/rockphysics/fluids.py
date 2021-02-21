@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 """
 Fluid properties.
 
@@ -9,6 +8,12 @@ properties of pore fluids. GEOPHYSICS, VOL. 57, NO. 11; P. 1396-1408,
 :license: Apache 2.0
 """
 import numpy as np
+
+def wood(Kf1, Kf2, Sf1):
+    """
+    Wood's equation, per equation 35b in Batzle and Wang (1992).
+    """
+    return 1 / ((Sf1 / Kf1) + ((1 - Sf1) / Kf2))
 
 
 def rho_water(temperature, pressure):

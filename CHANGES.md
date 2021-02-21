@@ -1,5 +1,5 @@
-### v0.4.1 — winter 2021
-- New things...
+### v0.4.1 — 21 February 2021
+- Moved `phase_rotate()` to `bruges.filters` and it now should handle 2D and 3D seismic correctly. You can also pass an array-like of phases to get a 'phase bank' of rotations, similar to how this works with frequencies and wavelet banks. 
 
 ### v0.4 — 27 November 2020
 - **Breaking change:** fixed numerous minor issues with `attribute.energy()`, see [issue 78](https://github.com/agile-geoscience/bruges/issues/78). Note that it now expects time to be in the last dimension of the array. The function now runs on n-D data and is also about 15 times faster.

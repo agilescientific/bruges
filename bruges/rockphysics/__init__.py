@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-
 from .moduli import youngs, bulk, pr
 from .moduli import mu, lam, pmod
 from .moduli import vp, vs, moduli_dict
@@ -10,6 +8,7 @@ from .fluidsub import avseth_fluidsub, smith_fluidsub
 
 from .fluids import rho_water, rho_brine
 from .fluids import v_water, v_brine
+from .fluids import wood
 
 from .anisotropy import backus_parameters, backus
 from .anisotropy import backus_quality_factor, thomsen_parameters

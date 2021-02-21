@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 """
 Convolution in n-dimensions.
 
@@ -29,3 +28,8 @@ def convolve(reflectivity, wavelet):
     syn = np.array([apply_along_axis(np.convolve, reflectivity_2d, w, mode='same') for w in bank])
 
     return syn.reshape(outshape)
+
+
+def apply_along_axis(func_1d, arr, *args, **kwargs):
+    mapobj = map(lambda tr: func_1d(tr, *args, **kwargs), arr)
+    return np.array(list(mapobj))

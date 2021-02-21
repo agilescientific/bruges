@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 """
 :copyright: Alistair Muldal
 :license: Unknown, shared on StackOverflow and Pastebin

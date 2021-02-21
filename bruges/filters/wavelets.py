@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 """
 Seismic wavelets.
 
@@ -10,6 +9,8 @@ import warnings
 
 import numpy as np
 import scipy.signal
+
+from bruges.util import deprecated
 
 
 def generic(func, duration, dt, f, return_t=False, taper='blackman'):
@@ -319,7 +320,7 @@ def ormsby(duration, dt, f, return_t=False):
     try:
         f1, f2, f3, f4 = f
     except ValueError:
-        raise ValueError("The last dimension of the frequency array must be 4")
+        raise ValueError("The last dimension of the frequency array must be of size 4.")
 
     def numerator(f, t):
         return (np.sinc(f * t)**2) * ((np.pi * f) ** 2)
@@ -466,6 +467,7 @@ def generalized(duration, dt, f, u=2, return_t=False, center=True, imag=False):
         return w
 
 
+@deprecated('bruges.filters.wavelets.rotate_phase() is deprecated. Please use bruges.filters.rotate_phase() instead.')
 def rotate_phase(w, phi, degrees=False):
     """
     Performs a phase rotation of wavelet or wavelet bank using:

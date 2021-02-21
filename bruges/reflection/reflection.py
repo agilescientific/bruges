@@ -74,7 +74,6 @@ def acoustic_reflectivity(vp, rho):
     lower = vp[1:] * rho[1:]
     return (lower - upper) / (lower + upper)
 
-
 def reflectivity(vp, vs, rho, theta=0, method='zoeppritz_rpp'):
     """
     Offset reflectivity, given Vp, Vs, rho, and offset.

@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 """
 Smoothers.
 
@@ -7,14 +6,12 @@ Smoothers.
 """
 import numpy as np
 import scipy.ndimage
+import scipy.signal
 
 from bruges.bruges import BrugesError
+from bruges.filters import apply_along_axis
 from bruges.util import nearest
 from bruges.util import rms as rms_
-
-# TODO:
-#     - 1D and 2D Gaussian (or, better, n-D)
-#     - See how these handle Nans, consider removing, interpolating, replacing.
 
 
 def mean(arr, size=5):
@@ -237,3 +234,19 @@ def conservative(arr, size=5, supercon=False):
                                                         'supercon': supercon,
                                                        }
                                        )
+
+
+def rotate_phase(s, phi, degrees=False):
+    # Make sure the data is at least 2D to apply_along
+    data = np.atleast_2d(s)
+
+    # Get Hilbert transform. This will be 2D.
+    a = apply_along_axis(scipy.signal.hilbert, data, axis=0)
+
+    # Transform angles into what we need.
+    phi = np.asanyarray(phi).reshape(-1, 1, 1)
+    if degrees:
+        phi = np.radians(phi)
+        
+    rotated = np.real(a) * np.cos(phi)  -  np.imag(a) * np.sin(phi)
+    return np.squeeze(rotated)

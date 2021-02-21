@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 """
 2D kernels for image processing.
 
