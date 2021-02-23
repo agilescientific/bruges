@@ -19,9 +19,9 @@ def get_time(duration, dt, parity='even'):
     """
     warnings.warn("In future releases, time parity will be 'odd' by default.", FutureWarning)
     if parity == 'even':
-        return np.linspace(-duration/2., duration/2., int(duration/dt)+1)
-    else:
         return np.linspace(-duration/2., duration/2., int(duration/dt), endpoint=False)
+    else:
+        return np.linspace(-duration/2., duration/2., int(duration/dt)+1)
 
 
 def generic(func, duration, dt, f, t=None, return_t=False, taper='blackman'):
