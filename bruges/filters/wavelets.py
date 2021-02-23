@@ -13,7 +13,18 @@ import scipy.signal
 from bruges.util import deprecated
 
 
-def generic(func, duration, dt, f, return_t=False, taper='blackman'):
+def get_time(duration, dt, parity='even'):
+    """
+    Make a time vector.
+    """
+    warnings.warn("In future releases, time parity will be 'odd' by default.", FutureWarning)
+    if parity == 'even':
+        return np.linspace(-duration/2., duration/2., int(duration/dt)+1)
+    else:
+        return np.linspace(-duration/2., duration/2., int(duration/dt), endpoint=False)
+
+
+def generic(func, duration, dt, f, t=None, return_t=False, taper='blackman'):
     """
     Generic wavelet generator: applies a window to a continuous function.
 
@@ -24,6 +35,9 @@ def generic(func, duration, dt, f, return_t=False, taper='blackman'):
             or 0.004).
         f (array-like): Dominant frequency of the wavelet in Hz. If a sequence is
             passed, you will get a 2D array in return, one row per frequency.
+        t (array-like): The time series to evaluate at, if you don't want one
+            to be computed. If you pass `t` then `duration` and `dt` will be
+            ignored, so we recommend passing `None` for those arguments.
         return_t (bool): If True, then the function returns a tuple of
             wavelet, time-basis, where time is the range from -duration/2 to
             duration/2 in steps of dt.
@@ -41,7 +55,10 @@ def generic(func, duration, dt, f, return_t=False, taper='blackman'):
         warnings.warn("In future releases, return_t will be True by default.", FutureWarning)
 
     f = np.asanyarray(f).reshape(-1, 1)
-    t = np.arange(-duration/2., duration/2., dt)
+
+    if t is None:
+        t = get_time(duration, dt)
+
     t[t == 0] = 1e-12  # Avoid division by zero.
     f[f == 0] = 1e-12  # Avoid division by zero.
 
@@ -175,7 +192,7 @@ def gabor(duration, dt, f, return_t=False):
     return generic(func, duration, dt, f, return_t)
 
 
-def ricker(duration, dt, f, return_t=False):
+def ricker(duration, dt, f, t=None, return_t=False, parity='even'):
     """
     Also known as the mexican hat wavelet, models the function:
 
@@ -193,9 +210,14 @@ def ricker(duration, dt, f, return_t=False):
             or 0.004).
         f (array-like): Centre frequency of the wavelet in Hz. If a sequence is
             passed, you will get a 2D array in return, one row per frequency.
+        t (array-like): The time series to evaluate at, if you don't want one
+            to be computed. If you pass `t` then `duration` and `dt` will be
+            ignored, so we recommend passing `None` for those arguments.
         return_t (bool): If True, then the function returns a tuple of
             wavelet, time-basis, where time is the range from -duration/2 to
             duration/2 in steps of dt.
+        parity (str): Should be 'odd' or 'even'. If 'even' (default behaviour
+            before v0.5) there may be time shifts in results of convolution.
 
     Returns:
         ndarray. Ricker wavelet(s) with centre frequency f sampled on t. If
@@ -205,7 +227,10 @@ def ricker(duration, dt, f, return_t=False):
         warnings.warn("In future releases, return_t will be True by default.", FutureWarning)
 
     f = np.asanyarray(f).reshape(-1, 1)
-    t = np.arange(-duration/2, duration/2, dt)
+
+    if t is None:
+        t = get_time(duration, dt, parity=parity)
+
     pft2 = (np.pi * f * t)**2
     w = np.squeeze((1 - (2 * pft2)) * np.exp(-pft2))
 
@@ -256,7 +281,7 @@ def klauder(duration, dt, f,
         warnings.warn("In future releases, return_t will be True by default.", FutureWarning)
 
     t0, t1 = -duration/2, duration/2
-    t = np.arange(t0, t1, dt)
+    t = get_time(duration, dt)
 
     f = np.asanyarray(f).reshape(-1, 1)
     f1, f2 = f
@@ -328,7 +353,7 @@ def ormsby(duration, dt, f, return_t=False):
     pf43 = (np.pi * f4) - (np.pi * f3)
     pf21 = (np.pi * f2) - (np.pi * f1)
 
-    t = np.arange(-duration/2, duration/2, dt)
+    t = get_time(duration, dt)
 
     w = ((numerator(f4, t)/pf43) - (numerator(f3, t)/pf43) -
          (numerator(f2, t)/pf21) + (numerator(f1, t)/pf21))
@@ -379,7 +404,7 @@ def berlage(duration, dt, f, n=2, alpha=180, phi=-np.pi/2, return_t=False):
         warnings.warn("In future releases, return_t will be True by default.", FutureWarning)
 
     f = np.asanyarray(f).reshape(-1, 1)
-    t = np.arange(-duration/2, duration/2, dt)
+    t = get_time(duration, dt)
 
     H = np.heaviside(t, 0)
     w = H * t**n * np.exp(-alpha * t) * np.cos(2 * np.pi * f * t + phi)
@@ -447,7 +472,7 @@ def generalized(duration, dt, f, u=2, return_t=False, center=True, imag=False):
 
     # Compute time domain response.
     if center:
-        t = np.arange(-duration/2, duration/2, dt)
+        t = get_time(duration, dt)
     else:
         t = np.arange(0, duration, dt)
     w = np.fft.ifft(W, t.size)
