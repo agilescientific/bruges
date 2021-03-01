@@ -1,30 +1,55 @@
 """
 Seismic wavelets.
 
-:copyright: 2019 Agile Geoscience
+:copyright: 2021 Agile Geoscience
 :license: Apache 2.0
 """
-from collections import namedtuple
 import warnings
+from collections import namedtuple
 
 import numpy as np
 import scipy.signal
-
 from bruges.util import deprecated
 
 
-def get_time(duration, dt, parity='even'):
+def _get_time(duration, dt, sym=None):
     """
     Make a time vector.
+
+    If `sym` is `True`, the time vector will have an odd number of samples,
+    and will be symmetric about 0. If it's False, and the number of samples
+    is even (e.g. duration = 0.016, dt = 0.004), then 0 will bot be center.
     """
-    warnings.warn("In future releases, time parity will be 'odd' by default.", FutureWarning)
-    if parity == 'even':
-        return np.linspace(-duration/2., duration/2., int(duration/dt), endpoint=False)
-    else:
-        return np.linspace(-duration/2., duration/2., int(duration/dt)+1)
+    if sym is None:
+        m = "In future releases, the default legacy behaviour will be removed. "
+        m += "We recommend setting sym=True. This will be the default in v0.5+."
+        warnings.warn(m, category=FutureWarning, stacklevel=2)
+        return np.arange(-duration/2, duration/2, dt)
+    
+    # This business is to avoid some of the issues with `np.arange`:
+    # (1) unpredictable length and (2) floating point weirdness, like
+    # 1.234e-17 instead of 0. Not using `linspace` because figuring out
+    # the length and offset gave me even more of a headache than this.
+    n = int(duration / dt)
+    odd = n % 2
+    k = int(10**-np.floor(np.log10(dt)))
+    dti = int(k * dt)  # integer dt
+        
+    if (odd and sym):
+        t = np.arange(n)
+    if (not odd and sym):
+        t = np.arange(n + 1)
+    if (odd and not sym): 
+        t = np.arange(n)
+    if (not odd and not sym):
+        t = np.arange(n) - 1
+        
+    t -= t[-1] // 2
+    
+    return dti * t / k
 
 
-def generic(func, duration, dt, f, t=None, return_t=False, taper='blackman'):
+def _generic(func, duration, dt, f, t=None, return_t=False, taper='blackman', sym=None):
     """
     Generic wavelet generator: applies a window to a continuous function.
 
@@ -39,25 +64,33 @@ def generic(func, duration, dt, f, t=None, return_t=False, taper='blackman'):
             to be computed. If you pass `t` then `duration` and `dt` will be
             ignored, so we recommend passing `None` for those arguments.
         return_t (bool): If True, then the function returns a tuple of
-            wavelet, time-basis, where time is the range from -duration/2 to
-            duration/2 in steps of dt.
+            wavelet, time-basis.
         taper (str or function): The window or tapering function to apply.
             To use one of NumPy's functions, pass 'bartlett', 'blackman' (the
             default), 'hamming', or 'hanning'; to apply no tapering, pass
             'none'. To apply your own function, pass a function taking only
             the length of the window and returning the window function.
+        sym (bool): If True (default behaviour before v0.5) then the wavelet
+            is forced to have an odd number of samples and the central sample
+            is at 0 time.
 
     Returns:
         ndarray. wavelet(s) with centre frequency f sampled on t. If you
             passed `return_t=True` then a tuple of (wavelet, t) is returned.
     """
     if not return_t:
-        warnings.warn("In future releases, return_t will be True by default.", FutureWarning)
+        m = "In future releases, return_t will be True by default."
+        warnings.warn(m, FutureWarning)
 
     f = np.asanyarray(f).reshape(-1, 1)
 
+    # Compute time domain response.
     if t is None:
-        t = get_time(duration, dt)
+        t = _get_time(duration, dt, sym=sym)
+    else:
+        if (duration is not None) or (dt is not None):
+            m = "`duration` and `dt` are ignored when `t` is passed."
+            warnings.warn(m, UserWarning, stacklevel=2)
 
     t[t == 0] = 1e-12  # Avoid division by zero.
     f[f == 0] = 1e-12  # Avoid division by zero.
@@ -82,7 +115,7 @@ def generic(func, duration, dt, f, t=None, return_t=False, taper='blackman'):
         return w
 
 
-def sinc(duration, dt, f, return_t=False, taper='blackman'):
+def sinc(duration, dt, f, t=None, return_t=False, taper='blackman', sym=None):
     """
     sinc function centered on t=0, with a dominant frequency of f Hz.
 
@@ -97,9 +130,11 @@ def sinc(duration, dt, f, return_t=False, taper='blackman'):
             or 0.004).
         f (array-like): Dominant frequency of the wavelet in Hz. If a sequence is
             passed, you will get a 2D array in return, one row per frequency.
+        t (array-like): The time series to evaluate at, if you don't want one
+            to be computed. If you pass `t` then `duration` and `dt` will be
+            ignored, so we recommend passing `None` for those arguments.
         return_t (bool): If True, then the function returns a tuple of
-            wavelet, time-basis, where time is the range from -duration/2 to
-            duration/2 in steps of dt.
+            wavelet, time-basis.
         taper (str or function): The window or tapering function to apply.
             To use one of NumPy's functions, pass 'bartlett', 'blackman' (the
             default), 'hamming', or 'hanning'; to apply no tapering, pass
@@ -113,10 +148,10 @@ def sinc(duration, dt, f, return_t=False, taper='blackman'):
     def func(t_, f_):
         return np.sin(2*np.pi*f_*t_) / (2*np.pi*f_*t_)
 
-    return generic(func, duration, dt, f, return_t, taper)
+    return _generic(func, duration, dt, f, t, return_t, taper)
 
 
-def cosine(duration, dt, f, return_t=False, taper='gaussian', sigma=None):
+def cosine(duration, dt, f, t=None, return_t=False, taper='gaussian', sigma=None, sym=None):
     """
     With the default Gaussian window, equivalent to a 'modified Morlet'
     also sometimes called a 'Gabor' wavelet. The `bruges.filters.gabor`
@@ -134,9 +169,11 @@ def cosine(duration, dt, f, return_t=False, taper='gaussian', sigma=None):
             or 0.004).
         f (array-like): Dominant frequency of the wavelet in Hz. If a sequence is
             passed, you will get a 2D array in return, one row per frequency.
+        t (array-like): The time series to evaluate at, if you don't want one
+            to be computed. If you pass `t` then `duration` and `dt` will be
+            ignored, so we recommend passing `None` for those arguments.
         return_t (bool): If True, then the function returns a tuple of
-            wavelet, time-basis, where time is the range from -duration/2 to
-            duration/2 in steps of dt.
+            wavelet, time-basis.
         taper (str or function): The window or tapering function to apply.
             To use one of NumPy's functions, pass 'bartlett', 'blackman' (the
             default), 'hamming', or 'hanning'; to apply no tapering, pass
@@ -158,10 +195,10 @@ def cosine(duration, dt, f, return_t=False, taper='gaussian', sigma=None):
     def taper(length):
         return scipy.signal.gaussian(length, sigma/dt)
 
-    return generic(func, duration, dt, f, return_t, taper)
+    return _generic(func, duration, dt, f, t, return_t, taper)
 
 
-def gabor(duration, dt, f, return_t=False):
+def gabor(duration, dt, f, t=None, return_t=False, sym=None):
     """
     Generates a Gabor wavelet with a peak frequency f0 at time t.
 
@@ -178,9 +215,11 @@ def gabor(duration, dt, f, return_t=False):
             or 0.004).
         f (array-like): Centre frequency of the wavelet in Hz. If a sequence is
             passed, you will get a 2D array in return, one row per frequency.
+        t (array-like): The time series to evaluate at, if you don't want one
+            to be computed. If you pass `t` then `duration` and `dt` will be
+            ignored, so we recommend passing `None` for those arguments.
         return_t (bool): If True, then the function returns a tuple of
-            wavelet, time-basis, where time is the range from -duration/2 to
-            duration/2 in steps of dt.
+            wavelet, time-basis.
 
     Returns:
         ndarray. Gabor wavelet(s) with centre frequency f sampled on t. If
@@ -189,10 +228,10 @@ def gabor(duration, dt, f, return_t=False):
     def func(t_, f_):
         return np.exp(-2 * f_**2 * t_**2) * np.cos(2 * np.pi * f_ * t_)
 
-    return generic(func, duration, dt, f, return_t)
+    return _generic(func, duration, dt, f, t, return_t)
 
 
-def ricker(duration, dt, f, t=None, return_t=False, parity='even'):
+def ricker(duration, dt, f, t=None, return_t=False, sym=None):
     """
     Also known as the mexican hat wavelet, models the function:
 
@@ -214,22 +253,27 @@ def ricker(duration, dt, f, t=None, return_t=False, parity='even'):
             to be computed. If you pass `t` then `duration` and `dt` will be
             ignored, so we recommend passing `None` for those arguments.
         return_t (bool): If True, then the function returns a tuple of
-            wavelet, time-basis, where time is the range from -duration/2 to
-            duration/2 in steps of dt.
-        parity (str): Should be 'odd' or 'even'. If 'even' (default behaviour
-            before v0.5) there may be time shifts in results of convolution.
+            wavelet, time-basis.
+        sym (bool): If True (default behaviour before v0.5) then the wavelet
+            is forced to have an odd number of samples and the central sample
+            is at 0 time.
 
     Returns:
         ndarray. Ricker wavelet(s) with centre frequency f sampled on t. If
             you passed `return_t=True` then a tuple of (wavelet, t) is returned.
     """
     if not return_t:
-        warnings.warn("In future releases, return_t will be True by default.", FutureWarning)
+        m = "In future releases, return_t will be True by default."
+        warnings.warn(m, FutureWarning, stacklevel=2)
 
     f = np.asanyarray(f).reshape(-1, 1)
 
     if t is None:
-        t = get_time(duration, dt, parity=parity)
+        t = _get_time(duration, dt, sym=sym)
+    else:
+        if (duration is not None) or (dt is not None):
+            m = "`duration` and `dt` are ignored when `t` is passed."
+            warnings.warn(m, UserWarning, stacklevel=2)
 
     pft2 = (np.pi * f * t)**2
     w = np.squeeze((1 - (2 * pft2)) * np.exp(-pft2))
@@ -243,8 +287,10 @@ def ricker(duration, dt, f, t=None, return_t=False, parity='even'):
 
 def klauder(duration, dt, f,
             autocorrelate=True,
+            t=None,
             return_t=False,
             taper='blackman',
+            sym=None,
             **kwargs):
     """
     By default, gives the autocorrelation of a linear frequency modulated
@@ -261,14 +307,19 @@ def klauder(duration, dt, f,
             A list of lists will create a wavelet bank.
         autocorrelate (bool): Whether to autocorrelate the sweep(s) to create
             a wavelet. Default is `True`.
+        t (array-like): The time series to evaluate at, if you don't want one
+            to be computed. If you pass `t` then `duration` and `dt` will be
+            ignored, so we recommend passing `None` for those arguments.
         return_t (bool): If True, then the function returns a tuple of
-            wavelet, time-basis, where time is the range from -duration/2 to
-            duration/2 in steps of dt.
+            wavelet, time-basis.
         taper (str or function): The window or tapering function to apply.
             To use one of NumPy's functions, pass 'bartlett', 'blackman' (the
             default), 'hamming', or 'hanning'; to apply no tapering, pass
             'none'. To apply your own function, pass a function taking only
             the length of the window and returning the window function.
+        sym (bool): If True (default behaviour before v0.5) then the wavelet
+            is forced to have an odd number of samples and the central sample
+            is at 0 time.
         **kwargs: Further arguments are passed to scipy.signal.chirp. They are
             `method` ('linear','quadratic','logarithmic'), `phi` (phase offset
             in degrees), and `vertex_zero`.
@@ -278,10 +329,18 @@ def klauder(duration, dt, f,
             (wavelet, t) is returned.
     """
     if not return_t:
-        warnings.warn("In future releases, return_t will be True by default.", FutureWarning)
+        m = "In future releases, return_t will be True by default."
+        warnings.warn(m, FutureWarning, stacklevel=2)
+
+    if t is None:
+        t = _get_time(duration, dt, sym=sym)
+    else:
+        if (duration is not None) or (dt is not None):
+            m = "`duration` and `dt` are ignored when `t` is passed. "
+            m += "Pass None to suppress this warning."
+            warnings.warn(m, UserWarning, stacklevel=2)
 
     t0, t1 = -duration/2, duration/2
-    t = get_time(duration, dt)
 
     f = np.asanyarray(f).reshape(-1, 1)
     f1, f2 = f
@@ -316,7 +375,7 @@ def klauder(duration, dt, f,
 sweep = klauder
 
 
-def ormsby(duration, dt, f, return_t=False):
+def ormsby(duration, dt, f, t=None, return_t=False, sym=None):
     """
     The Ormsby wavelet requires four frequencies which together define a
     trapezoid shape in the spectrum. The Ormsby wavelet has several sidelobes,
@@ -331,6 +390,14 @@ def ormsby(duration, dt, f, return_t=False):
             or 0.004).
         f (array-like): Sequence of form (f1, f2, f3, f4), or list of lists of
             frequencies, which will return a 2D wavelet bank.
+        t (array-like): The time series to evaluate at, if you don't want one
+            to be computed. If you pass `t` then `duration` and `dt` will be
+            ignored, so we recommend passing `None` for those arguments.
+        return_t (bool): If True, then the function returns a tuple of
+            wavelet, time-basis.
+        sym (bool): If True (default behaviour before v0.5) then the wavelet
+            is forced to have an odd number of samples and the central sample
+            is at 0 time.
 
     Returns:
         ndarray: A vector containing the Ormsby wavelet, or a bank of them. If
@@ -338,7 +405,8 @@ def ormsby(duration, dt, f, return_t=False):
 
     """
     if not return_t:
-        warnings.warn("In future releases, return_t will be True by default.", FutureWarning)
+        m = "In future releases, return_t will be True by default."
+        warnings.warn(m, FutureWarning, stacklevel=2)
 
     f = np.asanyarray(f).reshape(-1, 1)
 
@@ -353,7 +421,12 @@ def ormsby(duration, dt, f, return_t=False):
     pf43 = (np.pi * f4) - (np.pi * f3)
     pf21 = (np.pi * f2) - (np.pi * f1)
 
-    t = get_time(duration, dt)
+    if t is None:
+        t = _get_time(duration, dt, sym=sym)
+    else:
+        if (duration is not None) or (dt is not None):
+            m = "`duration` and `dt` are ignored when `t` is passed."
+            warnings.warn(m, UserWarning, stacklevel=2)
 
     w = ((numerator(f4, t)/pf43) - (numerator(f3, t)/pf43) -
          (numerator(f2, t)/pf21) + (numerator(f1, t)/pf21))
@@ -367,7 +440,65 @@ def ormsby(duration, dt, f, return_t=False):
         return w
 
 
-def berlage(duration, dt, f, n=2, alpha=180, phi=-np.pi/2, return_t=False):
+def ormsby_fft(duration, dt, f, P=(0, 0), return_t=True, sym=True):
+    """
+    Non-white Ormsby, with arbitary amplitudes.
+    
+    Can use as many points as you like. The power of f1 and f4 is assumed to be 0,
+    so you only need to provide p2 and p3 (the corners). (You can actually provide
+    as many f points as you like, as long as there are n - 2 matching p points.)
+
+    .. plot::
+        plt.plot(bruges.filters.ormsby(.5, 0.002, [5, 10, 40, 80]))
+
+    Args:
+        duration (float): The length in seconds of the wavelet.
+        dt (float): The sample interval in seconds (usually 0.001, 0.002,
+            or 0.004).
+        f (array-like): Sequence of form (f1, f2, f3, f4), or list of lists of
+            frequencies, which will return a 2D wavelet bank.
+        P (tuple): The power of the f2 and f3 frequencies, in relative dB.
+            (The magnitudes of f1 and f4 are assumed to be -∞ dB, i.e. a
+            magnitude of 0.) The default power values of (0, 0) results in a
+            trapezoidal spectrum and a conventional Ormsby wavelet. Pass, e.g.
+            (0, -15) for a 'pink' wavelet, with more energy in the lower
+            frequencies.
+        return_t (bool): If True, then the function returns a tuple of
+            wavelet, time-basis.
+        sym (bool): If True (default behaviour before v0.5) then the wavelet
+            is forced to have an odd number of samples and the central sample
+            is at 0 time.
+
+    Returns:
+        ndarray: A vector containing the Ormsby wavelet, or a bank of them. If
+            you passed `return_t=True` then a tuple of (wavelet, t) is returned.
+    """
+    fs = 1 / dt
+    fN = fs // 2
+    n = int(duration / dt)
+    a = map(lambda p: 10**(p/20), P)
+
+    # Linear interpolation of points.
+    x  = np.linspace(0, int(fN), int(10*n))
+    xp = [  0.] + list(f) +  [fN]
+    fp = [0., 0.] + list(a) + [0., 0.]
+    W = np.interp(x, xp, fp)
+
+    # Compute inverse FFT.
+    w_ = np.fft.fftshift(np.fft.irfft(W))
+    L = int(w_.size // 2)
+    normalize = lambda d: d / np.max(abs(d))
+    w = normalize(w_[L-n//2:L+n//2+sym])
+    t = _get_time(duration, dt, sym=sym)
+
+    if return_t:
+        OrmsbyWavelet = namedtuple('OrmsbyWavelet', ['amplitude', 'time'])
+        return OrmsbyWavelet(w, t)
+    else:
+        return w
+
+
+def berlage(duration, dt, f, n=2, alpha=180, phi=-np.pi/2, t=None, return_t=False, sym=None):
     """
     Generates a Berlage wavelet with a peak frequency f. Implements
 
@@ -392,19 +523,32 @@ def berlage(duration, dt, f, n=2, alpha=180, phi=-np.pi/2, return_t=False):
             passed, you will get a 2D array in return, one row per frequency.
         n (float): The time exponent; non-negative and real.
         alpha(float): The exponential decay factor; non-negative and real.
+        phi (float): The phase.
+        t (array-like): The time series to evaluate at, if you don't want one
+            to be computed. If you pass `t` then `duration` and `dt` will be
+            ignored, so we recommend passing `None` for those arguments.
         return_t (bool): If True, then the function returns a tuple of
-            wavelet, time-basis, where time is the range from -duration/2 to
-            duration/2 in steps of dt.
+            wavelet, time-basis.
+        sym (bool): If True (default behaviour before v0.5) then the wavelet
+            is forced to have an odd number of samples and the central sample
+            is at 0 time.
 
     Returns:
         ndarray. Berlage wavelet(s) with centre frequency f sampled on t. If
             you passed `return_t=True` then a tuple of (wavelet, t) is returned.
     """
     if not return_t:
-        warnings.warn("In future releases, return_t will be True by default.", FutureWarning)
+        m = "In future releases, return_t will be True by default."
+        warnings.warn(m, FutureWarning, stacklevel=2)
 
     f = np.asanyarray(f).reshape(-1, 1)
-    t = get_time(duration, dt)
+    if t is None:
+        t = _get_time(duration, dt, sym=sym)
+    else:
+        if (duration is not None) or (dt is not None):
+            m = "`duration` and `dt` are ignored when `t` is passed."
+            warnings.warn(m, UserWarning, stacklevel=2)
+
 
     H = np.heaviside(t, 0)
     w = H * t**n * np.exp(-alpha * t) * np.cos(2 * np.pi * f * t + phi)
@@ -418,7 +562,7 @@ def berlage(duration, dt, f, n=2, alpha=180, phi=-np.pi/2, return_t=False):
         return w
 
 
-def generalized(duration, dt, f, u=2, return_t=False, center=True, imag=False):
+def generalized(duration, dt, f, u=2, t=None, return_t=False, imag=False, sym=None):
     """
     Wang's generalized wavelet, of which the Ricker is a special case where
     u = 2. The parameter u is the order of the time-domain derivative, which
@@ -436,9 +580,15 @@ def generalized(duration, dt, f, u=2, return_t=False, center=True, imag=False):
         dt (float): The time sample interval in s.
         f (float or array-like): The frequency or frequencies, in Hertz.
         u (float or array-like): The fractional derivative parameter u.
+        t (array-like): The time series to evaluate at, if you don't want one
+            to be computed. If you pass `t` then `duration` and `dt` will be
+            ignored, so we recommend passing `None` for those arguments.
         return_t (bool): Whether to return the time basis array.
         center (bool): Whether to center the wavelet on time 0.
         imag (bool): Whether to return the imaginary component as well.
+        sym (bool): If True (default behaviour before v0.5) then the wavelet
+            is forced to have an odd number of samples and the central sample
+            is at 0 time.
 
     Returns:
         ndarray. If f and u are floats, the resulting wavelet has duration/dt
@@ -450,11 +600,22 @@ def generalized(duration, dt, f, u=2, return_t=False, center=True, imag=False):
             of (wavelet, t) is returned.
     """
     if not return_t:
-        warnings.warn("In future releases, return_t will be True by default.", FutureWarning)
+        m = "In future releases, return_t will be True by default."
+        warnings.warn(m, FutureWarning, stacklevel=2)
 
     # Make sure we can do banks.
     f = np.asanyarray(f).reshape(-1, 1)
     u = np.asanyarray(u).reshape(-1, 1, 1)
+
+    # Compute time domain response.
+    if t is None:
+        t = _get_time(duration, dt, sym=sym)
+    else:
+        if (duration is not None) or (dt is not None):
+            m = "`duration` and `dt` are ignored when `t` is passed."
+            warnings.warn(m, UserWarning, stacklevel=2)
+        dt = t[1] - t[0]
+        duration = len(t) * dt
 
     # Basics.
     om0 = f * 2 * np.pi
@@ -470,11 +631,6 @@ def generalized(duration, dt, f, u=2, return_t=False, center=True, imag=False):
     exp2 = np.exp(-1j*om*t0 + 1j*np.pi * (1 + u2))
     W = (u2**(-u2)) * (om**u / om0**u) * exp1 * exp2
 
-    # Compute time domain response.
-    if center:
-        t = get_time(duration, dt)
-    else:
-        t = np.arange(0, duration, dt)
     w = np.fft.ifft(W, t.size)
     if not imag:
         w = w.real
