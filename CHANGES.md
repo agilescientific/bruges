@@ -1,4 +1,4 @@
-### v0.4.2 — 28 February 2021
+### v0.4.2 — 1 March 2021
 - The Ormsby wavelet now has the option of passing in the relative power (in dB) of the f2 and f3 corner frequencies, e.g. `P=(0, -5)`. Default: `(0, 0)` (the conventional trapezoidal Ormsby bandpass filter). 
 - Wavelets now have the option of returning an odd number of samples for 'even' time periods, like 0.128 s at 0.004 s sample interval. This used to return 32 samples; now if you set `sym` to `True`, you'll get 33 samples. **Future change:** From v0.5, this will be the default.
 - Wavelet time shoud no longer suffer from floating point imprecision (previously common near t = 0). 
