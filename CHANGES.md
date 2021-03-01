@@ -1,3 +1,11 @@
+### v0.4.2 — 28 February 2021
+- The Ormsby wavelet now has the option of passing in the relative power (in dB) of the f2 and f3 corner frequencies, e.g. `P=(0, -5)`. Default: `(0, 0)` (the conventional trapezoidal Ormsby bandpass filter). 
+- Wavelets now have the option of returning an odd number of samples for 'even' time periods, like 0.128 s at 0.004 s sample interval. This used to return 32 samples; now if you set `sym` to `True`, you'll get 33 samples. **Future change:** From v0.5, this will be the default.
+- Wavelet time shoud no longer suffer from floating point imprecision (previously common near t = 0). 
+- You can now optionally pass a time series to a wavelet function, and the wavelet will be evaluated at those times. This overrides `duration` and `dt`, so you should pass `None` to those parameters (or get a warning).
+- Added a new module, `models`, which contains a new function, `wedge`. For now this generates 2D wedge models; in the future it will also provide 3D models.
+- **Future change:** Reminder: wavelets in v0.5 will no longer have `return_t=True` by default.
+
 ### v0.4.1 — 21 February 2021
 - Moved `phase_rotate()` to `bruges.filters` and it now should handle 2D and 3D seismic correctly. You can also pass an array-like of phases to get a 'phase bank' of rotations, similar to how this works with frequencies and wavelet banks. 
 

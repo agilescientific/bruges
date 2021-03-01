@@ -6,6 +6,7 @@ Initialize the library.
 """
 from . import attribute
 from . import filters
+from . import models
 from . import petrophysics
 from . import rockphysics
 from . import reflection

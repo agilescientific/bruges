@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-
 from .reflection import reflection_phase, critical_angles
 from .reflection import reflectivity, acoustic_reflectivity
 from .reflection import scattering_matrix
