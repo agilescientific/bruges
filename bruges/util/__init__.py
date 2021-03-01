@@ -10,3 +10,4 @@ from .util import extrapolate
 from .util import nearest
 from .util import deprecated
 from .util import apply_along_axis
+from .util import sigmoid

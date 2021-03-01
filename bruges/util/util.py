@@ -91,41 +91,6 @@ greek = {
 }
 
 
-def deprecated(instructions):
-    """
-    Flags a method as deprecated. This decorator can be used to mark functions
-    as deprecated. It will result in a warning being emitted when the function
-    is used.
-
-    Args:
-        instructions (str): A human-friendly string of instructions, such
-            as: 'Please migrate to add_proxy() ASAP.'
-
-    Returns:
-        The decorated function.
-    """
-    def decorator(func):
-
-        @functools.wraps(func)
-        def wrapper(*args, **kwargs):
-            message = 'Call to deprecated function {}. {}'.format(
-                func.__name__,
-                instructions)
-
-            frame = inspect.currentframe().f_back
-
-            warnings.warn_explicit(message,
-                                   category=DeprecationWarning,
-                                   filename=inspect.getfile(frame.f_code),
-                                   lineno=frame.f_lineno)
-
-            return func(*args, **kwargs)
-
-        return wrapper
-
-    return decorator
-
-
 def rms(a, axis=None):
     """
     Calculates the RMS of an array.
@@ -321,3 +286,15 @@ def apply_along_axis(func_1d, arr, kernel, **kwargs):
     """
     mapobj = map(lambda tr: func_1d(tr, kernel, **kwargs), arr)
     return np.array(list(mapobj))
+
+
+def sigmoid(start, stop, num):
+    """
+    Nonlinear space following a logistic function.
+    
+    The function is asymptotic; the parameters used in the sigmoid
+    gets within 0.5% of the target thickness in a wedge increasing
+    from 0 to 2x the original thickness.
+    """
+    x = np.linspace(-5.293305, 5.293305, num)
+    return start + (stop-start) / (1 + np.exp(-x))
