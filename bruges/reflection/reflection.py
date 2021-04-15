@@ -589,7 +589,7 @@ def shuey(vp1, vs1, rho1, vp2, vs2, rho2, theta1=0,
     if return_gradient:
         fields = ['intercept', 'gradient']
         Shuey = namedtuple('Shuey', fields)
-        return Shuey(np.squeeze(r0), np.squeeze(g))
+        return Shuey(np.squeeze(r0), np.squeeze(term2))
     elif terms:
         fields = ['R0', 'Rg', 'Rf']
         Shuey = namedtuple('Shuey', fields)
