@@ -25,7 +25,7 @@ def v_rms(v, depth=None, time=None):
         raise TypeError("You must provide a depth or time array")
 
     if depth is None:
-        return np.sqrt(np.cumsum(v**2 / time) / np.cumsum(time))
+        return np.sqrt(np.cumsum(v**2 * time) / np.cumsum(time))
     else:
         return np.sqrt(np.cumsum(depth * v) / np.cumsum(depth / v))
 
