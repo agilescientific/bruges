@@ -1,7 +1,7 @@
 """
 Utility functions.
 
-:copyright: 2015 Agile Geoscience
+:copyright: 2021 Agile Scientific
 :license: Apache 2.0
 """
 import functools
@@ -235,38 +235,38 @@ def extrapolate(a):
     return a
 
 
-def error_flag(pred, actual, dev = 1.0, method = 1):
-    """Calculate the difference between a predicted and an actual curve 
-    and return a log flagging large differences based on a user-defined distance 
-    (in standard deviation units) from the mean difference
+def error_flag(pred, actual, dev=1.0, method=1):
+    """
+    Calculate the difference between a predicted and an actual curve
+    and return a log flagging large differences based on a user-defined
+    distance (in standard deviation units) from the mean difference.
 
-    Matteo Niccoli, October 2018
-    
     Args:
-        predicted (ndarray) = predicted log
-        actual (ndarray) =  original log  
-        dev  (float) = standard deviations to use, default 1
-        error calcluation method (int), default 1
+        predicted (ndarray): predicted log.
+        actual (ndarray):  original log.
+        dev (float): standard deviations to use, default 1
+        error calcluation method (int): default 1
             1: difference between curves larger than mean difference plus dev
-            
-            2: curve slopes have opposite sign. Will require depth log for .diff method
-            3: curve slopes of opposite sign OR difference larger than mean plus dev
-    
+            2: curve slopes have opposite sign. Will require depth log for
+               .diff method
+            3: curve slopes of opposite sign OR difference larger than mean
+               plus dev
 
     Returns:
-    flag (ndarray) =  error flag curve"""
-    
+        flag (ndarray) =  error flag curve
+
+    Author:
+        Matteo Niccoli, 2018
+    """
+
     flag = np.zeros(len(pred))
     err = np.abs(pred-actual)
     err_mean = np.mean(err)
     err_std = np.std(err)
 
     if method == 1:
-        flag[np.where(err>(err_mean + (dev*err_std)))] = 1
-     
-     ###
-     # add methods 2 and 3
-     ###
+        flag[np.where(err > (err_mean + (dev * err_std)))] = 1
+
     return flag
 
 
@@ -291,10 +291,28 @@ def apply_along_axis(func_1d, arr, kernel, **kwargs):
 def sigmoid(start, stop, num):
     """
     Nonlinear space following a logistic function.
-    
+
     The function is asymptotic; the parameters used in the sigmoid
     gets within 0.5% of the target thickness in a wedge increasing
     from 0 to 2x the original thickness.
     """
     x = np.linspace(-5.293305, 5.293305, num)
     return start + (stop-start) / (1 + np.exp(-x))
+
+
+def root(start, stop, num):
+    """
+    Nonlinear space following a sqrt function.
+    """
+    x = np.linspace(0, 1, num)
+    y = np.sqrt(x)
+    return min(start, stop) + abs(stop-start) * y
+
+
+def power(start, stop, num):
+    """
+    Nonlinear space following a power function.
+    """
+    x = np.linspace(0, 8, num)
+    y = 1 - 2**-x
+    return min(start, stop) + abs(stop-start) * y

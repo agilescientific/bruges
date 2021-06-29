@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 from .util import rms
 from .util import moving_average
 from .util import moving_avg_conv
@@ -11,3 +10,5 @@ from .util import nearest
 from .util import deprecated
 from .util import apply_along_axis
 from .util import sigmoid
+from .util import power
+from .util import root

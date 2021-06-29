@@ -1,3 +1,9 @@
+### v0.4.3 — summer 2021
+- New in the `models` submodule: `panel` allows you to pass in two or more 1D arrays, which can be of different lengths, and linearly interpolate in between them, sample by sample. Note: there is no attempt to correlate them; the assumption is that the top and bottom correlate and everything in between correlates in a linear way.
+- New in `models.wedge`: varying net:gross along the 'breadth' (3rd) dimension of a wedge model. The wedge must be 'binary'; that is, the middle (wedge) layer must only contain 2 components. The 3rd dimension will then show pinch-out geometries that vary from one lithology to the other.
+- It is now possible to choose `power` and `root` shapes for `models.wedge`, as well as `linear` and `sigmoid`.
+- Fixed a bug in `models.wedge` that caused some wedges to fail with single values for the `width` argument.
+
 ### v0.4.2 — 1 March 2021
 - The Ormsby wavelet now has the option of passing in the relative power (in dB) of the f2 and f3 corner frequencies, e.g. `P=(0, -5)`. Default: `(0, 0)` (the conventional trapezoidal Ormsby bandpass filter). 
 - Wavelets now have the option of returning an odd number of samples for 'even' time periods, like 0.128 s at 0.004 s sample interval. This used to return 32 samples; now if you set `sym` to `True`, you'll get 33 samples. **Future change:** From v0.5, this will be the default.

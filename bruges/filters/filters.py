@@ -237,6 +237,31 @@ def conservative(arr, size=5, supercon=False):
 
 
 def rotate_phase(s, phi, degrees=False):
+    """
+    Performs a phase rotation of wavelet or wavelet bank using:
+
+    .. math::
+
+        A = w(t)\cos(\phi) - h(t)\sin(\phi)
+
+    where w(t) is the wavelet and h(t) is its Hilbert transform.
+
+    The analytic signal can be written in the form S(t) = A(t)exp(j*theta(t))
+    where A(t) = magnitude(hilbert(w(t))) and theta(t) = angle(hilbert(w(t))
+    then a constant phase rotation phi would produce the analytic signal
+    S(t) = A(t)exp(j*(theta(t) + phi)). To get the non analytic signal
+    we take real(S(t)) == A(t)cos(theta(t) + phi)
+    == A(t)(cos(theta(t))cos(phi) - sin(theta(t))sin(phi)) <= trig identity
+    == w(t)cos(phi) - h(t)sin(phi)
+
+    Args:
+        w (ndarray): The wavelet vector, can be a 2D wavelet bank.
+        phi (float): The phase rotation angle (in radians) to apply.
+        degrees (bool): If phi is in degrees not radians.
+
+    Returns:
+        The phase rotated signal (or bank of signals).
+    """
     # Make sure the data is at least 2D to apply_along
     data = np.atleast_2d(s)
 

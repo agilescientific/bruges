@@ -504,7 +504,7 @@ def berlage(duration, dt, f, n=2, alpha=180, phi=-np.pi/2, t=None, return_t=Fals
 
     .. math::
 
-    w(t) = AH(t) t^n \mathrm{e}^{-\alpha t} \cos(2 \pi f_0 t + \phi_0)
+        w(t) = AH(t) t^n \mathrm{e}^{-\alpha t} \cos(2 \pi f_0 t + \phi_0)
 
     as described in Aldridge, DF (1990), The Berlage wavelet, GEOPHYSICS
     55 (11), p 1508-1511. Berlage wavelets are causal, minimum phase and
@@ -653,7 +653,7 @@ def rotate_phase(w, phi, degrees=False):
     """
     Performs a phase rotation of wavelet or wavelet bank using:
 
-    ..math::
+    .. math::
 
         A = w(t)\cos(\phi) - h(t)\sin(\phi)
 
