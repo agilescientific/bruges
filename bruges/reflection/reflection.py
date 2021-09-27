@@ -7,6 +7,7 @@ Various reflectivity algorithms.
 """
 from functools import wraps
 from collections import namedtuple
+import warnings
 
 import numpy as np
 
@@ -59,22 +60,45 @@ def reflection_phase(reflectivity):
     return ph
 
 
-def acoustic_reflectivity(vp, rho):
+def acoustic_reflectivity(vp, rho, axis=0, mode='valid'):
     """
     The acoustic reflectivity, given Vp and RHOB logs.
 
     Args:
         vp (ndarray): The P-wave velocity.
         rho (ndarray): The bulk density.
+        axis (int): The dimension along which to compute the reflectivity.
+        mode (str): 'same' means the output will be the same shape. 'valid'
+            means that only strictly valid reflectivities are computed so
+            the result will be one sample shorted in the `axis` dimension.
 
     Returns:
         ndarray: The reflectivity coefficient series.
     """
-    upper = vp[:-1] * rho[:-1]
-    lower = vp[1:] * rho[1:]
-    return (lower - upper) / (lower + upper)
+    m = "In future releases, mode will be 'same' by default."
+    warnings.warn(m, FutureWarning, stacklevel=2)
 
-def reflectivity(vp, vs, rho, theta=0, method='zoeppritz_rpp'):
+    if axis < 0:
+        axis = vp.ndim + axis
+
+    if axis > 0:
+        imp = np.moveaxis(vp * rho, axis, 0)
+    else:
+        imp = vp * rho
+
+    if mode == 'same':
+        pad_width = [(0, 1)] + (imp.ndim - 1) * [(0, 0)]
+        imp = np.pad(imp, pad_width=pad_width, mode='edge')
+
+    rc = (imp[1:] - imp[:-1]) / (imp[1:] + imp[:-1])
+
+    if axis > 0:
+        return np.moveaxis(rc, 0, axis)
+    else:
+        return rc
+
+
+def reflectivity(vp, vs, rho, theta=0, method='zoeppritz_rpp', axis=0, mode='valid'):
     """
     Offset reflectivity, given Vp, Vs, rho, and offset.
 
@@ -97,6 +121,10 @@ def reflectivity(vp, vs, rho, theta=0, method='zoeppritz_rpp'):
         rho (ndarray): The density; float or 1D array length m.
         theta (ndarray): The incidence angle; float or 1D array length n.
         method (str): The reflectivity equation to use; one of:
+        axis (int): The dimension along which to compute the reflectivity.
+        mode (str): 'same' means the output will be the same shape. 'valid'
+            means that only strictly valid reflectivities are computed so
+            the result will be one sample shorted in the `axis` dimension.
 
                 - 'scattering_matrix': scattering_matrix
                 - 'zoeppritz_element': zoeppritz_element
@@ -135,16 +163,34 @@ def reflectivity(vp, vs, rho, theta=0, method='zoeppritz_rpp'):
         'bortfeld': bortfeld,
         'hilterman': hilterman,
     }
+
+    m = "In future releases, mode will be 'same' by default."
+    warnings.warn(m, FutureWarning, stacklevel=2)
+
+    if axis < 0:
+        axis = vp.ndim + axis
+
+    if axis > 0:
+        vp_  = np.moveaxis(np.asanyarray(vp, dtype=float), axis, 0)
+        vs_  = np.moveaxis(np.asanyarray(vs, dtype=float), axis, 0)
+        rho_ = np.moveaxis(np.asanyarray(rho, dtype=float), axis, 0)
+    else:
+        vp_, vs_, rho_ = vp, vs, rho
+
+    if mode == 'same':
+        pad_width = [(0, 1)] + (vp.ndim - 1) * [(0, 0)]
+        vp_ = np.pad(vp_, pad_width=pad_width, mode='edge')
+        vs_ = np.pad(vs_, pad_width=pad_width, mode='edge')
+        rho_ = np.pad(rho_, pad_width=pad_width, mode='edge')
+
     func = methods[method.lower()]
-    vp = np.asanyarray(vp, dtype=float)
-    vs = np.asanyarray(vs, dtype=float)
-    rho = np.asanyarray(rho, dtype=float)
 
-    vp1, vp2 = vp[:-1], vp[1:]
-    vs1, vs2 = vs[:-1], vs[1:]
-    rho1, rho2 = rho[:-1], rho[1:]
+    rc = func(vp_[:-1], vs_[:-1], rho_[:-1], vp_[1:], vs_[1:], rho_[1:], theta)
 
-    return func(vp1, vs1, rho1, vp2, vs2, rho2, theta)
+    if axis > 0:
+        return np.moveaxis(rc, 0, axis)
+    else:
+        return rc
 
 
 def vectorize(func):

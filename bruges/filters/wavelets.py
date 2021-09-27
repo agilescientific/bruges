@@ -80,7 +80,7 @@ def _generic(func, duration, dt, f, t=None, return_t=False, taper='blackman', sy
     """
     if not return_t:
         m = "In future releases, return_t will be True by default."
-        warnings.warn(m, FutureWarning)
+        warnings.warn(m, FutureWarning, stacklevel=2)
 
     f = np.asanyarray(f).reshape(-1, 1)
 

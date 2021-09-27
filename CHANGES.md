@@ -1,4 +1,10 @@
-### v0.4.3 — summer 2021
+### v0.4.5 [work in progress]
+- Coming soon: dynamic-time-warp-assisted panel interpolation.
+
+### v0.4.4 — 27 September 2021
+- `bruges.reflection.acoustic_reflectivity()` and `bruges.reflection.reflectivity()` now allow you to pass the `axis` to compute on (axis 0 by default, which results in a reflectivity series for each _column_ in a 2D array). You can also set a 'mode', which is currently 'valid' and results in one less sample in the `axis` dimension. In the next release, v0.5, it will be 'same' by default, so the output is the same shape as the input.
+
+### v0.4.3 — 30 June 2021
 - New in the `models` submodule: `panel` allows you to pass in two or more 1D arrays, which can be of different lengths, and linearly interpolate in between them, sample by sample. Note: there is no attempt to correlate them; the assumption is that the top and bottom correlate and everything in between correlates in a linear way.
 - New in `models.wedge`: varying net:gross along the 'breadth' (3rd) dimension of a wedge model. The wedge must be 'binary'; that is, the middle (wedge) layer must only contain 2 components. The 3rd dimension will then show pinch-out geometries that vary from one lithology to the other.
 - It is now possible to choose `power` and `root` shapes for `models.wedge`, as well as `linear` and `sigmoid`.
