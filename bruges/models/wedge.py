@@ -219,8 +219,8 @@ def wedge(depth=(30, 40, 30),
 
     # Get all layers thicknesses.
     if isinstance(depth, int):
-        L1, L2, L3 = 3 * [depth//3]  # Sizes if depth is just a number.
-        L3 += 1
+        L1, L2, _ = 3 * [depth//3]  # Sizes if depth is just a number.
+        L3 = depth - L1 - L2
     else:
         L1, L2, L3 = map(int, depth)
     L3 += int(right * L2)  # Adjust bottom layer.
@@ -298,6 +298,9 @@ def wedge(depth=(30, 40, 30),
     # Move the 'breadth' dim to last.
     if model.shape[0] > 1:
         model = np.moveaxis(model, 0, -1)
+
+    # Fix any shape discrepancy.
+    # if model.shape
 
     # Build and return output.
     Wedge = namedtuple('Wedge', ['wedge', 'top', 'base', 'reference'])

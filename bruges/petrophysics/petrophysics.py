@@ -123,6 +123,7 @@ def slowness_to_velocity(slowness):
 
 velocity_to_slowness = slowness_to_velocity
 
+
 def gardner_param(vp,rhob):
      """
      Finds optimal alpha and beta parameters for the gardner
@@ -138,7 +139,7 @@ def gardner_param(vp,rhob):
          alpha (float): The factor.
          beta (float): The exponent, usually 0.25.
      """
-     params,_ = curve_fit(optimizer_gardner,rhob,vp)
+     params, _ = curve_fit(optimizer_gardner, rhob, vp)
      return params[0], params[1]
      
 
