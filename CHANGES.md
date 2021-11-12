@@ -1,4 +1,7 @@
 ### v0.4.5 [work in progress]
+- Complex trace attributes `instantaneous_amplitude` (envelope), `instantaneous_phase` and `instantaneous_frequency`, along with the `quadrature`, were added to `bruges.attribute`. 
+- Fixed a bug in `bruges.models.wedge` that led to some wedge models not having the correct total size in the 'depth' dimension (e.g. sometimes being off by one pixel.)
+- Now tested on Python 3.8, 3.9 (should have been working, just catching up!). Removing Python 3.4 and 3.5 from testing.
 - Coming soon: dynamic-time-warp-assisted panel interpolation.
 
 ### v0.4.4 — 27 September 2021
