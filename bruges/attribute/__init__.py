@@ -12,3 +12,10 @@ from .dipsteer import dipsteer
 from .spectrogram import spectrogram
 
 from .spectraldecomp import spectraldecomp
+
+from .complex import instantaneous_amplitude
+from .complex import reflection_strength
+from .complex import envelope
+from .complex import instantaneous_phase
+from .complex import instantaneous_frequency
+from .complex import quadrature
