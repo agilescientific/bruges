@@ -32,6 +32,9 @@ CLASSIFIERS = ['Development Status :: 4 - Beta',
                'Programming Language :: Python :: 3.9',
                ]
 
+with open("README.rst", "r") as f:
+    LONG_DESCRIPTION = f.read()
+
 setup(name='bruges',
       version=verstr,
       author='Agile Scientific',
@@ -49,7 +52,8 @@ setup(name='bruges',
                 'bruges.util',
                 ],
       description='Useful geophysics functions',
-      long_description=open('README.rst').read(),
+      long_description=LONG_DESCRIPTION,
+      # long_description_content_type=NOT_NEEDED_FOR_RST,
       url='http://pypi.python.org/pypi/bruges/',
       install_requires=REQUIREMENTS,
       classifiers=CLASSIFIERS,

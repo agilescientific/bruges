@@ -19,3 +19,5 @@ from .complex import envelope
 from .complex import instantaneous_phase
 from .complex import instantaneous_frequency
 from .complex import quadrature
+
+from .horizon import *

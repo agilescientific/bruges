@@ -1,6 +1,6 @@
-### v0.4.5 [work in progress]
+### v0.4.5 — 8 December 2021
+- **Breaking change:** `bruges.attribute.similarity` has a new interface and computes its result(s) differently. I added several seismic coherence attributes as options to `bruges.attribute.similarity`. Methods include Marfurt coherence, that of Gersztenkorn, A., and K. J. Marfurt, 1999, and gradient structure tensor coherence (T Randen et al., 2000, 70th Annual International Meeting, SEG, Expanded Abstracts, 668-671.). Choose the method with the 'kind' argument. These functions were written by Joe Kington and published in The Leading Edge in the June 2015 issue.
 - Complex trace attributes `instantaneous_amplitude` (envelope), `instantaneous_phase` and `instantaneous_frequency`, along with the `quadrature`, were added to `bruges.attribute`. 
-- Breaking change: `bruges.attribute.similarity` has a new interface and computes its result(s) differently. I added several seismic coherence attributes as options to `bruges.attribute.similarity`. Methods include Marfurt coherence, that of Gersztenkorn, A., and K. J. Marfurt, 1999, and gradient structure tensor coherence (T Randen et al., 2000, 70th Annual International Meeting, SEG, Expanded Abstracts, 668-671.). Choose the method with the 'kind' argument. These functions were written by Joe Kington and published in The Leading Edge in the June 2015 issue.s
 - Fixed a bug in `bruges.models.wedge` that led to some wedge models not having the correct total size in the 'depth' dimension (e.g. sometimes being off by one pixel.)
 - Now tested on Python 3.8, 3.9 (should have been working, just catching up!). Removing Python 3.4 and 3.5 from testing.
 - Coming soon: dynamic-time-warp-assisted panel interpolation.

@@ -50,16 +50,6 @@ Install with
 **bruges** requires NumPy and SciPy.
 
 
-Contributors
-++++++++++++
-* Evan Bianco
-* Ben Bougher
-* Matt Hall
-* Alessandro Amato del Monte
-* Wes Hamlyn
-* Sean Ross-Ross
-
-
 Links
 +++++
 * `Documentation <https://bruges.readthedocs.org>`_
@@ -67,3 +57,6 @@ Links
 * `Issue Tracker <https://github.com/agile-geoscience/bruges/issues/>`_
 * `PyPi <http://pypi.python.org/pypi/bruges/>`_
 * `Agile Geoscience <http://www.agilegeoscience.com>`_
+
+
+.. image:: https://www.dropbox.com/s/tzvi22ujq6rozdb/bruges_long_rooves.png?raw=1

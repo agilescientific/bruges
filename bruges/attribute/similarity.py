@@ -30,7 +30,7 @@ def marfurt(traces):
     traces = traces.reshape(-1, t)
     square_sums = np.sum(traces, axis=0)**2
     sum_squares = np.sum(traces**2, axis=0)
-    c = square_sums.sum() / (square_sums.sum() + 1e-12)
+    c = square_sums.sum() / (sum_squares.sum() + 1e-12)
     return c / (i * x)
 
 
@@ -121,3 +121,5 @@ def similarity(traces, duration, dt, step_out=1, kind='gst', sigma=1):
         "gersztenkorn": moving_window(traces, gersztenkorn, window),
         "gst": gradient_structure_tensor(traces, window, sigma)
     }
+
+    return methods[kind]
