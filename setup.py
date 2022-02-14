@@ -1,61 +1,6 @@
-"""
-Python installation file.
-"""
 from setuptools import setup
-import re
 
-verstr = 'unknown'
-VERSIONFILE = "bruges/_version.py"
-with open(VERSIONFILE, "r")as f:
-    verstrline = f.read().strip()
-    pattern = re.compile(r"__version__ = ['\"](.*)['\"]")
-    mo = pattern.search(verstrline)
-if mo:
-    verstr = mo.group(1)
-    print("Version "+verstr)
-else:
-    raise RuntimeError("Unable to find version string in %s." % (VERSIONFILE,))
-
-REQUIREMENTS = ['numpy', 'scipy']
-
-DEV_REQUIREMENTS = ['sphinx', 'twine']
-
-CLASSIFIERS = ['Development Status :: 4 - Beta',
-               'Intended Audience :: Science/Research',
-               'Natural Language :: English',
-               'License :: OSI Approved :: Apache Software License',
-               'Operating System :: OS Independent',
-               'Programming Language :: Python',
-               'Programming Language :: Python :: 3.6',
-               'Programming Language :: Python :: 3.7',
-               'Programming Language :: Python :: 3.8',
-               'Programming Language :: Python :: 3.9',
-               ]
-
-with open("README.md", "r") as f:
-    LONG_DESCRIPTION = f.read()
-
-setup(name='bruges',
-      version=verstr,
-      author='Agile Scientific',
-      author_email='hello@agilescientific.com',
-      packages=['bruges',
-                'bruges.attribute',
-                'bruges.filters',
-                'bruges.models',
-                'bruges.noise',
-                'bruges.reflection',
-                'bruges.petrophysics',
-                'bruges.rockphysics',
-                'bruges.transform',
-                'bruges.unit',
-                'bruges.util',
-                ],
-      description='Useful geophysics functions',
-      long_description=LONG_DESCRIPTION,
-      # long_description_content_type=NOT_NEEDED_FOR_RST,
-      url='http://pypi.python.org/pypi/bruges/',
-      install_requires=REQUIREMENTS,
-      classifiers=CLASSIFIERS,
-      license='Apache 2',
-      )
+# Really only required so setup.cfg can pick up __version__
+setup(
+    name="bruges",
+)
