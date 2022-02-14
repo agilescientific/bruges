@@ -9,6 +9,7 @@ from collections import namedtuple
 
 import numpy as np
 import scipy.signal
+import matplotlib.pyplot as plt
 from bruges.util import deprecated
 
 
@@ -122,6 +123,9 @@ def sinc(duration, dt, f, t=None, return_t=False, taper='blackman', sym=None):
     If you pass a 1D array of frequencies, you get a wavelet bank in return.
 
     .. plot::
+
+        import matplotlib.pyplot as plt
+        import bruges
         plt.plot(bruges.filters.sinc(.5, 0.002, 40))
 
     Args:
@@ -161,7 +165,11 @@ def cosine(duration, dt, f, t=None, return_t=False, taper='gaussian', sigma=None
     If you pass a 1D array of frequencies, you get a wavelet bank in return.
 
     .. plot::
+
+        import matplotlib.pyplot as plt
+        import bruges
         plt.plot(bruges.filters.cosine(.5, 0.002, 40))
+        plt.show()
 
     Args:
         duration (float): The length in seconds of the wavelet.
@@ -207,6 +215,9 @@ def gabor(duration, dt, f, t=None, return_t=False, sym=None):
     If you pass a 1D array of frequencies, you get a wavelet bank in return.
 
     .. plot::
+
+        import matplotlib.pyplot as plt
+        import bruges
         plt.plot(bruges.filters.gabor(.5, 0.002, 40))
 
     Args:
@@ -241,6 +252,9 @@ def ricker(duration, dt, f, t=None, return_t=False, sym=None):
     If you pass a 1D array of frequencies, you get a wavelet bank in return.
 
     .. plot::
+
+        import matplotlib.pyplot as plt
+        import bruges
         plt.plot(bruges.filters.ricker(.5, 0.002, 40))
 
     Args:
@@ -261,6 +275,7 @@ def ricker(duration, dt, f, t=None, return_t=False, sym=None):
     Returns:
         ndarray. Ricker wavelet(s) with centre frequency f sampled on t. If
             you passed `return_t=True` then a tuple of (wavelet, t) is returned.
+    
     """
     if not return_t:
         m = "In future releases, return_t will be True by default."
@@ -295,9 +310,6 @@ def klauder(duration, dt, f,
     """
     By default, gives the autocorrelation of a linear frequency modulated
     wavelet (sweep). Uses scipy.signal.chirp, adding dimensions as necessary.
-
-    .. plot::
-        plt.plot(bruges.filters.klauder(.5, 0.002, [10, 80]))
 
     Args:
         duration (float): The length in seconds of the wavelet.
@@ -382,6 +394,9 @@ def ormsby(duration, dt, f, t=None, return_t=False, sym=None):
     unlike Ricker wavelets.
 
     .. plot::
+        
+        import matplotlib.pyplot as plt
+        import bruges
         plt.plot(bruges.filters.ormsby(.5, 0.002, [5, 10, 40, 80]))
 
     Args:
@@ -449,6 +464,9 @@ def ormsby_fft(duration, dt, f, P=(0, 0), return_t=True, sym=True):
     as many f points as you like, as long as there are n - 2 matching p points.)
 
     .. plot::
+
+        import matplotlib.pyplot as plt
+        import bruges
         plt.plot(bruges.filters.ormsby(.5, 0.002, [5, 10, 40, 80]))
 
     Args:
@@ -513,7 +531,11 @@ def berlage(duration, dt, f, n=2, alpha=180, phi=-np.pi/2, t=None, return_t=Fals
     If you pass a 1D array of frequencies, you get a wavelet bank in return.
 
     .. plot::
+
+        import matplotlib.pyplot as plt
+        import bruges
         plt.plot(bruges.filters.berlage(0.5, 0.002, 40))
+        plt.show()
 
     Args:
         duration (float): The length in seconds of the wavelet.
@@ -573,6 +595,9 @@ def generalized(duration, dt, f, u=2, t=None, return_t=False, imag=False, sym=No
     frequency domain method (eq 4 in that paper).
 
     .. plot::
+
+        import matplotlib.pyplot as plt
+        import bruges
         plt.plot(bruges.filters.generalized(.5, 0.002, 40, u=1.0))
 
     Args:

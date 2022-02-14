@@ -25,6 +25,7 @@ def instantaneous_amplitude(traces):
     """
     return np.abs(hilbert(traces))
 
+
 envelope = instantaneous_amplitude
 reflection_strength = instantaneous_amplitude
 
@@ -51,8 +52,9 @@ def instantaneous_phase(traces):
 
     .. math::
 
-        \phi(t) = {\rm Im}[\ln h(t)]
-
+        \\phi(t) = {\\rm Im}[\\ln h(t)]
+        
+    
     See https://wiki.seg.org/wiki/Instantaneous_attributes.
 
     Args:
