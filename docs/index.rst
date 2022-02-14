@@ -20,7 +20,7 @@ Installation
 .. toctree::
     :caption: Quick start
 
-To install ``bruges``, simply::
+To install ``bruges``, simply type the following into a terminal::
 
     pip install bruges
 
