@@ -1,3 +1,10 @@
+# -- bruges documentation build configuration file --------------------------------------------------------------
+#
+import os
+import sys
+sys.path.insert(0, os.path.abspath('..'))
+
+
 # Configuration file for the Sphinx documentation builder.
 
 # -- Setup function ----------------------------------------------------------
@@ -21,16 +28,6 @@ def setup(app):
     app.connect('autodoc-skip-member', autodoc_skip_member)
     app.connect("autodoc-process-docstring", remove_module_docstring)
     return
-
-# -- Path setup --------------------------------------------------------------
-
-# If extensions (or modules to document with autodoc) are in another directory,
-# add these directories to sys.path here. If the directory is relative to the
-# documentation root, use os.path.abspath to make it absolute, like shown here.
-#
-import os
-import sys
-sys.path.insert(0, os.path.abspath('..'))
 
 
 # -- Project information -----------------------------------------------------
