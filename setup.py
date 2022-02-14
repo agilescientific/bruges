@@ -32,7 +32,7 @@ CLASSIFIERS = ['Development Status :: 4 - Beta',
                'Programming Language :: Python :: 3.9',
                ]
 
-with open("README.rst", "r") as f:
+with open("README.md", "r") as f:
     LONG_DESCRIPTION = f.read()
 
 setup(name='bruges',
