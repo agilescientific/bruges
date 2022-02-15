@@ -153,19 +153,23 @@
   <input type="hidden" name="area" value="default">
 </form>
 <div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
-  <p class="caption" role="heading"><span class="caption-text">API reference</span></p>
+  <p class="caption" role="heading"><span class="caption-text">User guide</span></p>
 <ul>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../../../bruges.html">bruges package</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
-<li class="toctree-l2"><a class="reference internal" href="../../../bruges.attribute.html">bruges.attribute package</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../bruges.filters.html">bruges.filters package</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../bruges.models.html">bruges.models package</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../bruges.noise.html">bruges.noise package</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../bruges.petrophysics.html">bruges.petrophysics package</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../bruges.reflection.html">bruges.reflection package</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../bruges.rockphysics.html">bruges.rockphysics package</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../bruges.transform.html">bruges.transform package</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../bruges.unit.html">bruges.unit package</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../bruges.util.html">bruges.util package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../installation.html">Installation</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">API reference</span></p>
+<ul>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../api/bruges.html">bruges package</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/bruges.attribute.html">bruges.attribute package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/bruges.filters.html">bruges.filters package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/bruges.models.html">bruges.models package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/bruges.noise.html">bruges.noise package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/bruges.petrophysics.html">bruges.petrophysics package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/bruges.reflection.html">bruges.reflection package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/bruges.rockphysics.html">bruges.rockphysics package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/bruges.transform.html">bruges.transform package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/bruges.unit.html">bruges.unit package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/bruges.util.html">bruges.util package</a></li>
 </ul>
 </li>
 </ul>
@@ -173,8 +177,10 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../development.html">Development</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../authors.html">Authors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../authors.html#id1">Authors</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../license.html">License</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../changelog.html">Changelog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../changelog.html#id1">Changelog</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../contributing.html">Contributing</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Project links</span></p>
@@ -227,7 +233,7 @@
 <span class="kn">from</span> <span class="nn">bruges.util</span> <span class="kn">import</span> <span class="n">deprecated</span>
 
 
-<span class="k">def</span> <span class="nf">_get_time</span><span class="p">(</span><span class="n">duration</span><span class="p">,</span> <span class="n">dt</span><span class="p">,</span> <span class="n">sym</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">_get_time</span><span class="p">(</span><span class="n">duration</span><span class="p">,</span> <span class="n">dt</span><span class="p">,</span> <span class="n">sym</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
     <span class="sd">"""</span>
 <span class="sd">    Make a time vector.</span>
 
@@ -235,12 +241,6 @@
 <span class="sd">    and will be symmetric about 0. If it's False, and the number of samples</span>
 <span class="sd">    is even (e.g. duration = 0.016, dt = 0.004), then 0 will bot be center.</span>
 <span class="sd">    """</span>
-    <span class="k">if</span> <span class="n">sym</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">m</span> <span class="o">=</span> <span class="s2">"In future releases, the default legacy behaviour will be removed. "</span>
-        <span class="n">m</span> <span class="o">+=</span> <span class="s2">"We recommend setting sym=True. This will be the default in v0.5+."</span>
-        <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">category</span><span class="o">=</span><span class="ne">FutureWarning</span><span class="p">,</span> <span class="n">stacklevel</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="o">-</span><span class="n">duration</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span> <span class="n">duration</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span> <span class="n">dt</span><span class="p">)</span>
-    
     <span class="c1"># This business is to avoid some of the issues with `np.arange`:</span>
     <span class="c1"># (1) unpredictable length and (2) floating point weirdness, like</span>
     <span class="c1"># 1.234e-17 instead of 0. Not using `linspace` because figuring out</span>
@@ -249,22 +249,22 @@
     <span class="n">odd</span> <span class="o">=</span> <span class="n">n</span> <span class="o">%</span> <span class="mi">2</span>
     <span class="n">k</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="mi">10</span><span class="o">**-</span><span class="n">np</span><span class="o">.</span><span class="n">floor</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="n">dt</span><span class="p">)))</span>
     <span class="n">dti</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">k</span> <span class="o">*</span> <span class="n">dt</span><span class="p">)</span>  <span class="c1"># integer dt</span>
-        
+
     <span class="k">if</span> <span class="p">(</span><span class="n">odd</span> <span class="ow">and</span> <span class="n">sym</span><span class="p">):</span>
         <span class="n">t</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
     <span class="k">if</span> <span class="p">(</span><span class="ow">not</span> <span class="n">odd</span> <span class="ow">and</span> <span class="n">sym</span><span class="p">):</span>
         <span class="n">t</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">n</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
-    <span class="k">if</span> <span class="p">(</span><span class="n">odd</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">sym</span><span class="p">):</span> 
+    <span class="k">if</span> <span class="p">(</span><span class="n">odd</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">sym</span><span class="p">):</span>
         <span class="n">t</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
     <span class="k">if</span> <span class="p">(</span><span class="ow">not</span> <span class="n">odd</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">sym</span><span class="p">):</span>
         <span class="n">t</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">n</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span>
-        
+
     <span class="n">t</span> <span class="o">-=</span> <span class="n">t</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">//</span> <span class="mi">2</span>
-    
+
     <span class="k">return</span> <span class="n">dti</span> <span class="o">*</span> <span class="n">t</span> <span class="o">/</span> <span class="n">k</span>
 
 
-<span class="k">def</span> <span class="nf">_generic</span><span class="p">(</span><span class="n">func</span><span class="p">,</span> <span class="n">duration</span><span class="p">,</span> <span class="n">dt</span><span class="p">,</span> <span class="n">f</span><span class="p">,</span> <span class="n">t</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">return_t</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">taper</span><span class="o">=</span><span class="s1">'blackman'</span><span class="p">,</span> <span class="n">sym</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">_generic</span><span class="p">(</span><span class="n">func</span><span class="p">,</span> <span class="n">duration</span><span class="p">,</span> <span class="n">dt</span><span class="p">,</span> <span class="n">f</span><span class="p">,</span> <span class="n">t</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">return_t</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">taper</span><span class="o">=</span><span class="s1">'blackman'</span><span class="p">,</span> <span class="n">sym</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
     <span class="sd">"""</span>
 <span class="sd">    Generic wavelet generator: applies a window to a continuous function.</span>
 
@@ -294,8 +294,8 @@
 <span class="sd">            passed `return_t=True` then a tuple of (wavelet, t) is returned.</span>
 <span class="sd">    """</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="n">return_t</span><span class="p">:</span>
-        <span class="n">m</span> <span class="o">=</span> <span class="s2">"In future releases, return_t will be True by default."</span>
-        <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="ne">FutureWarning</span><span class="p">,</span> <span class="n">stacklevel</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+        <span class="n">m</span> <span class="o">=</span> <span class="s2">"return_t is deprecated. In future releases, return_t will always be True."</span>
+        <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="ne">DeprecationWarning</span><span class="p">,</span> <span class="n">stacklevel</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
 
     <span class="n">f</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asanyarray</span><span class="p">(</span><span class="n">f</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
 
@@ -330,7 +330,7 @@
         <span class="k">return</span> <span class="n">w</span>
 
 
-<div class="viewcode-block" id="sinc"><a class="viewcode-back" href="../../../bruges.filters.html#bruges.filters.wavelets.sinc">[docs]</a><span class="k">def</span> <span class="nf">sinc</span><span class="p">(</span><span class="n">duration</span><span class="p">,</span> <span class="n">dt</span><span class="p">,</span> <span class="n">f</span><span class="p">,</span> <span class="n">t</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">return_t</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">taper</span><span class="o">=</span><span class="s1">'blackman'</span><span class="p">,</span> <span class="n">sym</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="sinc"><a class="viewcode-back" href="../../../api/bruges.filters.html#bruges.filters.wavelets.sinc">[docs]</a><span class="k">def</span> <span class="nf">sinc</span><span class="p">(</span><span class="n">duration</span><span class="p">,</span> <span class="n">dt</span><span class="p">,</span> <span class="n">f</span><span class="p">,</span> <span class="n">t</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">return_t</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">taper</span><span class="o">=</span><span class="s1">'blackman'</span><span class="p">,</span> <span class="n">sym</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
     <span class="sd">"""</span>
 <span class="sd">    sinc function centered on t=0, with a dominant frequency of f Hz.</span>
 
@@ -340,7 +340,8 @@
 
 <span class="sd">        import matplotlib.pyplot as plt</span>
 <span class="sd">        import bruges</span>
-<span class="sd">        plt.plot(bruges.filters.sinc(.5, 0.002, 40))</span>
+<span class="sd">        w, t = bruges.filters.sinc(0.256, 0.002, 40)</span>
+<span class="sd">        plt.plot(t, w)</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        duration (float): The length in seconds of the wavelet.</span>
@@ -369,7 +370,7 @@
     <span class="k">return</span> <span class="n">_generic</span><span class="p">(</span><span class="n">func</span><span class="p">,</span> <span class="n">duration</span><span class="p">,</span> <span class="n">dt</span><span class="p">,</span> <span class="n">f</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="n">return_t</span><span class="p">,</span> <span class="n">taper</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="cosine"><a class="viewcode-back" href="../../../bruges.filters.html#bruges.filters.wavelets.cosine">[docs]</a><span class="k">def</span> <span class="nf">cosine</span><span class="p">(</span><span class="n">duration</span><span class="p">,</span> <span class="n">dt</span><span class="p">,</span> <span class="n">f</span><span class="p">,</span> <span class="n">t</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">return_t</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">taper</span><span class="o">=</span><span class="s1">'gaussian'</span><span class="p">,</span> <span class="n">sigma</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">sym</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="cosine"><a class="viewcode-back" href="../../../api/bruges.filters.html#bruges.filters.wavelets.cosine">[docs]</a><span class="k">def</span> <span class="nf">cosine</span><span class="p">(</span><span class="n">duration</span><span class="p">,</span> <span class="n">dt</span><span class="p">,</span> <span class="n">f</span><span class="p">,</span> <span class="n">t</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">return_t</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">taper</span><span class="o">=</span><span class="s1">'gaussian'</span><span class="p">,</span> <span class="n">sigma</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">sym</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
     <span class="sd">"""</span>
 <span class="sd">    With the default Gaussian window, equivalent to a 'modified Morlet'</span>
 <span class="sd">    also sometimes called a 'Gabor' wavelet. The `bruges.filters.gabor`</span>
@@ -382,8 +383,8 @@
 
 <span class="sd">        import matplotlib.pyplot as plt</span>
 <span class="sd">        import bruges</span>
-<span class="sd">        plt.plot(bruges.filters.cosine(.5, 0.002, 40))</span>
-<span class="sd">        plt.show()</span>
+<span class="sd">        w, t = bruges.filters.cosine(0.256, 0.002, 40)</span>
+<span class="sd">        plt.plot(t, w)</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        duration (float): The length in seconds of the wavelet.</span>
@@ -420,7 +421,7 @@
     <span class="k">return</span> <span class="n">_generic</span><span class="p">(</span><span class="n">func</span><span class="p">,</span> <span class="n">duration</span><span class="p">,</span> <span class="n">dt</span><span class="p">,</span> <span class="n">f</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="n">return_t</span><span class="p">,</span> <span class="n">taper</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="gabor"><a class="viewcode-back" href="../../../bruges.filters.html#bruges.filters.wavelets.gabor">[docs]</a><span class="k">def</span> <span class="nf">gabor</span><span class="p">(</span><span class="n">duration</span><span class="p">,</span> <span class="n">dt</span><span class="p">,</span> <span class="n">f</span><span class="p">,</span> <span class="n">t</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">return_t</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">sym</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="gabor"><a class="viewcode-back" href="../../../api/bruges.filters.html#bruges.filters.wavelets.gabor">[docs]</a><span class="k">def</span> <span class="nf">gabor</span><span class="p">(</span><span class="n">duration</span><span class="p">,</span> <span class="n">dt</span><span class="p">,</span> <span class="n">f</span><span class="p">,</span> <span class="n">t</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">return_t</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">sym</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
     <span class="sd">"""</span>
 <span class="sd">    Generates a Gabor wavelet with a peak frequency f0 at time t.</span>
 
@@ -432,7 +433,8 @@
 
 <span class="sd">        import matplotlib.pyplot as plt</span>
 <span class="sd">        import bruges</span>
-<span class="sd">        plt.plot(bruges.filters.gabor(.5, 0.002, 40))</span>
+<span class="sd">        w, t = bruges.filters.gabor(0.256, 0.002, 40)</span>
+<span class="sd">        plt.plot(t, w)</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        duration (float): The length in seconds of the wavelet.</span>
@@ -456,7 +458,7 @@
     <span class="k">return</span> <span class="n">_generic</span><span class="p">(</span><span class="n">func</span><span class="p">,</span> <span class="n">duration</span><span class="p">,</span> <span class="n">dt</span><span class="p">,</span> <span class="n">f</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="n">return_t</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="ricker"><a class="viewcode-back" href="../../../bruges.filters.html#bruges.filters.wavelets.ricker">[docs]</a><span class="k">def</span> <span class="nf">ricker</span><span class="p">(</span><span class="n">duration</span><span class="p">,</span> <span class="n">dt</span><span class="p">,</span> <span class="n">f</span><span class="p">,</span> <span class="n">t</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">return_t</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">sym</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="ricker"><a class="viewcode-back" href="../../../api/bruges.filters.html#bruges.filters.wavelets.ricker">[docs]</a><span class="k">def</span> <span class="nf">ricker</span><span class="p">(</span><span class="n">duration</span><span class="p">,</span> <span class="n">dt</span><span class="p">,</span> <span class="n">f</span><span class="p">,</span> <span class="n">t</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">return_t</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">sym</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
     <span class="sd">"""</span>
 <span class="sd">    Also known as the mexican hat wavelet, models the function:</span>
 
@@ -469,7 +471,8 @@
 
 <span class="sd">        import matplotlib.pyplot as plt</span>
 <span class="sd">        import bruges</span>
-<span class="sd">        plt.plot(bruges.filters.ricker(.5, 0.002, 40))</span>
+<span class="sd">        w, t = bruges.filters.ricker(0.256, 0.002, 40)</span>
+<span class="sd">        plt.plot(t, w)</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        duration (float): The length in seconds of the wavelet.</span>
@@ -489,11 +492,11 @@
 <span class="sd">    Returns:</span>
 <span class="sd">        ndarray. Ricker wavelet(s) with centre frequency f sampled on t. If</span>
 <span class="sd">            you passed `return_t=True` then a tuple of (wavelet, t) is returned.</span>
-<span class="sd">    </span>
+
 <span class="sd">    """</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="n">return_t</span><span class="p">:</span>
-        <span class="n">m</span> <span class="o">=</span> <span class="s2">"In future releases, return_t will be True by default."</span>
-        <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="ne">FutureWarning</span><span class="p">,</span> <span class="n">stacklevel</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+        <span class="n">m</span> <span class="o">=</span> <span class="s2">"return_t is deprecated. In future releases, return_t will always be True."</span>
+        <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="ne">DeprecationWarning</span><span class="p">,</span> <span class="n">stacklevel</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
 
     <span class="n">f</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asanyarray</span><span class="p">(</span><span class="n">f</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
 
@@ -514,16 +517,23 @@
         <span class="k">return</span> <span class="n">w</span></div>
 
 
-<div class="viewcode-block" id="klauder"><a class="viewcode-back" href="../../../bruges.filters.html#bruges.filters.wavelets.klauder">[docs]</a><span class="k">def</span> <span class="nf">klauder</span><span class="p">(</span><span class="n">duration</span><span class="p">,</span> <span class="n">dt</span><span class="p">,</span> <span class="n">f</span><span class="p">,</span>
+<div class="viewcode-block" id="klauder"><a class="viewcode-back" href="../../../api/bruges.filters.html#bruges.filters.wavelets.klauder">[docs]</a><span class="k">def</span> <span class="nf">klauder</span><span class="p">(</span><span class="n">duration</span><span class="p">,</span> <span class="n">dt</span><span class="p">,</span> <span class="n">f</span><span class="p">,</span>
             <span class="n">autocorrelate</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
             <span class="n">t</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-            <span class="n">return_t</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+            <span class="n">return_t</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
             <span class="n">taper</span><span class="o">=</span><span class="s1">'blackman'</span><span class="p">,</span>
-            <span class="n">sym</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+            <span class="n">sym</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
             <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
     <span class="sd">"""</span>
 <span class="sd">    By default, gives the autocorrelation of a linear frequency modulated</span>
 <span class="sd">    wavelet (sweep). Uses scipy.signal.chirp, adding dimensions as necessary.</span>
+
+<span class="sd">    .. plot::</span>
+
+<span class="sd">        import matplotlib.pyplot as plt</span>
+<span class="sd">        import bruges</span>
+<span class="sd">        w, t = bruges.filters.klauder(0.256, 0.002, [12, 48])</span>
+<span class="sd">        plt.plot(t, w)</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        duration (float): The length in seconds of the wavelet.</span>
@@ -555,8 +565,8 @@
 <span class="sd">            (wavelet, t) is returned.</span>
 <span class="sd">    """</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="n">return_t</span><span class="p">:</span>
-        <span class="n">m</span> <span class="o">=</span> <span class="s2">"In future releases, return_t will be True by default."</span>
-        <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="ne">FutureWarning</span><span class="p">,</span> <span class="n">stacklevel</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+        <span class="n">m</span> <span class="o">=</span> <span class="s2">"return_t is deprecated. In future releases, return_t will always be True."</span>
+        <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="ne">DeprecationWarning</span><span class="p">,</span> <span class="n">stacklevel</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
 
     <span class="k">if</span> <span class="n">t</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">t</span> <span class="o">=</span> <span class="n">_get_time</span><span class="p">(</span><span class="n">duration</span><span class="p">,</span> <span class="n">dt</span><span class="p">,</span> <span class="n">sym</span><span class="o">=</span><span class="n">sym</span><span class="p">)</span>
@@ -601,17 +611,18 @@
 <span class="n">sweep</span> <span class="o">=</span> <span class="n">klauder</span>
 
 
-<div class="viewcode-block" id="ormsby"><a class="viewcode-back" href="../../../bruges.filters.html#bruges.filters.wavelets.ormsby">[docs]</a><span class="k">def</span> <span class="nf">ormsby</span><span class="p">(</span><span class="n">duration</span><span class="p">,</span> <span class="n">dt</span><span class="p">,</span> <span class="n">f</span><span class="p">,</span> <span class="n">t</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">return_t</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">sym</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="ormsby"><a class="viewcode-back" href="../../../api/bruges.filters.html#bruges.filters.wavelets.ormsby">[docs]</a><span class="k">def</span> <span class="nf">ormsby</span><span class="p">(</span><span class="n">duration</span><span class="p">,</span> <span class="n">dt</span><span class="p">,</span> <span class="n">f</span><span class="p">,</span> <span class="n">t</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">return_t</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">sym</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
     <span class="sd">"""</span>
 <span class="sd">    The Ormsby wavelet requires four frequencies which together define a</span>
 <span class="sd">    trapezoid shape in the spectrum. The Ormsby wavelet has several sidelobes,</span>
 <span class="sd">    unlike Ricker wavelets.</span>
 
 <span class="sd">    .. plot::</span>
-<span class="sd">        </span>
+
 <span class="sd">        import matplotlib.pyplot as plt</span>
 <span class="sd">        import bruges</span>
-<span class="sd">        plt.plot(bruges.filters.ormsby(.5, 0.002, [5, 10, 40, 80]))</span>
+<span class="sd">        w, t = bruges.filters.ormsby(0.256, 0.002, [5, 10, 40, 80])</span>
+<span class="sd">        plt.plot(t, w)</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        duration (float): The length in seconds of the wavelet.</span>
@@ -634,8 +645,8 @@
 
 <span class="sd">    """</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="n">return_t</span><span class="p">:</span>
-        <span class="n">m</span> <span class="o">=</span> <span class="s2">"In future releases, return_t will be True by default."</span>
-        <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="ne">FutureWarning</span><span class="p">,</span> <span class="n">stacklevel</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+        <span class="n">m</span> <span class="o">=</span> <span class="s2">"return_t is deprecated. In future releases, return_t will always be True."</span>
+        <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="ne">DeprecationWarning</span><span class="p">,</span> <span class="n">stacklevel</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
 
     <span class="n">f</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asanyarray</span><span class="p">(</span><span class="n">f</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
 
@@ -669,10 +680,10 @@
         <span class="k">return</span> <span class="n">w</span></div>
 
 
-<div class="viewcode-block" id="ormsby_fft"><a class="viewcode-back" href="../../../bruges.filters.html#bruges.filters.wavelets.ormsby_fft">[docs]</a><span class="k">def</span> <span class="nf">ormsby_fft</span><span class="p">(</span><span class="n">duration</span><span class="p">,</span> <span class="n">dt</span><span class="p">,</span> <span class="n">f</span><span class="p">,</span> <span class="n">P</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="n">return_t</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">sym</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+<div class="viewcode-block" id="ormsby_fft"><a class="viewcode-back" href="../../../api/bruges.filters.html#bruges.filters.wavelets.ormsby_fft">[docs]</a><span class="k">def</span> <span class="nf">ormsby_fft</span><span class="p">(</span><span class="n">duration</span><span class="p">,</span> <span class="n">dt</span><span class="p">,</span> <span class="n">f</span><span class="p">,</span> <span class="n">P</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="n">return_t</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">sym</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
     <span class="sd">"""</span>
 <span class="sd">    Non-white Ormsby, with arbitary amplitudes.</span>
-<span class="sd">    </span>
+
 <span class="sd">    Can use as many points as you like. The power of f1 and f4 is assumed to be 0,</span>
 <span class="sd">    so you only need to provide p2 and p3 (the corners). (You can actually provide</span>
 <span class="sd">    as many f points as you like, as long as there are n - 2 matching p points.)</span>
@@ -681,7 +692,8 @@
 
 <span class="sd">        import matplotlib.pyplot as plt</span>
 <span class="sd">        import bruges</span>
-<span class="sd">        plt.plot(bruges.filters.ormsby(.5, 0.002, [5, 10, 40, 80]))</span>
+<span class="sd">        w, t = bruges.filters.ormsby(0.256, 0.002, [5, 10, 40, 80])</span>
+<span class="sd">        plt.plot(t, w)</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        duration (float): The length in seconds of the wavelet.</span>
@@ -705,6 +717,10 @@
 <span class="sd">        ndarray: A vector containing the Ormsby wavelet, or a bank of them. If</span>
 <span class="sd">            you passed `return_t=True` then a tuple of (wavelet, t) is returned.</span>
 <span class="sd">    """</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">return_t</span><span class="p">:</span>
+        <span class="n">m</span> <span class="o">=</span> <span class="s2">"return_t is deprecated. In future releases, return_t will always be True."</span>
+        <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="ne">DeprecationWarning</span><span class="p">,</span> <span class="n">stacklevel</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+
     <span class="n">fs</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">/</span> <span class="n">dt</span>
     <span class="n">fN</span> <span class="o">=</span> <span class="n">fs</span> <span class="o">//</span> <span class="mi">2</span>
     <span class="n">n</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">duration</span> <span class="o">/</span> <span class="n">dt</span><span class="p">)</span>
@@ -730,13 +746,13 @@
         <span class="k">return</span> <span class="n">w</span></div>
 
 
-<div class="viewcode-block" id="berlage"><a class="viewcode-back" href="../../../bruges.filters.html#bruges.filters.wavelets.berlage">[docs]</a><span class="k">def</span> <span class="nf">berlage</span><span class="p">(</span><span class="n">duration</span><span class="p">,</span> <span class="n">dt</span><span class="p">,</span> <span class="n">f</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mi">180</span><span class="p">,</span> <span class="n">phi</span><span class="o">=-</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span> <span class="n">t</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">return_t</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">sym</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-    <span class="sd">"""</span>
+<div class="viewcode-block" id="berlage"><a class="viewcode-back" href="../../../api/bruges.filters.html#bruges.filters.wavelets.berlage">[docs]</a><span class="k">def</span> <span class="nf">berlage</span><span class="p">(</span><span class="n">duration</span><span class="p">,</span> <span class="n">dt</span><span class="p">,</span> <span class="n">f</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mi">180</span><span class="p">,</span> <span class="n">phi</span><span class="o">=-</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span> <span class="n">t</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">return_t</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">sym</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+    <span class="sa">r</span><span class="sd">"""</span>
 <span class="sd">    Generates a Berlage wavelet with a peak frequency f. Implements</span>
 
 <span class="sd">    .. math::</span>
 
-<span class="sd">        w(t) = AH(t) t^n \mathrm{e}^{-\alpha t} \cos(2 \pi f_0 t + \phi_0)</span>
+<span class="sd">        w(t) = AH(t) t^n \mathrm{e}^{- \alpha t} \cos(2 \pi f_0 t + \phi_0)</span>
 
 <span class="sd">    as described in Aldridge, DF (1990), The Berlage wavelet, GEOPHYSICS</span>
 <span class="sd">    55 (11), p 1508-1511. Berlage wavelets are causal, minimum phase and</span>
@@ -748,8 +764,8 @@
 
 <span class="sd">        import matplotlib.pyplot as plt</span>
 <span class="sd">        import bruges</span>
-<span class="sd">        plt.plot(bruges.filters.berlage(0.5, 0.002, 40))</span>
-<span class="sd">        plt.show()</span>
+<span class="sd">        w, t = bruges.filters.berlage(0.256, 0.002, 40)</span>
+<span class="sd">        plt.plot(t, w)</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        duration (float): The length in seconds of the wavelet.</span>
@@ -774,8 +790,8 @@
 <span class="sd">            you passed `return_t=True` then a tuple of (wavelet, t) is returned.</span>
 <span class="sd">    """</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="n">return_t</span><span class="p">:</span>
-        <span class="n">m</span> <span class="o">=</span> <span class="s2">"In future releases, return_t will be True by default."</span>
-        <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="ne">FutureWarning</span><span class="p">,</span> <span class="n">stacklevel</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+        <span class="n">m</span> <span class="o">=</span> <span class="s2">"return_t is deprecated. In future releases, return_t will always be True."</span>
+        <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="ne">DeprecationWarning</span><span class="p">,</span> <span class="n">stacklevel</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
 
     <span class="n">f</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asanyarray</span><span class="p">(</span><span class="n">f</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">t</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
@@ -798,7 +814,7 @@
         <span class="k">return</span> <span class="n">w</span></div>
 
 
-<div class="viewcode-block" id="generalized"><a class="viewcode-back" href="../../../bruges.filters.html#bruges.filters.wavelets.generalized">[docs]</a><span class="k">def</span> <span class="nf">generalized</span><span class="p">(</span><span class="n">duration</span><span class="p">,</span> <span class="n">dt</span><span class="p">,</span> <span class="n">f</span><span class="p">,</span> <span class="n">u</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">t</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">return_t</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">imag</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">sym</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="generalized"><a class="viewcode-back" href="../../../api/bruges.filters.html#bruges.filters.wavelets.generalized">[docs]</a><span class="k">def</span> <span class="nf">generalized</span><span class="p">(</span><span class="n">duration</span><span class="p">,</span> <span class="n">dt</span><span class="p">,</span> <span class="n">f</span><span class="p">,</span> <span class="n">u</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">t</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">return_t</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">imag</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">sym</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
     <span class="sd">"""</span>
 <span class="sd">    Wang's generalized wavelet, of which the Ricker is a special case where</span>
 <span class="sd">    u = 2. The parameter u is the order of the time-domain derivative, which</span>
@@ -812,7 +828,8 @@
 
 <span class="sd">        import matplotlib.pyplot as plt</span>
 <span class="sd">        import bruges</span>
-<span class="sd">        plt.plot(bruges.filters.generalized(.5, 0.002, 40, u=1.0))</span>
+<span class="sd">        w, t = bruges.filters.generalized(0.256, 0.002, 40, u=1.0)</span>
+<span class="sd">        plt.plot(t, w)</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        duration (float): The length of the wavelet, in s.</span>
@@ -839,8 +856,8 @@
 <span class="sd">            of (wavelet, t) is returned.</span>
 <span class="sd">    """</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="n">return_t</span><span class="p">:</span>
-        <span class="n">m</span> <span class="o">=</span> <span class="s2">"In future releases, return_t will be True by default."</span>
-        <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="ne">FutureWarning</span><span class="p">,</span> <span class="n">stacklevel</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+        <span class="n">m</span> <span class="o">=</span> <span class="s2">"return_t is deprecated. In future releases, return_t will always be True."</span>
+        <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="ne">DeprecationWarning</span><span class="p">,</span> <span class="n">stacklevel</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
 
     <span class="c1"># Make sure we can do banks.</span>
     <span class="n">f</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asanyarray</span><span class="p">(</span><span class="n">f</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
@@ -885,40 +902,6 @@
         <span class="k">return</span> <span class="n">GeneralizedWavelet</span><span class="p">(</span><span class="n">w</span><span class="p">,</span> <span class="n">t</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">w</span></div>
-
-
-<div class="viewcode-block" id="rotate_phase"><a class="viewcode-back" href="../../../bruges.filters.html#bruges.filters.wavelets.rotate_phase">[docs]</a><span class="nd">@deprecated</span><span class="p">(</span><span class="s1">'bruges.filters.wavelets.rotate_phase() is deprecated. Please use bruges.filters.rotate_phase() instead.'</span><span class="p">)</span>
-<span class="k">def</span> <span class="nf">rotate_phase</span><span class="p">(</span><span class="n">w</span><span class="p">,</span> <span class="n">phi</span><span class="p">,</span> <span class="n">degrees</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
-    <span class="sd">"""</span>
-<span class="sd">    Performs a phase rotation of wavelet or wavelet bank using:</span>
-
-<span class="sd">    .. math::</span>
-
-<span class="sd">        A = w(t)\cos(\phi) - h(t)\sin(\phi)</span>
-
-<span class="sd">    where w(t) is the wavelet and h(t) is its Hilbert transform.</span>
-
-<span class="sd">    The analytic signal can be written in the form S(t) = A(t)exp(j*theta(t))</span>
-<span class="sd">    where A(t) = magnitude(hilbert(w(t))) and theta(t) = angle(hilbert(w(t))</span>
-<span class="sd">    then a constant phase rotation phi would produce the analytic signal</span>
-<span class="sd">    S(t) = A(t)exp(j*(theta(t) + phi)). To get the non analytic signal</span>
-<span class="sd">    we take real(S(t)) == A(t)cos(theta(t) + phi)</span>
-<span class="sd">    == A(t)(cos(theta(t))cos(phi) - sin(theta(t))sin(phi)) &lt;= trig identity</span>
-<span class="sd">    == w(t)cos(phi) - h(t)sin(phi)</span>
-
-<span class="sd">    Args:</span>
-<span class="sd">        w (ndarray): The wavelet vector, can be a 2D wavelet bank.</span>
-<span class="sd">        phi (float): The phase rotation angle (in radians) to apply.</span>
-<span class="sd">        degrees (bool): If phi is in degrees not radians.</span>
-
-<span class="sd">    Returns:</span>
-<span class="sd">        The phase rotated signal (or bank of signals).</span>
-<span class="sd">    """</span>
-    <span class="k">if</span> <span class="n">degrees</span><span class="p">:</span>
-        <span class="n">phi</span> <span class="o">=</span> <span class="n">phi</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">/</span> <span class="mf">180.0</span>
-    <span class="n">a</span> <span class="o">=</span> <span class="n">scipy</span><span class="o">.</span><span class="n">signal</span><span class="o">.</span><span class="n">hilbert</span><span class="p">(</span><span class="n">w</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
-    <span class="n">w</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">real</span><span class="p">(</span><span class="n">a</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">phi</span><span class="p">)</span>  <span class="o">-</span>  <span class="n">np</span><span class="o">.</span><span class="n">imag</span><span class="p">(</span><span class="n">a</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">phi</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">w</span></div>
 </pre></div>
         </article>
       </div>

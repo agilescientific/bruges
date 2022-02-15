@@ -153,19 +153,23 @@
   <input type="hidden" name="area" value="default">
 </form>
 <div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
-  <p class="caption" role="heading"><span class="caption-text">API reference</span></p>
+  <p class="caption" role="heading"><span class="caption-text">User guide</span></p>
 <ul>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../../../bruges.html">bruges package</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
-<li class="toctree-l2"><a class="reference internal" href="../../../bruges.attribute.html">bruges.attribute package</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../bruges.filters.html">bruges.filters package</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../bruges.models.html">bruges.models package</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../bruges.noise.html">bruges.noise package</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../bruges.petrophysics.html">bruges.petrophysics package</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../bruges.reflection.html">bruges.reflection package</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../bruges.rockphysics.html">bruges.rockphysics package</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../bruges.transform.html">bruges.transform package</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../bruges.unit.html">bruges.unit package</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../bruges.util.html">bruges.util package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../installation.html">Installation</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">API reference</span></p>
+<ul>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../api/bruges.html">bruges package</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/bruges.attribute.html">bruges.attribute package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/bruges.filters.html">bruges.filters package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/bruges.models.html">bruges.models package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/bruges.noise.html">bruges.noise package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/bruges.petrophysics.html">bruges.petrophysics package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/bruges.reflection.html">bruges.reflection package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/bruges.rockphysics.html">bruges.rockphysics package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/bruges.transform.html">bruges.transform package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/bruges.unit.html">bruges.unit package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/bruges.util.html">bruges.util package</a></li>
 </ul>
 </li>
 </ul>
@@ -173,8 +177,10 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../development.html">Development</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../authors.html">Authors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../authors.html#id1">Authors</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../license.html">License</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../changelog.html">Changelog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../changelog.html#id1">Changelog</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../contributing.html">Contributing</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Project links</span></p>
@@ -231,7 +237,7 @@
 <span class="kn">from</span> <span class="nn">bruges.util</span> <span class="kn">import</span> <span class="n">moving_average</span>
 
 
-<div class="viewcode-block" id="backus_parameters"><a class="viewcode-back" href="../../../bruges.rockphysics.html#bruges.rockphysics.anisotropy.backus_parameters">[docs]</a><span class="k">def</span> <span class="nf">backus_parameters</span><span class="p">(</span><span class="n">vp</span><span class="p">,</span> <span class="n">vs</span><span class="p">,</span> <span class="n">rho</span><span class="p">,</span> <span class="n">lb</span><span class="p">,</span> <span class="n">dz</span><span class="p">):</span>
+<div class="viewcode-block" id="backus_parameters"><a class="viewcode-back" href="../../../api/bruges.rockphysics.html#bruges.rockphysics.anisotropy.backus_parameters">[docs]</a><span class="k">def</span> <span class="nf">backus_parameters</span><span class="p">(</span><span class="n">vp</span><span class="p">,</span> <span class="n">vs</span><span class="p">,</span> <span class="n">rho</span><span class="p">,</span> <span class="n">lb</span><span class="p">,</span> <span class="n">dz</span><span class="p">):</span>
     <span class="sd">"""</span>
 <span class="sd">    Intermediate parameters for Backus averaging. This is expected to be a</span>
 <span class="sd">    private function. You probably want backus() and not this.</span>
@@ -291,7 +297,7 @@
 <span class="c1">#     return wrapper</span>
 
 
-<div class="viewcode-block" id="backus"><a class="viewcode-back" href="../../../bruges.rockphysics.html#bruges.rockphysics.anisotropy.backus">[docs]</a><span class="k">def</span> <span class="nf">backus</span><span class="p">(</span><span class="n">vp</span><span class="p">,</span> <span class="n">vs</span><span class="p">,</span> <span class="n">rho</span><span class="p">,</span> <span class="n">lb</span><span class="p">,</span> <span class="n">dz</span><span class="p">):</span>
+<div class="viewcode-block" id="backus"><a class="viewcode-back" href="../../../api/bruges.rockphysics.html#bruges.rockphysics.anisotropy.backus">[docs]</a><span class="k">def</span> <span class="nf">backus</span><span class="p">(</span><span class="n">vp</span><span class="p">,</span> <span class="n">vs</span><span class="p">,</span> <span class="n">rho</span><span class="p">,</span> <span class="n">lb</span><span class="p">,</span> <span class="n">dz</span><span class="p">):</span>
     <span class="sd">"""</span>
 <span class="sd">    Backus averaging. Using Liner's algorithm (2014; see Notes).</span>
 
@@ -323,7 +329,7 @@
     <span class="k">return</span> <span class="n">BackusResult</span><span class="p">(</span><span class="n">Vp</span><span class="o">=</span><span class="n">vp0</span><span class="p">,</span> <span class="n">Vs</span><span class="o">=</span><span class="n">vs0</span><span class="p">,</span> <span class="n">rho</span><span class="o">=</span><span class="n">R</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="backus_quality_factor"><a class="viewcode-back" href="../../../bruges.rockphysics.html#bruges.rockphysics.anisotropy.backus_quality_factor">[docs]</a><span class="k">def</span> <span class="nf">backus_quality_factor</span><span class="p">(</span><span class="n">vp</span><span class="p">,</span> <span class="n">vs</span><span class="p">,</span> <span class="n">rho</span><span class="p">,</span> <span class="n">lb</span><span class="p">,</span> <span class="n">dz</span><span class="p">):</span>
+<div class="viewcode-block" id="backus_quality_factor"><a class="viewcode-back" href="../../../api/bruges.rockphysics.html#bruges.rockphysics.anisotropy.backus_quality_factor">[docs]</a><span class="k">def</span> <span class="nf">backus_quality_factor</span><span class="p">(</span><span class="n">vp</span><span class="p">,</span> <span class="n">vs</span><span class="p">,</span> <span class="n">rho</span><span class="p">,</span> <span class="n">lb</span><span class="p">,</span> <span class="n">dz</span><span class="p">):</span>
     <span class="sd">"""</span>
 <span class="sd">    Compute Qp and Qs from Liner (2014) equation 10.</span>
 
@@ -349,7 +355,7 @@
     <span class="k">return</span> <span class="n">BackusResult</span><span class="p">(</span><span class="n">Qp</span><span class="o">=</span><span class="n">Qp</span><span class="p">,</span> <span class="n">Qs</span><span class="o">=</span><span class="n">Qs</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="thomsen_parameters"><a class="viewcode-back" href="../../../bruges.rockphysics.html#bruges.rockphysics.anisotropy.thomsen_parameters">[docs]</a><span class="k">def</span> <span class="nf">thomsen_parameters</span><span class="p">(</span><span class="n">vp</span><span class="p">,</span> <span class="n">vs</span><span class="p">,</span> <span class="n">rho</span><span class="p">,</span> <span class="n">lb</span><span class="p">,</span> <span class="n">dz</span><span class="p">):</span>
+<div class="viewcode-block" id="thomsen_parameters"><a class="viewcode-back" href="../../../api/bruges.rockphysics.html#bruges.rockphysics.anisotropy.thomsen_parameters">[docs]</a><span class="k">def</span> <span class="nf">thomsen_parameters</span><span class="p">(</span><span class="n">vp</span><span class="p">,</span> <span class="n">vs</span><span class="p">,</span> <span class="n">rho</span><span class="p">,</span> <span class="n">lb</span><span class="p">,</span> <span class="n">dz</span><span class="p">):</span>
     <span class="sd">"""</span>
 <span class="sd">    Liner, C, and T Fei (2006). Layer-induced seismic anisotropy from</span>
 <span class="sd">    full-wave sonic logs: Theory, application, and validation.</span>
@@ -376,7 +382,7 @@
     <span class="k">return</span> <span class="n">ThomsenParameters</span><span class="p">(</span><span class="n">delta</span><span class="p">,</span> <span class="n">epsilon</span><span class="p">,</span> <span class="n">gamma</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="dispersion_parameter"><a class="viewcode-back" href="../../../bruges.rockphysics.html#bruges.rockphysics.anisotropy.dispersion_parameter">[docs]</a><span class="k">def</span> <span class="nf">dispersion_parameter</span><span class="p">(</span><span class="n">qp</span><span class="p">):</span>
+<div class="viewcode-block" id="dispersion_parameter"><a class="viewcode-back" href="../../../api/bruges.rockphysics.html#bruges.rockphysics.anisotropy.dispersion_parameter">[docs]</a><span class="k">def</span> <span class="nf">dispersion_parameter</span><span class="p">(</span><span class="n">qp</span><span class="p">):</span>
     <span class="sd">"""</span>
 <span class="sd">    Kjartansson (1979). Journal of Geophysical Research, 84 (B9),</span>
 <span class="sd">    4737-4748. DOI: 10.1029/JB084iB09p04737.</span>
@@ -384,7 +390,7 @@
     <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">arctan</span><span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="n">qp</span><span class="p">)</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span></div>
 
 
-<div class="viewcode-block" id="blangy"><a class="viewcode-back" href="../../../bruges.rockphysics.html#bruges.rockphysics.anisotropy.blangy">[docs]</a><span class="k">def</span> <span class="nf">blangy</span><span class="p">(</span><span class="n">vp1</span><span class="p">,</span> <span class="n">vs1</span><span class="p">,</span> <span class="n">rho1</span><span class="p">,</span> <span class="n">d1</span><span class="p">,</span> <span class="n">e1</span><span class="p">,</span> <span class="n">vp0</span><span class="p">,</span> <span class="n">vs0</span><span class="p">,</span> <span class="n">rho0</span><span class="p">,</span> <span class="n">d0</span><span class="p">,</span> <span class="n">e0</span><span class="p">,</span> <span class="n">theta</span><span class="p">):</span>
+<div class="viewcode-block" id="blangy"><a class="viewcode-back" href="../../../api/bruges.rockphysics.html#bruges.rockphysics.anisotropy.blangy">[docs]</a><span class="k">def</span> <span class="nf">blangy</span><span class="p">(</span><span class="n">vp1</span><span class="p">,</span> <span class="n">vs1</span><span class="p">,</span> <span class="n">rho1</span><span class="p">,</span> <span class="n">d1</span><span class="p">,</span> <span class="n">e1</span><span class="p">,</span> <span class="n">vp0</span><span class="p">,</span> <span class="n">vs0</span><span class="p">,</span> <span class="n">rho0</span><span class="p">,</span> <span class="n">d0</span><span class="p">,</span> <span class="n">e0</span><span class="p">,</span> <span class="n">theta</span><span class="p">):</span>
     <span class="sd">"""</span>
 <span class="sd">    Blangy, JP, 1994, AVO in transversely isotropic media-An overview.</span>
 <span class="sd">    Geophysics 59 (5), 775-781. DOI: 10.1190/1.1443635</span>
@@ -455,7 +461,7 @@
     <span class="k">return</span> <span class="n">BlangyResult</span><span class="p">(</span><span class="n">isotropic</span><span class="p">,</span> <span class="n">anisotropic</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="ruger"><a class="viewcode-back" href="../../../bruges.rockphysics.html#bruges.rockphysics.anisotropy.ruger">[docs]</a><span class="k">def</span> <span class="nf">ruger</span><span class="p">(</span><span class="n">vp1</span><span class="p">,</span> <span class="n">vs1</span><span class="p">,</span> <span class="n">rho1</span><span class="p">,</span> <span class="n">d1</span><span class="p">,</span> <span class="n">e1</span><span class="p">,</span> <span class="n">vp2</span><span class="p">,</span> <span class="n">vs2</span><span class="p">,</span> <span class="n">rho2</span><span class="p">,</span> <span class="n">d2</span><span class="p">,</span> <span class="n">e2</span><span class="p">,</span> <span class="n">theta</span><span class="p">):</span>
+<div class="viewcode-block" id="ruger"><a class="viewcode-back" href="../../../api/bruges.rockphysics.html#bruges.rockphysics.anisotropy.ruger">[docs]</a><span class="k">def</span> <span class="nf">ruger</span><span class="p">(</span><span class="n">vp1</span><span class="p">,</span> <span class="n">vs1</span><span class="p">,</span> <span class="n">rho1</span><span class="p">,</span> <span class="n">d1</span><span class="p">,</span> <span class="n">e1</span><span class="p">,</span> <span class="n">vp2</span><span class="p">,</span> <span class="n">vs2</span><span class="p">,</span> <span class="n">rho2</span><span class="p">,</span> <span class="n">d2</span><span class="p">,</span> <span class="n">e2</span><span class="p">,</span> <span class="n">theta</span><span class="p">):</span>
     <span class="sd">"""</span>
 <span class="sd">    Coded by Alessandro Amato del Monte and (c) 2016 by him</span>
 <span class="sd">    https://github.com/aadm/avo_explorer/blob/master/avo_explorer_v2.ipynb</span>
@@ -503,7 +509,7 @@
     <span class="k">return</span> <span class="n">R</span></div>
 
 
-<div class="viewcode-block" id="crack_density"><a class="viewcode-back" href="../../../bruges.rockphysics.html#bruges.rockphysics.anisotropy.crack_density">[docs]</a><span class="k">def</span> <span class="nf">crack_density</span><span class="p">(</span><span class="n">porosity</span><span class="p">,</span> <span class="n">aspect</span><span class="p">):</span>
+<div class="viewcode-block" id="crack_density"><a class="viewcode-back" href="../../../api/bruges.rockphysics.html#bruges.rockphysics.anisotropy.crack_density">[docs]</a><span class="k">def</span> <span class="nf">crack_density</span><span class="p">(</span><span class="n">porosity</span><span class="p">,</span> <span class="n">aspect</span><span class="p">):</span>
     <span class="sd">"""</span>
 <span class="sd">    Returns crack density from porosity and aspect ratio, phi and alpha</span>
 <span class="sd">    respectively in the unnumbered equation between 15.40 and 15.41 in</span>
@@ -522,7 +528,7 @@
     <span class="k">return</span> <span class="mi">3</span> <span class="o">*</span> <span class="n">porosity</span> <span class="o">/</span> <span class="p">(</span><span class="mi">4</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">aspect</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="hudson_delta_M"><a class="viewcode-back" href="../../../bruges.rockphysics.html#bruges.rockphysics.anisotropy.hudson_delta_M">[docs]</a><span class="k">def</span> <span class="nf">hudson_delta_M</span><span class="p">(</span><span class="n">porosity</span><span class="p">,</span> <span class="n">aspect</span><span class="p">,</span> <span class="n">mu</span><span class="p">,</span> <span class="n">lam</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">pmod</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="hudson_delta_M"><a class="viewcode-back" href="../../../api/bruges.rockphysics.html#bruges.rockphysics.anisotropy.hudson_delta_M">[docs]</a><span class="k">def</span> <span class="nf">hudson_delta_M</span><span class="p">(</span><span class="n">porosity</span><span class="p">,</span> <span class="n">aspect</span><span class="p">,</span> <span class="n">mu</span><span class="p">,</span> <span class="n">lam</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">pmod</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
     <span class="sd">"""</span>
 <span class="sd">    The approximate reduction in compressional modulus M in the direction</span>
 <span class="sd">    normal to a set of aligned cracks. Eqn 15.40 in Dvorkin et al (2014).</span>
@@ -544,7 +550,7 @@
         <span class="k">return</span> <span class="p">(</span><span class="mi">4</span><span class="o">*</span><span class="n">epsilon</span><span class="o">/</span><span class="mi">3</span><span class="p">)</span> <span class="o">*</span> <span class="p">((</span><span class="n">pmod</span> <span class="o">-</span> <span class="mi">2</span><span class="o">*</span><span class="n">mu</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span> <span class="o">/</span> <span class="n">mu</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">pmod</span><span class="o">/</span><span class="p">(</span><span class="n">pmod</span><span class="o">-</span><span class="n">mu</span><span class="p">))</span></div>
 
 
-<div class="viewcode-block" id="hudson_delta_G"><a class="viewcode-back" href="../../../bruges.rockphysics.html#bruges.rockphysics.anisotropy.hudson_delta_G">[docs]</a><span class="k">def</span> <span class="nf">hudson_delta_G</span><span class="p">(</span><span class="n">porosity</span><span class="p">,</span> <span class="n">aspect</span><span class="p">,</span> <span class="n">mu</span><span class="p">,</span> <span class="n">lam</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">pmod</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="hudson_delta_G"><a class="viewcode-back" href="../../../api/bruges.rockphysics.html#bruges.rockphysics.anisotropy.hudson_delta_G">[docs]</a><span class="k">def</span> <span class="nf">hudson_delta_G</span><span class="p">(</span><span class="n">porosity</span><span class="p">,</span> <span class="n">aspect</span><span class="p">,</span> <span class="n">mu</span><span class="p">,</span> <span class="n">lam</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">pmod</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
     <span class="sd">"""</span>
 <span class="sd">    The approximate reduction in shear modulus G (or mu) in the direction</span>
 <span class="sd">    normal to a set of aligned cracks. Eqn 15.42 in Dvorkin et al (2014).</span>
@@ -566,7 +572,7 @@
         <span class="k">return</span> <span class="p">(</span><span class="mi">16</span><span class="o">*</span><span class="n">mu</span><span class="o">*</span><span class="n">epsilon</span><span class="o">/</span><span class="mi">3</span><span class="p">)</span> <span class="o">*</span> <span class="n">pmod</span> <span class="o">/</span> <span class="p">(</span><span class="mi">3</span><span class="o">*</span><span class="n">pmod</span> <span class="o">-</span> <span class="mi">2</span><span class="o">*</span><span class="n">mu</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="hudson_quality_factor"><a class="viewcode-back" href="../../../bruges.rockphysics.html#bruges.rockphysics.anisotropy.hudson_quality_factor">[docs]</a><span class="k">def</span> <span class="nf">hudson_quality_factor</span><span class="p">(</span><span class="n">porosity</span><span class="p">,</span> <span class="n">aspect</span><span class="p">,</span> <span class="n">mu</span><span class="p">,</span> <span class="n">lam</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">pmod</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="hudson_quality_factor"><a class="viewcode-back" href="../../../api/bruges.rockphysics.html#bruges.rockphysics.anisotropy.hudson_quality_factor">[docs]</a><span class="k">def</span> <span class="nf">hudson_quality_factor</span><span class="p">(</span><span class="n">porosity</span><span class="p">,</span> <span class="n">aspect</span><span class="p">,</span> <span class="n">mu</span><span class="p">,</span> <span class="n">lam</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">pmod</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
     <span class="sd">"""</span>
 <span class="sd">    Returns Q_p and Q_s for cracked media. Equations 15.41 and 15.43 in</span>
 <span class="sd">    Dvorkin et al. (2014).</span>
@@ -587,7 +593,7 @@
     <span class="k">return</span> <span class="n">Qp</span><span class="p">,</span> <span class="n">Qs</span></div>
 
 
-<div class="viewcode-block" id="hudson_inverse_Q_ratio"><a class="viewcode-back" href="../../../bruges.rockphysics.html#bruges.rockphysics.anisotropy.hudson_inverse_Q_ratio">[docs]</a><span class="k">def</span> <span class="nf">hudson_inverse_Q_ratio</span><span class="p">(</span><span class="n">mu</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+<div class="viewcode-block" id="hudson_inverse_Q_ratio"><a class="viewcode-back" href="../../../api/bruges.rockphysics.html#bruges.rockphysics.anisotropy.hudson_inverse_Q_ratio">[docs]</a><span class="k">def</span> <span class="nf">hudson_inverse_Q_ratio</span><span class="p">(</span><span class="n">mu</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
                            <span class="n">pmod</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
                            <span class="n">pr</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
                            <span class="n">vp</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>

@@ -3,7 +3,7 @@
   <head><meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width,initial-scale=1"/>
     <meta name="color-scheme" content="light dark"><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
-<link rel="index" title="Index" href="genindex.html" /><link rel="search" title="Search" href="search.html" /><link rel="next" title="bruges package" href="bruges.html" />
+<link rel="index" title="Index" href="genindex.html" /><link rel="search" title="Search" href="search.html" /><link rel="next" title="Installation" href="installation.html" />
 
     <link rel="shortcut icon" href="_static/favicon.ico"/><meta name="generator" content="sphinx-4.4.0, furo 2022.02.14.1"/>
         <title>bruges documentation</title>
@@ -154,19 +154,23 @@
   <input type="hidden" name="area" value="default">
 </form>
 <div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
-  <p class="caption" role="heading"><span class="caption-text">API reference</span></p>
+  <p class="caption" role="heading"><span class="caption-text">User guide</span></p>
 <ul>
-<li class="toctree-l1 has-children"><a class="reference internal" href="bruges.html">bruges package</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
-<li class="toctree-l2"><a class="reference internal" href="bruges.attribute.html">bruges.attribute package</a></li>
-<li class="toctree-l2"><a class="reference internal" href="bruges.filters.html">bruges.filters package</a></li>
-<li class="toctree-l2"><a class="reference internal" href="bruges.models.html">bruges.models package</a></li>
-<li class="toctree-l2"><a class="reference internal" href="bruges.noise.html">bruges.noise package</a></li>
-<li class="toctree-l2"><a class="reference internal" href="bruges.petrophysics.html">bruges.petrophysics package</a></li>
-<li class="toctree-l2"><a class="reference internal" href="bruges.reflection.html">bruges.reflection package</a></li>
-<li class="toctree-l2"><a class="reference internal" href="bruges.rockphysics.html">bruges.rockphysics package</a></li>
-<li class="toctree-l2"><a class="reference internal" href="bruges.transform.html">bruges.transform package</a></li>
-<li class="toctree-l2"><a class="reference internal" href="bruges.unit.html">bruges.unit package</a></li>
-<li class="toctree-l2"><a class="reference internal" href="bruges.util.html">bruges.util package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">API reference</span></p>
+<ul>
+<li class="toctree-l1 has-children"><a class="reference internal" href="api/bruges.html">bruges package</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="api/bruges.attribute.html">bruges.attribute package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/bruges.filters.html">bruges.filters package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/bruges.models.html">bruges.models package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/bruges.noise.html">bruges.noise package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/bruges.petrophysics.html">bruges.petrophysics package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/bruges.reflection.html">bruges.reflection package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/bruges.rockphysics.html">bruges.rockphysics package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/bruges.transform.html">bruges.transform package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/bruges.unit.html">bruges.unit package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/bruges.util.html">bruges.util package</a></li>
 </ul>
 </li>
 </ul>
@@ -174,8 +178,10 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="development.html">Development</a></li>
 <li class="toctree-l1"><a class="reference internal" href="authors.html">Authors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="authors.html#id1">Authors</a></li>
 <li class="toctree-l1"><a class="reference internal" href="license.html">License</a></li>
 <li class="toctree-l1"><a class="reference internal" href="changelog.html">Changelog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="changelog.html#id1">Changelog</a></li>
 <li class="toctree-l1"><a class="reference internal" href="contributing.html">Contributing</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Project links</span></p>
@@ -219,49 +225,58 @@
 <h1>bruges is a<a class="headerlink" href="#bruges-is-a" title="Permalink to this headline">#</a></h1>
 <img alt="http://agile.geosci.ai/bruges.png" src="http://agile.geosci.ai/bruges.png"/>
 <p>In other words, it’s just a load of functions that implement important equations in (mostly seismic) geophysics, from Aki-Richards to Zoeppritz.</p>
-<section id="installation">
-<h2>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">#</a></h2>
+<section id="quick-start">
+<h2>Quick start<a class="headerlink" href="#quick-start" title="Permalink to this headline">#</a></h2>
 <div class="toctree-wrapper compound">
 </div>
 <p>To install <code class="docutils literal notranslate"><span class="pre">bruges</span></code>, simply type the following into a terminal:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="n">bruges</span>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>pip install bruges
 </pre></div>
 </div>
-<p>To create an Ormsby Wavelet:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">bruges.filters.wavelets</span> <span class="kn">import</span> <span class="n">ormbsy</span><span class="p">:</span>
-<span class="n">w</span> <span class="o">=</span> <span class="n">ormsby</span><span class="p">(</span><span class="n">duration</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">dt</span><span class="o">=</span><span class="mf">0.002</span><span class="p">,</span> <span class="n">f</span><span class="o">=</span><span class="p">[</span><span class="mi">5</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">40</span><span class="p">,</span> <span class="mi">80</span><span class="p">])</span>
+<p>To create an Ormsby wavelet:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">bruges.filters</span> <span class="kn">import</span> <span class="n">ormbsy</span>
+<span class="n">w</span><span class="p">,</span> <span class="n">t</span> <span class="o">=</span> <span class="n">ormsby</span><span class="p">(</span><span class="n">duration</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">dt</span><span class="o">=</span><span class="mf">0.002</span><span class="p">,</span> <span class="n">f</span><span class="o">=</span><span class="p">[</span><span class="mi">5</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">40</span><span class="p">,</span> <span class="mi">80</span><span class="p">])</span>
+</pre></div>
+</div>
+<p>The function passes back the wavelet amplitude samples <code class="docutils literal notranslate"><span class="pre">w</span></code> and the time
+of each sample, <code class="docutils literal notranslate"><span class="pre">t</span></code>. You can plot the wavelet with <code class="docutils literal notranslate"><span class="pre">matplotlib</span></code> like so:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">w</span><span class="p">)</span>
 </pre></div>
 </div>
 </section>
 <section id="user-guide">
 <h2>User Guide<a class="headerlink" href="#user-guide" title="Permalink to this headline">#</a></h2>
-<blockquote>
-<div><p>Coming soon!</p>
-</div></blockquote>
+<div class="toctree-wrapper compound">
+<p class="caption" role="heading"><span class="caption-text">User guide</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+</ul>
+</div>
 </section>
 <section id="api-reference">
 <h2>API reference<a class="headerlink" href="#api-reference" title="Permalink to this headline">#</a></h2>
 <div class="toctree-wrapper compound">
 <p class="caption" role="heading"><span class="caption-text">API reference</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="bruges.html">bruges package</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="bruges.html#subpackages">Subpackages</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="bruges.attribute.html">bruges.attribute package</a></li>
-<li class="toctree-l3"><a class="reference internal" href="bruges.filters.html">bruges.filters package</a></li>
-<li class="toctree-l3"><a class="reference internal" href="bruges.models.html">bruges.models package</a></li>
-<li class="toctree-l3"><a class="reference internal" href="bruges.noise.html">bruges.noise package</a></li>
-<li class="toctree-l3"><a class="reference internal" href="bruges.petrophysics.html">bruges.petrophysics package</a></li>
-<li class="toctree-l3"><a class="reference internal" href="bruges.reflection.html">bruges.reflection package</a></li>
-<li class="toctree-l3"><a class="reference internal" href="bruges.rockphysics.html">bruges.rockphysics package</a></li>
-<li class="toctree-l3"><a class="reference internal" href="bruges.transform.html">bruges.transform package</a></li>
-<li class="toctree-l3"><a class="reference internal" href="bruges.unit.html">bruges.unit package</a></li>
-<li class="toctree-l3"><a class="reference internal" href="bruges.util.html">bruges.util package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api/bruges.html">bruges package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="api/bruges.html#subpackages">Subpackages</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="api/bruges.attribute.html">bruges.attribute package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/bruges.filters.html">bruges.filters package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/bruges.models.html">bruges.models package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/bruges.noise.html">bruges.noise package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/bruges.petrophysics.html">bruges.petrophysics package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/bruges.reflection.html">bruges.reflection package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/bruges.rockphysics.html">bruges.rockphysics package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/bruges.transform.html">bruges.transform package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/bruges.unit.html">bruges.unit package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/bruges.util.html">bruges.util package</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="bruges.html#submodules">Submodules</a></li>
-<li class="toctree-l2"><a class="reference internal" href="bruges.html#module-bruges.bruges">bruges.bruges module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="bruges.html#module-bruges.get_bruges">bruges.get_bruges module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="bruges.html#module-bruges">Module contents</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/bruges.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/bruges.html#module-bruges.bruges">bruges.bruges module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/bruges.html#module-bruges.get_bruges">bruges.get_bruges module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/bruges.html#module-bruges">Module contents</a></li>
 </ul>
 </li>
 </ul>
@@ -274,8 +289,10 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="development.html">Development</a></li>
 <li class="toctree-l1"><a class="reference internal" href="authors.html">Authors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="authors.html#id1">Authors</a></li>
 <li class="toctree-l1"><a class="reference internal" href="license.html">License</a></li>
 <li class="toctree-l1"><a class="reference internal" href="changelog.html">Changelog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="changelog.html#id1">Changelog</a></li>
 <li class="toctree-l1"><a class="reference internal" href="contributing.html">Contributing</a></li>
 </ul>
 </div>
@@ -297,12 +314,12 @@
       <footer>
         
         <div class="related-pages">
-          <a class="next-page" href="bruges.html">
+          <a class="next-page" href="installation.html">
               <div class="page-info">
                 <div class="context">
                   <span>Next</span>
                 </div>
-                <div class="title">bruges package</div>
+                <div class="title">Installation</div>
               </div>
               <svg><use href="#svg-arrow-right"></use></svg>
             </a>

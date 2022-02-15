@@ -153,19 +153,23 @@
   <input type="hidden" name="area" value="default">
 </form>
 <div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
-  <p class="caption" role="heading"><span class="caption-text">API reference</span></p>
+  <p class="caption" role="heading"><span class="caption-text">User guide</span></p>
 <ul>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../../../bruges.html">bruges package</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
-<li class="toctree-l2"><a class="reference internal" href="../../../bruges.attribute.html">bruges.attribute package</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../bruges.filters.html">bruges.filters package</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../bruges.models.html">bruges.models package</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../bruges.noise.html">bruges.noise package</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../bruges.petrophysics.html">bruges.petrophysics package</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../bruges.reflection.html">bruges.reflection package</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../bruges.rockphysics.html">bruges.rockphysics package</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../bruges.transform.html">bruges.transform package</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../bruges.unit.html">bruges.unit package</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../bruges.util.html">bruges.util package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../installation.html">Installation</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">API reference</span></p>
+<ul>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../api/bruges.html">bruges package</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/bruges.attribute.html">bruges.attribute package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/bruges.filters.html">bruges.filters package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/bruges.models.html">bruges.models package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/bruges.noise.html">bruges.noise package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/bruges.petrophysics.html">bruges.petrophysics package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/bruges.reflection.html">bruges.reflection package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/bruges.rockphysics.html">bruges.rockphysics package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/bruges.transform.html">bruges.transform package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/bruges.unit.html">bruges.unit package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/bruges.util.html">bruges.util package</a></li>
 </ul>
 </li>
 </ul>
@@ -173,8 +177,10 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../development.html">Development</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../authors.html">Authors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../authors.html#id1">Authors</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../license.html">License</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../changelog.html">Changelog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../changelog.html#id1">Changelog</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../contributing.html">Contributing</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Project links</span></p>
@@ -222,7 +228,7 @@
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 
 
-<div class="viewcode-block" id="critpor"><a class="viewcode-back" href="../../../bruges.rockphysics.html#bruges.rockphysics.rpm.critpor">[docs]</a><span class="k">def</span> <span class="nf">critpor</span><span class="p">(</span><span class="n">K0</span><span class="p">,</span> <span class="n">G0</span><span class="p">,</span> <span class="n">phi</span><span class="p">,</span> <span class="n">phic</span><span class="o">=</span><span class="mf">0.4</span><span class="p">):</span>
+<div class="viewcode-block" id="critpor"><a class="viewcode-back" href="../../../api/bruges.rockphysics.html#bruges.rockphysics.rpm.critpor">[docs]</a><span class="k">def</span> <span class="nf">critpor</span><span class="p">(</span><span class="n">K0</span><span class="p">,</span> <span class="n">G0</span><span class="p">,</span> <span class="n">phi</span><span class="p">,</span> <span class="n">phic</span><span class="o">=</span><span class="mf">0.4</span><span class="p">):</span>
     <span class="sd">'''</span>
 <span class="sd">    Critical porosity, Nur et al. (1991, 1995)</span>
 <span class="sd">    written by Alessandro Amato del Monte (2015)</span>
@@ -239,7 +245,7 @@
     <span class="k">return</span> <span class="n">K_DRY</span><span class="p">,</span> <span class="n">G_DRY</span></div>
 
 
-<div class="viewcode-block" id="hertzmindlin"><a class="viewcode-back" href="../../../bruges.rockphysics.html#bruges.rockphysics.rpm.hertzmindlin">[docs]</a><span class="k">def</span> <span class="nf">hertzmindlin</span><span class="p">(</span><span class="n">K0</span><span class="p">,</span> <span class="n">G0</span><span class="p">,</span> <span class="n">phi</span><span class="p">,</span> <span class="n">phic</span><span class="o">=</span><span class="mf">0.4</span><span class="p">,</span> <span class="n">Cn</span><span class="o">=</span><span class="mf">8.6</span><span class="p">,</span> <span class="n">P</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">f</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+<div class="viewcode-block" id="hertzmindlin"><a class="viewcode-back" href="../../../api/bruges.rockphysics.html#bruges.rockphysics.rpm.hertzmindlin">[docs]</a><span class="k">def</span> <span class="nf">hertzmindlin</span><span class="p">(</span><span class="n">K0</span><span class="p">,</span> <span class="n">G0</span><span class="p">,</span> <span class="n">phi</span><span class="p">,</span> <span class="n">phic</span><span class="o">=</span><span class="mf">0.4</span><span class="p">,</span> <span class="n">Cn</span><span class="o">=</span><span class="mf">8.6</span><span class="p">,</span> <span class="n">P</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">f</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
     <span class="sd">'''</span>
 <span class="sd">    Hertz-Mindlin model</span>
 <span class="sd">    written by Alessandro Amato del Monte (2015)</span>
@@ -261,7 +267,7 @@
     <span class="n">G_HM</span> <span class="o">=</span> <span class="p">((</span><span class="mi">2</span><span class="o">+</span><span class="mi">3</span><span class="o">*</span><span class="n">f</span><span class="o">-</span><span class="n">PR0</span><span class="o">*</span><span class="p">(</span><span class="mi">1</span><span class="o">+</span><span class="mi">3</span><span class="o">*</span><span class="n">f</span><span class="p">))</span><span class="o">/</span><span class="p">(</span><span class="mi">5</span><span class="o">*</span><span class="p">(</span><span class="mi">2</span><span class="o">-</span><span class="n">PR0</span><span class="p">)))</span> <span class="o">*</span> <span class="p">((</span><span class="n">P</span><span class="o">*</span><span class="p">(</span><span class="mi">3</span><span class="o">*</span><span class="n">Cn</span><span class="o">**</span><span class="mi">2</span><span class="o">*</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">phic</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="o">*</span><span class="n">G0</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">**</span><span class="mi">2</span><span class="o">*</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">PR0</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">)))</span><span class="o">**</span><span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="mi">3</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">K_HM</span><span class="p">,</span> <span class="n">G_HM</span></div>
 
-<div class="viewcode-block" id="softsand"><a class="viewcode-back" href="../../../bruges.rockphysics.html#bruges.rockphysics.rpm.softsand">[docs]</a><span class="k">def</span> <span class="nf">softsand</span><span class="p">(</span><span class="n">K0</span><span class="p">,</span> <span class="n">G0</span><span class="p">,</span> <span class="n">phi</span><span class="p">,</span> <span class="n">phic</span><span class="o">=</span><span class="mf">0.4</span><span class="p">,</span> <span class="n">Cn</span><span class="o">=</span><span class="mf">8.6</span><span class="p">,</span> <span class="n">P</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">f</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+<div class="viewcode-block" id="softsand"><a class="viewcode-back" href="../../../api/bruges.rockphysics.html#bruges.rockphysics.rpm.softsand">[docs]</a><span class="k">def</span> <span class="nf">softsand</span><span class="p">(</span><span class="n">K0</span><span class="p">,</span> <span class="n">G0</span><span class="p">,</span> <span class="n">phi</span><span class="p">,</span> <span class="n">phic</span><span class="o">=</span><span class="mf">0.4</span><span class="p">,</span> <span class="n">Cn</span><span class="o">=</span><span class="mf">8.6</span><span class="p">,</span> <span class="n">P</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">f</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
     <span class="sd">'''</span>
 <span class="sd">    Soft-sand (uncemented) model</span>
 <span class="sd">    written by Alessandro Amato del Monte (2015)</span>
@@ -283,7 +289,7 @@
     <span class="n">G_DRY</span> <span class="o">=</span> <span class="o">-</span><span class="n">tmp</span> <span class="o">+</span> <span class="p">((</span><span class="n">phi</span><span class="o">/</span><span class="n">phic</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="n">G_HM</span><span class="o">+</span><span class="n">tmp</span><span class="p">)</span> <span class="o">+</span> <span class="p">((</span><span class="mi">1</span><span class="o">-</span><span class="n">phi</span><span class="o">/</span><span class="n">phic</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="n">G0</span><span class="o">+</span><span class="n">tmp</span><span class="p">)))</span><span class="o">**-</span><span class="mi">1</span>
     <span class="k">return</span> <span class="n">K_DRY</span><span class="p">,</span> <span class="n">G_DRY</span></div>
 
-<div class="viewcode-block" id="stiffsand"><a class="viewcode-back" href="../../../bruges.rockphysics.html#bruges.rockphysics.rpm.stiffsand">[docs]</a><span class="k">def</span> <span class="nf">stiffsand</span><span class="p">(</span><span class="n">K0</span><span class="p">,</span> <span class="n">G0</span><span class="p">,</span> <span class="n">phi</span><span class="p">,</span> <span class="n">phic</span><span class="o">=</span><span class="mf">0.4</span><span class="p">,</span> <span class="n">Cn</span><span class="o">=</span><span class="mf">8.6</span><span class="p">,</span> <span class="n">P</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">f</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+<div class="viewcode-block" id="stiffsand"><a class="viewcode-back" href="../../../api/bruges.rockphysics.html#bruges.rockphysics.rpm.stiffsand">[docs]</a><span class="k">def</span> <span class="nf">stiffsand</span><span class="p">(</span><span class="n">K0</span><span class="p">,</span> <span class="n">G0</span><span class="p">,</span> <span class="n">phi</span><span class="p">,</span> <span class="n">phic</span><span class="o">=</span><span class="mf">0.4</span><span class="p">,</span> <span class="n">Cn</span><span class="o">=</span><span class="mf">8.6</span><span class="p">,</span> <span class="n">P</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">f</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
     <span class="sd">'''</span>
 <span class="sd">    Stiff-sand model</span>
 <span class="sd">    written by Alessandro Amato del Monte (2015)</span>
@@ -305,7 +311,7 @@
     <span class="n">G_DRY</span> <span class="o">=</span> <span class="o">-</span><span class="n">tmp</span> <span class="o">+</span> <span class="p">((</span><span class="n">phi</span><span class="o">/</span><span class="n">phic</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="n">G_HM</span><span class="o">+</span><span class="n">tmp</span><span class="p">)</span> <span class="o">+</span> <span class="p">((</span><span class="mi">1</span><span class="o">-</span><span class="n">phi</span><span class="o">/</span><span class="n">phic</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="n">G0</span><span class="o">+</span><span class="n">tmp</span><span class="p">)))</span><span class="o">**-</span><span class="mi">1</span>
     <span class="k">return</span> <span class="n">K_DRY</span><span class="p">,</span> <span class="n">G_DRY</span></div>
 
-<div class="viewcode-block" id="contactcement"><a class="viewcode-back" href="../../../bruges.rockphysics.html#bruges.rockphysics.rpm.contactcement">[docs]</a><span class="k">def</span> <span class="nf">contactcement</span><span class="p">(</span><span class="n">K0</span><span class="p">,</span> <span class="n">G0</span><span class="p">,</span> <span class="n">phi</span><span class="p">,</span> <span class="n">phic</span><span class="o">=</span><span class="mf">0.4</span><span class="p">,</span> <span class="n">Cn</span><span class="o">=</span><span class="mf">8.6</span><span class="p">,</span> <span class="n">Kc</span><span class="o">=</span><span class="mi">37</span><span class="p">,</span> <span class="n">Gc</span><span class="o">=</span><span class="mi">45</span><span class="p">,</span> <span class="n">scheme</span><span class="o">=</span><span class="mi">2</span><span class="p">):</span>
+<div class="viewcode-block" id="contactcement"><a class="viewcode-back" href="../../../api/bruges.rockphysics.html#bruges.rockphysics.rpm.contactcement">[docs]</a><span class="k">def</span> <span class="nf">contactcement</span><span class="p">(</span><span class="n">K0</span><span class="p">,</span> <span class="n">G0</span><span class="p">,</span> <span class="n">phi</span><span class="p">,</span> <span class="n">phic</span><span class="o">=</span><span class="mf">0.4</span><span class="p">,</span> <span class="n">Cn</span><span class="o">=</span><span class="mf">8.6</span><span class="p">,</span> <span class="n">Kc</span><span class="o">=</span><span class="mi">37</span><span class="p">,</span> <span class="n">Gc</span><span class="o">=</span><span class="mi">45</span><span class="p">,</span> <span class="n">scheme</span><span class="o">=</span><span class="mi">2</span><span class="p">):</span>
     <span class="sd">'''</span>
 <span class="sd">    Contact cement (cemented sand) model, Dvorkin-Nur (1996)</span>
 <span class="sd">    written by Alessandro Amato del Monte (2015)</span>

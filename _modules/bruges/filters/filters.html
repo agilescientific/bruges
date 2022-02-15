@@ -153,19 +153,23 @@
   <input type="hidden" name="area" value="default">
 </form>
 <div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
-  <p class="caption" role="heading"><span class="caption-text">API reference</span></p>
+  <p class="caption" role="heading"><span class="caption-text">User guide</span></p>
 <ul>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../../../bruges.html">bruges package</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
-<li class="toctree-l2"><a class="reference internal" href="../../../bruges.attribute.html">bruges.attribute package</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../bruges.filters.html">bruges.filters package</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../bruges.models.html">bruges.models package</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../bruges.noise.html">bruges.noise package</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../bruges.petrophysics.html">bruges.petrophysics package</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../bruges.reflection.html">bruges.reflection package</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../bruges.rockphysics.html">bruges.rockphysics package</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../bruges.transform.html">bruges.transform package</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../bruges.unit.html">bruges.unit package</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../bruges.util.html">bruges.util package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../installation.html">Installation</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">API reference</span></p>
+<ul>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../api/bruges.html">bruges package</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/bruges.attribute.html">bruges.attribute package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/bruges.filters.html">bruges.filters package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/bruges.models.html">bruges.models package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/bruges.noise.html">bruges.noise package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/bruges.petrophysics.html">bruges.petrophysics package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/bruges.reflection.html">bruges.reflection package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/bruges.rockphysics.html">bruges.rockphysics package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/bruges.transform.html">bruges.transform package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/bruges.unit.html">bruges.unit package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/bruges.util.html">bruges.util package</a></li>
 </ul>
 </li>
 </ul>
@@ -173,8 +177,10 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../development.html">Development</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../authors.html">Authors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../authors.html#id1">Authors</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../license.html">License</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../changelog.html">Changelog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../changelog.html#id1">Changelog</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../contributing.html">Contributing</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Project links</span></p>
@@ -228,7 +234,7 @@
 <span class="kn">from</span> <span class="nn">bruges.util</span> <span class="kn">import</span> <span class="n">rms</span> <span class="k">as</span> <span class="n">rms_</span>
 
 
-<div class="viewcode-block" id="mean"><a class="viewcode-back" href="../../../bruges.filters.html#bruges.filters.filters.mean">[docs]</a><span class="k">def</span> <span class="nf">mean</span><span class="p">(</span><span class="n">arr</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">5</span><span class="p">):</span>
+<div class="viewcode-block" id="mean"><a class="viewcode-back" href="../../../api/bruges.filters.html#bruges.filters.filters.mean">[docs]</a><span class="k">def</span> <span class="nf">mean</span><span class="p">(</span><span class="n">arr</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">5</span><span class="p">):</span>
     <span class="sd">"""</span>
 <span class="sd">    A linear n-D smoothing filter. Can be used as a moving average on 1D data.</span>
 
@@ -248,7 +254,7 @@
     <span class="k">return</span> <span class="n">scipy</span><span class="o">.</span><span class="n">ndimage</span><span class="o">.</span><span class="n">generic_filter</span><span class="p">(</span><span class="n">arr</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">size</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="rms"><a class="viewcode-back" href="../../../bruges.filters.html#bruges.filters.filters.rms">[docs]</a><span class="k">def</span> <span class="nf">rms</span><span class="p">(</span><span class="n">arr</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">5</span><span class="p">):</span>
+<div class="viewcode-block" id="rms"><a class="viewcode-back" href="../../../api/bruges.filters.html#bruges.filters.filters.rms">[docs]</a><span class="k">def</span> <span class="nf">rms</span><span class="p">(</span><span class="n">arr</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">5</span><span class="p">):</span>
     <span class="sd">"""</span>
 <span class="sd">    A linear n-D smoothing filter. Can be used as a moving average on 1D data.</span>
 
@@ -268,7 +274,7 @@
     <span class="k">return</span> <span class="n">scipy</span><span class="o">.</span><span class="n">ndimage</span><span class="o">.</span><span class="n">generic_filter</span><span class="p">(</span><span class="n">arr</span><span class="p">,</span> <span class="n">rms_</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">size</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="median"><a class="viewcode-back" href="../../../bruges.filters.html#bruges.filters.filters.median">[docs]</a><span class="k">def</span> <span class="nf">median</span><span class="p">(</span><span class="n">arr</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">5</span><span class="p">):</span>
+<div class="viewcode-block" id="median"><a class="viewcode-back" href="../../../api/bruges.filters.html#bruges.filters.filters.median">[docs]</a><span class="k">def</span> <span class="nf">median</span><span class="p">(</span><span class="n">arr</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">5</span><span class="p">):</span>
     <span class="sd">"""</span>
 <span class="sd">    A nonlinear n-D edge-preserving smoothing filter.</span>
 
@@ -288,7 +294,7 @@
     <span class="k">return</span> <span class="n">scipy</span><span class="o">.</span><span class="n">ndimage</span><span class="o">.</span><span class="n">generic_filter</span><span class="p">(</span><span class="n">arr</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">median</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">size</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="mode"><a class="viewcode-back" href="../../../bruges.filters.html#bruges.filters.filters.mode">[docs]</a><span class="k">def</span> <span class="nf">mode</span><span class="p">(</span><span class="n">arr</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">tie</span><span class="o">=</span><span class="s1">'smallest'</span><span class="p">):</span>
+<div class="viewcode-block" id="mode"><a class="viewcode-back" href="../../../api/bruges.filters.html#bruges.filters.filters.mode">[docs]</a><span class="k">def</span> <span class="nf">mode</span><span class="p">(</span><span class="n">arr</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">tie</span><span class="o">=</span><span class="s1">'smallest'</span><span class="p">):</span>
     <span class="sd">"""</span>
 <span class="sd">    A nonlinear n-D categorical smoothing filter. Use this to filter non-</span>
 <span class="sd">    continuous variables, such as categorical integers, e.g. to label facies.</span>
@@ -321,7 +327,7 @@
                                        <span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="snn"><a class="viewcode-back" href="../../../bruges.filters.html#bruges.filters.filters.snn">[docs]</a><span class="k">def</span> <span class="nf">snn</span><span class="p">(</span><span class="n">arr</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">include</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+<div class="viewcode-block" id="snn"><a class="viewcode-back" href="../../../api/bruges.filters.html#bruges.filters.filters.snn">[docs]</a><span class="k">def</span> <span class="nf">snn</span><span class="p">(</span><span class="n">arr</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">include</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
     <span class="sd">"""</span>
 <span class="sd">    Symmetric nearest neighbour, a nonlinear 2D smoothing filter.</span>
 <span class="sd">    http://subsurfwiki.org/wiki/Symmetric_nearest_neighbour_filter</span>
@@ -361,7 +367,7 @@
                                        <span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="kuwahara"><a class="viewcode-back" href="../../../bruges.filters.html#bruges.filters.filters.kuwahara">[docs]</a><span class="k">def</span> <span class="nf">kuwahara</span><span class="p">(</span><span class="n">arr</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">5</span><span class="p">):</span>
+<div class="viewcode-block" id="kuwahara"><a class="viewcode-back" href="../../../api/bruges.filters.html#bruges.filters.filters.kuwahara">[docs]</a><span class="k">def</span> <span class="nf">kuwahara</span><span class="p">(</span><span class="n">arr</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">5</span><span class="p">):</span>
     <span class="sd">"""</span>
 <span class="sd">    Kuwahara, a nonlinear 2D smoothing filter.</span>
 <span class="sd">    http://subsurfwiki.org/wiki/Kuwahara_filter</span>
@@ -405,7 +411,7 @@
                                        <span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="conservative"><a class="viewcode-back" href="../../../bruges.filters.html#bruges.filters.filters.conservative">[docs]</a><span class="k">def</span> <span class="nf">conservative</span><span class="p">(</span><span class="n">arr</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">supercon</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<div class="viewcode-block" id="conservative"><a class="viewcode-back" href="../../../api/bruges.filters.html#bruges.filters.filters.conservative">[docs]</a><span class="k">def</span> <span class="nf">conservative</span><span class="p">(</span><span class="n">arr</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">supercon</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
     <span class="sd">"""</span>
 <span class="sd">    Conservative, a nonlinear n-D despiking filter. Very conservative! Only</span>
 <span class="sd">    changes centre value if it is outside the range of all the other values</span>
@@ -450,7 +456,7 @@
                                        <span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="rotate_phase"><a class="viewcode-back" href="../../../bruges.filters.html#bruges.filters.filters.rotate_phase">[docs]</a><span class="k">def</span> <span class="nf">rotate_phase</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">phi</span><span class="p">,</span> <span class="n">degrees</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<div class="viewcode-block" id="rotate_phase"><a class="viewcode-back" href="../../../api/bruges.filters.html#bruges.filters.filters.rotate_phase">[docs]</a><span class="k">def</span> <span class="nf">rotate_phase</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">phi</span><span class="p">,</span> <span class="n">degrees</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
     <span class="sd">"""</span>
 <span class="sd">    Performs a phase rotation of wavelet or wavelet bank using:</span>
 
@@ -486,7 +492,7 @@
     <span class="n">phi</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asanyarray</span><span class="p">(</span><span class="n">phi</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">degrees</span><span class="p">:</span>
         <span class="n">phi</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">radians</span><span class="p">(</span><span class="n">phi</span><span class="p">)</span>
-        
+
     <span class="n">rotated</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">real</span><span class="p">(</span><span class="n">a</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">phi</span><span class="p">)</span>  <span class="o">-</span>  <span class="n">np</span><span class="o">.</span><span class="n">imag</span><span class="p">(</span><span class="n">a</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">phi</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">squeeze</span><span class="p">(</span><span class="n">rotated</span><span class="p">)</span></div>
 </pre></div>

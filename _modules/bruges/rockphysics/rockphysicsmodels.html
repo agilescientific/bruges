@@ -153,19 +153,23 @@
   <input type="hidden" name="area" value="default">
 </form>
 <div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
-  <p class="caption" role="heading"><span class="caption-text">API reference</span></p>
+  <p class="caption" role="heading"><span class="caption-text">User guide</span></p>
 <ul>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../../../bruges.html">bruges package</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
-<li class="toctree-l2"><a class="reference internal" href="../../../bruges.attribute.html">bruges.attribute package</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../bruges.filters.html">bruges.filters package</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../bruges.models.html">bruges.models package</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../bruges.noise.html">bruges.noise package</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../bruges.petrophysics.html">bruges.petrophysics package</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../bruges.reflection.html">bruges.reflection package</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../bruges.rockphysics.html">bruges.rockphysics package</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../bruges.transform.html">bruges.transform package</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../bruges.unit.html">bruges.unit package</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../bruges.util.html">bruges.util package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../installation.html">Installation</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">API reference</span></p>
+<ul>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../api/bruges.html">bruges package</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/bruges.attribute.html">bruges.attribute package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/bruges.filters.html">bruges.filters package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/bruges.models.html">bruges.models package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/bruges.noise.html">bruges.noise package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/bruges.petrophysics.html">bruges.petrophysics package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/bruges.reflection.html">bruges.reflection package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/bruges.rockphysics.html">bruges.rockphysics package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/bruges.transform.html">bruges.transform package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/bruges.unit.html">bruges.unit package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/bruges.util.html">bruges.util package</a></li>
 </ul>
 </li>
 </ul>
@@ -173,8 +177,10 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../development.html">Development</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../authors.html">Authors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../authors.html#id1">Authors</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../license.html">License</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../changelog.html">Changelog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../changelog.html#id1">Changelog</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../contributing.html">Contributing</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Project links</span></p>
@@ -226,7 +232,7 @@
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 
 
-<div class="viewcode-block" id="critical_porosity"><a class="viewcode-back" href="../../../bruges.rockphysics.html#bruges.rockphysics.rockphysicsmodels.critical_porosity">[docs]</a><span class="k">def</span> <span class="nf">critical_porosity</span><span class="p">(</span><span class="n">K0</span><span class="p">,</span> <span class="n">G0</span><span class="p">,</span> <span class="n">phi</span><span class="p">,</span> <span class="n">phi_c</span><span class="o">=</span><span class="mf">0.4</span><span class="p">):</span>
+<div class="viewcode-block" id="critical_porosity"><a class="viewcode-back" href="../../../api/bruges.rockphysics.html#bruges.rockphysics.rockphysicsmodels.critical_porosity">[docs]</a><span class="k">def</span> <span class="nf">critical_porosity</span><span class="p">(</span><span class="n">K0</span><span class="p">,</span> <span class="n">G0</span><span class="p">,</span> <span class="n">phi</span><span class="p">,</span> <span class="n">phi_c</span><span class="o">=</span><span class="mf">0.4</span><span class="p">):</span>
     <span class="sd">'''</span>
 <span class="sd">    Critical porosity model.</span>
 <span class="sd">    This model describes the elastic behaviour (K=bulk and G=shear moduli)</span>
@@ -261,7 +267,7 @@
     <span class="k">return</span> <span class="n">Kdry</span><span class="p">,</span> <span class="n">Gdry</span></div>
 
 
-<div class="viewcode-block" id="hertz_mindlin"><a class="viewcode-back" href="../../../bruges.rockphysics.html#bruges.rockphysics.rockphysicsmodels.hertz_mindlin">[docs]</a><span class="k">def</span> <span class="nf">hertz_mindlin</span><span class="p">(</span><span class="n">K0</span><span class="p">,</span> <span class="n">G0</span><span class="p">,</span> <span class="n">sigma</span><span class="p">,</span> <span class="n">phi_c</span><span class="o">=</span><span class="mf">0.4</span><span class="p">,</span> <span class="n">Cn</span><span class="o">=</span><span class="mf">8.6</span><span class="p">,</span> <span class="n">f</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+<div class="viewcode-block" id="hertz_mindlin"><a class="viewcode-back" href="../../../api/bruges.rockphysics.html#bruges.rockphysics.rockphysicsmodels.hertz_mindlin">[docs]</a><span class="k">def</span> <span class="nf">hertz_mindlin</span><span class="p">(</span><span class="n">K0</span><span class="p">,</span> <span class="n">G0</span><span class="p">,</span> <span class="n">sigma</span><span class="p">,</span> <span class="n">phi_c</span><span class="o">=</span><span class="mf">0.4</span><span class="p">,</span> <span class="n">Cn</span><span class="o">=</span><span class="mf">8.6</span><span class="p">,</span> <span class="n">f</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
     <span class="sd">'''</span>
 <span class="sd">    Hertz-Mindlin model.</span>
 <span class="sd">    This model describes the elastic behaviour (K=bulk and G=shear moduli)</span>
@@ -303,7 +309,7 @@
     <span class="k">return</span> <span class="n">Khm</span><span class="p">,</span> <span class="n">Ghm</span></div>
 
 
-<div class="viewcode-block" id="soft_sand"><a class="viewcode-back" href="../../../bruges.rockphysics.html#bruges.rockphysics.rockphysicsmodels.soft_sand">[docs]</a><span class="k">def</span> <span class="nf">soft_sand</span><span class="p">(</span><span class="n">K0</span><span class="p">,</span> <span class="n">G0</span><span class="p">,</span> <span class="n">phi</span><span class="p">,</span> <span class="n">sigma</span><span class="p">,</span> <span class="n">phi_c</span><span class="o">=</span><span class="mf">0.4</span><span class="p">,</span> <span class="n">Cn</span><span class="o">=</span><span class="mf">8.6</span><span class="p">,</span> <span class="n">f</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+<div class="viewcode-block" id="soft_sand"><a class="viewcode-back" href="../../../api/bruges.rockphysics.html#bruges.rockphysics.rockphysicsmodels.soft_sand">[docs]</a><span class="k">def</span> <span class="nf">soft_sand</span><span class="p">(</span><span class="n">K0</span><span class="p">,</span> <span class="n">G0</span><span class="p">,</span> <span class="n">phi</span><span class="p">,</span> <span class="n">sigma</span><span class="p">,</span> <span class="n">phi_c</span><span class="o">=</span><span class="mf">0.4</span><span class="p">,</span> <span class="n">Cn</span><span class="o">=</span><span class="mf">8.6</span><span class="p">,</span> <span class="n">f</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
     <span class="sd">'''</span>
 <span class="sd">    Soft sand, or friable sand or uncemented sand model.</span>
 <span class="sd">    This model describes the elastic behaviour (K=bulk and G=shear moduli)</span>
@@ -347,7 +353,7 @@
     <span class="k">return</span> <span class="n">Kdry</span><span class="p">,</span> <span class="n">Gdry</span></div>
 
 
-<div class="viewcode-block" id="stiff_sand"><a class="viewcode-back" href="../../../bruges.rockphysics.html#bruges.rockphysics.rockphysicsmodels.stiff_sand">[docs]</a><span class="k">def</span> <span class="nf">stiff_sand</span><span class="p">(</span><span class="n">K0</span><span class="p">,</span> <span class="n">G0</span><span class="p">,</span> <span class="n">phi</span><span class="p">,</span> <span class="n">sigma</span><span class="p">,</span> <span class="n">phi_c</span><span class="o">=</span><span class="mf">0.4</span><span class="p">,</span> <span class="n">Cn</span><span class="o">=</span><span class="mf">8.6</span><span class="p">,</span> <span class="n">f</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+<div class="viewcode-block" id="stiff_sand"><a class="viewcode-back" href="../../../api/bruges.rockphysics.html#bruges.rockphysics.rockphysicsmodels.stiff_sand">[docs]</a><span class="k">def</span> <span class="nf">stiff_sand</span><span class="p">(</span><span class="n">K0</span><span class="p">,</span> <span class="n">G0</span><span class="p">,</span> <span class="n">phi</span><span class="p">,</span> <span class="n">sigma</span><span class="p">,</span> <span class="n">phi_c</span><span class="o">=</span><span class="mf">0.4</span><span class="p">,</span> <span class="n">Cn</span><span class="o">=</span><span class="mf">8.6</span><span class="p">,</span> <span class="n">f</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
     <span class="sd">'''</span>
 <span class="sd">    Stiff sand model.</span>
 <span class="sd">    This model describes the elastic behaviour (K=bulk and G=shear moduli)</span>
@@ -391,7 +397,7 @@
     <span class="k">return</span> <span class="n">Kdry</span><span class="p">,</span> <span class="n">Gdry</span></div>
 
 
-<div class="viewcode-block" id="contact_cement"><a class="viewcode-back" href="../../../bruges.rockphysics.html#bruges.rockphysics.rockphysicsmodels.contact_cement">[docs]</a><span class="k">def</span> <span class="nf">contact_cement</span><span class="p">(</span><span class="n">K0</span><span class="p">,</span> <span class="n">G0</span><span class="p">,</span> <span class="n">phi</span><span class="p">,</span> <span class="n">phi_c</span><span class="o">=</span><span class="mf">0.4</span><span class="p">,</span> <span class="n">Cn</span><span class="o">=</span><span class="mf">8.6</span><span class="p">,</span> <span class="n">Kc</span><span class="o">=</span><span class="mi">37</span><span class="p">,</span> <span class="n">Gc</span><span class="o">=</span><span class="mi">45</span><span class="p">,</span> <span class="n">scheme</span><span class="o">=</span><span class="mi">2</span><span class="p">):</span>
+<div class="viewcode-block" id="contact_cement"><a class="viewcode-back" href="../../../api/bruges.rockphysics.html#bruges.rockphysics.rockphysicsmodels.contact_cement">[docs]</a><span class="k">def</span> <span class="nf">contact_cement</span><span class="p">(</span><span class="n">K0</span><span class="p">,</span> <span class="n">G0</span><span class="p">,</span> <span class="n">phi</span><span class="p">,</span> <span class="n">phi_c</span><span class="o">=</span><span class="mf">0.4</span><span class="p">,</span> <span class="n">Cn</span><span class="o">=</span><span class="mf">8.6</span><span class="p">,</span> <span class="n">Kc</span><span class="o">=</span><span class="mi">37</span><span class="p">,</span> <span class="n">Gc</span><span class="o">=</span><span class="mi">45</span><span class="p">,</span> <span class="n">scheme</span><span class="o">=</span><span class="mi">2</span><span class="p">):</span>
     <span class="sd">'''</span>
 <span class="sd">    Contact cement or cemented sand model,.</span>
 <span class="sd">    This model describes the elastic behaviour (K=bulk and G=shear moduli)</span>
@@ -453,7 +459,7 @@
     <span class="k">return</span> <span class="n">Kdry</span><span class="p">,</span> <span class="n">Gdry</span></div>
 
 
-<div class="viewcode-block" id="constant_cement"><a class="viewcode-back" href="../../../bruges.rockphysics.html#bruges.rockphysics.rockphysicsmodels.constant_cement">[docs]</a><span class="k">def</span> <span class="nf">constant_cement</span><span class="p">(</span><span class="n">K0</span><span class="p">,</span> <span class="n">G0</span><span class="p">,</span> <span class="n">phi</span><span class="p">,</span> <span class="n">phi_cem</span><span class="o">=</span><span class="mf">0.38</span><span class="p">,</span> <span class="n">phi_c</span><span class="o">=</span><span class="mf">0.4</span><span class="p">,</span> <span class="n">Cn</span><span class="o">=</span><span class="mf">8.6</span><span class="p">,</span> <span class="n">Kc</span><span class="o">=</span><span class="mi">37</span><span class="p">,</span> <span class="n">Gc</span><span class="o">=</span><span class="mi">45</span><span class="p">,</span> <span class="n">scheme</span><span class="o">=</span><span class="mi">2</span><span class="p">):</span>
+<div class="viewcode-block" id="constant_cement"><a class="viewcode-back" href="../../../api/bruges.rockphysics.html#bruges.rockphysics.rockphysicsmodels.constant_cement">[docs]</a><span class="k">def</span> <span class="nf">constant_cement</span><span class="p">(</span><span class="n">K0</span><span class="p">,</span> <span class="n">G0</span><span class="p">,</span> <span class="n">phi</span><span class="p">,</span> <span class="n">phi_cem</span><span class="o">=</span><span class="mf">0.38</span><span class="p">,</span> <span class="n">phi_c</span><span class="o">=</span><span class="mf">0.4</span><span class="p">,</span> <span class="n">Cn</span><span class="o">=</span><span class="mf">8.6</span><span class="p">,</span> <span class="n">Kc</span><span class="o">=</span><span class="mi">37</span><span class="p">,</span> <span class="n">Gc</span><span class="o">=</span><span class="mi">45</span><span class="p">,</span> <span class="n">scheme</span><span class="o">=</span><span class="mi">2</span><span class="p">):</span>
     <span class="sd">'''</span>
 <span class="sd">    Constant cement model, Avseth et al. (2000).</span>
 <span class="sd">    This model describes the elastic behaviour (K=bulk and G=shear moduli)</span>
@@ -515,7 +521,7 @@
     <span class="k">return</span> <span class="n">Kdry</span><span class="p">,</span> <span class="n">Gdry</span></div>
 
 
-<div class="viewcode-block" id="increasing_cement"><a class="viewcode-back" href="../../../bruges.rockphysics.html#bruges.rockphysics.rockphysicsmodels.increasing_cement">[docs]</a><span class="k">def</span> <span class="nf">increasing_cement</span><span class="p">(</span><span class="n">K0</span><span class="p">,</span> <span class="n">G0</span><span class="p">,</span> <span class="n">phi</span><span class="p">,</span> <span class="n">phi_cem</span><span class="o">=</span><span class="mf">0.38</span><span class="p">,</span> <span class="n">phi_c</span><span class="o">=</span><span class="mf">0.4</span><span class="p">,</span> <span class="n">Cn</span><span class="o">=</span><span class="mf">8.6</span><span class="p">,</span> <span class="n">Kc</span><span class="o">=</span><span class="mi">37</span><span class="p">,</span> <span class="n">Gc</span><span class="o">=</span><span class="mi">45</span><span class="p">,</span> <span class="n">scheme</span><span class="o">=</span><span class="mi">2</span><span class="p">):</span>
+<div class="viewcode-block" id="increasing_cement"><a class="viewcode-back" href="../../../api/bruges.rockphysics.html#bruges.rockphysics.rockphysicsmodels.increasing_cement">[docs]</a><span class="k">def</span> <span class="nf">increasing_cement</span><span class="p">(</span><span class="n">K0</span><span class="p">,</span> <span class="n">G0</span><span class="p">,</span> <span class="n">phi</span><span class="p">,</span> <span class="n">phi_cem</span><span class="o">=</span><span class="mf">0.38</span><span class="p">,</span> <span class="n">phi_c</span><span class="o">=</span><span class="mf">0.4</span><span class="p">,</span> <span class="n">Cn</span><span class="o">=</span><span class="mf">8.6</span><span class="p">,</span> <span class="n">Kc</span><span class="o">=</span><span class="mi">37</span><span class="p">,</span> <span class="n">Gc</span><span class="o">=</span><span class="mi">45</span><span class="p">,</span> <span class="n">scheme</span><span class="o">=</span><span class="mi">2</span><span class="p">):</span>
     <span class="sd">'''</span>
 <span class="sd">    Increasing cement model (Modified Hashin-Shtrikman upper bound).</span>
 <span class="sd">    This model describes the elastic behaviour (K=bulk and G=shear moduli)</span>
@@ -561,7 +567,7 @@
     <span class="k">return</span> <span class="n">Kdry</span><span class="p">,</span> <span class="n">Gdry</span></div>
 
 
-<div class="viewcode-block" id="vernik_consol_sand"><a class="viewcode-back" href="../../../bruges.rockphysics.html#bruges.rockphysics.rockphysicsmodels.vernik_consol_sand">[docs]</a><span class="k">def</span> <span class="nf">vernik_consol_sand</span><span class="p">(</span><span class="n">K0</span><span class="p">,</span> <span class="n">G0</span><span class="p">,</span> <span class="n">phi</span><span class="p">,</span> <span class="n">sigma</span><span class="p">,</span> <span class="n">b</span><span class="o">=</span><span class="mi">10</span><span class="p">):</span>
+<div class="viewcode-block" id="vernik_consol_sand"><a class="viewcode-back" href="../../../api/bruges.rockphysics.html#bruges.rockphysics.rockphysicsmodels.vernik_consol_sand">[docs]</a><span class="k">def</span> <span class="nf">vernik_consol_sand</span><span class="p">(</span><span class="n">K0</span><span class="p">,</span> <span class="n">G0</span><span class="p">,</span> <span class="n">phi</span><span class="p">,</span> <span class="n">sigma</span><span class="p">,</span> <span class="n">b</span><span class="o">=</span><span class="mi">10</span><span class="p">):</span>
     <span class="sd">'''</span>
 <span class="sd">    Vernik &amp; Kachanov Consolidated Sand Model.</span>
 <span class="sd">    This model describes the elastic behaviour (K=bulk and G=shear moduli)</span>
@@ -616,7 +622,7 @@
     <span class="k">return</span> <span class="n">Kdry</span><span class="p">,</span> <span class="n">Gdry</span></div>
 
 
-<div class="viewcode-block" id="vernik_soft_sand_1"><a class="viewcode-back" href="../../../bruges.rockphysics.html#bruges.rockphysics.rockphysicsmodels.vernik_soft_sand_1">[docs]</a><span class="k">def</span> <span class="nf">vernik_soft_sand_1</span><span class="p">(</span><span class="n">K0</span><span class="p">,</span> <span class="n">G0</span><span class="p">,</span> <span class="n">phi</span><span class="p">,</span> <span class="n">sigma</span><span class="p">,</span> <span class="n">phi_c</span><span class="o">=</span><span class="mf">0.36</span><span class="p">,</span> <span class="n">phi_con</span><span class="o">=</span><span class="mf">0.26</span><span class="p">,</span> <span class="n">b</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="mf">2.00</span><span class="p">,</span> <span class="n">m</span><span class="o">=</span><span class="mf">2.05</span><span class="p">):</span>
+<div class="viewcode-block" id="vernik_soft_sand_1"><a class="viewcode-back" href="../../../api/bruges.rockphysics.html#bruges.rockphysics.rockphysicsmodels.vernik_soft_sand_1">[docs]</a><span class="k">def</span> <span class="nf">vernik_soft_sand_1</span><span class="p">(</span><span class="n">K0</span><span class="p">,</span> <span class="n">G0</span><span class="p">,</span> <span class="n">phi</span><span class="p">,</span> <span class="n">sigma</span><span class="p">,</span> <span class="n">phi_c</span><span class="o">=</span><span class="mf">0.36</span><span class="p">,</span> <span class="n">phi_con</span><span class="o">=</span><span class="mf">0.26</span><span class="p">,</span> <span class="n">b</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="mf">2.00</span><span class="p">,</span> <span class="n">m</span><span class="o">=</span><span class="mf">2.05</span><span class="p">):</span>
     <span class="sd">'''</span>
 <span class="sd">    Vernik &amp; Kachanov Soft Sand Model 1.</span>
 <span class="sd">    This model describes the elastic behaviour (K=bulk and G=shear moduli)</span>
@@ -671,7 +677,7 @@
     <span class="k">return</span> <span class="n">Kdry</span><span class="p">,</span> <span class="n">Gdry</span></div>
 
 
-<div class="viewcode-block" id="vernik_soft_sand_2"><a class="viewcode-back" href="../../../bruges.rockphysics.html#bruges.rockphysics.rockphysicsmodels.vernik_soft_sand_2">[docs]</a><span class="k">def</span> <span class="nf">vernik_soft_sand_2</span><span class="p">(</span><span class="n">K0</span><span class="p">,</span> <span class="n">G0</span><span class="p">,</span> <span class="n">phi</span><span class="p">,</span> <span class="n">p</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">q</span><span class="o">=</span><span class="mi">20</span><span class="p">):</span>
+<div class="viewcode-block" id="vernik_soft_sand_2"><a class="viewcode-back" href="../../../api/bruges.rockphysics.html#bruges.rockphysics.rockphysicsmodels.vernik_soft_sand_2">[docs]</a><span class="k">def</span> <span class="nf">vernik_soft_sand_2</span><span class="p">(</span><span class="n">K0</span><span class="p">,</span> <span class="n">G0</span><span class="p">,</span> <span class="n">phi</span><span class="p">,</span> <span class="n">p</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">q</span><span class="o">=</span><span class="mi">20</span><span class="p">):</span>
     <span class="sd">'''</span>
 <span class="sd">    Vernik &amp; Kachanov Soft Sand Model 2.</span>
 <span class="sd">    This model describes the elastic behaviour (K=bulk and G=shear moduli)</span>
@@ -704,7 +710,7 @@
     <span class="k">return</span> <span class="n">Kdry</span><span class="p">,</span> <span class="n">Gdry</span></div>
 
 
-<div class="viewcode-block" id="vernik_sand_diagenesis"><a class="viewcode-back" href="../../../bruges.rockphysics.html#bruges.rockphysics.rockphysicsmodels.vernik_sand_diagenesis">[docs]</a><span class="k">def</span> <span class="nf">vernik_sand_diagenesis</span><span class="p">(</span><span class="n">K0</span><span class="p">,</span> <span class="n">G0</span><span class="p">,</span> <span class="n">phi</span><span class="p">,</span> <span class="n">sigma</span><span class="p">,</span> <span class="n">phi_c</span><span class="o">=</span><span class="mf">0.36</span><span class="p">,</span> <span class="n">phi_con</span><span class="o">=</span><span class="mf">0.26</span><span class="p">,</span> <span class="n">b</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="mf">2.00</span><span class="p">,</span> <span class="n">m</span><span class="o">=</span><span class="mf">2.05</span><span class="p">):</span>
+<div class="viewcode-block" id="vernik_sand_diagenesis"><a class="viewcode-back" href="../../../api/bruges.rockphysics.html#bruges.rockphysics.rockphysicsmodels.vernik_sand_diagenesis">[docs]</a><span class="k">def</span> <span class="nf">vernik_sand_diagenesis</span><span class="p">(</span><span class="n">K0</span><span class="p">,</span> <span class="n">G0</span><span class="p">,</span> <span class="n">phi</span><span class="p">,</span> <span class="n">sigma</span><span class="p">,</span> <span class="n">phi_c</span><span class="o">=</span><span class="mf">0.36</span><span class="p">,</span> <span class="n">phi_con</span><span class="o">=</span><span class="mf">0.26</span><span class="p">,</span> <span class="n">b</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="mf">2.00</span><span class="p">,</span> <span class="n">m</span><span class="o">=</span><span class="mf">2.05</span><span class="p">):</span>
     <span class="sd">'''</span>
 <span class="sd">    Vernik &amp; Kachanov Sandstone Diagenesis Model.</span>
 <span class="sd">    This model describes the elastic behaviour (K=bulk and G=shear moduli)</span>
@@ -754,7 +760,7 @@
             <span class="k">return</span> <span class="n">Kdry_soft</span><span class="p">,</span> <span class="n">Gdry_soft</span></div>
 
 
-<div class="viewcode-block" id="vernik_shale"><a class="viewcode-back" href="../../../bruges.rockphysics.html#bruges.rockphysics.rockphysicsmodels.vernik_shale">[docs]</a><span class="k">def</span> <span class="nf">vernik_shale</span><span class="p">(</span><span class="n">vclay</span><span class="p">,</span> <span class="n">phi</span><span class="p">,</span> <span class="n">rhom</span><span class="o">=</span><span class="mf">2.73</span><span class="p">,</span> <span class="n">rhob</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">Mqz</span><span class="o">=</span><span class="mi">96</span><span class="p">,</span> <span class="n">c33_clay</span><span class="o">=</span><span class="mf">33.4</span><span class="p">,</span> <span class="n">A</span><span class="o">=</span><span class="mf">0.00284</span><span class="p">):</span>
+<div class="viewcode-block" id="vernik_shale"><a class="viewcode-back" href="../../../api/bruges.rockphysics.html#bruges.rockphysics.rockphysicsmodels.vernik_shale">[docs]</a><span class="k">def</span> <span class="nf">vernik_shale</span><span class="p">(</span><span class="n">vclay</span><span class="p">,</span> <span class="n">phi</span><span class="p">,</span> <span class="n">rhom</span><span class="o">=</span><span class="mf">2.73</span><span class="p">,</span> <span class="n">rhob</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">Mqz</span><span class="o">=</span><span class="mi">96</span><span class="p">,</span> <span class="n">c33_clay</span><span class="o">=</span><span class="mf">33.4</span><span class="p">,</span> <span class="n">A</span><span class="o">=</span><span class="mf">0.00284</span><span class="p">):</span>
     <span class="sd">'''</span>
 <span class="sd">    Vernik &amp; Kachanov Shale Model.</span>
 <span class="sd">    This model describes the elastic behaviour in terms of velocities</span>

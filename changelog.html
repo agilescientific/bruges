@@ -154,19 +154,23 @@
   <input type="hidden" name="area" value="default">
 </form>
 <div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
-  <p class="caption" role="heading"><span class="caption-text">API reference</span></p>
+  <p class="caption" role="heading"><span class="caption-text">User guide</span></p>
 <ul>
-<li class="toctree-l1 has-children"><a class="reference internal" href="bruges.html">bruges package</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
-<li class="toctree-l2"><a class="reference internal" href="bruges.attribute.html">bruges.attribute package</a></li>
-<li class="toctree-l2"><a class="reference internal" href="bruges.filters.html">bruges.filters package</a></li>
-<li class="toctree-l2"><a class="reference internal" href="bruges.models.html">bruges.models package</a></li>
-<li class="toctree-l2"><a class="reference internal" href="bruges.noise.html">bruges.noise package</a></li>
-<li class="toctree-l2"><a class="reference internal" href="bruges.petrophysics.html">bruges.petrophysics package</a></li>
-<li class="toctree-l2"><a class="reference internal" href="bruges.reflection.html">bruges.reflection package</a></li>
-<li class="toctree-l2"><a class="reference internal" href="bruges.rockphysics.html">bruges.rockphysics package</a></li>
-<li class="toctree-l2"><a class="reference internal" href="bruges.transform.html">bruges.transform package</a></li>
-<li class="toctree-l2"><a class="reference internal" href="bruges.unit.html">bruges.unit package</a></li>
-<li class="toctree-l2"><a class="reference internal" href="bruges.util.html">bruges.util package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">API reference</span></p>
+<ul>
+<li class="toctree-l1 has-children"><a class="reference internal" href="api/bruges.html">bruges package</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="api/bruges.attribute.html">bruges.attribute package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/bruges.filters.html">bruges.filters package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/bruges.models.html">bruges.models package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/bruges.noise.html">bruges.noise package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/bruges.petrophysics.html">bruges.petrophysics package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/bruges.reflection.html">bruges.reflection package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/bruges.rockphysics.html">bruges.rockphysics package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/bruges.transform.html">bruges.transform package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/bruges.unit.html">bruges.unit package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/bruges.util.html">bruges.util package</a></li>
 </ul>
 </li>
 </ul>
@@ -174,8 +178,10 @@
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="development.html">Development</a></li>
 <li class="toctree-l1"><a class="reference internal" href="authors.html">Authors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="authors.html#id1">Authors</a></li>
 <li class="toctree-l1"><a class="reference internal" href="license.html">License</a></li>
 <li class="toctree-l1 current current-page"><a class="current reference internal" href="#">Changelog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="#id1">Changelog</a></li>
 <li class="toctree-l1"><a class="reference internal" href="contributing.html">Contributing</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Project links</span></p>
@@ -214,6 +220,19 @@
         <article role="main">
           <section class="tex2jax_ignore mathjax_ignore" id="changelog">
 <h1>Changelog<a class="headerlink" href="#changelog" title="Permalink to this headline">#</a></h1>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="id1">
+<h1>Changelog<a class="headerlink" href="#id1" title="Permalink to this headline">#</a></h1>
+<section id="february-2022">
+<h2>0.4.6 — February 2022<a class="headerlink" href="#february-2022" title="Permalink to this headline">#</a></h2>
+<ul class="simple">
+<li><p>In all wavelets, <code class="docutils literal notranslate"><span class="pre">sym</span></code> is now <code class="docutils literal notranslate"><span class="pre">True</span></code> by default.</p></li>
+<li><p>In all wavelets, <code class="docutils literal notranslate"><span class="pre">return_t</span></code> is now <code class="docutils literal notranslate"><span class="pre">True</span></code> by default. you can still set it to false but…</p></li>
+<li><p><strong>Breaking change in the future:</strong> In the next minor release, <code class="docutils literal notranslate"><span class="pre">return_t</span></code> will always be <code class="docutils literal notranslate"><span class="pre">True</span></code>. <strong>If you are setting it to <code class="docutils literal notranslate"><span class="pre">False</span></code>, please change your code.</strong> We will continue to accept the argument for the time being, so if you’re setting it to <code class="docutils literal notranslate"><span class="pre">True</span></code>, you can stop doing that, and leave it out of future code.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">bruges.filters.wavelets.rotate_phase()</span></code>, deprecated in v0.4.1, has now gone away and is available in improved form as <code class="docutils literal notranslate"><span class="pre">bruges.filters.rotate_phase()</span></code>.</p></li>
+<li><p>The docs have been substantially overhauled; we hope you notice an improvement.</p></li>
+</ul>
+</section>
 <section id="v0-4-5-8-december-2021">
 <h2>v0.4.5 — 8 December 2021<a class="headerlink" href="#v0-4-5-8-december-2021" title="Permalink to this headline">#</a></h2>
 <ul class="simple">
@@ -253,7 +272,7 @@
 <section id="v0-4-1-21-february-2021">
 <h2>v0.4.1 — 21 February 2021<a class="headerlink" href="#v0-4-1-21-february-2021" title="Permalink to this headline">#</a></h2>
 <ul class="simple">
-<li><p>Moved <code class="docutils literal notranslate"><span class="pre">phase_rotate()</span></code> to <code class="docutils literal notranslate"><span class="pre">bruges.filters</span></code> and it now should handle 2D and 3D seismic correctly. You can also pass an array-like of phases to get a ‘phase bank’ of rotations, similar to how this works with frequencies and wavelet banks.</p></li>
+<li><p>Moved <code class="docutils literal notranslate"><span class="pre">rotate_phase()</span></code> to <code class="docutils literal notranslate"><span class="pre">bruges.filters</span></code> and it now should handle 2D and 3D seismic correctly. You can also pass an array-like of phases to get a ‘phase bank’ of rotations, similar to how this works with frequencies and wavelet banks.</p></li>
 </ul>
 </section>
 <section id="v0-4-27-november-2020">
@@ -467,7 +486,9 @@
         <div class="toc-tree-container">
           <div class="toc-tree">
             <ul>
-<li><a class="reference internal" href="#">Changelog</a><ul>
+<li><a class="reference internal" href="#">Changelog</a></li>
+<li><a class="reference internal" href="#id1">Changelog</a><ul>
+<li><a class="reference internal" href="#february-2022">0.4.6 — February 2022</a></li>
 <li><a class="reference internal" href="#v0-4-5-8-december-2021">v0.4.5 — 8 December 2021</a></li>
 <li><a class="reference internal" href="#v0-4-4-27-september-2021">v0.4.4 — 27 September 2021</a></li>
 <li><a class="reference internal" href="#v0-4-3-30-june-2021">v0.4.3 — 30 June 2021</a></li>

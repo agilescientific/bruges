@@ -153,19 +153,23 @@
   <input type="hidden" name="area" value="default">
 </form>
 <div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
-  <p class="caption" role="heading"><span class="caption-text">API reference</span></p>
+  <p class="caption" role="heading"><span class="caption-text">User guide</span></p>
 <ul>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../../../bruges.html">bruges package</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
-<li class="toctree-l2"><a class="reference internal" href="../../../bruges.attribute.html">bruges.attribute package</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../bruges.filters.html">bruges.filters package</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../bruges.models.html">bruges.models package</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../bruges.noise.html">bruges.noise package</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../bruges.petrophysics.html">bruges.petrophysics package</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../bruges.reflection.html">bruges.reflection package</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../bruges.rockphysics.html">bruges.rockphysics package</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../bruges.transform.html">bruges.transform package</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../bruges.unit.html">bruges.unit package</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../bruges.util.html">bruges.util package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../installation.html">Installation</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">API reference</span></p>
+<ul>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../api/bruges.html">bruges package</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/bruges.attribute.html">bruges.attribute package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/bruges.filters.html">bruges.filters package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/bruges.models.html">bruges.models package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/bruges.noise.html">bruges.noise package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/bruges.petrophysics.html">bruges.petrophysics package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/bruges.reflection.html">bruges.reflection package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/bruges.rockphysics.html">bruges.rockphysics package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/bruges.transform.html">bruges.transform package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/bruges.unit.html">bruges.unit package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/bruges.util.html">bruges.util package</a></li>
 </ul>
 </li>
 </ul>
@@ -173,8 +177,10 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../development.html">Development</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../authors.html">Authors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../authors.html#id1">Authors</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../license.html">License</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../changelog.html">Changelog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../changelog.html#id1">Changelog</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../contributing.html">Contributing</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Project links</span></p>
@@ -241,7 +247,7 @@
 <span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">fluids</span>
 
 
-<div class="viewcode-block" id="avseth_gassmann"><a class="viewcode-back" href="../../../bruges.rockphysics.html#bruges.rockphysics.fluidsub.avseth_gassmann">[docs]</a><span class="k">def</span> <span class="nf">avseth_gassmann</span><span class="p">(</span><span class="n">ksat1</span><span class="p">,</span> <span class="n">kf1</span><span class="p">,</span> <span class="n">kf2</span><span class="p">,</span> <span class="n">k0</span><span class="p">,</span> <span class="n">phi</span><span class="p">):</span>
+<div class="viewcode-block" id="avseth_gassmann"><a class="viewcode-back" href="../../../api/bruges.rockphysics.html#bruges.rockphysics.fluidsub.avseth_gassmann">[docs]</a><span class="k">def</span> <span class="nf">avseth_gassmann</span><span class="p">(</span><span class="n">ksat1</span><span class="p">,</span> <span class="n">kf1</span><span class="p">,</span> <span class="n">kf2</span><span class="p">,</span> <span class="n">k0</span><span class="p">,</span> <span class="n">phi</span><span class="p">):</span>
     <span class="sd">"""</span>
 <span class="sd">    Applies the inverse Gassmann's equation to calculate the rock bulk modulus</span>
 <span class="sd">    saturated with fluid with bulk modulus. Requires as inputs the insitu</span>
@@ -267,7 +273,7 @@
     <span class="k">return</span> <span class="n">ksat2</span></div>
 
 
-<div class="viewcode-block" id="smith_gassmann"><a class="viewcode-back" href="../../../bruges.rockphysics.html#bruges.rockphysics.fluidsub.smith_gassmann">[docs]</a><span class="k">def</span> <span class="nf">smith_gassmann</span><span class="p">(</span><span class="n">kdry</span><span class="p">,</span> <span class="n">k0</span><span class="p">,</span> <span class="n">kf</span><span class="p">,</span> <span class="n">phi</span><span class="p">):</span>
+<div class="viewcode-block" id="smith_gassmann"><a class="viewcode-back" href="../../../api/bruges.rockphysics.html#bruges.rockphysics.fluidsub.smith_gassmann">[docs]</a><span class="k">def</span> <span class="nf">smith_gassmann</span><span class="p">(</span><span class="n">kdry</span><span class="p">,</span> <span class="n">k0</span><span class="p">,</span> <span class="n">kf</span><span class="p">,</span> <span class="n">phi</span><span class="p">):</span>
     <span class="sd">"""</span>
 <span class="sd">    Applies the direct Gassmann's equation to calculate the saturated rock</span>
 <span class="sd">    bulk modulus from porosity and the dry-rock, mineral and fluid bulk moduli.</span>
@@ -289,7 +295,7 @@
     <span class="k">return</span> <span class="n">ksat</span></div>
 
 
-<div class="viewcode-block" id="vrh"><a class="viewcode-back" href="../../../bruges.rockphysics.html#bruges.rockphysics.fluidsub.vrh">[docs]</a><span class="k">def</span> <span class="nf">vrh</span><span class="p">(</span><span class="n">kclay</span><span class="p">,</span> <span class="n">kqtz</span><span class="p">,</span> <span class="n">vclay</span><span class="p">):</span>
+<div class="viewcode-block" id="vrh"><a class="viewcode-back" href="../../../api/bruges.rockphysics.html#bruges.rockphysics.fluidsub.vrh">[docs]</a><span class="k">def</span> <span class="nf">vrh</span><span class="p">(</span><span class="n">kclay</span><span class="p">,</span> <span class="n">kqtz</span><span class="p">,</span> <span class="n">vclay</span><span class="p">):</span>
     <span class="sd">"""</span>
 <span class="sd">    Voigt-Reuss-Hill average to find Kmatrix from clay and qtz components.</span>
 <span class="sd">    Works for any two components, they don't have to be clay and quartz.</span>
@@ -314,7 +320,7 @@
     <span class="k">return</span> <span class="n">kvrh</span></div>
 
 
-<div class="viewcode-block" id="rhogas"><a class="viewcode-back" href="../../../bruges.rockphysics.html#bruges.rockphysics.fluidsub.rhogas">[docs]</a><span class="k">def</span> <span class="nf">rhogas</span><span class="p">(</span><span class="n">gravity</span><span class="p">,</span> <span class="n">temp</span><span class="p">,</span> <span class="n">pressure</span><span class="p">):</span>
+<div class="viewcode-block" id="rhogas"><a class="viewcode-back" href="../../../api/bruges.rockphysics.html#bruges.rockphysics.fluidsub.rhogas">[docs]</a><span class="k">def</span> <span class="nf">rhogas</span><span class="p">(</span><span class="n">gravity</span><span class="p">,</span> <span class="n">temp</span><span class="p">,</span> <span class="n">pressure</span><span class="p">):</span>
     <span class="sd">"""</span>
 <span class="sd">    From http://www.spgindia.org/geohorizon/jan_2006/dhananjay_paper.pdf</span>
 <span class="sd">    """</span>
@@ -335,7 +341,7 @@
     <span class="k">return</span> <span class="n">rhogas</span></div>
 
 
-<div class="viewcode-block" id="rhosat"><a class="viewcode-back" href="../../../bruges.rockphysics.html#bruges.rockphysics.fluidsub.rhosat">[docs]</a><span class="k">def</span> <span class="nf">rhosat</span><span class="p">(</span><span class="n">phi</span><span class="p">,</span> <span class="n">sw</span><span class="p">,</span> <span class="n">rhomin</span><span class="p">,</span> <span class="n">rhow</span><span class="p">,</span> <span class="n">rhohc</span><span class="p">):</span>
+<div class="viewcode-block" id="rhosat"><a class="viewcode-back" href="../../../api/bruges.rockphysics.html#bruges.rockphysics.fluidsub.rhosat">[docs]</a><span class="k">def</span> <span class="nf">rhosat</span><span class="p">(</span><span class="n">phi</span><span class="p">,</span> <span class="n">sw</span><span class="p">,</span> <span class="n">rhomin</span><span class="p">,</span> <span class="n">rhow</span><span class="p">,</span> <span class="n">rhohc</span><span class="p">):</span>
     <span class="sd">"""</span>
 <span class="sd">    Density of partially saturated rock.</span>
 <span class="sd">    """</span>
@@ -346,7 +352,7 @@
     <span class="k">return</span> <span class="n">a</span> <span class="o">+</span> <span class="n">b</span> <span class="o">+</span> <span class="n">c</span></div>
 
 
-<div class="viewcode-block" id="avseth_fluidsub"><a class="viewcode-back" href="../../../bruges.rockphysics.html#bruges.rockphysics.fluidsub.avseth_fluidsub">[docs]</a><span class="k">def</span> <span class="nf">avseth_fluidsub</span><span class="p">(</span><span class="n">vp</span><span class="p">,</span> <span class="n">vs</span><span class="p">,</span> <span class="n">rho</span><span class="p">,</span> <span class="n">phi</span><span class="p">,</span> <span class="n">rhof1</span><span class="p">,</span> <span class="n">rhof2</span><span class="p">,</span> <span class="n">kmin</span><span class="p">,</span> <span class="n">kf1</span><span class="p">,</span> <span class="n">kf2</span><span class="p">):</span>
+<div class="viewcode-block" id="avseth_fluidsub"><a class="viewcode-back" href="../../../api/bruges.rockphysics.html#bruges.rockphysics.fluidsub.avseth_fluidsub">[docs]</a><span class="k">def</span> <span class="nf">avseth_fluidsub</span><span class="p">(</span><span class="n">vp</span><span class="p">,</span> <span class="n">vs</span><span class="p">,</span> <span class="n">rho</span><span class="p">,</span> <span class="n">phi</span><span class="p">,</span> <span class="n">rhof1</span><span class="p">,</span> <span class="n">rhof2</span><span class="p">,</span> <span class="n">kmin</span><span class="p">,</span> <span class="n">kf1</span><span class="p">,</span> <span class="n">kf2</span><span class="p">):</span>
     <span class="sd">"""</span>
 <span class="sd">    Naive fluid substitution from Avseth et al, section 1.3.1. Bulk modulus of</span>
 <span class="sd">    fluid 1 and fluid 2 are already known, and the bulk modulus of the dry</span>
@@ -388,7 +394,7 @@
     <span class="k">return</span> <span class="n">FluidSubResult</span><span class="p">(</span><span class="n">vp2</span><span class="p">,</span> <span class="n">vs2</span><span class="p">,</span> <span class="n">rho2</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="smith_fluidsub"><a class="viewcode-back" href="../../../bruges.rockphysics.html#bruges.rockphysics.fluidsub.smith_fluidsub">[docs]</a><span class="k">def</span> <span class="nf">smith_fluidsub</span><span class="p">(</span><span class="n">vp</span><span class="p">,</span> <span class="n">vs</span><span class="p">,</span> <span class="n">rho</span><span class="p">,</span> <span class="n">phi</span><span class="p">,</span> <span class="n">rhow</span><span class="p">,</span> <span class="n">rhohc</span><span class="p">,</span>
+<div class="viewcode-block" id="smith_fluidsub"><a class="viewcode-back" href="../../../api/bruges.rockphysics.html#bruges.rockphysics.fluidsub.smith_fluidsub">[docs]</a><span class="k">def</span> <span class="nf">smith_fluidsub</span><span class="p">(</span><span class="n">vp</span><span class="p">,</span> <span class="n">vs</span><span class="p">,</span> <span class="n">rho</span><span class="p">,</span> <span class="n">phi</span><span class="p">,</span> <span class="n">rhow</span><span class="p">,</span> <span class="n">rhohc</span><span class="p">,</span>
                    <span class="n">sw</span><span class="p">,</span> <span class="n">swnew</span><span class="p">,</span> <span class="n">kw</span><span class="p">,</span> <span class="n">khc</span><span class="p">,</span> <span class="n">kclay</span><span class="p">,</span> <span class="n">kqtz</span><span class="p">,</span>
                    <span class="n">vclay</span><span class="p">,</span>
                    <span class="n">rhownew</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">rhohcnew</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
@@ -483,7 +489,7 @@
     <span class="k">return</span> <span class="n">FluidSubResult</span><span class="p">(</span><span class="n">vp2</span><span class="p">,</span> <span class="n">vs2</span><span class="p">,</span> <span class="n">rho2</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="vels"><a class="viewcode-back" href="../../../bruges.rockphysics.html#bruges.rockphysics.fluidsub.vels">[docs]</a><span class="k">def</span> <span class="nf">vels</span><span class="p">(</span><span class="n">Kdry</span><span class="p">,</span> <span class="n">Gdry</span><span class="p">,</span> <span class="n">K0</span><span class="p">,</span> <span class="n">D0</span><span class="p">,</span> <span class="n">Kf</span><span class="p">,</span> <span class="n">Df</span><span class="p">,</span> <span class="n">phi</span><span class="p">):</span>
+<div class="viewcode-block" id="vels"><a class="viewcode-back" href="../../../api/bruges.rockphysics.html#bruges.rockphysics.fluidsub.vels">[docs]</a><span class="k">def</span> <span class="nf">vels</span><span class="p">(</span><span class="n">Kdry</span><span class="p">,</span> <span class="n">Gdry</span><span class="p">,</span> <span class="n">K0</span><span class="p">,</span> <span class="n">D0</span><span class="p">,</span> <span class="n">Kf</span><span class="p">,</span> <span class="n">Df</span><span class="p">,</span> <span class="n">phi</span><span class="p">):</span>
     <span class="sd">'''</span>
 <span class="sd">    Calculate velocities and densities of saturated rock via Gassmann equation.</span>
 <span class="sd">    Provide all quantities in SI units.</span>

@@ -153,19 +153,23 @@
   <input type="hidden" name="area" value="default">
 </form>
 <div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
-  <p class="caption" role="heading"><span class="caption-text">API reference</span></p>
+  <p class="caption" role="heading"><span class="caption-text">User guide</span></p>
 <ul>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../../../bruges.html">bruges package</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
-<li class="toctree-l2"><a class="reference internal" href="../../../bruges.attribute.html">bruges.attribute package</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../bruges.filters.html">bruges.filters package</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../bruges.models.html">bruges.models package</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../bruges.noise.html">bruges.noise package</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../bruges.petrophysics.html">bruges.petrophysics package</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../bruges.reflection.html">bruges.reflection package</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../bruges.rockphysics.html">bruges.rockphysics package</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../bruges.transform.html">bruges.transform package</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../bruges.unit.html">bruges.unit package</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../bruges.util.html">bruges.util package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../installation.html">Installation</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">API reference</span></p>
+<ul>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../api/bruges.html">bruges package</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/bruges.attribute.html">bruges.attribute package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/bruges.filters.html">bruges.filters package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/bruges.models.html">bruges.models package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/bruges.noise.html">bruges.noise package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/bruges.petrophysics.html">bruges.petrophysics package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/bruges.reflection.html">bruges.reflection package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/bruges.rockphysics.html">bruges.rockphysics package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/bruges.transform.html">bruges.transform package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/bruges.unit.html">bruges.unit package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/bruges.util.html">bruges.util package</a></li>
 </ul>
 </li>
 </ul>
@@ -173,8 +177,10 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../development.html">Development</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../authors.html">Authors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../authors.html#id1">Authors</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../license.html">License</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../changelog.html">Changelog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../changelog.html#id1">Changelog</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../contributing.html">Contributing</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Project links</span></p>
@@ -224,7 +230,7 @@
 <span class="kn">from</span> <span class="nn">scipy.ndimage</span> <span class="kn">import</span> <span class="n">gaussian_filter1d</span>
 
 
-<div class="viewcode-block" id="moving_window"><a class="viewcode-back" href="../../../bruges.attribute.html#bruges.attribute.similarity.moving_window">[docs]</a><span class="k">def</span> <span class="nf">moving_window</span><span class="p">(</span><span class="n">traces</span><span class="p">,</span> <span class="n">func</span><span class="p">,</span> <span class="n">window</span><span class="p">):</span>
+<div class="viewcode-block" id="moving_window"><a class="viewcode-back" href="../../../api/bruges.attribute.html#bruges.attribute.similarity.moving_window">[docs]</a><span class="k">def</span> <span class="nf">moving_window</span><span class="p">(</span><span class="n">traces</span><span class="p">,</span> <span class="n">func</span><span class="p">,</span> <span class="n">window</span><span class="p">):</span>
     <span class="sd">"""</span>
 <span class="sd">    Helper function for multi-trace attribute generation.</span>
 <span class="sd">    This function applies a 3D function func to process a</span>
@@ -234,7 +240,7 @@
     <span class="k">return</span> <span class="n">generic_filter</span><span class="p">(</span><span class="n">traces</span><span class="p">,</span> <span class="n">wrapped</span><span class="p">,</span> <span class="n">window</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="marfurt"><a class="viewcode-back" href="../../../bruges.attribute.html#bruges.attribute.similarity.marfurt">[docs]</a><span class="k">def</span> <span class="nf">marfurt</span><span class="p">(</span><span class="n">traces</span><span class="p">):</span>
+<div class="viewcode-block" id="marfurt"><a class="viewcode-back" href="../../../api/bruges.attribute.html#bruges.attribute.similarity.marfurt">[docs]</a><span class="k">def</span> <span class="nf">marfurt</span><span class="p">(</span><span class="n">traces</span><span class="p">):</span>
     <span class="sd">"""</span>
 <span class="sd">    Marfurt, K., V. Sudhaker, A. Gersztenkorn, K. D. Crawford, and S. E. Nissen, 1999,</span>
 <span class="sd">    Coherency calculations in the presence of structural dip: GEOPHYSICS, 64, 104-111.</span>
@@ -248,7 +254,7 @@
     <span class="k">return</span> <span class="n">c</span> <span class="o">/</span> <span class="p">(</span><span class="n">i</span> <span class="o">*</span> <span class="n">x</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="gersztenkorn"><a class="viewcode-back" href="../../../bruges.attribute.html#bruges.attribute.similarity.gersztenkorn">[docs]</a><span class="k">def</span> <span class="nf">gersztenkorn</span><span class="p">(</span><span class="n">traces</span><span class="p">):</span>
+<div class="viewcode-block" id="gersztenkorn"><a class="viewcode-back" href="../../../api/bruges.attribute.html#bruges.attribute.similarity.gersztenkorn">[docs]</a><span class="k">def</span> <span class="nf">gersztenkorn</span><span class="p">(</span><span class="n">traces</span><span class="p">):</span>
     <span class="sd">"""</span>
 <span class="sd">    Gersztenkorn, A., and K. J. Marfurt, 1999, Eigenstructure‐based coherence</span>
 <span class="sd">    computations as an aid to 3-D structural and stratigraphic mapping:</span>
@@ -263,7 +269,7 @@
     <span class="k">return</span> <span class="n">vals</span><span class="o">.</span><span class="n">max</span><span class="p">()</span> <span class="o">/</span> <span class="p">(</span><span class="n">vals</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span> <span class="o">+</span> <span class="mf">1e-12</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="gradients"><a class="viewcode-back" href="../../../bruges.attribute.html#bruges.attribute.similarity.gradients">[docs]</a><span class="k">def</span> <span class="nf">gradients</span><span class="p">(</span><span class="n">traces</span><span class="p">,</span> <span class="n">sigma</span><span class="p">):</span>
+<div class="viewcode-block" id="gradients"><a class="viewcode-back" href="../../../api/bruges.attribute.html#bruges.attribute.similarity.gradients">[docs]</a><span class="k">def</span> <span class="nf">gradients</span><span class="p">(</span><span class="n">traces</span><span class="p">,</span> <span class="n">sigma</span><span class="p">):</span>
     <span class="n">grads</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="k">for</span> <span class="n">axis</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">):</span>
         <span class="n">grad</span> <span class="o">=</span> <span class="n">gaussian_filter1d</span><span class="p">(</span><span class="n">traces</span><span class="p">,</span> <span class="n">sigma</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="n">axis</span><span class="p">,</span> <span class="n">order</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
@@ -271,7 +277,7 @@
     <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">(</span><span class="n">grads</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="moving_window4d"><a class="viewcode-back" href="../../../bruges.attribute.html#bruges.attribute.similarity.moving_window4d">[docs]</a><span class="k">def</span> <span class="nf">moving_window4d</span><span class="p">(</span><span class="n">grad</span><span class="p">,</span> <span class="n">window</span><span class="p">,</span> <span class="n">func</span><span class="p">):</span>
+<div class="viewcode-block" id="moving_window4d"><a class="viewcode-back" href="../../../api/bruges.attribute.html#bruges.attribute.similarity.moving_window4d">[docs]</a><span class="k">def</span> <span class="nf">moving_window4d</span><span class="p">(</span><span class="n">grad</span><span class="p">,</span> <span class="n">window</span><span class="p">,</span> <span class="n">func</span><span class="p">):</span>
     <span class="sd">"""Applies the given function *func* over a moving *window*, reducing </span>
 <span class="sd">    the input *grad* array from 4D to 3D."""</span>
     <span class="c1"># Pad in the spatial dimensions, but leave the gradient dimension unpadded.</span>
@@ -285,14 +291,14 @@
     <span class="k">return</span> <span class="n">out</span></div>
 
 
-<div class="viewcode-block" id="gst_coherence_calc"><a class="viewcode-back" href="../../../bruges.attribute.html#bruges.attribute.similarity.gst_coherence_calc">[docs]</a><span class="k">def</span> <span class="nf">gst_coherence_calc</span><span class="p">(</span><span class="n">region</span><span class="p">):</span>
+<div class="viewcode-block" id="gst_coherence_calc"><a class="viewcode-back" href="../../../api/bruges.attribute.html#bruges.attribute.similarity.gst_coherence_calc">[docs]</a><span class="k">def</span> <span class="nf">gst_coherence_calc</span><span class="p">(</span><span class="n">region</span><span class="p">):</span>
     <span class="n">region</span> <span class="o">=</span> <span class="n">region</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
     <span class="n">gst</span> <span class="o">=</span> <span class="n">region</span><span class="o">.</span><span class="n">T</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">region</span><span class="p">)</span>
     <span class="n">eigs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">eigvalsh</span><span class="p">(</span><span class="n">gst</span><span class="p">))[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
     <span class="k">return</span> <span class="p">(</span><span class="n">eigs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">-</span><span class="n">eigs</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="o">/</span> <span class="p">(</span><span class="n">eigs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">+</span><span class="n">eigs</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span></div>
 
 
-<div class="viewcode-block" id="gradient_structure_tensor"><a class="viewcode-back" href="../../../bruges.attribute.html#bruges.attribute.similarity.gradient_structure_tensor">[docs]</a><span class="k">def</span> <span class="nf">gradient_structure_tensor</span><span class="p">(</span><span class="n">seismic</span><span class="p">,</span> <span class="n">window</span><span class="p">,</span> <span class="n">sigma</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+<div class="viewcode-block" id="gradient_structure_tensor"><a class="viewcode-back" href="../../../api/bruges.attribute.html#bruges.attribute.similarity.gradient_structure_tensor">[docs]</a><span class="k">def</span> <span class="nf">gradient_structure_tensor</span><span class="p">(</span><span class="n">seismic</span><span class="p">,</span> <span class="n">window</span><span class="p">,</span> <span class="n">sigma</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
     <span class="sd">"""</span>
 <span class="sd">    Randen, T., E. Monsen, C. Singe, A. Abrahamsen, J. Hansen, T. Saeter, and J. Schlaf, 2000,</span>
 <span class="sd">    Three-dimensional texture attributes for seismic data analysis, 70th Annual International Meeting,</span>
@@ -302,7 +308,7 @@
     <span class="k">return</span> <span class="n">moving_window4d</span><span class="p">(</span><span class="n">grad</span><span class="p">,</span> <span class="n">window</span><span class="p">,</span> <span class="n">gst_coherence_calc</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="similarity"><a class="viewcode-back" href="../../../bruges.attribute.html#bruges.attribute.similarity.similarity">[docs]</a><span class="k">def</span> <span class="nf">similarity</span><span class="p">(</span><span class="n">traces</span><span class="p">,</span> <span class="n">duration</span><span class="p">,</span> <span class="n">dt</span><span class="p">,</span> <span class="n">step_out</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">kind</span><span class="o">=</span><span class="s1">'gst'</span><span class="p">,</span> <span class="n">sigma</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+<div class="viewcode-block" id="similarity"><a class="viewcode-back" href="../../../api/bruges.attribute.html#bruges.attribute.similarity.similarity">[docs]</a><span class="k">def</span> <span class="nf">similarity</span><span class="p">(</span><span class="n">traces</span><span class="p">,</span> <span class="n">duration</span><span class="p">,</span> <span class="n">dt</span><span class="p">,</span> <span class="n">step_out</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">kind</span><span class="o">=</span><span class="s1">'gst'</span><span class="p">,</span> <span class="n">sigma</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
     <span class="sd">"""</span>
 <span class="sd">    Compute similarity for a seismic section using one of various methods.</span>
 

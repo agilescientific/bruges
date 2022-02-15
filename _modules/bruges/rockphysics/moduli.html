@@ -153,19 +153,23 @@
   <input type="hidden" name="area" value="default">
 </form>
 <div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
-  <p class="caption" role="heading"><span class="caption-text">API reference</span></p>
+  <p class="caption" role="heading"><span class="caption-text">User guide</span></p>
 <ul>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../../../bruges.html">bruges package</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
-<li class="toctree-l2"><a class="reference internal" href="../../../bruges.attribute.html">bruges.attribute package</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../bruges.filters.html">bruges.filters package</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../bruges.models.html">bruges.models package</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../bruges.noise.html">bruges.noise package</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../bruges.petrophysics.html">bruges.petrophysics package</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../bruges.reflection.html">bruges.reflection package</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../bruges.rockphysics.html">bruges.rockphysics package</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../bruges.transform.html">bruges.transform package</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../bruges.unit.html">bruges.unit package</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../bruges.util.html">bruges.util package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../installation.html">Installation</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">API reference</span></p>
+<ul>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../api/bruges.html">bruges package</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/bruges.attribute.html">bruges.attribute package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/bruges.filters.html">bruges.filters package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/bruges.models.html">bruges.models package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/bruges.noise.html">bruges.noise package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/bruges.petrophysics.html">bruges.petrophysics package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/bruges.reflection.html">bruges.reflection package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/bruges.rockphysics.html">bruges.rockphysics package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/bruges.transform.html">bruges.transform package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/bruges.unit.html">bruges.unit package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/bruges.util.html">bruges.util package</a></li>
 </ul>
 </li>
 </ul>
@@ -173,8 +177,10 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../development.html">Development</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../authors.html">Authors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../authors.html#id1">Authors</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../license.html">License</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../changelog.html">Changelog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../changelog.html#id1">Changelog</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../contributing.html">Contributing</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Project links</span></p>
@@ -229,7 +235,7 @@
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 
 
-<div class="viewcode-block" id="youngs"><a class="viewcode-back" href="../../../bruges.rockphysics.html#bruges.rockphysics.moduli.youngs">[docs]</a><span class="k">def</span> <span class="nf">youngs</span><span class="p">(</span><span class="n">vp</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">vs</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">rho</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">mu</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">lam</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">bulk</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">pr</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+<div class="viewcode-block" id="youngs"><a class="viewcode-back" href="../../../api/bruges.rockphysics.html#bruges.rockphysics.moduli.youngs">[docs]</a><span class="k">def</span> <span class="nf">youngs</span><span class="p">(</span><span class="n">vp</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">vs</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">rho</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">mu</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">lam</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">bulk</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">pr</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
            <span class="n">pmod</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
     <span class="sd">"""</span>
 <span class="sd">    Computes Young's modulus given either Vp, Vs, and rho, or</span>
@@ -268,7 +274,7 @@
         <span class="k">return</span> <span class="kc">None</span></div>
 
 
-<div class="viewcode-block" id="bulk"><a class="viewcode-back" href="../../../bruges.rockphysics.html#bruges.rockphysics.moduli.bulk">[docs]</a><span class="k">def</span> <span class="nf">bulk</span><span class="p">(</span><span class="n">vp</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">vs</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">rho</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">mu</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">lam</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">youngs</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">pr</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+<div class="viewcode-block" id="bulk"><a class="viewcode-back" href="../../../api/bruges.rockphysics.html#bruges.rockphysics.moduli.bulk">[docs]</a><span class="k">def</span> <span class="nf">bulk</span><span class="p">(</span><span class="n">vp</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">vs</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">rho</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">mu</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">lam</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">youngs</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">pr</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
          <span class="n">pmod</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
     <span class="sd">"""</span>
 <span class="sd">    Computes bulk modulus given either Vp, Vs, and rho, or</span>
@@ -314,7 +320,7 @@
         <span class="k">return</span> <span class="kc">None</span></div>
 
 
-<div class="viewcode-block" id="pr"><a class="viewcode-back" href="../../../bruges.rockphysics.html#bruges.rockphysics.moduli.pr">[docs]</a><span class="k">def</span> <span class="nf">pr</span><span class="p">(</span><span class="n">vp</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">vs</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">rho</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">mu</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">lam</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">youngs</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">bulk</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+<div class="viewcode-block" id="pr"><a class="viewcode-back" href="../../../api/bruges.rockphysics.html#bruges.rockphysics.moduli.pr">[docs]</a><span class="k">def</span> <span class="nf">pr</span><span class="p">(</span><span class="n">vp</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">vs</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">rho</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">mu</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">lam</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">youngs</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">bulk</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
        <span class="n">pmod</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
     <span class="sd">"""</span>
 <span class="sd">    Computes Poisson ratio given either Vp, Vs, and rho, or</span>
@@ -360,7 +366,7 @@
         <span class="k">return</span> <span class="kc">None</span></div>
 
 
-<div class="viewcode-block" id="mu"><a class="viewcode-back" href="../../../bruges.rockphysics.html#bruges.rockphysics.moduli.mu">[docs]</a><span class="k">def</span> <span class="nf">mu</span><span class="p">(</span><span class="n">vp</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">vs</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">rho</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">pr</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">lam</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">youngs</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">bulk</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+<div class="viewcode-block" id="mu"><a class="viewcode-back" href="../../../api/bruges.rockphysics.html#bruges.rockphysics.moduli.mu">[docs]</a><span class="k">def</span> <span class="nf">mu</span><span class="p">(</span><span class="n">vp</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">vs</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">rho</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">pr</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">lam</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">youngs</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">bulk</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
        <span class="n">pmod</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
     <span class="sd">"""</span>
 <span class="sd">    Computes shear modulus given either Vp, Vs, and rho, or</span>
@@ -406,7 +412,7 @@
         <span class="k">return</span> <span class="kc">None</span></div>
 
 
-<div class="viewcode-block" id="lam"><a class="viewcode-back" href="../../../bruges.rockphysics.html#bruges.rockphysics.moduli.lam">[docs]</a><span class="k">def</span> <span class="nf">lam</span><span class="p">(</span><span class="n">vp</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">vs</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">rho</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">pr</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>  <span class="n">mu</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">youngs</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">bulk</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+<div class="viewcode-block" id="lam"><a class="viewcode-back" href="../../../api/bruges.rockphysics.html#bruges.rockphysics.moduli.lam">[docs]</a><span class="k">def</span> <span class="nf">lam</span><span class="p">(</span><span class="n">vp</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">vs</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">rho</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">pr</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>  <span class="n">mu</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">youngs</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">bulk</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
         <span class="n">pmod</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
     <span class="sd">"""</span>
 <span class="sd">    Computes lambda given either Vp, Vs, and rho, or</span>
@@ -445,7 +451,7 @@
         <span class="k">return</span> <span class="kc">None</span></div>
 
 
-<div class="viewcode-block" id="pmod"><a class="viewcode-back" href="../../../bruges.rockphysics.html#bruges.rockphysics.moduli.pmod">[docs]</a><span class="k">def</span> <span class="nf">pmod</span><span class="p">(</span><span class="n">vp</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">vs</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">rho</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">pr</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">mu</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">lam</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">youngs</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+<div class="viewcode-block" id="pmod"><a class="viewcode-back" href="../../../api/bruges.rockphysics.html#bruges.rockphysics.moduli.pmod">[docs]</a><span class="k">def</span> <span class="nf">pmod</span><span class="p">(</span><span class="n">vp</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">vs</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">rho</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">pr</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">mu</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">lam</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">youngs</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
          <span class="n">bulk</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
     <span class="sd">"""</span>
 <span class="sd">    Computes P-wave modulus given either Vp, Vs, and rho, or</span>
@@ -503,7 +509,7 @@
         <span class="k">return</span> <span class="kc">None</span></div>
 
 
-<div class="viewcode-block" id="vp"><a class="viewcode-back" href="../../../bruges.rockphysics.html#bruges.rockphysics.moduli.vp">[docs]</a><span class="k">def</span> <span class="nf">vp</span><span class="p">(</span><span class="n">youngs</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">vs</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">rho</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">mu</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">lam</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">bulk</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">pr</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+<div class="viewcode-block" id="vp"><a class="viewcode-back" href="../../../api/bruges.rockphysics.html#bruges.rockphysics.moduli.vp">[docs]</a><span class="k">def</span> <span class="nf">vp</span><span class="p">(</span><span class="n">youngs</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">vs</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">rho</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">mu</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">lam</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">bulk</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">pr</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
        <span class="n">pmod</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
     <span class="sd">"""</span>
 <span class="sd">    Computes Vp given bulk density and any two elastic moduli</span>
@@ -541,7 +547,7 @@
         <span class="k">return</span> <span class="kc">None</span></div>
 
 
-<div class="viewcode-block" id="vs"><a class="viewcode-back" href="../../../bruges.rockphysics.html#bruges.rockphysics.moduli.vs">[docs]</a><span class="k">def</span> <span class="nf">vs</span><span class="p">(</span><span class="n">youngs</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">vp</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">rho</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">mu</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">lam</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">bulk</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">pr</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+<div class="viewcode-block" id="vs"><a class="viewcode-back" href="../../../api/bruges.rockphysics.html#bruges.rockphysics.moduli.vs">[docs]</a><span class="k">def</span> <span class="nf">vs</span><span class="p">(</span><span class="n">youngs</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">vp</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">rho</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">mu</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">lam</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">bulk</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">pr</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
        <span class="n">pmod</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
     <span class="sd">"""</span>
 <span class="sd">    Computes Vs given bulk density and shear modulus. SI units only.</span>
@@ -560,7 +566,7 @@
         <span class="k">return</span> <span class="kc">None</span></div>
 
 
-<div class="viewcode-block" id="moduli_dict"><a class="viewcode-back" href="../../../bruges.rockphysics.html#bruges.rockphysics.moduli.moduli_dict">[docs]</a><span class="k">def</span> <span class="nf">moduli_dict</span><span class="p">(</span><span class="n">vp</span><span class="p">,</span> <span class="n">vs</span><span class="p">,</span> <span class="n">rho</span><span class="p">):</span>
+<div class="viewcode-block" id="moduli_dict"><a class="viewcode-back" href="../../../api/bruges.rockphysics.html#bruges.rockphysics.moduli.moduli_dict">[docs]</a><span class="k">def</span> <span class="nf">moduli_dict</span><span class="p">(</span><span class="n">vp</span><span class="p">,</span> <span class="n">vs</span><span class="p">,</span> <span class="n">rho</span><span class="p">):</span>
     <span class="sd">"""</span>
 <span class="sd">    Computes elastic moduli given Vp, Vs, and rho. SI units only.</span>
 
