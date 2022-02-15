@@ -1,4 +1,4 @@
 # Authors
 
-```{include} ../contributors.rst
+```{include} ../contributors.md
 ```
