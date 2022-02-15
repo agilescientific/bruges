@@ -1,0 +1,337 @@
+<!doctype html>
+<html class="no-js" lang="en">
+  <head><meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
+    <meta name="color-scheme" content="light dark"><link rel="index" title="Index" href="../../../genindex.html" /><link rel="search" title="Search" href="../../../search.html" />
+
+    <link rel="shortcut icon" href="../../../_static/favicon.ico"/><meta name="generator" content="sphinx-4.4.0, furo 2022.02.14.1"/>
+        <title>bruges.rockphysics.rpt - bruges documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/styles/furo.css?digest=a8f031f701c6af50c9919b48f173a5785af06fac" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/plot_directive.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/styles/furo-extensions.css?digest=25ceb02ed1c46dc30f2321ff83e92799f69dfdb9" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/custom.css" />
+    
+    
+
+
+<style>
+  body {
+    --color-code-background: #f8f8f8;
+  --color-code-foreground: black;
+  
+  }
+  body[data-theme="dark"] {
+    --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+  }
+  @media (prefers-color-scheme: dark) {
+    body:not([data-theme="light"]) {
+      --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+    }
+  }
+</style></head>
+  <body>
+    <script>
+      document.body.dataset.theme = localStorage.getItem("theme") || "auto";
+    </script>
+    
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="svg-toc" viewBox="0 0 24 24">
+    <title>Contents</title>
+    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 1024 1024">
+      <path d="M408 442h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8zm-8 204c0 4.4 3.6 8 8 8h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56zm504-486H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zm0 632H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zM115.4 518.9L271.7 642c5.8 4.6 14.4.5 14.4-6.9V388.9c0-7.4-8.5-11.5-14.4-6.9L115.4 505.1a8.74 8.74 0 0 0 0 13.8z"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-menu" viewBox="0 0 24 24">
+    <title>Menu</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-menu">
+      <line x1="3" y1="12" x2="21" y2="12"></line>
+      <line x1="3" y1="6" x2="21" y2="6"></line>
+      <line x1="3" y1="18" x2="21" y2="18"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+    <title>Expand</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-chevron-right">
+      <polyline points="9 18 15 12 9 6"></polyline>
+    </svg>
+  </symbol>
+  <symbol id="svg-sun" viewBox="0 0 24 24">
+    <title>Light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="feather-sun">
+      <circle cx="12" cy="12" r="5"></circle>
+      <line x1="12" y1="1" x2="12" y2="3"></line>
+      <line x1="12" y1="21" x2="12" y2="23"></line>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+      <line x1="1" y1="12" x2="3" y2="12"></line>
+      <line x1="21" y1="12" x2="23" y2="12"></line>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon" viewBox="0 0 24 24">
+    <title>Dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-moon">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
+    </svg>
+  </symbol>
+  <symbol id="svg-sun-half" viewBox="0 0 24 24">
+    <title>Auto light/dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-shadow">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+      <circle cx="12" cy="12" r="9" />
+      <path d="M13 12h5" />
+      <path d="M13 15h4" />
+      <path d="M13 18h1" />
+      <path d="M13 9h4" />
+      <path d="M13 6h1" />
+    </svg>
+  </symbol>
+</svg>
+
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation">
+<input type="checkbox" class="sidebar-toggle" name="__toc" id="__toc">
+<label class="overlay sidebar-overlay" for="__navigation">
+  <div class="visually-hidden">Hide navigation sidebar</div>
+</label>
+<label class="overlay toc-overlay" for="__toc">
+  <div class="visually-hidden">Hide table of contents sidebar</div>
+</label>
+
+
+
+<div class="page">
+  <header class="mobile-header">
+    <div class="header-left">
+      <label class="nav-overlay-icon" for="__navigation">
+        <div class="visually-hidden">Toggle site navigation sidebar</div>
+        <i class="icon"><svg><use href="#svg-menu"></use></svg></i>
+      </label>
+    </div>
+    <div class="header-center">
+      <a href="../../../index.html"><div class="brand">bruges  documentation</div></a>
+    </div>
+    <div class="header-right">
+      <div class="theme-toggle-container theme-toggle-header">
+        <button class="theme-toggle">
+          <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+          <svg class="theme-icon-when-auto"><use href="#svg-sun-half"></use></svg>
+          <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+          <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+        </button>
+      </div>
+      <label class="toc-overlay-icon toc-header-icon no-toc" for="__toc">
+        <div class="visually-hidden">Toggle table of contents sidebar</div>
+        <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+      </label>
+    </div>
+  </header>
+  <aside class="sidebar-drawer">
+    <div class="sidebar-container">
+      
+      <div class="sidebar-sticky"><a class="sidebar-brand centered" href="../../../index.html">
+  
+  <div class="sidebar-logo-container">
+    <img class="sidebar-logo" src="../../../_static/bruges_logo.png" alt="Logo"/>
+  </div>
+  
+  
+</a><form class="sidebar-search-container" method="get" action="../../../search.html" role="search">
+  <input class="sidebar-search" placeholder=Search name="q" aria-label="Search">
+  <input type="hidden" name="check_keywords" value="yes">
+  <input type="hidden" name="area" value="default">
+</form>
+<div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
+  <p class="caption" role="heading"><span class="caption-text">API reference</span></p>
+<ul>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../bruges.html">bruges package</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../bruges.attribute.html">bruges.attribute package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../bruges.filters.html">bruges.filters package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../bruges.models.html">bruges.models package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../bruges.noise.html">bruges.noise package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../bruges.petrophysics.html">bruges.petrophysics package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../bruges.reflection.html">bruges.reflection package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../bruges.rockphysics.html">bruges.rockphysics package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../bruges.transform.html">bruges.transform package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../bruges.unit.html">bruges.unit package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../bruges.util.html">bruges.util package</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Other resources</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../development.html">Development</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../authors.html">Authors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../license.html">License</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../changelog.html">Changelog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../contributing.html">Contributing</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Project links</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="https://pypi.org/project/bruges/">PyPI releases</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/agile-geoscience/bruges">Code in GitHub</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/agile-geoscience/bruges/issues">Issue tracker</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://code.agilescientific.com/community">Community guidelines</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://code.agilescientific.com">Agile's software</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://www.agilescientific.com">Agile's website</a></li>
+</ul>
+
+</div>
+</div>
+
+      </div>
+      
+    </div>
+  </aside>
+  <div class="main">
+    <div class="content">
+      <div class="article-container">
+        <div class="content-icon-container"><div class="theme-toggle-container theme-toggle-content">
+            <button class="theme-toggle">
+              <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+              <svg class="theme-icon-when-auto"><use href="#svg-sun-half"></use></svg>
+              <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+              <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+            </button>
+          </div>
+          <label class="toc-overlay-icon toc-content-icon no-toc" for="__toc">
+            <div class="visually-hidden">Toggle table of contents sidebar</div>
+            <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+          </label>
+        </div>
+        <article role="main">
+          <h1>Source code for bruges.rockphysics.rpt</h1><div class="highlight"><pre>
+<span></span><span class="sd">'''</span>
+<span class="sd">===================</span>
+<span class="sd">rpt.py</span>
+<span class="sd">===================</span>
+<span class="sd">Rock physics templates</span>
+<span class="sd">Uses rock physics models defined in rpm.py</span>
+<span class="sd">For Voigt-Reuss-Hill averages I define my own function here but I should</span>
+<span class="sd">really change it and use the bounds already defined in bruges.</span>
+<span class="sd">@author: Alessandro Amato del Monte</span>
+<span class="sd">'''</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">from</span> <span class="nn">bruges.rockphysics</span> <span class="kn">import</span> <span class="n">rpm</span>
+<span class="kn">from</span> <span class="nn">bruges.rockphysics</span> <span class="kn">import</span> <span class="n">fluidsub</span>
+
+<div class="viewcode-block" id="vrh"><a class="viewcode-back" href="../../../bruges.rockphysics.html#bruges.rockphysics.rpt.vrh">[docs]</a><span class="k">def</span> <span class="nf">vrh</span><span class="p">(</span><span class="n">volumes</span><span class="p">,</span><span class="n">k</span><span class="p">,</span><span class="n">mu</span><span class="p">):</span>
+    <span class="sd">'''</span>
+<span class="sd">    Calculates Voigt-Reuss-Hill bounds.</span>
+<span class="sd">    INPUT</span>
+<span class="sd">    volumes: array with volumetric fractions</span>
+<span class="sd">    k: array with bulk modulus</span>
+<span class="sd">    mu: array with shear modulus</span>
+<span class="sd">    OUTPUT</span>
+<span class="sd">    k_u, k_l: upper (Voigt) and lower (Reuss) average for k</span>
+<span class="sd">    mu_u, mu_l: upper (Voigt) and lower (Reuss) average for mu</span>
+<span class="sd">    k0, mu0: Hill average of k and mu</span>
+<span class="sd">    '''</span>
+    <span class="n">f</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">volumes</span><span class="p">)</span><span class="o">.</span><span class="n">T</span>
+    <span class="n">k</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">resize</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">k</span><span class="p">),</span><span class="n">np</span><span class="o">.</span><span class="n">shape</span><span class="p">(</span><span class="n">f</span><span class="p">))</span>
+    <span class="n">mu</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">resize</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">mu</span><span class="p">),</span><span class="n">np</span><span class="o">.</span><span class="n">shape</span><span class="p">(</span><span class="n">f</span><span class="p">))</span>
+    <span class="n">ax</span><span class="o">=</span><span class="mi">0</span> <span class="k">if</span> <span class="n">f</span><span class="o">.</span><span class="n">ndim</span><span class="o">==</span><span class="mi">1</span> <span class="k">else</span> <span class="mi">1</span>
+    <span class="n">k_u</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">f</span><span class="o">*</span><span class="n">k</span><span class="p">,</span><span class="n">axis</span><span class="o">=</span><span class="n">ax</span><span class="p">)</span>
+    <span class="n">k_l</span> <span class="o">=</span> <span class="mf">1.</span><span class="o">/</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">f</span><span class="o">/</span><span class="n">k</span><span class="p">,</span><span class="n">axis</span><span class="o">=</span><span class="n">ax</span><span class="p">)</span>
+    <span class="n">mu_u</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">f</span><span class="o">*</span><span class="n">mu</span><span class="p">,</span><span class="n">axis</span><span class="o">=</span><span class="n">ax</span><span class="p">)</span>
+    <span class="n">mu_l</span> <span class="o">=</span> <span class="mf">1.</span><span class="o">/</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">f</span><span class="o">/</span><span class="n">mu</span><span class="p">,</span><span class="n">axis</span><span class="o">=</span><span class="n">ax</span><span class="p">)</span>
+    <span class="n">k0</span> <span class="o">=</span> <span class="p">(</span><span class="n">k_u</span><span class="o">+</span><span class="n">k_l</span><span class="p">)</span><span class="o">/</span><span class="mf">2.</span>
+    <span class="n">mu0</span> <span class="o">=</span> <span class="p">(</span><span class="n">mu_u</span><span class="o">+</span><span class="n">mu_l</span><span class="p">)</span><span class="o">/</span><span class="mf">2.</span>
+    <span class="k">return</span> <span class="n">k_u</span><span class="p">,</span> <span class="n">k_l</span><span class="p">,</span> <span class="n">mu_u</span><span class="p">,</span> <span class="n">mu_l</span><span class="p">,</span> <span class="n">k0</span><span class="p">,</span> <span class="n">mu0</span></div>
+
+
+<div class="viewcode-block" id="rpt"><a class="viewcode-back" href="../../../bruges.rockphysics.html#bruges.rockphysics.rpt.rpt">[docs]</a><span class="k">def</span> <span class="nf">rpt</span><span class="p">(</span><span class="n">model</span><span class="o">=</span><span class="s1">'soft'</span><span class="p">,</span><span class="n">vsh</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span><span class="n">fluid</span><span class="o">=</span><span class="s1">'gas'</span><span class="p">,</span><span class="n">phic</span><span class="o">=</span><span class="mf">0.4</span><span class="p">,</span><span class="n">Cn</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span><span class="n">P</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span><span class="n">f</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">cement</span><span class="o">=</span><span class="s1">'quartz'</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">cement</span><span class="o">==</span><span class="s1">'quartz'</span><span class="p">:</span>
+        <span class="n">Kc</span><span class="p">,</span> <span class="n">Gc</span> <span class="o">=</span> <span class="mi">37</span><span class="p">,</span> <span class="mi">45</span>
+    <span class="k">elif</span> <span class="n">cement</span><span class="o">==</span><span class="s1">'calcite'</span><span class="p">:</span>
+        <span class="n">Kc</span><span class="p">,</span> <span class="n">Gc</span> <span class="o">=</span> <span class="mf">76.8</span><span class="p">,</span> <span class="mi">32</span>
+    <span class="k">elif</span> <span class="n">cement</span><span class="o">==</span><span class="s1">'clay'</span><span class="p">:</span>
+        <span class="n">Kc</span><span class="p">,</span> <span class="n">Gc</span> <span class="o">=</span> <span class="mi">21</span><span class="p">,</span> <span class="mi">7</span>
+    <span class="n">phi</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mf">0.1</span><span class="p">,</span><span class="n">phic</span><span class="o">-</span><span class="mf">.1</span><span class="p">,</span><span class="mi">6</span><span class="p">)</span>
+    <span class="n">sw</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">5</span><span class="p">)</span>
+    <span class="p">(</span><span class="n">Khc</span><span class="p">,</span> <span class="n">Dhc</span><span class="p">)</span> <span class="o">=</span> <span class="p">(</span><span class="n">Kg</span><span class="p">,</span> <span class="n">Dg</span><span class="p">)</span> <span class="k">if</span> <span class="n">fluid</span> <span class="o">==</span> <span class="s1">'gas'</span> <span class="k">else</span> <span class="p">(</span><span class="n">Ko</span><span class="p">,</span><span class="n">Do</span><span class="p">)</span>
+    <span class="n">K0</span><span class="p">,</span><span class="n">G0</span> <span class="o">=</span> <span class="n">vrh</span><span class="p">([</span><span class="n">vsh</span><span class="p">,</span> <span class="mi">1</span><span class="o">-</span><span class="n">vsh</span><span class="p">],[</span><span class="n">Ksh</span><span class="p">,</span><span class="n">Kqz</span><span class="p">],[</span><span class="n">Gsh</span><span class="p">,</span><span class="n">Gqz</span><span class="p">])[</span><span class="mi">4</span><span class="p">:]</span>
+    <span class="n">D0</span> <span class="o">=</span> <span class="n">vsh</span><span class="o">*</span><span class="n">Dsh</span><span class="o">+</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">vsh</span><span class="p">)</span><span class="o">*</span><span class="n">Dqz</span>
+    <span class="k">if</span> <span class="n">model</span><span class="o">==</span><span class="s1">'soft'</span><span class="p">:</span>
+        <span class="n">Kdry</span><span class="p">,</span> <span class="n">Gdry</span> <span class="o">=</span> <span class="n">rpm</span><span class="o">.</span><span class="n">softsand</span><span class="p">(</span><span class="n">K0</span><span class="p">,</span><span class="n">G0</span><span class="p">,</span><span class="n">phi</span><span class="p">,</span><span class="n">phic</span><span class="p">,</span><span class="n">Cn</span><span class="p">,</span><span class="n">P</span><span class="p">,</span><span class="n">f</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">model</span><span class="o">==</span><span class="s1">'stiff'</span><span class="p">:</span>
+         <span class="n">Kdry</span><span class="p">,</span> <span class="n">Gdry</span> <span class="o">=</span> <span class="n">rpm</span><span class="o">.</span><span class="n">stiffsand</span><span class="p">(</span><span class="n">K0</span><span class="p">,</span><span class="n">G0</span><span class="p">,</span><span class="n">phi</span><span class="p">,</span><span class="n">phic</span><span class="p">,</span><span class="n">Cn</span><span class="p">,</span><span class="n">P</span><span class="p">,</span><span class="n">f</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">model</span><span class="o">==</span><span class="s1">'cem'</span><span class="p">:</span>
+         <span class="n">Kdry</span><span class="p">,</span> <span class="n">Gdry</span> <span class="o">=</span> <span class="n">rpm</span><span class="o">.</span><span class="n">contactcement</span><span class="p">(</span><span class="n">K0</span><span class="p">,</span><span class="n">G0</span><span class="p">,</span><span class="n">phi</span><span class="p">,</span><span class="n">phic</span><span class="p">,</span><span class="n">Cn</span><span class="p">,</span><span class="n">Kc</span><span class="p">,</span><span class="n">Gc</span><span class="p">,</span><span class="n">scheme</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">model</span><span class="o">==</span><span class="s1">'crit'</span><span class="p">:</span>
+         <span class="n">Kdry</span><span class="p">,</span> <span class="n">Gdry</span> <span class="o">=</span> <span class="n">rpm</span><span class="o">.</span><span class="n">critpor</span><span class="p">(</span><span class="n">K0</span><span class="p">,</span><span class="n">G0</span><span class="p">,</span><span class="n">phi</span><span class="p">,</span><span class="n">phic</span><span class="p">)</span>
+
+    <span class="n">xx</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">((</span><span class="n">phi</span><span class="o">.</span><span class="n">size</span><span class="p">,</span><span class="n">sw</span><span class="o">.</span><span class="n">size</span><span class="p">))</span>
+    <span class="n">yy</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">((</span><span class="n">phi</span><span class="o">.</span><span class="n">size</span><span class="p">,</span><span class="n">sw</span><span class="o">.</span><span class="n">size</span><span class="p">))</span>
+
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span><span class="n">val</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">sw</span><span class="p">):</span>
+        <span class="n">Kf</span> <span class="o">=</span> <span class="n">vrh</span><span class="p">([</span><span class="n">val</span><span class="p">,</span><span class="mi">1</span><span class="o">-</span><span class="n">val</span><span class="p">],[</span><span class="n">Kb</span><span class="p">,</span><span class="n">Khc</span><span class="p">],[</span><span class="mi">999</span><span class="p">,</span><span class="mi">999</span><span class="p">])[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">Df</span> <span class="o">=</span> <span class="n">val</span><span class="o">*</span><span class="n">Db</span><span class="o">+</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">val</span><span class="p">)</span><span class="o">*</span><span class="n">Dhc</span>
+        <span class="n">vp</span><span class="p">,</span><span class="n">vs</span><span class="p">,</span><span class="n">rho</span><span class="p">,</span><span class="n">_</span><span class="o">=</span> <span class="n">fluidsub</span><span class="o">.</span><span class="n">vels</span><span class="p">(</span><span class="n">Kdry</span><span class="p">,</span><span class="n">Gdry</span><span class="p">,</span><span class="n">K0</span><span class="p">,</span><span class="n">D0</span><span class="p">,</span><span class="n">Kf</span><span class="p">,</span><span class="n">Df</span><span class="p">,</span><span class="n">phi</span><span class="p">)</span>
+        <span class="n">xx</span><span class="p">[:,</span><span class="n">i</span><span class="p">]</span><span class="o">=</span><span class="n">vp</span><span class="o">*</span><span class="n">rho</span>
+        <span class="n">yy</span><span class="p">[:,</span><span class="n">i</span><span class="p">]</span><span class="o">=</span><span class="n">vp</span><span class="o">/</span><span class="n">vs</span>
+
+    <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">6</span><span class="p">))</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xx</span><span class="p">,</span> <span class="n">yy</span><span class="p">,</span> <span class="s1">'-ok'</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xx</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">yy</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="s1">'-ok'</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span><span class="n">val</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">phi</span><span class="p">):</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">xx</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span><span class="n">yy</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">+</span><span class="mf">.01</span><span class="p">,</span><span class="s1">'$\phi=</span><span class="si">{:.02f}</span><span class="s1">$'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">val</span><span class="p">),</span> <span class="n">backgroundcolor</span><span class="o">=</span><span class="s1">'0.9'</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">xx</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span><span class="o">-</span><span class="mi">100</span><span class="p">,</span><span class="n">yy</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span><span class="s1">'$S_w=</span><span class="si">{:.02f}</span><span class="s1">$'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">sw</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span><span class="n">ha</span><span class="o">=</span><span class="s1">'right'</span><span class="p">,</span> <span class="n">backgroundcolor</span><span class="o">=</span><span class="s1">'0.9'</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">xx</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">-</span><span class="mi">100</span><span class="p">,</span><span class="n">yy</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span><span class="s1">'$S_w=</span><span class="si">{:.02f}</span><span class="s1">$'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">sw</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]),</span><span class="n">ha</span><span class="o">=</span><span class="s1">'right'</span><span class="p">,</span> <span class="n">backgroundcolor</span><span class="o">=</span><span class="s1">'0.9'</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">'Ip'</span><span class="p">),</span> <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">'Vp/Vs'</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">(</span><span class="n">xx</span><span class="o">.</span><span class="n">min</span><span class="p">()</span><span class="o">-</span><span class="n">xx</span><span class="o">.</span><span class="n">min</span><span class="p">()</span><span class="o">*</span><span class="mf">.1</span><span class="p">,</span><span class="n">xx</span><span class="o">.</span><span class="n">max</span><span class="p">()</span><span class="o">+</span><span class="n">xx</span><span class="o">.</span><span class="n">max</span><span class="p">()</span><span class="o">*</span><span class="mf">.1</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="n">yy</span><span class="o">.</span><span class="n">min</span><span class="p">()</span><span class="o">-</span><span class="n">yy</span><span class="o">.</span><span class="n">min</span><span class="p">()</span><span class="o">*</span><span class="mf">.1</span><span class="p">,</span><span class="n">yy</span><span class="o">.</span><span class="n">max</span><span class="p">()</span><span class="o">+</span><span class="n">yy</span><span class="o">.</span><span class="n">max</span><span class="p">()</span><span class="o">*</span><span class="mf">.1</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">'RPT (N:G=</span><span class="si">{0}</span><span class="s1">, fluid=</span><span class="si">{1}</span><span class="s1">)'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">vsh</span><span class="p">,</span> <span class="n">fluid</span><span class="p">))</span></div>
+</pre></div>
+        </article>
+      </div>
+      <footer>
+        
+        <div class="related-pages">
+          
+          
+        </div>
+        <div class="bottom-of-page">
+          <div class="left-details">
+            <div class="copyright">
+                Copyright &#169; 2022, Agile Scientific
+            </div>
+            Made with <a href="https://www.sphinx-doc.org/">Sphinx</a> and <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
+            
+            <a href="https://github.com/pradyunsg/furo">Furo</a>
+            
+          </div>
+          <div class="right-details">
+            <div class="icons">
+              
+            </div>
+          </div>
+        </div>
+        
+      </footer>
+    </div>
+    <aside class="toc-drawer no-toc">
+      
+      
+      
+    </aside>
+  </div>
+</div><script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+    <script src="../../../_static/jquery.js"></script>
+    <script src="../../../_static/underscore.js"></script>
+    <script src="../../../_static/doctools.js"></script>
+    <script src="../../../_static/scripts/furo.js"></script>
+    </body>
+</html>

@@ -1,0 +1,667 @@
+<!doctype html>
+<html class="no-js" lang="en">
+  <head><meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
+    <meta name="color-scheme" content="light dark"><link rel="index" title="Index" href="../../../genindex.html" /><link rel="search" title="Search" href="../../../search.html" />
+
+    <link rel="shortcut icon" href="../../../_static/favicon.ico"/><meta name="generator" content="sphinx-4.4.0, furo 2022.02.14.1"/>
+        <title>bruges.rockphysics.anisotropy - bruges documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/styles/furo.css?digest=a8f031f701c6af50c9919b48f173a5785af06fac" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/plot_directive.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/styles/furo-extensions.css?digest=25ceb02ed1c46dc30f2321ff83e92799f69dfdb9" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/custom.css" />
+    
+    
+
+
+<style>
+  body {
+    --color-code-background: #f8f8f8;
+  --color-code-foreground: black;
+  
+  }
+  body[data-theme="dark"] {
+    --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+  }
+  @media (prefers-color-scheme: dark) {
+    body:not([data-theme="light"]) {
+      --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+    }
+  }
+</style></head>
+  <body>
+    <script>
+      document.body.dataset.theme = localStorage.getItem("theme") || "auto";
+    </script>
+    
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="svg-toc" viewBox="0 0 24 24">
+    <title>Contents</title>
+    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 1024 1024">
+      <path d="M408 442h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8zm-8 204c0 4.4 3.6 8 8 8h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56zm504-486H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zm0 632H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zM115.4 518.9L271.7 642c5.8 4.6 14.4.5 14.4-6.9V388.9c0-7.4-8.5-11.5-14.4-6.9L115.4 505.1a8.74 8.74 0 0 0 0 13.8z"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-menu" viewBox="0 0 24 24">
+    <title>Menu</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-menu">
+      <line x1="3" y1="12" x2="21" y2="12"></line>
+      <line x1="3" y1="6" x2="21" y2="6"></line>
+      <line x1="3" y1="18" x2="21" y2="18"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+    <title>Expand</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-chevron-right">
+      <polyline points="9 18 15 12 9 6"></polyline>
+    </svg>
+  </symbol>
+  <symbol id="svg-sun" viewBox="0 0 24 24">
+    <title>Light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="feather-sun">
+      <circle cx="12" cy="12" r="5"></circle>
+      <line x1="12" y1="1" x2="12" y2="3"></line>
+      <line x1="12" y1="21" x2="12" y2="23"></line>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+      <line x1="1" y1="12" x2="3" y2="12"></line>
+      <line x1="21" y1="12" x2="23" y2="12"></line>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon" viewBox="0 0 24 24">
+    <title>Dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-moon">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
+    </svg>
+  </symbol>
+  <symbol id="svg-sun-half" viewBox="0 0 24 24">
+    <title>Auto light/dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-shadow">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+      <circle cx="12" cy="12" r="9" />
+      <path d="M13 12h5" />
+      <path d="M13 15h4" />
+      <path d="M13 18h1" />
+      <path d="M13 9h4" />
+      <path d="M13 6h1" />
+    </svg>
+  </symbol>
+</svg>
+
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation">
+<input type="checkbox" class="sidebar-toggle" name="__toc" id="__toc">
+<label class="overlay sidebar-overlay" for="__navigation">
+  <div class="visually-hidden">Hide navigation sidebar</div>
+</label>
+<label class="overlay toc-overlay" for="__toc">
+  <div class="visually-hidden">Hide table of contents sidebar</div>
+</label>
+
+
+
+<div class="page">
+  <header class="mobile-header">
+    <div class="header-left">
+      <label class="nav-overlay-icon" for="__navigation">
+        <div class="visually-hidden">Toggle site navigation sidebar</div>
+        <i class="icon"><svg><use href="#svg-menu"></use></svg></i>
+      </label>
+    </div>
+    <div class="header-center">
+      <a href="../../../index.html"><div class="brand">bruges  documentation</div></a>
+    </div>
+    <div class="header-right">
+      <div class="theme-toggle-container theme-toggle-header">
+        <button class="theme-toggle">
+          <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+          <svg class="theme-icon-when-auto"><use href="#svg-sun-half"></use></svg>
+          <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+          <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+        </button>
+      </div>
+      <label class="toc-overlay-icon toc-header-icon no-toc" for="__toc">
+        <div class="visually-hidden">Toggle table of contents sidebar</div>
+        <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+      </label>
+    </div>
+  </header>
+  <aside class="sidebar-drawer">
+    <div class="sidebar-container">
+      
+      <div class="sidebar-sticky"><a class="sidebar-brand centered" href="../../../index.html">
+  
+  <div class="sidebar-logo-container">
+    <img class="sidebar-logo" src="../../../_static/bruges_logo.png" alt="Logo"/>
+  </div>
+  
+  
+</a><form class="sidebar-search-container" method="get" action="../../../search.html" role="search">
+  <input class="sidebar-search" placeholder=Search name="q" aria-label="Search">
+  <input type="hidden" name="check_keywords" value="yes">
+  <input type="hidden" name="area" value="default">
+</form>
+<div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
+  <p class="caption" role="heading"><span class="caption-text">API reference</span></p>
+<ul>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../bruges.html">bruges package</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../bruges.attribute.html">bruges.attribute package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../bruges.filters.html">bruges.filters package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../bruges.models.html">bruges.models package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../bruges.noise.html">bruges.noise package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../bruges.petrophysics.html">bruges.petrophysics package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../bruges.reflection.html">bruges.reflection package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../bruges.rockphysics.html">bruges.rockphysics package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../bruges.transform.html">bruges.transform package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../bruges.unit.html">bruges.unit package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../bruges.util.html">bruges.util package</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Other resources</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../development.html">Development</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../authors.html">Authors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../license.html">License</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../changelog.html">Changelog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../contributing.html">Contributing</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Project links</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="https://pypi.org/project/bruges/">PyPI releases</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/agile-geoscience/bruges">Code in GitHub</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/agile-geoscience/bruges/issues">Issue tracker</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://code.agilescientific.com/community">Community guidelines</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://code.agilescientific.com">Agile's software</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://www.agilescientific.com">Agile's website</a></li>
+</ul>
+
+</div>
+</div>
+
+      </div>
+      
+    </div>
+  </aside>
+  <div class="main">
+    <div class="content">
+      <div class="article-container">
+        <div class="content-icon-container"><div class="theme-toggle-container theme-toggle-content">
+            <button class="theme-toggle">
+              <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+              <svg class="theme-icon-when-auto"><use href="#svg-sun-half"></use></svg>
+              <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+              <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+            </button>
+          </div>
+          <label class="toc-overlay-icon toc-content-icon no-toc" for="__toc">
+            <div class="visually-hidden">Toggle table of contents sidebar</div>
+            <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+          </label>
+        </div>
+        <article role="main">
+          <h1>Source code for bruges.rockphysics.anisotropy</h1><div class="highlight"><pre>
+<span></span><span class="sd">"""</span>
+<span class="sd">Anisotropy effects.</span>
+
+<span class="sd">Backus anisotropy is from thin layers.</span>
+
+<span class="sd">Hudson anisotropy is from crack defects.</span>
+
+<span class="sd">:copyright: 2015 Agile Geoscience</span>
+<span class="sd">:license: Apache 2.0</span>
+<span class="sd">"""</span>
+<span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">namedtuple</span>
+<span class="c1">#from functools import wraps</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="kn">from</span> <span class="nn">bruges.rockphysics</span> <span class="kn">import</span> <span class="n">moduli</span>
+<span class="kn">from</span> <span class="nn">bruges.util</span> <span class="kn">import</span> <span class="n">moving_average</span>
+
+
+<div class="viewcode-block" id="backus_parameters"><a class="viewcode-back" href="../../../bruges.rockphysics.html#bruges.rockphysics.anisotropy.backus_parameters">[docs]</a><span class="k">def</span> <span class="nf">backus_parameters</span><span class="p">(</span><span class="n">vp</span><span class="p">,</span> <span class="n">vs</span><span class="p">,</span> <span class="n">rho</span><span class="p">,</span> <span class="n">lb</span><span class="p">,</span> <span class="n">dz</span><span class="p">):</span>
+    <span class="sd">"""</span>
+<span class="sd">    Intermediate parameters for Backus averaging. This is expected to be a</span>
+<span class="sd">    private function. You probably want backus() and not this.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        vp (ndarray): P-wave interval velocity.</span>
+<span class="sd">        vs (ndarray): S-wave interval velocity.</span>
+<span class="sd">        rho (ndarray): Bulk density.</span>
+<span class="sd">        lb (float): The Backus averaging length in m.</span>
+<span class="sd">        dz (float): The depth sample interval in m.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        tuple: Liner's 5 intermediate parameters: A, C, F, L and M.</span>
+
+<span class="sd">    Notes:</span>
+<span class="sd">        Liner, C (2014), Long-wave elastic attenuation produced by horizontal</span>
+<span class="sd">        layering. The Leading Edge, June 2014, p 634-638.</span>
+
+<span class="sd">    """</span>
+    <span class="n">lam</span> <span class="o">=</span> <span class="n">moduli</span><span class="o">.</span><span class="n">lam</span><span class="p">(</span><span class="n">vp</span><span class="p">,</span> <span class="n">vs</span><span class="p">,</span> <span class="n">rho</span><span class="p">)</span>
+    <span class="n">mu</span> <span class="o">=</span> <span class="n">moduli</span><span class="o">.</span><span class="n">mu</span><span class="p">(</span><span class="n">vp</span><span class="p">,</span> <span class="n">vs</span><span class="p">,</span> <span class="n">rho</span><span class="p">)</span>
+
+    <span class="c1"># Compute the layer parameters from Liner (2014) equation 2:</span>
+    <span class="n">a</span> <span class="o">=</span> <span class="n">rho</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">power</span><span class="p">(</span><span class="n">vp</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">)</span>  <span class="c1"># Acoustic impedance</span>
+
+    <span class="c1"># Compute the Backus parameters from Liner (2014) equation 4:</span>
+    <span class="n">A1</span> <span class="o">=</span> <span class="mi">4</span> <span class="o">*</span> <span class="n">moving_average</span><span class="p">(</span><span class="n">mu</span><span class="o">*</span><span class="p">(</span><span class="n">lam</span><span class="o">+</span><span class="n">mu</span><span class="p">)</span><span class="o">/</span><span class="n">a</span><span class="p">,</span> <span class="n">lb</span><span class="o">/</span><span class="n">dz</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">'same'</span><span class="p">)</span>
+    <span class="n">A</span> <span class="o">=</span> <span class="n">A1</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">power</span><span class="p">(</span><span class="n">moving_average</span><span class="p">(</span><span class="n">lam</span><span class="o">/</span><span class="n">a</span><span class="p">,</span> <span class="n">lb</span><span class="o">/</span><span class="n">dz</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">'same'</span><span class="p">),</span> <span class="mf">2.0</span><span class="p">)</span>\
+        <span class="o">/</span> <span class="n">moving_average</span><span class="p">(</span><span class="mf">1.0</span><span class="o">/</span><span class="n">a</span><span class="p">,</span> <span class="n">lb</span><span class="o">/</span><span class="n">dz</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">'same'</span><span class="p">)</span>
+    <span class="n">C</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="o">/</span> <span class="n">moving_average</span><span class="p">(</span><span class="mf">1.0</span><span class="o">/</span><span class="n">a</span><span class="p">,</span> <span class="n">lb</span><span class="o">/</span><span class="n">dz</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">'same'</span><span class="p">)</span>
+    <span class="n">F</span> <span class="o">=</span> <span class="n">moving_average</span><span class="p">(</span><span class="n">lam</span><span class="o">/</span><span class="n">a</span><span class="p">,</span> <span class="n">lb</span><span class="o">/</span><span class="n">dz</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">'same'</span><span class="p">)</span>\
+        <span class="o">/</span> <span class="n">moving_average</span><span class="p">(</span><span class="mf">1.0</span><span class="o">/</span><span class="n">a</span><span class="p">,</span> <span class="n">lb</span><span class="o">/</span><span class="n">dz</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">'same'</span><span class="p">)</span>
+    <span class="n">L</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="o">/</span> <span class="n">moving_average</span><span class="p">(</span><span class="mf">1.0</span><span class="o">/</span><span class="n">mu</span><span class="p">,</span> <span class="n">lb</span><span class="o">/</span><span class="n">dz</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">'same'</span><span class="p">)</span>
+    <span class="n">M</span> <span class="o">=</span> <span class="n">moving_average</span><span class="p">(</span><span class="n">mu</span><span class="p">,</span> <span class="n">lb</span><span class="o">/</span><span class="n">dz</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">'same'</span><span class="p">)</span>
+
+    <span class="n">BackusResult</span> <span class="o">=</span> <span class="n">namedtuple</span><span class="p">(</span><span class="s1">'BackusResult'</span><span class="p">,</span> <span class="p">[</span><span class="s1">'A'</span><span class="p">,</span> <span class="s1">'C'</span><span class="p">,</span> <span class="s1">'F'</span><span class="p">,</span> <span class="s1">'L'</span><span class="p">,</span> <span class="s1">'M'</span><span class="p">])</span>
+    <span class="k">return</span> <span class="n">BackusResult</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">C</span><span class="p">,</span> <span class="n">F</span><span class="p">,</span> <span class="n">L</span><span class="p">,</span> <span class="n">M</span><span class="p">)</span></div>
+
+<span class="c1">#</span>
+<span class="c1"># def vectorize(func):</span>
+<span class="c1">#     """</span>
+<span class="c1">#     Decorator to make sure the inputs are arrays. We also add a dimension</span>
+<span class="c1">#     to theta to make the functions work in an 'outer product' way.</span>
+<span class="c1">#</span>
+<span class="c1">#     Takes a reflectivity function requiring Vp, Vs, and RHOB for 2 rocks</span>
+<span class="c1">#     (upper and lower), plus incidence angle theta, plus kwargs. Returns</span>
+<span class="c1">#     that function with the arguments transformed to ndarrays.</span>
+<span class="c1">#     """</span>
+<span class="c1">#     @wraps(func)</span>
+<span class="c1">#     def wrapper(vp1, vs1, rho1, vp2, vs2, rho2, theta1=0, **kwargs):</span>
+<span class="c1">#         vp = np.asanyarray(vp, dtype=float)</span>
+<span class="c1">#         vs = np.asanyarray(vs, dtype=float) + 1e-12  # Prevent singular matrix.</span>
+<span class="c1">#         rho = np.asanyarray(rho, dtype=float)</span>
+<span class="c1">#         lb = np.asanyarray(lb, dtype=float).reshape((-1, 1))</span>
+<span class="c1">#         dz = np.asanyarray(dz, dtype=float)</span>
+<span class="c1">#         return func(vp, vs, rho, lb, dz)</span>
+<span class="c1">#     return wrapper</span>
+
+
+<div class="viewcode-block" id="backus"><a class="viewcode-back" href="../../../bruges.rockphysics.html#bruges.rockphysics.anisotropy.backus">[docs]</a><span class="k">def</span> <span class="nf">backus</span><span class="p">(</span><span class="n">vp</span><span class="p">,</span> <span class="n">vs</span><span class="p">,</span> <span class="n">rho</span><span class="p">,</span> <span class="n">lb</span><span class="p">,</span> <span class="n">dz</span><span class="p">):</span>
+    <span class="sd">"""</span>
+<span class="sd">    Backus averaging. Using Liner's algorithm (2014; see Notes).</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        vp (ndarray): P-wave interval velocity.</span>
+<span class="sd">        vs (ndarray): S-wave interval velocity.</span>
+<span class="sd">        rho (ndarray): Bulk density.</span>
+<span class="sd">        lb (float): The Backus averaging length in m.</span>
+<span class="sd">        dz (float): The depth sample interval in m.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        namedtuple: the smoothed logs: vp, vs, plus rho. Useful for computing</span>
+<span class="sd">            other elastic parameters at a seismic scale.</span>
+
+<span class="sd">    Notes:</span>
+<span class="sd">        Liner, C (2014), Long-wave elastic attenuation produced by horizontal</span>
+<span class="sd">        layering. The Leading Edge, June 2014, p 634-638.</span>
+
+<span class="sd">    """</span>
+    <span class="c1"># Compute the Backus parameters:</span>
+    <span class="n">A</span><span class="p">,</span> <span class="n">C</span><span class="p">,</span> <span class="n">F</span><span class="p">,</span> <span class="n">L</span><span class="p">,</span> <span class="n">M</span> <span class="o">=</span> <span class="n">backus_parameters</span><span class="p">(</span><span class="n">vp</span><span class="p">,</span> <span class="n">vs</span><span class="p">,</span> <span class="n">rho</span><span class="p">,</span> <span class="n">lb</span><span class="p">,</span> <span class="n">dz</span><span class="p">)</span>
+
+    <span class="c1"># Compute the vertical velocities from Liner (2014) equation 5:</span>
+    <span class="n">R</span> <span class="o">=</span> <span class="n">moving_average</span><span class="p">(</span><span class="n">rho</span><span class="p">,</span> <span class="n">lb</span><span class="o">/</span><span class="n">dz</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">'same'</span><span class="p">)</span>
+    <span class="n">vp0</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">C</span> <span class="o">/</span> <span class="n">R</span><span class="p">)</span>
+    <span class="n">vs0</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">L</span> <span class="o">/</span> <span class="n">R</span><span class="p">)</span>
+
+    <span class="n">BackusResult</span> <span class="o">=</span> <span class="n">namedtuple</span><span class="p">(</span><span class="s1">'BackusResult'</span><span class="p">,</span> <span class="p">[</span><span class="s1">'Vp'</span><span class="p">,</span> <span class="s1">'Vs'</span><span class="p">,</span> <span class="s1">'rho'</span><span class="p">])</span>
+    <span class="k">return</span> <span class="n">BackusResult</span><span class="p">(</span><span class="n">Vp</span><span class="o">=</span><span class="n">vp0</span><span class="p">,</span> <span class="n">Vs</span><span class="o">=</span><span class="n">vs0</span><span class="p">,</span> <span class="n">rho</span><span class="o">=</span><span class="n">R</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="backus_quality_factor"><a class="viewcode-back" href="../../../bruges.rockphysics.html#bruges.rockphysics.anisotropy.backus_quality_factor">[docs]</a><span class="k">def</span> <span class="nf">backus_quality_factor</span><span class="p">(</span><span class="n">vp</span><span class="p">,</span> <span class="n">vs</span><span class="p">,</span> <span class="n">rho</span><span class="p">,</span> <span class="n">lb</span><span class="p">,</span> <span class="n">dz</span><span class="p">):</span>
+    <span class="sd">"""</span>
+<span class="sd">    Compute Qp and Qs from Liner (2014) equation 10.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        vp (ndarray): P-wave interval velocity.</span>
+<span class="sd">        vs (ndarray): S-wave interval velocity.</span>
+<span class="sd">        rho (ndarray): Bulk density.</span>
+<span class="sd">        lb (float): The Backus averaging length in m.</span>
+<span class="sd">        dz (float): The depth sample interval in m.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        namedtuple: Qp and Qs.</span>
+<span class="sd">    """</span>
+    <span class="n">vp0</span><span class="p">,</span> <span class="n">vs0</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">backus</span><span class="p">(</span><span class="n">vp</span><span class="p">,</span> <span class="n">vs</span><span class="p">,</span> <span class="n">rho</span><span class="p">,</span> <span class="n">lb</span><span class="p">,</span> <span class="n">dz</span><span class="p">)</span>
+
+    <span class="n">ptemp</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">vp0</span> <span class="o">/</span> <span class="n">vp</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">vp0</span> <span class="o">/</span> <span class="n">vp</span><span class="p">)</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">lb</span><span class="o">/</span><span class="n">dz</span><span class="p">))</span>
+    <span class="n">Qp</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">tan</span><span class="p">(</span><span class="n">ptemp</span><span class="p">)</span>
+
+    <span class="n">stemp</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">vs0</span> <span class="o">/</span> <span class="n">vs</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">vs0</span> <span class="o">/</span> <span class="n">vs</span><span class="p">)</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">lb</span><span class="o">/</span><span class="n">dz</span><span class="p">))</span>
+    <span class="n">Qs</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">tan</span><span class="p">(</span><span class="n">stemp</span><span class="p">)</span>
+
+    <span class="n">BackusResult</span> <span class="o">=</span> <span class="n">namedtuple</span><span class="p">(</span><span class="s1">'BackusResult'</span><span class="p">,</span> <span class="p">[</span><span class="s1">'Qp'</span><span class="p">,</span> <span class="s1">'Qs'</span><span class="p">])</span>
+    <span class="k">return</span> <span class="n">BackusResult</span><span class="p">(</span><span class="n">Qp</span><span class="o">=</span><span class="n">Qp</span><span class="p">,</span> <span class="n">Qs</span><span class="o">=</span><span class="n">Qs</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="thomsen_parameters"><a class="viewcode-back" href="../../../bruges.rockphysics.html#bruges.rockphysics.anisotropy.thomsen_parameters">[docs]</a><span class="k">def</span> <span class="nf">thomsen_parameters</span><span class="p">(</span><span class="n">vp</span><span class="p">,</span> <span class="n">vs</span><span class="p">,</span> <span class="n">rho</span><span class="p">,</span> <span class="n">lb</span><span class="p">,</span> <span class="n">dz</span><span class="p">):</span>
+    <span class="sd">"""</span>
+<span class="sd">    Liner, C, and T Fei (2006). Layer-induced seismic anisotropy from</span>
+<span class="sd">    full-wave sonic logs: Theory, application, and validation.</span>
+<span class="sd">    Geophysics 71 (6), p D183–D190. DOI:10.1190/1.2356997</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        vp (ndarray): P-wave interval velocity.</span>
+<span class="sd">        vs (ndarray): S-wave interval velocity.</span>
+<span class="sd">        rho (ndarray): Bulk density.</span>
+<span class="sd">        lb (float): The Backus averaging length in m.</span>
+<span class="sd">        dz (float): The depth sample interval in m.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        namedtuple: delta, epsilon and gamma.</span>
+
+<span class="sd">    """</span>
+    <span class="n">A</span><span class="p">,</span> <span class="n">C</span><span class="p">,</span> <span class="n">F</span><span class="p">,</span> <span class="n">L</span><span class="p">,</span> <span class="n">M</span> <span class="o">=</span> <span class="n">backus_parameters</span><span class="p">(</span><span class="n">vp</span><span class="p">,</span> <span class="n">vs</span><span class="p">,</span> <span class="n">rho</span><span class="p">,</span> <span class="n">lb</span><span class="p">,</span> <span class="n">dz</span><span class="p">)</span>
+
+    <span class="n">delta</span> <span class="o">=</span> <span class="p">((</span><span class="n">F</span> <span class="o">+</span> <span class="n">L</span><span class="p">)</span><span class="o">**</span><span class="mf">2.0</span> <span class="o">-</span> <span class="p">(</span><span class="n">C</span> <span class="o">-</span> <span class="n">L</span><span class="p">)</span><span class="o">**</span><span class="mf">2.0</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="mf">2.0</span> <span class="o">*</span> <span class="n">C</span> <span class="o">*</span> <span class="p">(</span><span class="n">C</span> <span class="o">-</span> <span class="n">L</span><span class="p">))</span>
+    <span class="n">epsilon</span> <span class="o">=</span> <span class="p">(</span><span class="n">A</span> <span class="o">-</span> <span class="n">C</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="mf">2.0</span> <span class="o">*</span> <span class="n">C</span><span class="p">)</span>
+    <span class="n">gamma</span> <span class="o">=</span> <span class="p">(</span><span class="n">M</span> <span class="o">-</span> <span class="n">L</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="mf">2.0</span> <span class="o">*</span> <span class="n">L</span><span class="p">)</span>
+
+    <span class="n">ThomsenParameters</span> <span class="o">=</span> <span class="n">namedtuple</span><span class="p">(</span><span class="s1">'ThomsenParameters'</span><span class="p">,</span> <span class="p">[</span><span class="s1">'δ'</span><span class="p">,</span> <span class="s1">'ε'</span><span class="p">,</span> <span class="s1">'γ'</span><span class="p">])</span>
+    <span class="k">return</span> <span class="n">ThomsenParameters</span><span class="p">(</span><span class="n">delta</span><span class="p">,</span> <span class="n">epsilon</span><span class="p">,</span> <span class="n">gamma</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="dispersion_parameter"><a class="viewcode-back" href="../../../bruges.rockphysics.html#bruges.rockphysics.anisotropy.dispersion_parameter">[docs]</a><span class="k">def</span> <span class="nf">dispersion_parameter</span><span class="p">(</span><span class="n">qp</span><span class="p">):</span>
+    <span class="sd">"""</span>
+<span class="sd">    Kjartansson (1979). Journal of Geophysical Research, 84 (B9),</span>
+<span class="sd">    4737-4748. DOI: 10.1029/JB084iB09p04737.</span>
+<span class="sd">    """</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">arctan</span><span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="n">qp</span><span class="p">)</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span></div>
+
+
+<div class="viewcode-block" id="blangy"><a class="viewcode-back" href="../../../bruges.rockphysics.html#bruges.rockphysics.anisotropy.blangy">[docs]</a><span class="k">def</span> <span class="nf">blangy</span><span class="p">(</span><span class="n">vp1</span><span class="p">,</span> <span class="n">vs1</span><span class="p">,</span> <span class="n">rho1</span><span class="p">,</span> <span class="n">d1</span><span class="p">,</span> <span class="n">e1</span><span class="p">,</span> <span class="n">vp0</span><span class="p">,</span> <span class="n">vs0</span><span class="p">,</span> <span class="n">rho0</span><span class="p">,</span> <span class="n">d0</span><span class="p">,</span> <span class="n">e0</span><span class="p">,</span> <span class="n">theta</span><span class="p">):</span>
+    <span class="sd">"""</span>
+<span class="sd">    Blangy, JP, 1994, AVO in transversely isotropic media-An overview.</span>
+<span class="sd">    Geophysics 59 (5), 775-781. DOI: 10.1190/1.1443635</span>
+
+<span class="sd">    Provide Vp, Vs, rho, delta, epsilon for the upper and lower intervals,</span>
+<span class="sd">    and theta, the incidence angle.</span>
+
+<span class="sd">    :param vp1: The p-wave velocity of the upper medium.</span>
+<span class="sd">    :param vs1: The s-wave velocity of the upper medium.</span>
+<span class="sd">    :param rho1: The density of the upper medium.</span>
+<span class="sd">    :param d1: Thomsen's delta of the upper medium.</span>
+<span class="sd">    :param e1: Thomsen's epsilon of the upper medium.</span>
+
+<span class="sd">    :param vp0: The p-wave velocity of the lower medium.</span>
+<span class="sd">    :param vs0: The s-wave velocity of the lower medium.</span>
+<span class="sd">    :param rho0: The density of the lower medium.</span>
+<span class="sd">    :param d0: Thomsen's delta of the lower medium.</span>
+<span class="sd">    :param e0: Thomsen's epsilon of the lower medium.</span>
+
+<span class="sd">    :param theta: A scalar [degrees].</span>
+
+<span class="sd">    :returns: the isotropic and anisotropic reflectivities in a tuple. The</span>
+<span class="sd">        isotropic result is equivalent to Aki-Richards.</span>
+
+
+<span class="sd">    TODO</span>
+<span class="sd">        Use rocks.</span>
+<span class="sd">    """</span>
+    <span class="n">lower</span> <span class="o">=</span> <span class="p">{</span><span class="s1">'vp'</span><span class="p">:</span> <span class="n">vp0</span><span class="p">,</span>
+             <span class="s1">'vs'</span><span class="p">:</span> <span class="n">vs0</span><span class="p">,</span>
+             <span class="s1">'rho'</span><span class="p">:</span> <span class="n">rho0</span><span class="p">,</span>
+             <span class="s1">'d'</span><span class="p">:</span> <span class="n">d0</span><span class="p">,</span>
+             <span class="s1">'e'</span><span class="p">:</span> <span class="n">e0</span><span class="p">,</span>
+             <span class="p">}</span>
+
+    <span class="n">upper</span> <span class="o">=</span> <span class="p">{</span><span class="s1">'vp'</span><span class="p">:</span> <span class="n">vp1</span><span class="p">,</span>
+             <span class="s1">'vs'</span><span class="p">:</span> <span class="n">vs1</span><span class="p">,</span>
+             <span class="s1">'rho'</span><span class="p">:</span> <span class="n">rho1</span><span class="p">,</span>
+             <span class="s1">'d'</span><span class="p">:</span> <span class="n">d1</span><span class="p">,</span>
+             <span class="s1">'e'</span><span class="p">:</span> <span class="n">e1</span><span class="p">,</span>
+             <span class="p">}</span>
+
+    <span class="c1"># Redefine theta</span>
+    <span class="n">inc_angle</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">radians</span><span class="p">(</span><span class="n">theta</span><span class="p">)</span>
+    <span class="n">trans_angle</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arcsin</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">inc_angle</span><span class="p">)</span> <span class="o">*</span> <span class="n">lower</span><span class="p">[</span><span class="s1">'vp'</span><span class="p">]</span><span class="o">/</span><span class="n">upper</span><span class="p">[</span><span class="s1">'vp'</span><span class="p">])</span>
+    <span class="n">theta</span> <span class="o">=</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="p">(</span><span class="n">inc_angle</span> <span class="o">+</span> <span class="n">trans_angle</span><span class="p">)</span>
+
+    <span class="n">vp</span> <span class="o">=</span> <span class="p">(</span><span class="n">upper</span><span class="p">[</span><span class="s1">'vp'</span><span class="p">]</span> <span class="o">+</span> <span class="n">lower</span><span class="p">[</span><span class="s1">'vp'</span><span class="p">])</span><span class="o">/</span><span class="mf">2.0</span>
+    <span class="n">vs</span> <span class="o">=</span> <span class="p">(</span><span class="n">upper</span><span class="p">[</span><span class="s1">'vs'</span><span class="p">]</span> <span class="o">+</span> <span class="n">lower</span><span class="p">[</span><span class="s1">'vs'</span><span class="p">])</span><span class="o">/</span><span class="mf">2.0</span>
+    <span class="n">rho</span> <span class="o">=</span> <span class="p">(</span><span class="n">upper</span><span class="p">[</span><span class="s1">'rho'</span><span class="p">]</span> <span class="o">+</span> <span class="n">lower</span><span class="p">[</span><span class="s1">'rho'</span><span class="p">])</span><span class="o">/</span><span class="mf">2.0</span>
+
+    <span class="n">dvp</span> <span class="o">=</span> <span class="n">lower</span><span class="p">[</span><span class="s1">'vp'</span><span class="p">]</span> <span class="o">-</span> <span class="n">upper</span><span class="p">[</span><span class="s1">'vp'</span><span class="p">]</span>
+    <span class="n">dvs</span> <span class="o">=</span> <span class="n">lower</span><span class="p">[</span><span class="s1">'vs'</span><span class="p">]</span> <span class="o">-</span> <span class="n">upper</span><span class="p">[</span><span class="s1">'vs'</span><span class="p">]</span>
+    <span class="n">drho</span> <span class="o">=</span> <span class="n">lower</span><span class="p">[</span><span class="s1">'rho'</span><span class="p">]</span> <span class="o">-</span> <span class="n">upper</span><span class="p">[</span><span class="s1">'rho'</span><span class="p">]</span>
+    <span class="n">dd</span> <span class="o">=</span> <span class="n">lower</span><span class="p">[</span><span class="s1">'d'</span><span class="p">]</span> <span class="o">-</span> <span class="n">upper</span><span class="p">[</span><span class="s1">'d'</span><span class="p">]</span>
+    <span class="n">de</span> <span class="o">=</span> <span class="n">lower</span><span class="p">[</span><span class="s1">'e'</span><span class="p">]</span> <span class="o">-</span> <span class="n">upper</span><span class="p">[</span><span class="s1">'e'</span><span class="p">]</span>
+
+    <span class="n">A</span> <span class="o">=</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="p">(</span><span class="n">drho</span><span class="o">/</span><span class="n">rho</span> <span class="o">+</span> <span class="n">dvp</span><span class="o">/</span><span class="n">vp</span><span class="p">)</span>
+    <span class="n">B</span> <span class="o">=</span> <span class="mf">2.0</span> <span class="o">*</span> <span class="p">(</span><span class="n">vs</span><span class="o">**</span><span class="mi">2</span> <span class="o">/</span> <span class="n">vp</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span> <span class="o">*</span> <span class="p">((</span><span class="n">drho</span><span class="o">/</span><span class="n">rho</span> <span class="o">+</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">dvs</span><span class="o">/</span><span class="n">vs</span><span class="p">))</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">theta</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span>
+    <span class="n">C</span> <span class="o">=</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="p">(</span><span class="n">dvp</span><span class="o">/</span><span class="n">vp</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">tan</span><span class="p">(</span><span class="n">theta</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span>
+    <span class="n">D</span> <span class="o">=</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">dd</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">theta</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span>
+    <span class="n">E</span> <span class="o">=</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="p">(</span><span class="n">dd</span> <span class="o">-</span> <span class="n">de</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">theta</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">tan</span><span class="p">(</span><span class="n">theta</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span>
+
+    <span class="n">isotropic</span> <span class="o">=</span> <span class="n">A</span> <span class="o">-</span> <span class="n">B</span> <span class="o">+</span> <span class="n">C</span>
+    <span class="n">anisotropic</span> <span class="o">=</span> <span class="n">isotropic</span> <span class="o">+</span> <span class="n">D</span> <span class="o">-</span> <span class="n">E</span>
+
+    <span class="n">BlangyResult</span> <span class="o">=</span> <span class="n">namedtuple</span><span class="p">(</span><span class="s1">'BlangyResult'</span><span class="p">,</span> <span class="p">[</span><span class="s1">'isotropic'</span><span class="p">,</span> <span class="s1">'anisotropic'</span><span class="p">])</span>
+    <span class="k">return</span> <span class="n">BlangyResult</span><span class="p">(</span><span class="n">isotropic</span><span class="p">,</span> <span class="n">anisotropic</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="ruger"><a class="viewcode-back" href="../../../bruges.rockphysics.html#bruges.rockphysics.anisotropy.ruger">[docs]</a><span class="k">def</span> <span class="nf">ruger</span><span class="p">(</span><span class="n">vp1</span><span class="p">,</span> <span class="n">vs1</span><span class="p">,</span> <span class="n">rho1</span><span class="p">,</span> <span class="n">d1</span><span class="p">,</span> <span class="n">e1</span><span class="p">,</span> <span class="n">vp2</span><span class="p">,</span> <span class="n">vs2</span><span class="p">,</span> <span class="n">rho2</span><span class="p">,</span> <span class="n">d2</span><span class="p">,</span> <span class="n">e2</span><span class="p">,</span> <span class="n">theta</span><span class="p">):</span>
+    <span class="sd">"""</span>
+<span class="sd">    Coded by Alessandro Amato del Monte and (c) 2016 by him</span>
+<span class="sd">    https://github.com/aadm/avo_explorer/blob/master/avo_explorer_v2.ipynb</span>
+
+<span class="sd">    Rüger, A., 1997, P -wave reflection coefficients for transversely</span>
+<span class="sd">    isotropic models with vertical and horizontal axis of symmetry:</span>
+<span class="sd">    Geophysics, v. 62, no. 3, p. 713–722.</span>
+
+<span class="sd">    Provide Vp, Vs, rho, delta, epsilon for the upper and lower intervals,</span>
+<span class="sd">    and theta, the incidence angle.</span>
+
+<span class="sd">    :param vp1: The p-wave velocity of the upper medium.</span>
+<span class="sd">    :param vs1: The s-wave velocity of the upper medium.</span>
+<span class="sd">    :param rho1: The density of the upper medium.</span>
+<span class="sd">    :param d1: Thomsen's delta of the upper medium.</span>
+<span class="sd">    :param e1: Thomsen's epsilon of the upper medium.</span>
+
+<span class="sd">    :param vp0: The p-wave velocity of the lower medium.</span>
+<span class="sd">    :param vs0: The s-wave velocity of the lower medium.</span>
+<span class="sd">    :param rho0: The density of the lower medium.</span>
+<span class="sd">    :param d0: Thomsen's delta of the lower medium.</span>
+<span class="sd">    :param e0: Thomsen's epsilon of the lower medium.</span>
+
+<span class="sd">    :param theta: A scalar [degrees].</span>
+
+<span class="sd">    :returns: anisotropic reflectivity.</span>
+
+<span class="sd">    """</span>
+    <span class="n">a</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">radians</span><span class="p">(</span><span class="n">theta</span><span class="p">)</span>
+    <span class="n">vp</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">([</span><span class="n">vp1</span><span class="p">,</span> <span class="n">vp2</span><span class="p">])</span>
+    <span class="n">vs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">([</span><span class="n">vs1</span><span class="p">,</span> <span class="n">vs2</span><span class="p">])</span>
+    <span class="n">z</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">([</span><span class="n">vp1</span><span class="o">*</span><span class="n">rho1</span><span class="p">,</span> <span class="n">vp2</span><span class="o">*</span><span class="n">rho2</span><span class="p">])</span>
+    <span class="n">g</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">([</span><span class="n">rho1</span><span class="o">*</span><span class="n">vs1</span><span class="o">**</span><span class="mi">2</span><span class="p">,</span> <span class="n">rho2</span><span class="o">*</span><span class="n">vs2</span><span class="o">**</span><span class="mi">2</span><span class="p">])</span>
+    <span class="n">dvp</span> <span class="o">=</span> <span class="n">vp2</span><span class="o">-</span><span class="n">vp1</span>
+    <span class="n">z2</span><span class="p">,</span> <span class="n">z1</span> <span class="o">=</span> <span class="n">vp2</span><span class="o">*</span><span class="n">rho2</span><span class="p">,</span> <span class="n">vp1</span><span class="o">*</span><span class="n">rho1</span>
+    <span class="n">dz</span> <span class="o">=</span> <span class="n">z2</span><span class="o">-</span><span class="n">z1</span>
+    <span class="n">dg</span> <span class="o">=</span> <span class="n">rho2</span><span class="o">*</span><span class="n">vs2</span><span class="o">**</span><span class="mi">2</span> <span class="o">-</span> <span class="n">rho1</span><span class="o">*</span><span class="n">vs1</span><span class="o">**</span><span class="mi">2</span>
+    <span class="n">dd</span> <span class="o">=</span> <span class="n">d2</span><span class="o">-</span><span class="n">d1</span>
+    <span class="n">de</span> <span class="o">=</span> <span class="n">e2</span><span class="o">-</span><span class="n">e1</span>
+    <span class="n">A</span> <span class="o">=</span> <span class="mf">0.5</span><span class="o">*</span><span class="p">(</span><span class="n">dz</span><span class="o">/</span><span class="n">z</span><span class="p">)</span>
+    <span class="n">B</span> <span class="o">=</span> <span class="mf">0.5</span><span class="o">*</span><span class="p">(</span><span class="n">dvp</span><span class="o">/</span><span class="n">vp</span> <span class="o">-</span> <span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">vs</span><span class="o">/</span><span class="n">vp</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span> <span class="o">*</span> <span class="p">(</span><span class="n">dg</span><span class="o">/</span><span class="n">g</span><span class="p">)</span> <span class="o">+</span> <span class="n">dd</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">a</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span>
+    <span class="n">C</span> <span class="o">=</span> <span class="mf">0.5</span><span class="o">*</span><span class="p">(</span><span class="n">dvp</span><span class="o">/</span><span class="n">vp</span> <span class="o">+</span> <span class="n">de</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">a</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">tan</span><span class="p">(</span><span class="n">a</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span>
+    <span class="n">R</span> <span class="o">=</span> <span class="n">A</span><span class="o">+</span><span class="n">B</span><span class="o">+</span><span class="n">C</span>
+
+    <span class="k">return</span> <span class="n">R</span></div>
+
+
+<div class="viewcode-block" id="crack_density"><a class="viewcode-back" href="../../../bruges.rockphysics.html#bruges.rockphysics.anisotropy.crack_density">[docs]</a><span class="k">def</span> <span class="nf">crack_density</span><span class="p">(</span><span class="n">porosity</span><span class="p">,</span> <span class="n">aspect</span><span class="p">):</span>
+    <span class="sd">"""</span>
+<span class="sd">    Returns crack density from porosity and aspect ratio, phi and alpha</span>
+<span class="sd">    respectively in the unnumbered equation between 15.40 and 15.41 in</span>
+<span class="sd">    Dvorkin et al. 2014.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        porosity (float): Fractional porosity.</span>
+<span class="sd">        aspect (float): Aspect ratio.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        float: Crack density.</span>
+<span class="sd">    """</span>
+    <span class="k">if</span> <span class="n">porosity</span> <span class="o">&gt;=</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="n">porosity</span> <span class="o">/=</span> <span class="mf">100.</span>
+
+    <span class="k">return</span> <span class="mi">3</span> <span class="o">*</span> <span class="n">porosity</span> <span class="o">/</span> <span class="p">(</span><span class="mi">4</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">aspect</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="hudson_delta_M"><a class="viewcode-back" href="../../../bruges.rockphysics.html#bruges.rockphysics.anisotropy.hudson_delta_M">[docs]</a><span class="k">def</span> <span class="nf">hudson_delta_M</span><span class="p">(</span><span class="n">porosity</span><span class="p">,</span> <span class="n">aspect</span><span class="p">,</span> <span class="n">mu</span><span class="p">,</span> <span class="n">lam</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">pmod</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="sd">"""</span>
+<span class="sd">    The approximate reduction in compressional modulus M in the direction</span>
+<span class="sd">    normal to a set of aligned cracks. Eqn 15.40 in Dvorkin et al (2014).</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        porosity (float): Fractional porosity, phi.</span>
+<span class="sd">        aspect (float): Aspect ratio, alpha.</span>
+<span class="sd">        mu (float): Shear modulus, sometimes called G.</span>
+<span class="sd">        lam (float): Lame's first parameter.</span>
+<span class="sd">        pmod (float): Compressional modulus, M.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        float: M_inf - M_0 = \Delta c_11.</span>
+<span class="sd">    """</span>
+    <span class="n">epsilon</span> <span class="o">=</span> <span class="n">crack_density</span><span class="p">(</span><span class="n">porosity</span><span class="p">,</span> <span class="n">aspect</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">lam</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">epsilon</span> <span class="o">*</span> <span class="p">(</span><span class="n">lam</span><span class="o">**</span><span class="mi">2</span> <span class="o">/</span> <span class="n">mu</span><span class="p">)</span> <span class="o">*</span> <span class="mi">4</span><span class="o">*</span><span class="p">(</span><span class="n">lam</span> <span class="o">+</span> <span class="mi">2</span><span class="o">*</span><span class="n">mu</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="mi">3</span><span class="o">*</span><span class="n">lam</span> <span class="o">+</span> <span class="mi">3</span><span class="o">*</span><span class="n">mu</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="p">(</span><span class="mi">4</span><span class="o">*</span><span class="n">epsilon</span><span class="o">/</span><span class="mi">3</span><span class="p">)</span> <span class="o">*</span> <span class="p">((</span><span class="n">pmod</span> <span class="o">-</span> <span class="mi">2</span><span class="o">*</span><span class="n">mu</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span> <span class="o">/</span> <span class="n">mu</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">pmod</span><span class="o">/</span><span class="p">(</span><span class="n">pmod</span><span class="o">-</span><span class="n">mu</span><span class="p">))</span></div>
+
+
+<div class="viewcode-block" id="hudson_delta_G"><a class="viewcode-back" href="../../../bruges.rockphysics.html#bruges.rockphysics.anisotropy.hudson_delta_G">[docs]</a><span class="k">def</span> <span class="nf">hudson_delta_G</span><span class="p">(</span><span class="n">porosity</span><span class="p">,</span> <span class="n">aspect</span><span class="p">,</span> <span class="n">mu</span><span class="p">,</span> <span class="n">lam</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">pmod</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="sd">"""</span>
+<span class="sd">    The approximate reduction in shear modulus G (or mu) in the direction</span>
+<span class="sd">    normal to a set of aligned cracks. Eqn 15.42 in Dvorkin et al (2014).</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        porosity (float): Fractional porosity, phi.</span>
+<span class="sd">        aspect (float): Aspect ratio, alpha.</span>
+<span class="sd">        mu (float): Shear modulus, sometimes called G.</span>
+<span class="sd">        lam (float): Lame's first parameter, lambda.</span>
+<span class="sd">        pmod (float): Compressional modulus, M.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        float: M_inf - M_0 = \Delta c_11.</span>
+<span class="sd">    """</span>
+    <span class="n">epsilon</span> <span class="o">=</span> <span class="n">crack_density</span><span class="p">(</span><span class="n">porosity</span><span class="p">,</span> <span class="n">aspect</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">lam</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">epsilon</span> <span class="o">*</span> <span class="n">mu</span> <span class="o">*</span> <span class="mi">16</span><span class="o">*</span><span class="p">(</span><span class="n">lam</span> <span class="o">+</span> <span class="mi">2</span><span class="o">*</span><span class="n">mu</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="mi">9</span><span class="o">*</span><span class="n">lam</span> <span class="o">+</span> <span class="mi">12</span><span class="o">*</span><span class="n">mu</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="p">(</span><span class="mi">16</span><span class="o">*</span><span class="n">mu</span><span class="o">*</span><span class="n">epsilon</span><span class="o">/</span><span class="mi">3</span><span class="p">)</span> <span class="o">*</span> <span class="n">pmod</span> <span class="o">/</span> <span class="p">(</span><span class="mi">3</span><span class="o">*</span><span class="n">pmod</span> <span class="o">-</span> <span class="mi">2</span><span class="o">*</span><span class="n">mu</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="hudson_quality_factor"><a class="viewcode-back" href="../../../bruges.rockphysics.html#bruges.rockphysics.anisotropy.hudson_quality_factor">[docs]</a><span class="k">def</span> <span class="nf">hudson_quality_factor</span><span class="p">(</span><span class="n">porosity</span><span class="p">,</span> <span class="n">aspect</span><span class="p">,</span> <span class="n">mu</span><span class="p">,</span> <span class="n">lam</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">pmod</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="sd">"""</span>
+<span class="sd">    Returns Q_p and Q_s for cracked media. Equations 15.41 and 15.43 in</span>
+<span class="sd">    Dvorkin et al. (2014).</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        porosity (float): Fractional porosity, phi.</span>
+<span class="sd">        aspect (float): Aspect ratio, alpha.</span>
+<span class="sd">        mu (float): Shear modulus, sometimes called G.</span>
+<span class="sd">        lam (float): Lame's first parameter, lambda.</span>
+<span class="sd">        pmod (float): Compressional modulus, M.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        float: Q_p</span>
+<span class="sd">        float: Q_s</span>
+<span class="sd">    """</span>
+    <span class="n">Qp</span> <span class="o">=</span> <span class="mi">2</span><span class="o">*</span><span class="n">mu</span> <span class="o">/</span> <span class="n">hudson_delta_M</span><span class="p">(</span><span class="n">porosity</span><span class="p">,</span> <span class="n">aspect</span><span class="p">,</span> <span class="n">mu</span><span class="p">,</span> <span class="n">lam</span><span class="p">,</span> <span class="n">pmod</span><span class="p">)</span>
+    <span class="n">Qs</span> <span class="o">=</span> <span class="mi">2</span><span class="o">*</span><span class="n">mu</span> <span class="o">/</span> <span class="n">hudson_delta_G</span><span class="p">(</span><span class="n">porosity</span><span class="p">,</span> <span class="n">aspect</span><span class="p">,</span> <span class="n">mu</span><span class="p">,</span> <span class="n">lam</span><span class="p">,</span> <span class="n">pmod</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">Qp</span><span class="p">,</span> <span class="n">Qs</span></div>
+
+
+<div class="viewcode-block" id="hudson_inverse_Q_ratio"><a class="viewcode-back" href="../../../bruges.rockphysics.html#bruges.rockphysics.anisotropy.hudson_inverse_Q_ratio">[docs]</a><span class="k">def</span> <span class="nf">hudson_inverse_Q_ratio</span><span class="p">(</span><span class="n">mu</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                           <span class="n">pmod</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                           <span class="n">pr</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                           <span class="n">vp</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                           <span class="n">vs</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                           <span class="n">aligned</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+    <span class="sd">"""</span>
+<span class="sd">    Dvorkin et al. (2014), Eq 15.44 (aligned) and 15.48 (not aligned). You must</span>
+<span class="sd">    provide one of the following: `pr`, or `vp` and `vs`, or `mu` and `pmod`.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        mu (float): Shear modulus, sometimes called G.</span>
+<span class="sd">        pmod (float): Compressional modulus, M.</span>
+<span class="sd">        pr (float): Poisson's ratio, somtimes called v.</span>
+<span class="sd">        vp (ndarray): P-wave interval velocity.</span>
+<span class="sd">        vs (ndarray): S-wave interval velocity.</span>
+<span class="sd">        aligned (bool): Either treats cracks as alligned (Default, True)</span>
+<span class="sd">                        or assumes defects are randomly oriented (False)</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        float: 2Q_s^-1</span>
+<span class="sd">    """</span>
+    <span class="k">if</span> <span class="n">pr</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="p">(</span><span class="mi">2</span> <span class="o">-</span> <span class="mi">2</span><span class="o">*</span><span class="n">pr</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="mi">2</span><span class="o">*</span><span class="n">pr</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="p">(</span><span class="n">vp</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">vs</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">):</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">vp</span><span class="o">**</span><span class="mi">2</span> <span class="o">/</span> <span class="n">vs</span><span class="o">**</span><span class="mi">2</span>
+    <span class="k">elif</span> <span class="p">(</span><span class="n">mu</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">pmod</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">):</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">pmod</span> <span class="o">/</span> <span class="n">mu</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">"You must provide pr or (vp and vs) or (mu and pmod)"</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">aligned</span><span class="p">:</span>
+        <span class="k">return</span> <span class="mf">0.25</span> <span class="o">*</span> <span class="p">(</span><span class="n">x</span> <span class="o">-</span> <span class="mi">2</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span> <span class="o">*</span> <span class="p">(</span><span class="mi">3</span><span class="o">*</span><span class="n">x</span> <span class="o">-</span> <span class="mi">2</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">x</span><span class="o">**</span><span class="mi">2</span> <span class="o">-</span> <span class="n">x</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">a</span> <span class="o">=</span> <span class="mi">2</span><span class="o">*</span><span class="n">x</span> <span class="o">/</span> <span class="p">(</span><span class="mi">3</span><span class="o">*</span><span class="n">x</span> <span class="o">-</span> <span class="mi">2</span><span class="p">)</span>
+        <span class="n">b</span> <span class="o">=</span> <span class="n">x</span> <span class="o">/</span> <span class="mi">3</span><span class="o">*</span><span class="p">(</span><span class="n">x</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="k">return</span> <span class="mf">1.25</span> <span class="o">*</span> <span class="p">((</span><span class="n">x</span> <span class="o">-</span> <span class="mi">2</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span> <span class="o">/</span> <span class="p">(</span><span class="n">x</span> <span class="o">-</span> <span class="mi">1</span><span class="p">))</span> <span class="o">/</span> <span class="p">(</span><span class="n">a</span> <span class="o">+</span> <span class="n">b</span><span class="p">)</span></div>
+</pre></div>
+        </article>
+      </div>
+      <footer>
+        
+        <div class="related-pages">
+          
+          
+        </div>
+        <div class="bottom-of-page">
+          <div class="left-details">
+            <div class="copyright">
+                Copyright &#169; 2022, Agile Scientific
+            </div>
+            Made with <a href="https://www.sphinx-doc.org/">Sphinx</a> and <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
+            
+            <a href="https://github.com/pradyunsg/furo">Furo</a>
+            
+          </div>
+          <div class="right-details">
+            <div class="icons">
+              
+            </div>
+          </div>
+        </div>
+        
+      </footer>
+    </div>
+    <aside class="toc-drawer no-toc">
+      
+      
+      
+    </aside>
+  </div>
+</div><script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+    <script src="../../../_static/jquery.js"></script>
+    <script src="../../../_static/underscore.js"></script>
+    <script src="../../../_static/doctools.js"></script>
+    <script src="../../../_static/scripts/furo.js"></script>
+    </body>
+</html>

@@ -1,0 +1,1067 @@
+<!doctype html>
+<html class="no-js" lang="en">
+  <head><meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
+    <meta name="color-scheme" content="light dark"><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+<link rel="index" title="Index" href="genindex.html" /><link rel="search" title="Search" href="search.html" /><link rel="next" title="bruges.models package" href="bruges.models.html" /><link rel="prev" title="bruges.attribute package" href="bruges.attribute.html" />
+
+    <link rel="shortcut icon" href="_static/favicon.ico"/><meta name="generator" content="sphinx-4.4.0, furo 2022.02.14.1"/>
+        <title>bruges.filters package - bruges documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/furo.css?digest=a8f031f701c6af50c9919b48f173a5785af06fac" />
+    <link rel="stylesheet" type="text/css" href="_static/plot_directive.css" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/furo-extensions.css?digest=25ceb02ed1c46dc30f2321ff83e92799f69dfdb9" />
+    <link rel="stylesheet" type="text/css" href="_static/custom.css" />
+    
+    
+
+
+<style>
+  body {
+    --color-code-background: #f8f8f8;
+  --color-code-foreground: black;
+  
+  }
+  body[data-theme="dark"] {
+    --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+  }
+  @media (prefers-color-scheme: dark) {
+    body:not([data-theme="light"]) {
+      --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+    }
+  }
+</style></head>
+  <body>
+    <script>
+      document.body.dataset.theme = localStorage.getItem("theme") || "auto";
+    </script>
+    
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="svg-toc" viewBox="0 0 24 24">
+    <title>Contents</title>
+    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 1024 1024">
+      <path d="M408 442h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8zm-8 204c0 4.4 3.6 8 8 8h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56zm504-486H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zm0 632H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zM115.4 518.9L271.7 642c5.8 4.6 14.4.5 14.4-6.9V388.9c0-7.4-8.5-11.5-14.4-6.9L115.4 505.1a8.74 8.74 0 0 0 0 13.8z"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-menu" viewBox="0 0 24 24">
+    <title>Menu</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-menu">
+      <line x1="3" y1="12" x2="21" y2="12"></line>
+      <line x1="3" y1="6" x2="21" y2="6"></line>
+      <line x1="3" y1="18" x2="21" y2="18"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+    <title>Expand</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-chevron-right">
+      <polyline points="9 18 15 12 9 6"></polyline>
+    </svg>
+  </symbol>
+  <symbol id="svg-sun" viewBox="0 0 24 24">
+    <title>Light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="feather-sun">
+      <circle cx="12" cy="12" r="5"></circle>
+      <line x1="12" y1="1" x2="12" y2="3"></line>
+      <line x1="12" y1="21" x2="12" y2="23"></line>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+      <line x1="1" y1="12" x2="3" y2="12"></line>
+      <line x1="21" y1="12" x2="23" y2="12"></line>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon" viewBox="0 0 24 24">
+    <title>Dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-moon">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
+    </svg>
+  </symbol>
+  <symbol id="svg-sun-half" viewBox="0 0 24 24">
+    <title>Auto light/dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-shadow">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+      <circle cx="12" cy="12" r="9" />
+      <path d="M13 12h5" />
+      <path d="M13 15h4" />
+      <path d="M13 18h1" />
+      <path d="M13 9h4" />
+      <path d="M13 6h1" />
+    </svg>
+  </symbol>
+</svg>
+
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation">
+<input type="checkbox" class="sidebar-toggle" name="__toc" id="__toc">
+<label class="overlay sidebar-overlay" for="__navigation">
+  <div class="visually-hidden">Hide navigation sidebar</div>
+</label>
+<label class="overlay toc-overlay" for="__toc">
+  <div class="visually-hidden">Hide table of contents sidebar</div>
+</label>
+
+
+
+<div class="page">
+  <header class="mobile-header">
+    <div class="header-left">
+      <label class="nav-overlay-icon" for="__navigation">
+        <div class="visually-hidden">Toggle site navigation sidebar</div>
+        <i class="icon"><svg><use href="#svg-menu"></use></svg></i>
+      </label>
+    </div>
+    <div class="header-center">
+      <a href="index.html"><div class="brand">bruges  documentation</div></a>
+    </div>
+    <div class="header-right">
+      <div class="theme-toggle-container theme-toggle-header">
+        <button class="theme-toggle">
+          <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+          <svg class="theme-icon-when-auto"><use href="#svg-sun-half"></use></svg>
+          <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+          <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+        </button>
+      </div>
+      <label class="toc-overlay-icon toc-header-icon" for="__toc">
+        <div class="visually-hidden">Toggle table of contents sidebar</div>
+        <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+      </label>
+    </div>
+  </header>
+  <aside class="sidebar-drawer">
+    <div class="sidebar-container">
+      
+      <div class="sidebar-sticky"><a class="sidebar-brand centered" href="index.html">
+  
+  <div class="sidebar-logo-container">
+    <img class="sidebar-logo" src="_static/bruges_logo.png" alt="Logo"/>
+  </div>
+  
+  
+</a><form class="sidebar-search-container" method="get" action="search.html" role="search">
+  <input class="sidebar-search" placeholder=Search name="q" aria-label="Search">
+  <input type="hidden" name="check_keywords" value="yes">
+  <input type="hidden" name="area" value="default">
+</form>
+<div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
+  <p class="caption" role="heading"><span class="caption-text">API reference</span></p>
+<ul class="current">
+<li class="toctree-l1 current has-children"><a class="reference internal" href="bruges.html">bruges package</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="bruges.attribute.html">bruges.attribute package</a></li>
+<li class="toctree-l2 current current-page"><a class="current reference internal" href="#">bruges.filters package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="bruges.models.html">bruges.models package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="bruges.noise.html">bruges.noise package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="bruges.petrophysics.html">bruges.petrophysics package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="bruges.reflection.html">bruges.reflection package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="bruges.rockphysics.html">bruges.rockphysics package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="bruges.transform.html">bruges.transform package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="bruges.unit.html">bruges.unit package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="bruges.util.html">bruges.util package</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Other resources</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="development.html">Development</a></li>
+<li class="toctree-l1"><a class="reference internal" href="authors.html">Authors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="license.html">License</a></li>
+<li class="toctree-l1"><a class="reference internal" href="changelog.html">Changelog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contributing.html">Contributing</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Project links</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="https://pypi.org/project/bruges/">PyPI releases</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/agile-geoscience/bruges">Code in GitHub</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/agile-geoscience/bruges/issues">Issue tracker</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://code.agilescientific.com/community">Community guidelines</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://code.agilescientific.com">Agile's software</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://www.agilescientific.com">Agile's website</a></li>
+</ul>
+
+</div>
+</div>
+
+      </div>
+      
+    </div>
+  </aside>
+  <div class="main">
+    <div class="content">
+      <div class="article-container">
+        <div class="content-icon-container"><div class="theme-toggle-container theme-toggle-content">
+            <button class="theme-toggle">
+              <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+              <svg class="theme-icon-when-auto"><use href="#svg-sun-half"></use></svg>
+              <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+              <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+            </button>
+          </div>
+          <label class="toc-overlay-icon toc-content-icon" for="__toc">
+            <div class="visually-hidden">Toggle table of contents sidebar</div>
+            <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+          </label>
+        </div>
+        <article role="main">
+          <section id="bruges-filters-package">
+<h1>bruges.filters package<a class="headerlink" href="#bruges-filters-package" title="Permalink to this headline">#</a></h1>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">#</a></h2>
+</section>
+<section id="module-bruges.filters.anisodiff">
+<span id="bruges-filters-anisodiff-module"></span><h2>bruges.filters.anisodiff module<a class="headerlink" href="#module-bruges.filters.anisodiff" title="Permalink to this headline">#</a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="bruges.filters.anisodiff.anisodiff">
+<span class="sig-prename descclassname"><span class="pre">bruges.filters.anisodiff.</span></span><span class="sig-name descname"><span class="pre">anisodiff</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">img</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">niter</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">kappa</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">50</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gamma</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">step</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">(1.0,</span> <span class="pre">1.0)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">option</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bruges/filters/anisodiff.html#anisodiff"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bruges.filters.anisodiff.anisodiff" title="Permalink to this definition">#</a></dt>
+<dd><p>Anisotropic diffusion.</p>
+<p>Usage:
+imgout = anisodiff(im, niter, kappa, gamma, option)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>image</strong> (<em>img    - input</em>) – </p></li>
+<li><p><strong>iterations</strong> (<em>niter  - number of</em>) – </p></li>
+<li><p><strong>?</strong> (<em>kappa  - conduction coefficient 20-100</em>) – </p></li>
+<li><p><strong>stability</strong> (<em>gamma  - max value of .25 for</em>) – </p></li>
+<li><p><strong>tuple</strong> (<em>step   -</em>) – </p></li>
+<li><p><strong>in</strong> (<em>the distance between adjacent pixels</em>) – </p></li>
+<li><p><strong>1</strong> (<em>option - 1 Perona Malik diffusion equation No</em>) – 2 Perona Malik diffusion equation No 2</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>imgout   - diffused image.</p>
+</dd>
+</dl>
+<p>kappa controls conduction as a function of gradient.  If kappa is low
+small intensity gradients are able to block conduction and hence
+diffusion across step edges.  A large value reduces the influence of
+intensity gradients on conduction.</p>
+<p>gamma controls speed of diffusion (you usually want it at a maximum of
+0.25)</p>
+<p>step is used to scale the gradients in case the spacing between
+adjacent pixels differs in the x and y axes</p>
+<p>Diffusion equation 1 favours high contrast edges over low contrast
+ones.
+Diffusion equation 2 favours wide regions over smaller ones.</p>
+</dd></dl>
+<dl class="py function">
+<dt class="sig sig-object py" id="bruges.filters.anisodiff.anisodiff3">
+<span class="sig-prename descclassname"><span class="pre">bruges.filters.anisodiff.</span></span><span class="sig-name descname"><span class="pre">anisodiff3</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">stack</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">niter</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">kappa</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">50</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gamma</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">step</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">(1.0,</span> <span class="pre">1.0,</span> <span class="pre">1.0)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">option</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bruges/filters/anisodiff.html#anisodiff3"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bruges.filters.anisodiff.anisodiff3" title="Permalink to this definition">#</a></dt>
+<dd><p>3D Anisotropic diffusion.</p>
+<p>Usage:
+stackout = anisodiff(stack, niter, kappa, gamma, option)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>stack</strong> (<em>stack  - input</em>) – </p></li>
+<li><p><strong>iterations</strong> (<em>niter  - number of</em>) – </p></li>
+<li><p><strong>?</strong> (<em>kappa  - conduction coefficient 20-100</em>) – </p></li>
+<li><p><strong>stability</strong> (<em>gamma  - max value of .25 for</em>) – </p></li>
+<li><p><strong>tuple</strong> (<em>step   -</em>) – </p></li>
+<li><p><strong>in</strong> (<em>the distance between adjacent pixels</em>) – </p></li>
+<li><p><strong>1</strong> (<em>option - 1 Perona Malik diffusion equation No</em>) – 2 Perona Malik diffusion equation No 2</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>stackout   - diffused stack.</p>
+</dd>
+</dl>
+<p>kappa controls conduction as a function of gradient.  If kappa is low
+small intensity gradients are able to block conduction and hence
+diffusion across step edges. A large value reduces the influence of
+intensity gradients on conduction.</p>
+<p>gamma controls speed of diffusion (you usually want it at a maximum of
+0.25)</p>
+<p>step is used to scale the gradients in case the spacing between
+adjacent pixels differs in the x,y and/or z axes</p>
+<p>Diffusion equation 1 favours high contrast edges over low contrast
+ones.
+Diffusion equation 2 favours wide regions over smaller ones.</p>
+</dd></dl>
+</section>
+<section id="module-bruges.filters.convolve">
+<span id="bruges-filters-convolve-module"></span><h2>bruges.filters.convolve module<a class="headerlink" href="#module-bruges.filters.convolve" title="Permalink to this headline">#</a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="bruges.filters.convolve.apply_along_axis">
+<span class="sig-prename descclassname"><span class="pre">bruges.filters.convolve.</span></span><span class="sig-name descname"><span class="pre">apply_along_axis</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">func_1d</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">arr</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bruges/filters/convolve.html#apply_along_axis"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bruges.filters.convolve.apply_along_axis" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+<dl class="py function">
+<dt class="sig sig-object py" id="bruges.filters.convolve.convolve">
+<span class="sig-prename descclassname"><span class="pre">bruges.filters.convolve.</span></span><span class="sig-name descname"><span class="pre">convolve</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">reflectivity</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wavelet</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bruges/filters/convolve.html#convolve"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bruges.filters.convolve.convolve" title="Permalink to this definition">#</a></dt>
+<dd><p>Convolve n-dimensional reflectivity with a 1D wavelet or 2D wavelet bank.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>reflectivity</strong> (<em>ndarray</em>) – The reflectivity trace, or 2D section, or volume.</p></li>
+<li><p><strong>wavelet</strong> (<em>ndarray</em>) – The wavelet, must be 1D function or a 2D wavelet ‘bank’. If a wavelet bank, time should be on the last axis.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>out</strong> – Discrete, linear convolution of <cite>reflectivity</cite> and <cite>wavelet</cite></p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+</section>
+<section id="module-bruges.filters.filters">
+<span id="bruges-filters-filters-module"></span><h2>bruges.filters.filters module<a class="headerlink" href="#module-bruges.filters.filters" title="Permalink to this headline">#</a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="bruges.filters.filters.conservative">
+<span class="sig-prename descclassname"><span class="pre">bruges.filters.filters.</span></span><span class="sig-name descname"><span class="pre">conservative</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">arr</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">supercon</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bruges/filters/filters.html#conservative"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bruges.filters.filters.conservative" title="Permalink to this definition">#</a></dt>
+<dd><p>Conservative, a nonlinear n-D despiking filter. Very conservative! Only
+changes centre value if it is outside the range of all the other values
+in the kernel. Read <a class="reference external" href="http://subsurfwiki.org/wiki/Conservative_filter">http://subsurfwiki.org/wiki/Conservative_filter</a></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>arr</strong> (<em>ndarray</em>) – an n-dimensional array, such as a seismic horizon.</p></li>
+<li><p><strong>size</strong> (<em>int</em>) – the kernel size, e.g. 5 for 5x5 (in a 2D arr). Should be
+odd, rounded up if not.</p></li>
+<li><p><strong>supercon</strong> (<em>bool</em>) – whether to be superconservative. If True, replaces
+pixel with min or max of kernel. If False (default), replaces pixel
+with mean of kernel.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>the resulting smoothed array.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py function">
+<dt class="sig sig-object py" id="bruges.filters.filters.kuwahara">
+<span class="sig-prename descclassname"><span class="pre">bruges.filters.filters.</span></span><span class="sig-name descname"><span class="pre">kuwahara</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">arr</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">5</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bruges/filters/filters.html#kuwahara"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bruges.filters.filters.kuwahara" title="Permalink to this definition">#</a></dt>
+<dd><p>Kuwahara, a nonlinear 2D smoothing filter.
+<a class="reference external" href="http://subsurfwiki.org/wiki/Kuwahara_filter">http://subsurfwiki.org/wiki/Kuwahara_filter</a></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>arr</strong> (<em>ndarray</em>) – a 2D array, such as a seismic horizon.</p></li>
+<li><p><strong>size</strong> (<em>int</em>) – the kernel size, e.g. 5 for 5x5. Should be odd,
+rounded up if not.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>the resulting smoothed array.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py function">
+<dt class="sig sig-object py" id="bruges.filters.filters.mean">
+<span class="sig-prename descclassname"><span class="pre">bruges.filters.filters.</span></span><span class="sig-name descname"><span class="pre">mean</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">arr</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">5</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bruges/filters/filters.html#mean"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bruges.filters.filters.mean" title="Permalink to this definition">#</a></dt>
+<dd><p>A linear n-D smoothing filter. Can be used as a moving average on 1D data.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>arr</strong> (<em>ndarray</em>) – an n-dimensional array, such as a seismic horizon.</p></li>
+<li><p><strong>size</strong> (<em>int</em>) – the kernel size, e.g. 5 for 5x5. Should be odd,
+rounded up if not.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>the resulting smoothed array.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py function">
+<dt class="sig sig-object py" id="bruges.filters.filters.median">
+<span class="sig-prename descclassname"><span class="pre">bruges.filters.filters.</span></span><span class="sig-name descname"><span class="pre">median</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">arr</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">5</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bruges/filters/filters.html#median"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bruges.filters.filters.median" title="Permalink to this definition">#</a></dt>
+<dd><p>A nonlinear n-D edge-preserving smoothing filter.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>arr</strong> (<em>ndarray</em>) – an n-dimensional array, such as a seismic horizon.</p></li>
+<li><p><strong>size</strong> (<em>int</em>) – the kernel size, e.g. 5 for 5x5. Should be odd,
+rounded up if not.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>the resulting smoothed array.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py function">
+<dt class="sig sig-object py" id="bruges.filters.filters.mode">
+<span class="sig-prename descclassname"><span class="pre">bruges.filters.filters.</span></span><span class="sig-name descname"><span class="pre">mode</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">arr</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tie</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'smallest'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bruges/filters/filters.html#mode"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bruges.filters.filters.mode" title="Permalink to this definition">#</a></dt>
+<dd><p>A nonlinear n-D categorical smoothing filter. Use this to filter non-
+continuous variables, such as categorical integers, e.g. to label facies.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>arr</strong> (<em>ndarray</em>) – an n-dimensional array, such as a seismic horizon.</p></li>
+<li><p><strong>size</strong> (<em>int</em>) – the kernel size, e.g. 5 for 5x5. Should be odd,
+rounded up if not.</p></li>
+<li><p><strong>tie</strong> (<em>str</em>) – <cite>‘smallest’</cite> or <cite>‘largest</cite>’. In the event of a tie (i.e. two
+or more values having the same count in the kernel), whether to
+give back the smallest of the tying values, or the largest.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>the resulting smoothed array.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py function">
+<dt class="sig sig-object py" id="bruges.filters.filters.rms">
+<span class="sig-prename descclassname"><span class="pre">bruges.filters.filters.</span></span><span class="sig-name descname"><span class="pre">rms</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">arr</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">5</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bruges/filters/filters.html#rms"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bruges.filters.filters.rms" title="Permalink to this definition">#</a></dt>
+<dd><p>A linear n-D smoothing filter. Can be used as a moving average on 1D data.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>arr</strong> (<em>ndarray</em>) – an n-dimensional array, such as a seismic horizon.</p></li>
+<li><p><strong>size</strong> (<em>int</em>) – the kernel size, e.g. 5 for 5x5. Should be odd,
+rounded up if not.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>the resulting smoothed array.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py function">
+<dt class="sig sig-object py" id="bruges.filters.filters.rotate_phase">
+<span class="sig-prename descclassname"><span class="pre">bruges.filters.filters.</span></span><span class="sig-name descname"><span class="pre">rotate_phase</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">s</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">phi</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">degrees</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bruges/filters/filters.html#rotate_phase"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bruges.filters.filters.rotate_phase" title="Permalink to this definition">#</a></dt>
+<dd><p>Performs a phase rotation of wavelet or wavelet bank using:</p>
+<div class="math-wrapper"><div class="math notranslate nohighlight">
+\[A = w(t)\cos(\phi) - h(t)\sin(\phi)\]</div></div>
+<p>where w(t) is the wavelet and h(t) is its Hilbert transform.</p>
+<p>The analytic signal can be written in the form S(t) = A(t)exp(j*theta(t))
+where A(t) = magnitude(hilbert(w(t))) and theta(t) = angle(hilbert(w(t))
+then a constant phase rotation phi would produce the analytic signal
+S(t) = A(t)exp(j*(theta(t) + phi)). To get the non analytic signal
+we take real(S(t)) == A(t)cos(theta(t) + phi)
+== A(t)(cos(theta(t))cos(phi) - sin(theta(t))sin(phi)) &lt;= trig identity
+== w(t)cos(phi) - h(t)sin(phi)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>w</strong> (<em>ndarray</em>) – The wavelet vector, can be a 2D wavelet bank.</p></li>
+<li><p><strong>phi</strong> (<em>float</em>) – The phase rotation angle (in radians) to apply.</p></li>
+<li><p><strong>degrees</strong> (<em>bool</em>) – If phi is in degrees not radians.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The phase rotated signal (or bank of signals).</p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py function">
+<dt class="sig sig-object py" id="bruges.filters.filters.snn">
+<span class="sig-prename descclassname"><span class="pre">bruges.filters.filters.</span></span><span class="sig-name descname"><span class="pre">snn</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">arr</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">include</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bruges/filters/filters.html#snn"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bruges.filters.filters.snn" title="Permalink to this definition">#</a></dt>
+<dd><p>Symmetric nearest neighbour, a nonlinear 2D smoothing filter.
+<a class="reference external" href="http://subsurfwiki.org/wiki/Symmetric_nearest_neighbour_filter">http://subsurfwiki.org/wiki/Symmetric_nearest_neighbour_filter</a></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>arr</strong> (<em>ndarray</em>) – a 2D array, such as a seismic horizon.</p></li>
+<li><p><strong>size</strong> (<em>int</em>) – the kernel size, e.g. 5 for 5x5. Should be odd,
+rounded up if not.</p></li>
+<li><p><strong>include</strong> (<em>bool</em>) – whether to include the central pixel itself.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>the resulting smoothed array.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+</section>
+<section id="module-bruges.filters.kernels">
+<span id="bruges-filters-kernels-module"></span><h2>bruges.filters.kernels module<a class="headerlink" href="#module-bruges.filters.kernels" title="Permalink to this headline">#</a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="bruges.filters.kernels.gaussian">
+<span class="sig-prename descclassname"><span class="pre">bruges.filters.kernels.</span></span><span class="sig-name descname"><span class="pre">gaussian</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">size</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">size_y</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bruges/filters/kernels.html#gaussian"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bruges.filters.kernels.gaussian" title="Permalink to this definition">#</a></dt>
+<dd><p>2D Gaussian Kernel</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>size</strong> (<em>int</em>) – the kernel size, e.g. 5 for 5x5 (in a 2D arr). Should be
+odd, rounded up if not.</p></li>
+<li><p><strong>size_y</strong> (<em>int</em>) – similar to size. If not provided, uses size as default.</p></li>
+</ul>
+</dd>
+</dl>
+<p>Returns: a Gaussian kernel.</p>
+</dd></dl>
+<dl class="py function">
+<dt class="sig sig-object py" id="bruges.filters.kernels.gaussian_kernel">
+<span class="sig-prename descclassname"><span class="pre">bruges.filters.kernels.</span></span><span class="sig-name descname"><span class="pre">gaussian_kernel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">size</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">size_y</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bruges.filters.kernels.gaussian_kernel" title="Permalink to this definition">#</a></dt>
+<dd><p>2D Gaussian Kernel</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>size</strong> (<em>int</em>) – the kernel size, e.g. 5 for 5x5 (in a 2D arr). Should be
+odd, rounded up if not.</p></li>
+<li><p><strong>size_y</strong> (<em>int</em>) – similar to size. If not provided, uses size as default.</p></li>
+</ul>
+</dd>
+</dl>
+<p>Returns: a Gaussian kernel.</p>
+</dd></dl>
+</section>
+<section id="module-bruges.filters.wavelets">
+<span id="bruges-filters-wavelets-module"></span><h2>bruges.filters.wavelets module<a class="headerlink" href="#module-bruges.filters.wavelets" title="Permalink to this headline">#</a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="bruges.filters.wavelets.berlage">
+<span class="sig-prename descclassname"><span class="pre">bruges.filters.wavelets.</span></span><span class="sig-name descname"><span class="pre">berlage</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">duration</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dt</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">f</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alpha</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">180</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">phi</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">-</span> <span class="pre">1.5707963267948966</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">t</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">return_t</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sym</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bruges/filters/wavelets.html#berlage"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bruges.filters.wavelets.berlage" title="Permalink to this definition">#</a></dt>
+<dd><p>Generates a Berlage wavelet with a peak frequency f. Implements</p>
+<div class="math-wrapper"><div class="math notranslate nohighlight">
+\[w(t) = AH(t) t^n \mathrm{e}^{-lpha t} \cos(2 \pi f_0 t + \phi_0)\]</div></div>
+<p>as described in Aldridge, DF (1990), The Berlage wavelet, GEOPHYSICS
+55 (11), p 1508-1511. Berlage wavelets are causal, minimum phase and
+useful for modeling marine airgun sources.</p>
+<p>If you pass a 1D array of frequencies, you get a wavelet bank in return.</p>
+<p>(<a class="reference external" href=".//bruges-filters-1.py">Source code</a>, <a class="reference external" href=".//bruges-filters-1.png">png</a>, <a class="reference external" href=".//bruges-filters-1.hires.png">hires.png</a>, <a class="reference external" href=".//bruges-filters-1.pdf">pdf</a>)</p>
+<figure class="align-default">
+<img alt="_images/bruges-filters-1.png" class="plot-directive" src="_images/bruges-filters-1.png"/>
+</figure>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>duration</strong> (<em>float</em>) – The length in seconds of the wavelet.</p></li>
+<li><p><strong>dt</strong> (<em>float</em>) – The sample interval in seconds (often one of  0.001, 0.002,
+or 0.004).</p></li>
+<li><p><strong>f</strong> (<em>array-like</em>) – Centre frequency of the wavelet in Hz. If a sequence is
+passed, you will get a 2D array in return, one row per frequency.</p></li>
+<li><p><strong>n</strong> (<em>float</em>) – The time exponent; non-negative and real.</p></li>
+<li><p><strong>alpha</strong> (<em>float</em>) – The exponential decay factor; non-negative and real.</p></li>
+<li><p><strong>phi</strong> (<em>float</em>) – The phase.</p></li>
+<li><p><strong>t</strong> (<em>array-like</em>) – The time series to evaluate at, if you don’t want one
+to be computed. If you pass <cite>t</cite> then <cite>duration</cite> and <cite>dt</cite> will be
+ignored, so we recommend passing <cite>None</cite> for those arguments.</p></li>
+<li><p><strong>return_t</strong> (<em>bool</em>) – If True, then the function returns a tuple of
+wavelet, time-basis.</p></li>
+<li><p><strong>sym</strong> (<em>bool</em>) – If True (default behaviour before v0.5) then the wavelet
+is forced to have an odd number of samples and the central sample
+is at 0 time.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><dl class="simple">
+<dt>ndarray. Berlage wavelet(s) with centre frequency f sampled on t. If</dt><dd><p>you passed <cite>return_t=True</cite> then a tuple of (wavelet, t) is returned.</p>
+</dd>
+</dl>
+</p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py function">
+<dt class="sig sig-object py" id="bruges.filters.wavelets.cosine">
+<span class="sig-prename descclassname"><span class="pre">bruges.filters.wavelets.</span></span><span class="sig-name descname"><span class="pre">cosine</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">duration</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dt</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">f</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">t</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">return_t</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">taper</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'gaussian'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sigma</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sym</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bruges/filters/wavelets.html#cosine"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bruges.filters.wavelets.cosine" title="Permalink to this definition">#</a></dt>
+<dd><p>With the default Gaussian window, equivalent to a ‘modified Morlet’
+also sometimes called a ‘Gabor’ wavelet. The <cite>bruges.filters.gabor</cite>
+function returns a similar shape, but with a higher mean frequancy,
+somewhere between a Ricker and a cosine (pure tone).</p>
+<p>If you pass a 1D array of frequencies, you get a wavelet bank in return.</p>
+<p>(<a class="reference external" href=".//bruges-filters-2.py">Source code</a>, <a class="reference external" href=".//bruges-filters-2.png">png</a>, <a class="reference external" href=".//bruges-filters-2.hires.png">hires.png</a>, <a class="reference external" href=".//bruges-filters-2.pdf">pdf</a>)</p>
+<figure class="align-default">
+<img alt="_images/bruges-filters-2.png" class="plot-directive" src="_images/bruges-filters-2.png"/>
+</figure>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>duration</strong> (<em>float</em>) – The length in seconds of the wavelet.</p></li>
+<li><p><strong>dt</strong> (<em>float</em>) – The sample interval in seconds (often one of  0.001, 0.002,
+or 0.004).</p></li>
+<li><p><strong>f</strong> (<em>array-like</em>) – Dominant frequency of the wavelet in Hz. If a sequence is
+passed, you will get a 2D array in return, one row per frequency.</p></li>
+<li><p><strong>t</strong> (<em>array-like</em>) – The time series to evaluate at, if you don’t want one
+to be computed. If you pass <cite>t</cite> then <cite>duration</cite> and <cite>dt</cite> will be
+ignored, so we recommend passing <cite>None</cite> for those arguments.</p></li>
+<li><p><strong>return_t</strong> (<em>bool</em>) – If True, then the function returns a tuple of
+wavelet, time-basis.</p></li>
+<li><p><strong>taper</strong> (<em>str</em><em> or </em><em>function</em>) – The window or tapering function to apply.
+To use one of NumPy’s functions, pass ‘bartlett’, ‘blackman’ (the
+default), ‘hamming’, or ‘hanning’; to apply no tapering, pass
+‘none’. To apply your own function, pass a function taking only
+the length of the window and returning the window function.</p></li>
+<li><p><strong>sigma</strong> (<em>float</em>) – Width of the default Gaussian window, in seconds.
+Defaults to 1/8 of the duration.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><dl class="simple">
+<dt>ndarray. sinc wavelet(s) with centre frequency f sampled on t. If</dt><dd><p>you passed <cite>return_t=True</cite> then a tuple of (wavelet, t) is returned.</p>
+</dd>
+</dl>
+</p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py function">
+<dt class="sig sig-object py" id="bruges.filters.wavelets.gabor">
+<span class="sig-prename descclassname"><span class="pre">bruges.filters.wavelets.</span></span><span class="sig-name descname"><span class="pre">gabor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">duration</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dt</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">f</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">t</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">return_t</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sym</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bruges/filters/wavelets.html#gabor"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bruges.filters.wavelets.gabor" title="Permalink to this definition">#</a></dt>
+<dd><p>Generates a Gabor wavelet with a peak frequency f0 at time t.</p>
+<p><a class="reference external" href="https://en.wikipedia.org/wiki/Gabor_wavelet">https://en.wikipedia.org/wiki/Gabor_wavelet</a></p>
+<p>If you pass a 1D array of frequencies, you get a wavelet bank in return.</p>
+<p>(<a class="reference external" href=".//bruges-filters-3.py">Source code</a>, <a class="reference external" href=".//bruges-filters-3.png">png</a>, <a class="reference external" href=".//bruges-filters-3.hires.png">hires.png</a>, <a class="reference external" href=".//bruges-filters-3.pdf">pdf</a>)</p>
+<figure class="align-default">
+<img alt="_images/bruges-filters-3.png" class="plot-directive" src="_images/bruges-filters-3.png"/>
+</figure>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>duration</strong> (<em>float</em>) – The length in seconds of the wavelet.</p></li>
+<li><p><strong>dt</strong> (<em>float</em>) – The sample interval in seconds (often one of  0.001, 0.002,
+or 0.004).</p></li>
+<li><p><strong>f</strong> (<em>array-like</em>) – Centre frequency of the wavelet in Hz. If a sequence is
+passed, you will get a 2D array in return, one row per frequency.</p></li>
+<li><p><strong>t</strong> (<em>array-like</em>) – The time series to evaluate at, if you don’t want one
+to be computed. If you pass <cite>t</cite> then <cite>duration</cite> and <cite>dt</cite> will be
+ignored, so we recommend passing <cite>None</cite> for those arguments.</p></li>
+<li><p><strong>return_t</strong> (<em>bool</em>) – If True, then the function returns a tuple of
+wavelet, time-basis.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><dl class="simple">
+<dt>ndarray. Gabor wavelet(s) with centre frequency f sampled on t. If</dt><dd><p>you passed <cite>return_t=True</cite> then a tuple of (wavelet, t) is returned.</p>
+</dd>
+</dl>
+</p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py function">
+<dt class="sig sig-object py" id="bruges.filters.wavelets.generalized">
+<span class="sig-prename descclassname"><span class="pre">bruges.filters.wavelets.</span></span><span class="sig-name descname"><span class="pre">generalized</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">duration</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dt</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">f</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">u</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">t</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">return_t</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">imag</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sym</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bruges/filters/wavelets.html#generalized"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bruges.filters.wavelets.generalized" title="Permalink to this definition">#</a></dt>
+<dd><p>Wang’s generalized wavelet, of which the Ricker is a special case where
+u = 2. The parameter u is the order of the time-domain derivative, which
+can be a fractional derivative.</p>
+<p>As given by Wang (2015), Generalized seismic wavelets. GJI 203, p 1172-78.
+DOI: <a class="reference external" href="https://doi.org/10.1093/gji/ggv346">https://doi.org/10.1093/gji/ggv346</a>. I am using the (more accurate)
+frequency domain method (eq 4 in that paper).</p>
+<p>(<a class="reference external" href=".//bruges-filters-4.py">Source code</a>, <a class="reference external" href=".//bruges-filters-4.png">png</a>, <a class="reference external" href=".//bruges-filters-4.hires.png">hires.png</a>, <a class="reference external" href=".//bruges-filters-4.pdf">pdf</a>)</p>
+<figure class="align-default">
+<img alt="_images/bruges-filters-4.png" class="plot-directive" src="_images/bruges-filters-4.png"/>
+</figure>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>duration</strong> (<em>float</em>) – The length of the wavelet, in s.</p></li>
+<li><p><strong>dt</strong> (<em>float</em>) – The time sample interval in s.</p></li>
+<li><p><strong>f</strong> (<em>float</em><em> or </em><em>array-like</em>) – The frequency or frequencies, in Hertz.</p></li>
+<li><p><strong>u</strong> (<em>float</em><em> or </em><em>array-like</em>) – The fractional derivative parameter u.</p></li>
+<li><p><strong>t</strong> (<em>array-like</em>) – The time series to evaluate at, if you don’t want one
+to be computed. If you pass <cite>t</cite> then <cite>duration</cite> and <cite>dt</cite> will be
+ignored, so we recommend passing <cite>None</cite> for those arguments.</p></li>
+<li><p><strong>return_t</strong> (<em>bool</em>) – Whether to return the time basis array.</p></li>
+<li><p><strong>center</strong> (<em>bool</em>) – Whether to center the wavelet on time 0.</p></li>
+<li><p><strong>imag</strong> (<em>bool</em>) – Whether to return the imaginary component as well.</p></li>
+<li><p><strong>sym</strong> (<em>bool</em>) – If True (default behaviour before v0.5) then the wavelet
+is forced to have an odd number of samples and the central sample
+is at 0 time.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><dl class="simple">
+<dt>ndarray. If f and u are floats, the resulting wavelet has duration/dt</dt><dd><p>= A samples. If you give f as an array of length M and u as an
+array of length N, then the resulting wavelet bank will have shape
+(M, N, A). If f or u are floats, their size will be 1, and they
+will be squeezed out: the bank is always squeezed to its minimum
+number of dimensions. If you passed <cite>return_t=True</cite> then a tuple
+of (wavelet, t) is returned.</p>
+</dd>
+</dl>
+</p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py function">
+<dt class="sig sig-object py" id="bruges.filters.wavelets.klauder">
+<span class="sig-prename descclassname"><span class="pre">bruges.filters.wavelets.</span></span><span class="sig-name descname"><span class="pre">klauder</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">duration</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dt</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">f</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">autocorrelate</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">t</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">return_t</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">taper</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'blackman'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sym</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bruges/filters/wavelets.html#klauder"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bruges.filters.wavelets.klauder" title="Permalink to this definition">#</a></dt>
+<dd><p>By default, gives the autocorrelation of a linear frequency modulated
+wavelet (sweep). Uses scipy.signal.chirp, adding dimensions as necessary.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>duration</strong> (<em>float</em>) – The length in seconds of the wavelet.</p></li>
+<li><p><strong>dt</strong> (<em>float</em>) – is the sample interval in seconds (usually 0.001, 0.002,
+or 0.004)</p></li>
+<li><p><strong>f</strong> (<em>array-like</em>) – Upper and lower frequencies. Any sequence like (f1, f2).
+A list of lists will create a wavelet bank.</p></li>
+<li><p><strong>autocorrelate</strong> (<em>bool</em>) – Whether to autocorrelate the sweep(s) to create
+a wavelet. Default is <cite>True</cite>.</p></li>
+<li><p><strong>t</strong> (<em>array-like</em>) – The time series to evaluate at, if you don’t want one
+to be computed. If you pass <cite>t</cite> then <cite>duration</cite> and <cite>dt</cite> will be
+ignored, so we recommend passing <cite>None</cite> for those arguments.</p></li>
+<li><p><strong>return_t</strong> (<em>bool</em>) – If True, then the function returns a tuple of
+wavelet, time-basis.</p></li>
+<li><p><strong>taper</strong> (<em>str</em><em> or </em><em>function</em>) – The window or tapering function to apply.
+To use one of NumPy’s functions, pass ‘bartlett’, ‘blackman’ (the
+default), ‘hamming’, or ‘hanning’; to apply no tapering, pass
+‘none’. To apply your own function, pass a function taking only
+the length of the window and returning the window function.</p></li>
+<li><p><strong>sym</strong> (<em>bool</em>) – If True (default behaviour before v0.5) then the wavelet
+is forced to have an odd number of samples and the central sample
+is at 0 time.</p></li>
+<li><p><strong>**kwargs</strong> – Further arguments are passed to scipy.signal.chirp. They are
+<cite>method</cite> (‘linear’,’quadratic’,’logarithmic’), <cite>phi</cite> (phase offset
+in degrees), and <cite>vertex_zero</cite>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><dl class="simple">
+<dt>The waveform. If you passed <cite>return_t=True</cite> then a tuple of</dt><dd><p>(wavelet, t) is returned.</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py function">
+<dt class="sig sig-object py" id="bruges.filters.wavelets.ormsby">
+<span class="sig-prename descclassname"><span class="pre">bruges.filters.wavelets.</span></span><span class="sig-name descname"><span class="pre">ormsby</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">duration</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dt</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">f</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">t</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">return_t</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sym</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bruges/filters/wavelets.html#ormsby"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bruges.filters.wavelets.ormsby" title="Permalink to this definition">#</a></dt>
+<dd><p>The Ormsby wavelet requires four frequencies which together define a
+trapezoid shape in the spectrum. The Ormsby wavelet has several sidelobes,
+unlike Ricker wavelets.</p>
+<p>(<a class="reference external" href=".//bruges-filters-5.py">Source code</a>, <a class="reference external" href=".//bruges-filters-5.png">png</a>, <a class="reference external" href=".//bruges-filters-5.hires.png">hires.png</a>, <a class="reference external" href=".//bruges-filters-5.pdf">pdf</a>)</p>
+<figure class="align-default">
+<img alt="_images/bruges-filters-5.png" class="plot-directive" src="_images/bruges-filters-5.png"/>
+</figure>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>duration</strong> (<em>float</em>) – The length in seconds of the wavelet.</p></li>
+<li><p><strong>dt</strong> (<em>float</em>) – The sample interval in seconds (usually 0.001, 0.002,
+or 0.004).</p></li>
+<li><p><strong>f</strong> (<em>array-like</em>) – Sequence of form (f1, f2, f3, f4), or list of lists of
+frequencies, which will return a 2D wavelet bank.</p></li>
+<li><p><strong>t</strong> (<em>array-like</em>) – The time series to evaluate at, if you don’t want one
+to be computed. If you pass <cite>t</cite> then <cite>duration</cite> and <cite>dt</cite> will be
+ignored, so we recommend passing <cite>None</cite> for those arguments.</p></li>
+<li><p><strong>return_t</strong> (<em>bool</em>) – If True, then the function returns a tuple of
+wavelet, time-basis.</p></li>
+<li><p><strong>sym</strong> (<em>bool</em>) – If True (default behaviour before v0.5) then the wavelet
+is forced to have an odd number of samples and the central sample
+is at 0 time.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><dl class="simple">
+<dt>A vector containing the Ormsby wavelet, or a bank of them. If</dt><dd><p>you passed <cite>return_t=True</cite> then a tuple of (wavelet, t) is returned.</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py function">
+<dt class="sig sig-object py" id="bruges.filters.wavelets.ormsby_fft">
+<span class="sig-prename descclassname"><span class="pre">bruges.filters.wavelets.</span></span><span class="sig-name descname"><span class="pre">ormsby_fft</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">duration</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dt</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">f</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">P</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">(0,</span> <span class="pre">0)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">return_t</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sym</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bruges/filters/wavelets.html#ormsby_fft"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bruges.filters.wavelets.ormsby_fft" title="Permalink to this definition">#</a></dt>
+<dd><p>Non-white Ormsby, with arbitary amplitudes.</p>
+<p>Can use as many points as you like. The power of f1 and f4 is assumed to be 0,
+so you only need to provide p2 and p3 (the corners). (You can actually provide
+as many f points as you like, as long as there are n - 2 matching p points.)</p>
+<p>(<a class="reference external" href=".//bruges-filters-6.py">Source code</a>, <a class="reference external" href=".//bruges-filters-6.png">png</a>, <a class="reference external" href=".//bruges-filters-6.hires.png">hires.png</a>, <a class="reference external" href=".//bruges-filters-6.pdf">pdf</a>)</p>
+<figure class="align-default">
+<img alt="_images/bruges-filters-6.png" class="plot-directive" src="_images/bruges-filters-6.png"/>
+</figure>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>duration</strong> (<em>float</em>) – The length in seconds of the wavelet.</p></li>
+<li><p><strong>dt</strong> (<em>float</em>) – The sample interval in seconds (usually 0.001, 0.002,
+or 0.004).</p></li>
+<li><p><strong>f</strong> (<em>array-like</em>) – Sequence of form (f1, f2, f3, f4), or list of lists of
+frequencies, which will return a 2D wavelet bank.</p></li>
+<li><p><strong>P</strong> (<em>tuple</em>) – The power of the f2 and f3 frequencies, in relative dB.
+(The magnitudes of f1 and f4 are assumed to be -∞ dB, i.e. a
+magnitude of 0.) The default power values of (0, 0) results in a
+trapezoidal spectrum and a conventional Ormsby wavelet. Pass, e.g.
+(0, -15) for a ‘pink’ wavelet, with more energy in the lower
+frequencies.</p></li>
+<li><p><strong>return_t</strong> (<em>bool</em>) – If True, then the function returns a tuple of
+wavelet, time-basis.</p></li>
+<li><p><strong>sym</strong> (<em>bool</em>) – If True (default behaviour before v0.5) then the wavelet
+is forced to have an odd number of samples and the central sample
+is at 0 time.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><dl class="simple">
+<dt>A vector containing the Ormsby wavelet, or a bank of them. If</dt><dd><p>you passed <cite>return_t=True</cite> then a tuple of (wavelet, t) is returned.</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py function">
+<dt class="sig sig-object py" id="bruges.filters.wavelets.ricker">
+<span class="sig-prename descclassname"><span class="pre">bruges.filters.wavelets.</span></span><span class="sig-name descname"><span class="pre">ricker</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">duration</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dt</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">f</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">t</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">return_t</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sym</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bruges/filters/wavelets.html#ricker"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bruges.filters.wavelets.ricker" title="Permalink to this definition">#</a></dt>
+<dd><p>Also known as the mexican hat wavelet, models the function:</p>
+<div class="math-wrapper"><div class="math notranslate nohighlight">
+\[A =  (1 - 2 \pi^2 f^2 t^2) e^{-\pi^2 f^2 t^2}\]</div></div>
+<p>If you pass a 1D array of frequencies, you get a wavelet bank in return.</p>
+<p>(<a class="reference external" href=".//bruges-filters-7.py">Source code</a>, <a class="reference external" href=".//bruges-filters-7.png">png</a>, <a class="reference external" href=".//bruges-filters-7.hires.png">hires.png</a>, <a class="reference external" href=".//bruges-filters-7.pdf">pdf</a>)</p>
+<figure class="align-default">
+<img alt="_images/bruges-filters-7.png" class="plot-directive" src="_images/bruges-filters-7.png"/>
+</figure>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>duration</strong> (<em>float</em>) – The length in seconds of the wavelet.</p></li>
+<li><p><strong>dt</strong> (<em>float</em>) – The sample interval in seconds (often one of  0.001, 0.002,
+or 0.004).</p></li>
+<li><p><strong>f</strong> (<em>array-like</em>) – Centre frequency of the wavelet in Hz. If a sequence is
+passed, you will get a 2D array in return, one row per frequency.</p></li>
+<li><p><strong>t</strong> (<em>array-like</em>) – The time series to evaluate at, if you don’t want one
+to be computed. If you pass <cite>t</cite> then <cite>duration</cite> and <cite>dt</cite> will be
+ignored, so we recommend passing <cite>None</cite> for those arguments.</p></li>
+<li><p><strong>return_t</strong> (<em>bool</em>) – If True, then the function returns a tuple of
+wavelet, time-basis.</p></li>
+<li><p><strong>sym</strong> (<em>bool</em>) – If True (default behaviour before v0.5) then the wavelet
+is forced to have an odd number of samples and the central sample
+is at 0 time.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><dl class="simple">
+<dt>ndarray. Ricker wavelet(s) with centre frequency f sampled on t. If</dt><dd><p>you passed <cite>return_t=True</cite> then a tuple of (wavelet, t) is returned.</p>
+</dd>
+</dl>
+</p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py function">
+<dt class="sig sig-object py" id="bruges.filters.wavelets.rotate_phase">
+<span class="sig-prename descclassname"><span class="pre">bruges.filters.wavelets.</span></span><span class="sig-name descname"><span class="pre">rotate_phase</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">w</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">phi</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">degrees</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bruges/filters/wavelets.html#rotate_phase"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bruges.filters.wavelets.rotate_phase" title="Permalink to this definition">#</a></dt>
+<dd><p>Performs a phase rotation of wavelet or wavelet bank using:</p>
+<div class="math-wrapper"><div class="math notranslate nohighlight">
+\[A = w(t)\cos(\phi) - h(t)\sin(\phi)\]</div></div>
+<p>where w(t) is the wavelet and h(t) is its Hilbert transform.</p>
+<p>The analytic signal can be written in the form S(t) = A(t)exp(j*theta(t))
+where A(t) = magnitude(hilbert(w(t))) and theta(t) = angle(hilbert(w(t))
+then a constant phase rotation phi would produce the analytic signal
+S(t) = A(t)exp(j*(theta(t) + phi)). To get the non analytic signal
+we take real(S(t)) == A(t)cos(theta(t) + phi)
+== A(t)(cos(theta(t))cos(phi) - sin(theta(t))sin(phi)) &lt;= trig identity
+== w(t)cos(phi) - h(t)sin(phi)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>w</strong> (<em>ndarray</em>) – The wavelet vector, can be a 2D wavelet bank.</p></li>
+<li><p><strong>phi</strong> (<em>float</em>) – The phase rotation angle (in radians) to apply.</p></li>
+<li><p><strong>degrees</strong> (<em>bool</em>) – If phi is in degrees not radians.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The phase rotated signal (or bank of signals).</p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py function">
+<dt class="sig sig-object py" id="bruges.filters.wavelets.sinc">
+<span class="sig-prename descclassname"><span class="pre">bruges.filters.wavelets.</span></span><span class="sig-name descname"><span class="pre">sinc</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">duration</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dt</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">f</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">t</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">return_t</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">taper</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'blackman'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sym</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bruges/filters/wavelets.html#sinc"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bruges.filters.wavelets.sinc" title="Permalink to this definition">#</a></dt>
+<dd><p>sinc function centered on t=0, with a dominant frequency of f Hz.</p>
+<p>If you pass a 1D array of frequencies, you get a wavelet bank in return.</p>
+<p>(<a class="reference external" href=".//bruges-filters-8.py">Source code</a>, <a class="reference external" href=".//bruges-filters-8.png">png</a>, <a class="reference external" href=".//bruges-filters-8.hires.png">hires.png</a>, <a class="reference external" href=".//bruges-filters-8.pdf">pdf</a>)</p>
+<figure class="align-default">
+<img alt="_images/bruges-filters-8.png" class="plot-directive" src="_images/bruges-filters-8.png"/>
+</figure>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>duration</strong> (<em>float</em>) – The length in seconds of the wavelet.</p></li>
+<li><p><strong>dt</strong> (<em>float</em>) – The sample interval in seconds (often one of  0.001, 0.002,
+or 0.004).</p></li>
+<li><p><strong>f</strong> (<em>array-like</em>) – Dominant frequency of the wavelet in Hz. If a sequence is
+passed, you will get a 2D array in return, one row per frequency.</p></li>
+<li><p><strong>t</strong> (<em>array-like</em>) – The time series to evaluate at, if you don’t want one
+to be computed. If you pass <cite>t</cite> then <cite>duration</cite> and <cite>dt</cite> will be
+ignored, so we recommend passing <cite>None</cite> for those arguments.</p></li>
+<li><p><strong>return_t</strong> (<em>bool</em>) – If True, then the function returns a tuple of
+wavelet, time-basis.</p></li>
+<li><p><strong>taper</strong> (<em>str</em><em> or </em><em>function</em>) – The window or tapering function to apply.
+To use one of NumPy’s functions, pass ‘bartlett’, ‘blackman’ (the
+default), ‘hamming’, or ‘hanning’; to apply no tapering, pass
+‘none’. To apply your own function, pass a function taking only
+the length of the window and returning the window function.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><dl class="simple">
+<dt>ndarray. sinc wavelet(s) with centre frequency f sampled on t. If</dt><dd><p>you passed <cite>return_t=True</cite> then a tuple of (wavelet, t) is returned.</p>
+</dd>
+</dl>
+</p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py function">
+<dt class="sig sig-object py" id="bruges.filters.wavelets.sweep">
+<span class="sig-prename descclassname"><span class="pre">bruges.filters.wavelets.</span></span><span class="sig-name descname"><span class="pre">sweep</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">duration</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dt</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">f</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">autocorrelate</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">t</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">return_t</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">taper</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'blackman'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sym</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bruges.filters.wavelets.sweep" title="Permalink to this definition">#</a></dt>
+<dd><p>By default, gives the autocorrelation of a linear frequency modulated
+wavelet (sweep). Uses scipy.signal.chirp, adding dimensions as necessary.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>duration</strong> (<em>float</em>) – The length in seconds of the wavelet.</p></li>
+<li><p><strong>dt</strong> (<em>float</em>) – is the sample interval in seconds (usually 0.001, 0.002,
+or 0.004)</p></li>
+<li><p><strong>f</strong> (<em>array-like</em>) – Upper and lower frequencies. Any sequence like (f1, f2).
+A list of lists will create a wavelet bank.</p></li>
+<li><p><strong>autocorrelate</strong> (<em>bool</em>) – Whether to autocorrelate the sweep(s) to create
+a wavelet. Default is <cite>True</cite>.</p></li>
+<li><p><strong>t</strong> (<em>array-like</em>) – The time series to evaluate at, if you don’t want one
+to be computed. If you pass <cite>t</cite> then <cite>duration</cite> and <cite>dt</cite> will be
+ignored, so we recommend passing <cite>None</cite> for those arguments.</p></li>
+<li><p><strong>return_t</strong> (<em>bool</em>) – If True, then the function returns a tuple of
+wavelet, time-basis.</p></li>
+<li><p><strong>taper</strong> (<em>str</em><em> or </em><em>function</em>) – The window or tapering function to apply.
+To use one of NumPy’s functions, pass ‘bartlett’, ‘blackman’ (the
+default), ‘hamming’, or ‘hanning’; to apply no tapering, pass
+‘none’. To apply your own function, pass a function taking only
+the length of the window and returning the window function.</p></li>
+<li><p><strong>sym</strong> (<em>bool</em>) – If True (default behaviour before v0.5) then the wavelet
+is forced to have an odd number of samples and the central sample
+is at 0 time.</p></li>
+<li><p><strong>**kwargs</strong> – Further arguments are passed to scipy.signal.chirp. They are
+<cite>method</cite> (‘linear’,’quadratic’,’logarithmic’), <cite>phi</cite> (phase offset
+in degrees), and <cite>vertex_zero</cite>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><dl class="simple">
+<dt>The waveform. If you passed <cite>return_t=True</cite> then a tuple of</dt><dd><p>(wavelet, t) is returned.</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+</section>
+<section id="module-bruges.filters">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-bruges.filters" title="Permalink to this headline">#</a></h2>
+</section>
+</section>
+
+        </article>
+      </div>
+      <footer>
+        
+        <div class="related-pages">
+          <a class="next-page" href="bruges.models.html">
+              <div class="page-info">
+                <div class="context">
+                  <span>Next</span>
+                </div>
+                <div class="title">bruges.models package</div>
+              </div>
+              <svg><use href="#svg-arrow-right"></use></svg>
+            </a>
+          <a class="prev-page" href="bruges.attribute.html">
+              <svg><use href="#svg-arrow-right"></use></svg>
+              <div class="page-info">
+                <div class="context">
+                  <span>Previous</span>
+                </div>
+                
+                <div class="title">bruges.attribute package</div>
+                
+              </div>
+            </a>
+        </div>
+        <div class="bottom-of-page">
+          <div class="left-details">
+            <div class="copyright">
+                Copyright &#169; 2022, Agile Scientific
+            </div>
+            Made with <a href="https://www.sphinx-doc.org/">Sphinx</a> and <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
+            
+            <a href="https://github.com/pradyunsg/furo">Furo</a>
+            
+          </div>
+          <div class="right-details">
+            <div class="icons">
+              
+            </div>
+          </div>
+        </div>
+        
+      </footer>
+    </div>
+    <aside class="toc-drawer">
+      
+      
+      <div class="toc-sticky toc-scroll">
+        <div class="toc-title-container">
+          <span class="toc-title">
+            Contents
+          </span>
+        </div>
+        <div class="toc-tree-container">
+          <div class="toc-tree">
+            <ul>
+<li><a class="reference internal" href="#">bruges.filters package</a><ul>
+<li><a class="reference internal" href="#submodules">Submodules</a></li>
+<li><a class="reference internal" href="#module-bruges.filters.anisodiff">bruges.filters.anisodiff module</a></li>
+<li><a class="reference internal" href="#module-bruges.filters.convolve">bruges.filters.convolve module</a></li>
+<li><a class="reference internal" href="#module-bruges.filters.filters">bruges.filters.filters module</a></li>
+<li><a class="reference internal" href="#module-bruges.filters.kernels">bruges.filters.kernels module</a></li>
+<li><a class="reference internal" href="#module-bruges.filters.wavelets">bruges.filters.wavelets module</a></li>
+<li><a class="reference internal" href="#module-bruges.filters">Module contents</a></li>
+</ul>
+</li>
+</ul>
+
+          </div>
+        </div>
+      </div>
+      
+      
+    </aside>
+  </div>
+</div><script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/scripts/furo.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    </body>
+</html>

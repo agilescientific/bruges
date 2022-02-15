@@ -1,0 +1,1096 @@
+<!doctype html>
+<html class="no-js" lang="en">
+  <head><meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
+    <meta name="color-scheme" content="light dark"><link rel="index" title="Index" href="../../../genindex.html" /><link rel="search" title="Search" href="../../../search.html" />
+
+    <link rel="shortcut icon" href="../../../_static/favicon.ico"/><meta name="generator" content="sphinx-4.4.0, furo 2022.02.14.1"/>
+        <title>bruges.reflection.reflection - bruges documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/styles/furo.css?digest=a8f031f701c6af50c9919b48f173a5785af06fac" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/plot_directive.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/styles/furo-extensions.css?digest=25ceb02ed1c46dc30f2321ff83e92799f69dfdb9" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/custom.css" />
+    
+    
+
+
+<style>
+  body {
+    --color-code-background: #f8f8f8;
+  --color-code-foreground: black;
+  
+  }
+  body[data-theme="dark"] {
+    --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+  }
+  @media (prefers-color-scheme: dark) {
+    body:not([data-theme="light"]) {
+      --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+    }
+  }
+</style></head>
+  <body>
+    <script>
+      document.body.dataset.theme = localStorage.getItem("theme") || "auto";
+    </script>
+    
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="svg-toc" viewBox="0 0 24 24">
+    <title>Contents</title>
+    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 1024 1024">
+      <path d="M408 442h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8zm-8 204c0 4.4 3.6 8 8 8h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56zm504-486H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zm0 632H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zM115.4 518.9L271.7 642c5.8 4.6 14.4.5 14.4-6.9V388.9c0-7.4-8.5-11.5-14.4-6.9L115.4 505.1a8.74 8.74 0 0 0 0 13.8z"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-menu" viewBox="0 0 24 24">
+    <title>Menu</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-menu">
+      <line x1="3" y1="12" x2="21" y2="12"></line>
+      <line x1="3" y1="6" x2="21" y2="6"></line>
+      <line x1="3" y1="18" x2="21" y2="18"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+    <title>Expand</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-chevron-right">
+      <polyline points="9 18 15 12 9 6"></polyline>
+    </svg>
+  </symbol>
+  <symbol id="svg-sun" viewBox="0 0 24 24">
+    <title>Light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="feather-sun">
+      <circle cx="12" cy="12" r="5"></circle>
+      <line x1="12" y1="1" x2="12" y2="3"></line>
+      <line x1="12" y1="21" x2="12" y2="23"></line>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+      <line x1="1" y1="12" x2="3" y2="12"></line>
+      <line x1="21" y1="12" x2="23" y2="12"></line>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon" viewBox="0 0 24 24">
+    <title>Dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-moon">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
+    </svg>
+  </symbol>
+  <symbol id="svg-sun-half" viewBox="0 0 24 24">
+    <title>Auto light/dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-shadow">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+      <circle cx="12" cy="12" r="9" />
+      <path d="M13 12h5" />
+      <path d="M13 15h4" />
+      <path d="M13 18h1" />
+      <path d="M13 9h4" />
+      <path d="M13 6h1" />
+    </svg>
+  </symbol>
+</svg>
+
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation">
+<input type="checkbox" class="sidebar-toggle" name="__toc" id="__toc">
+<label class="overlay sidebar-overlay" for="__navigation">
+  <div class="visually-hidden">Hide navigation sidebar</div>
+</label>
+<label class="overlay toc-overlay" for="__toc">
+  <div class="visually-hidden">Hide table of contents sidebar</div>
+</label>
+
+
+
+<div class="page">
+  <header class="mobile-header">
+    <div class="header-left">
+      <label class="nav-overlay-icon" for="__navigation">
+        <div class="visually-hidden">Toggle site navigation sidebar</div>
+        <i class="icon"><svg><use href="#svg-menu"></use></svg></i>
+      </label>
+    </div>
+    <div class="header-center">
+      <a href="../../../index.html"><div class="brand">bruges  documentation</div></a>
+    </div>
+    <div class="header-right">
+      <div class="theme-toggle-container theme-toggle-header">
+        <button class="theme-toggle">
+          <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+          <svg class="theme-icon-when-auto"><use href="#svg-sun-half"></use></svg>
+          <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+          <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+        </button>
+      </div>
+      <label class="toc-overlay-icon toc-header-icon no-toc" for="__toc">
+        <div class="visually-hidden">Toggle table of contents sidebar</div>
+        <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+      </label>
+    </div>
+  </header>
+  <aside class="sidebar-drawer">
+    <div class="sidebar-container">
+      
+      <div class="sidebar-sticky"><a class="sidebar-brand centered" href="../../../index.html">
+  
+  <div class="sidebar-logo-container">
+    <img class="sidebar-logo" src="../../../_static/bruges_logo.png" alt="Logo"/>
+  </div>
+  
+  
+</a><form class="sidebar-search-container" method="get" action="../../../search.html" role="search">
+  <input class="sidebar-search" placeholder=Search name="q" aria-label="Search">
+  <input type="hidden" name="check_keywords" value="yes">
+  <input type="hidden" name="area" value="default">
+</form>
+<div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
+  <p class="caption" role="heading"><span class="caption-text">API reference</span></p>
+<ul>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../bruges.html">bruges package</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../bruges.attribute.html">bruges.attribute package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../bruges.filters.html">bruges.filters package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../bruges.models.html">bruges.models package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../bruges.noise.html">bruges.noise package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../bruges.petrophysics.html">bruges.petrophysics package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../bruges.reflection.html">bruges.reflection package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../bruges.rockphysics.html">bruges.rockphysics package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../bruges.transform.html">bruges.transform package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../bruges.unit.html">bruges.unit package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../bruges.util.html">bruges.util package</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Other resources</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../development.html">Development</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../authors.html">Authors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../license.html">License</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../changelog.html">Changelog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../contributing.html">Contributing</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Project links</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="https://pypi.org/project/bruges/">PyPI releases</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/agile-geoscience/bruges">Code in GitHub</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/agile-geoscience/bruges/issues">Issue tracker</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://code.agilescientific.com/community">Community guidelines</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://code.agilescientific.com">Agile's software</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://www.agilescientific.com">Agile's website</a></li>
+</ul>
+
+</div>
+</div>
+
+      </div>
+      
+    </div>
+  </aside>
+  <div class="main">
+    <div class="content">
+      <div class="article-container">
+        <div class="content-icon-container"><div class="theme-toggle-container theme-toggle-content">
+            <button class="theme-toggle">
+              <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+              <svg class="theme-icon-when-auto"><use href="#svg-sun-half"></use></svg>
+              <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+              <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+            </button>
+          </div>
+          <label class="toc-overlay-icon toc-content-icon no-toc" for="__toc">
+            <div class="visually-hidden">Toggle table of contents sidebar</div>
+            <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+          </label>
+        </div>
+        <article role="main">
+          <h1>Source code for bruges.reflection.reflection</h1><div class="highlight"><pre>
+<span></span><span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="sd">"""</span>
+<span class="sd">Various reflectivity algorithms.</span>
+
+<span class="sd">:copyright: 2018 Agile Geoscience</span>
+<span class="sd">:license: Apache 2.0</span>
+<span class="sd">"""</span>
+<span class="kn">from</span> <span class="nn">functools</span> <span class="kn">import</span> <span class="n">wraps</span>
+<span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">namedtuple</span>
+<span class="kn">import</span> <span class="nn">warnings</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="kn">from</span> <span class="nn">bruges.rockphysics</span> <span class="kn">import</span> <span class="n">moduli</span>
+<span class="kn">from</span> <span class="nn">bruges.rockphysics</span> <span class="kn">import</span> <span class="n">anisotropy</span>
+<span class="kn">from</span> <span class="nn">bruges.util</span> <span class="kn">import</span> <span class="n">deprecated</span>
+
+
+<div class="viewcode-block" id="critical_angles"><a class="viewcode-back" href="../../../bruges.reflection.html#bruges.reflection.reflection.critical_angles">[docs]</a><span class="k">def</span> <span class="nf">critical_angles</span><span class="p">(</span><span class="n">vp1</span><span class="p">,</span> <span class="n">vp2</span><span class="p">,</span> <span class="n">vs2</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="sd">"""Compute critical angle at an interface</span>
+
+<span class="sd">    Given the upper (vp1) and lower (vp2) velocities at an interface. If you want the PS-wave critical angle as well,</span>
+<span class="sd">    pass vs2 as well.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        vp1 (ndarray): Upper layer P-wave velocity.</span>
+<span class="sd">        vp2 (ndarray): Lower layer P-wave velocity.</span>
+<span class="sd">        vs2 (ndarray): Lower layer S-wave velocity (optional).</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        tuple: The first and second critical angles at the interface, in</span>
+<span class="sd">            degrees. If there isn't a critical angle, it returns np.nan.</span>
+<span class="sd">    """</span>
+    <span class="n">ca1</span> <span class="o">=</span> <span class="n">ca2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span>
+
+    <span class="k">if</span> <span class="n">vp1</span> <span class="o">&lt;</span> <span class="n">vp2</span><span class="p">:</span>
+        <span class="n">ca1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">degrees</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arcsin</span><span class="p">(</span><span class="n">vp1</span><span class="o">/</span><span class="n">vp2</span><span class="p">))</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="n">vs2</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">vp1</span> <span class="o">&lt;</span> <span class="n">vs2</span><span class="p">):</span>
+        <span class="n">ca2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">degrees</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arcsin</span><span class="p">(</span><span class="n">vp1</span><span class="o">/</span><span class="n">vs2</span><span class="p">))</span>
+
+    <span class="k">return</span> <span class="n">ca1</span><span class="p">,</span> <span class="n">ca2</span></div>
+
+
+<div class="viewcode-block" id="reflection_phase"><a class="viewcode-back" href="../../../bruges.reflection.html#bruges.reflection.reflection.reflection_phase">[docs]</a><span class="k">def</span> <span class="nf">reflection_phase</span><span class="p">(</span><span class="n">reflectivity</span><span class="p">):</span>
+    <span class="sd">"""</span>
+<span class="sd">    Compute the phase of the reflectivity. Returns an array (or float) of</span>
+<span class="sd">    the phase, in positive multiples of 180 deg or pi rad. So 1 is opposite</span>
+<span class="sd">    phase. A value of 1.1 would be +1.1 \times \pi rad.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        reflectivity (ndarray): The reflectivity, eg from `zoeppritz()`.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        ndarray: The phase, strictly positive</span>
+<span class="sd">    """</span>
+    <span class="n">ph</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arctan2</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">imag</span><span class="p">(</span><span class="n">reflectivity</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">real</span><span class="p">(</span><span class="n">reflectivity</span><span class="p">))</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span>
+    <span class="n">ph</span><span class="p">[</span><span class="n">ph</span> <span class="o">==</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">ph</span><span class="p">[</span><span class="n">ph</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">+</span> <span class="n">ph</span><span class="p">[</span><span class="n">ph</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">ph</span></div>
+
+
+<div class="viewcode-block" id="acoustic_reflectivity"><a class="viewcode-back" href="../../../bruges.reflection.html#bruges.reflection.reflection.acoustic_reflectivity">[docs]</a><span class="k">def</span> <span class="nf">acoustic_reflectivity</span><span class="p">(</span><span class="n">vp</span><span class="p">,</span> <span class="n">rho</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">'valid'</span><span class="p">):</span>
+    <span class="sd">"""</span>
+<span class="sd">    The acoustic reflectivity, given Vp and RHOB logs.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        vp (ndarray): The P-wave velocity.</span>
+<span class="sd">        rho (ndarray): The bulk density.</span>
+<span class="sd">        axis (int): The dimension along which to compute the reflectivity.</span>
+<span class="sd">        mode (str): 'same' means the output will be the same shape. 'valid'</span>
+<span class="sd">            means that only strictly valid reflectivities are computed so</span>
+<span class="sd">            the result will be one sample shorted in the `axis` dimension.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        ndarray: The reflectivity coefficient series.</span>
+<span class="sd">    """</span>
+    <span class="n">m</span> <span class="o">=</span> <span class="s2">"In future releases, mode will be 'same' by default."</span>
+    <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="ne">FutureWarning</span><span class="p">,</span> <span class="n">stacklevel</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">axis</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">axis</span> <span class="o">=</span> <span class="n">vp</span><span class="o">.</span><span class="n">ndim</span> <span class="o">+</span> <span class="n">axis</span>
+
+    <span class="k">if</span> <span class="n">axis</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">imp</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">moveaxis</span><span class="p">(</span><span class="n">vp</span> <span class="o">*</span> <span class="n">rho</span><span class="p">,</span> <span class="n">axis</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">imp</span> <span class="o">=</span> <span class="n">vp</span> <span class="o">*</span> <span class="n">rho</span>
+
+    <span class="k">if</span> <span class="n">mode</span> <span class="o">==</span> <span class="s1">'same'</span><span class="p">:</span>
+        <span class="n">pad_width</span> <span class="o">=</span> <span class="p">[(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)]</span> <span class="o">+</span> <span class="p">(</span><span class="n">imp</span><span class="o">.</span><span class="n">ndim</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="p">[(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)]</span>
+        <span class="n">imp</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">pad</span><span class="p">(</span><span class="n">imp</span><span class="p">,</span> <span class="n">pad_width</span><span class="o">=</span><span class="n">pad_width</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">'edge'</span><span class="p">)</span>
+
+    <span class="n">rc</span> <span class="o">=</span> <span class="p">(</span><span class="n">imp</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span> <span class="o">-</span> <span class="n">imp</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span> <span class="o">/</span> <span class="p">(</span><span class="n">imp</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span> <span class="o">+</span> <span class="n">imp</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+
+    <span class="k">if</span> <span class="n">axis</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">moveaxis</span><span class="p">(</span><span class="n">rc</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">axis</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">rc</span></div>
+
+
+<div class="viewcode-block" id="reflectivity"><a class="viewcode-back" href="../../../bruges.reflection.html#bruges.reflection.reflection.reflectivity">[docs]</a><span class="k">def</span> <span class="nf">reflectivity</span><span class="p">(</span><span class="n">vp</span><span class="p">,</span> <span class="n">vs</span><span class="p">,</span> <span class="n">rho</span><span class="p">,</span> <span class="n">theta</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s1">'zoeppritz_rpp'</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">'valid'</span><span class="p">):</span>
+    <span class="sd">"""</span>
+<span class="sd">    Offset reflectivity, given Vp, Vs, rho, and offset.</span>
+
+<span class="sd">    Computes 'upper' and 'lower' intervals from the three provided arrays,</span>
+<span class="sd">    then passes the result to the specified method to compute reflection</span>
+<span class="sd">    coefficients.</span>
+
+<span class="sd">    For acoustic reflectivity, either use the `acoustic_reflectivity()`</span>
+<span class="sd">    function, or call `reflectivity()` passing any log as Vs, e.g. just give</span>
+<span class="sd">    the Vp log twice (it won't be used anyway):</span>
+
+<span class="sd">        reflectivity(vp, vp, rho)</span>
+
+<span class="sd">    For anisotropic reflectivity, use either `anisotropy.blangy()` or</span>
+<span class="sd">    `anisotropy.ruger()`.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        vp (ndarray): The P-wave velocity; float or 1D array length m.</span>
+<span class="sd">        vs (ndarray): The S-wave velocity; float or 1D array length m.</span>
+<span class="sd">        rho (ndarray): The density; float or 1D array length m.</span>
+<span class="sd">        theta (ndarray): The incidence angle; float or 1D array length n.</span>
+<span class="sd">        method (str): The reflectivity equation to use; one of:</span>
+<span class="sd">        axis (int): The dimension along which to compute the reflectivity.</span>
+<span class="sd">        mode (str): 'same' means the output will be the same shape. 'valid'</span>
+<span class="sd">            means that only strictly valid reflectivities are computed so</span>
+<span class="sd">            the result will be one sample shorted in the `axis` dimension.</span>
+
+<span class="sd">                - 'scattering_matrix': scattering_matrix</span>
+<span class="sd">                - 'zoeppritz_element': zoeppritz_element</span>
+<span class="sd">                - 'zoeppritz': zoeppritz</span>
+<span class="sd">                - 'zoeppritz_rpp': zoeppritz_rpp</span>
+<span class="sd">                - 'akirichards': akirichards</span>
+<span class="sd">                - 'akirichards_alt': akirichards_alt</span>
+<span class="sd">                - 'fatti': fatti</span>
+<span class="sd">                - 'shuey': shuey</span>
+<span class="sd">                - 'bortfeld': bortfeld</span>
+<span class="sd">                - 'hilterman': hilterman</span>
+
+<span class="sd">        Notes:</span>
+
+<span class="sd">                - scattering_matrix gives the full solution</span>
+<span class="sd">                - zoeppritz_element gives a single element which you specify</span>
+<span class="sd">                - zoeppritz returns RPP element only; use zoeppritz_rpp instead</span>
+<span class="sd">                - zoeppritz_rpp is faster than zoeppritz or zoeppritz_element</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        ndarray. The result of running the specified method on the inputs.</span>
+<span class="sd">            Will be a float (for float inputs and one angle), a 1 x n array</span>
+<span class="sd">            (for float inputs and an array of angles), a 1 x m-1 array (for</span>
+<span class="sd">            float inputs and one angle), or an m-1 x n array (for array inputs</span>
+<span class="sd">            and an array of angles).</span>
+<span class="sd">    """</span>
+    <span class="n">methods</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s1">'scattering_matrix'</span><span class="p">:</span> <span class="n">scattering_matrix</span><span class="p">,</span>
+        <span class="s1">'zoeppritz_element'</span><span class="p">:</span> <span class="n">zoeppritz_element</span><span class="p">,</span>
+        <span class="s1">'zoeppritz'</span><span class="p">:</span> <span class="n">zoeppritz</span><span class="p">,</span>
+        <span class="s1">'zoeppritz_rpp'</span><span class="p">:</span> <span class="n">zoeppritz_rpp</span><span class="p">,</span>
+        <span class="s1">'akirichards'</span><span class="p">:</span> <span class="n">akirichards</span><span class="p">,</span>
+        <span class="s1">'akirichards_alt'</span><span class="p">:</span> <span class="n">akirichards_alt</span><span class="p">,</span>
+        <span class="s1">'fatti'</span><span class="p">:</span> <span class="n">fatti</span><span class="p">,</span>
+        <span class="s1">'shuey'</span><span class="p">:</span> <span class="n">shuey</span><span class="p">,</span>
+        <span class="s1">'bortfeld'</span><span class="p">:</span> <span class="n">bortfeld</span><span class="p">,</span>
+        <span class="s1">'hilterman'</span><span class="p">:</span> <span class="n">hilterman</span><span class="p">,</span>
+    <span class="p">}</span>
+
+    <span class="n">m</span> <span class="o">=</span> <span class="s2">"In future releases, mode will be 'same' by default."</span>
+    <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="ne">FutureWarning</span><span class="p">,</span> <span class="n">stacklevel</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">axis</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">axis</span> <span class="o">=</span> <span class="n">vp</span><span class="o">.</span><span class="n">ndim</span> <span class="o">+</span> <span class="n">axis</span>
+
+    <span class="k">if</span> <span class="n">axis</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">vp_</span>  <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">moveaxis</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">asanyarray</span><span class="p">(</span><span class="n">vp</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">),</span> <span class="n">axis</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="n">vs_</span>  <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">moveaxis</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">asanyarray</span><span class="p">(</span><span class="n">vs</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">),</span> <span class="n">axis</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="n">rho_</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">moveaxis</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">asanyarray</span><span class="p">(</span><span class="n">rho</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">),</span> <span class="n">axis</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">vp_</span><span class="p">,</span> <span class="n">vs_</span><span class="p">,</span> <span class="n">rho_</span> <span class="o">=</span> <span class="n">vp</span><span class="p">,</span> <span class="n">vs</span><span class="p">,</span> <span class="n">rho</span>
+
+    <span class="k">if</span> <span class="n">mode</span> <span class="o">==</span> <span class="s1">'same'</span><span class="p">:</span>
+        <span class="n">pad_width</span> <span class="o">=</span> <span class="p">[(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)]</span> <span class="o">+</span> <span class="p">(</span><span class="n">vp</span><span class="o">.</span><span class="n">ndim</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="p">[(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)]</span>
+        <span class="n">vp_</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">pad</span><span class="p">(</span><span class="n">vp_</span><span class="p">,</span> <span class="n">pad_width</span><span class="o">=</span><span class="n">pad_width</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">'edge'</span><span class="p">)</span>
+        <span class="n">vs_</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">pad</span><span class="p">(</span><span class="n">vs_</span><span class="p">,</span> <span class="n">pad_width</span><span class="o">=</span><span class="n">pad_width</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">'edge'</span><span class="p">)</span>
+        <span class="n">rho_</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">pad</span><span class="p">(</span><span class="n">rho_</span><span class="p">,</span> <span class="n">pad_width</span><span class="o">=</span><span class="n">pad_width</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">'edge'</span><span class="p">)</span>
+
+    <span class="n">func</span> <span class="o">=</span> <span class="n">methods</span><span class="p">[</span><span class="n">method</span><span class="o">.</span><span class="n">lower</span><span class="p">()]</span>
+
+    <span class="n">rc</span> <span class="o">=</span> <span class="n">func</span><span class="p">(</span><span class="n">vp_</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">vs_</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">rho_</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">vp_</span><span class="p">[</span><span class="mi">1</span><span class="p">:],</span> <span class="n">vs_</span><span class="p">[</span><span class="mi">1</span><span class="p">:],</span> <span class="n">rho_</span><span class="p">[</span><span class="mi">1</span><span class="p">:],</span> <span class="n">theta</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">axis</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">moveaxis</span><span class="p">(</span><span class="n">rc</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">axis</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">rc</span></div>
+
+
+<div class="viewcode-block" id="vectorize"><a class="viewcode-back" href="../../../bruges.reflection.html#bruges.reflection.reflection.vectorize">[docs]</a><span class="k">def</span> <span class="nf">vectorize</span><span class="p">(</span><span class="n">func</span><span class="p">):</span>
+    <span class="sd">"""</span>
+<span class="sd">    Decorator to make sure the inputs are arrays. We also add a dimension</span>
+<span class="sd">    to theta to make the functions work in an 'outer product' way.</span>
+
+<span class="sd">    Takes a reflectivity function requiring Vp, Vs, and RHOB for 2 rocks</span>
+<span class="sd">    (upper and lower), plus incidence angle theta, plus kwargs. Returns</span>
+<span class="sd">    that function with the arguments transformed to ndarrays.</span>
+<span class="sd">    """</span>
+    <span class="nd">@wraps</span><span class="p">(</span><span class="n">func</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">wrapper</span><span class="p">(</span><span class="n">vp1</span><span class="p">,</span> <span class="n">vs1</span><span class="p">,</span> <span class="n">rho1</span><span class="p">,</span> <span class="n">vp2</span><span class="p">,</span> <span class="n">vs2</span><span class="p">,</span> <span class="n">rho2</span><span class="p">,</span> <span class="n">theta1</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="n">vp1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asanyarray</span><span class="p">(</span><span class="n">vp1</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
+        <span class="n">vs1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asanyarray</span><span class="p">(</span><span class="n">vs1</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span> <span class="o">+</span> <span class="mf">1e-12</span>  <span class="c1"># Prevent singular matrix.</span>
+        <span class="n">rho1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asanyarray</span><span class="p">(</span><span class="n">rho1</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
+        <span class="n">vp2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asanyarray</span><span class="p">(</span><span class="n">vp2</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
+        <span class="n">vs2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asanyarray</span><span class="p">(</span><span class="n">vs2</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span> <span class="o">+</span> <span class="mf">1e-12</span>  <span class="c1"># Prevent singular matrix.</span>
+        <span class="n">rho2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asanyarray</span><span class="p">(</span><span class="n">rho2</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
+        <span class="n">theta1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asanyarray</span><span class="p">(</span><span class="n">theta1</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">func</span><span class="p">(</span><span class="n">vp1</span><span class="p">,</span> <span class="n">vs1</span><span class="p">,</span> <span class="n">rho1</span><span class="p">,</span> <span class="n">vp2</span><span class="p">,</span> <span class="n">vs2</span><span class="p">,</span> <span class="n">rho2</span><span class="p">,</span> <span class="n">theta1</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">wrapper</span></div>
+
+
+<div class="viewcode-block" id="preprocess"><a class="viewcode-back" href="../../../bruges.reflection.html#bruges.reflection.reflection.preprocess">[docs]</a><span class="k">def</span> <span class="nf">preprocess</span><span class="p">(</span><span class="n">func</span><span class="p">):</span>
+    <span class="sd">"""</span>
+<span class="sd">    Decorator to preprocess arguments for the reflectivity equations.</span>
+
+<span class="sd">    Takes a reflectivity function requiring Vp, Vs, and RHOB for 2 rocks</span>
+<span class="sd">    (upper and lower), plus incidence angle theta, plus kwargs. Returns</span>
+<span class="sd">    that function with some arguments transformed.</span>
+<span class="sd">    """</span>
+    <span class="nd">@wraps</span><span class="p">(</span><span class="n">func</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">wrapper</span><span class="p">(</span><span class="n">vp1</span><span class="p">,</span> <span class="n">vs1</span><span class="p">,</span> <span class="n">rho1</span><span class="p">,</span> <span class="n">vp2</span><span class="p">,</span> <span class="n">vs2</span><span class="p">,</span> <span class="n">rho2</span><span class="p">,</span> <span class="n">theta1</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+
+        <span class="c1"># Interpret tuple for theta1 as a linspace.</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">theta1</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">):</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">theta1</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+                <span class="n">start</span><span class="p">,</span> <span class="n">stop</span> <span class="o">=</span> <span class="n">theta1</span>
+                <span class="n">theta1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">start</span><span class="p">,</span> <span class="n">stop</span><span class="p">,</span> <span class="n">num</span><span class="o">=</span><span class="n">stop</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">theta1</span><span class="p">)</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span>
+                <span class="n">start</span><span class="p">,</span> <span class="n">stop</span><span class="p">,</span> <span class="n">step</span> <span class="o">=</span> <span class="n">theta1</span>
+                <span class="n">steps</span> <span class="o">=</span> <span class="p">(</span><span class="n">stop</span> <span class="o">/</span> <span class="n">step</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span>
+                <span class="n">theta1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">start</span><span class="p">,</span> <span class="n">stop</span><span class="p">,</span> <span class="n">num</span><span class="o">=</span><span class="n">steps</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">"Expected 2 or 3 parameters for theta1 expressed as range."</span><span class="p">)</span>
+
+        <span class="c1"># Convert theta1 to radians and complex numbers.</span>
+        <span class="n">theta1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">radians</span><span class="p">(</span><span class="n">theta1</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">complex</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">func</span><span class="p">(</span><span class="n">vp1</span><span class="p">,</span> <span class="n">vs1</span><span class="p">,</span> <span class="n">rho1</span><span class="p">,</span> <span class="n">vp2</span><span class="p">,</span> <span class="n">vs2</span><span class="p">,</span> <span class="n">rho2</span><span class="p">,</span> <span class="n">theta1</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">wrapper</span></div>
+
+
+<div class="viewcode-block" id="scattering_matrix"><a class="viewcode-back" href="../../../bruges.reflection.html#bruges.reflection.reflection.scattering_matrix">[docs]</a><span class="nd">@preprocess</span>
+<span class="nd">@vectorize</span>
+<span class="k">def</span> <span class="nf">scattering_matrix</span><span class="p">(</span><span class="n">vp1</span><span class="p">,</span> <span class="n">vs1</span><span class="p">,</span> <span class="n">rho1</span><span class="p">,</span> <span class="n">vp2</span><span class="p">,</span> <span class="n">vs2</span><span class="p">,</span> <span class="n">rho2</span><span class="p">,</span> <span class="n">theta1</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+    <span class="sd">"""</span>
+<span class="sd">    Full Zoeppritz solution, considered the definitive solution.</span>
+<span class="sd">    Calculates the angle dependent p-wave reflectivity of an interface</span>
+<span class="sd">    between two mediums.</span>
+
+<span class="sd">    Originally written by: Wes Hamlyn, vectorized by Agile.</span>
+
+<span class="sd">    Returns the complex reflectivity.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        vp1 (float): The upper P-wave velocity.</span>
+<span class="sd">        vs1 (float): The upper S-wave velocity.</span>
+<span class="sd">        rho1 (float): The upper layer's density.</span>
+<span class="sd">        vp2 (float): The lower P-wave velocity.</span>
+<span class="sd">        vs2 (float): The lower S-wave velocity.</span>
+<span class="sd">        rho2 (float): The lower layer's density.</span>
+<span class="sd">        theta1 (ndarray): The incidence angle; float or 1D array length n.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        ndarray. The exact Zoeppritz solution for all modes at the interface.</span>
+<span class="sd">            A 4x4 array representing the scattering matrix at the incident</span>
+<span class="sd">            angle theta1.</span>
+<span class="sd">    """</span>
+    <span class="n">theta1</span> <span class="o">*=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones_like</span><span class="p">(</span><span class="n">vp1</span><span class="p">)</span>
+    <span class="n">p</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">theta1</span><span class="p">)</span> <span class="o">/</span> <span class="n">vp1</span>  <span class="c1"># Ray parameter.</span>
+    <span class="n">theta2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arcsin</span><span class="p">(</span><span class="n">p</span> <span class="o">*</span> <span class="n">vp2</span><span class="p">)</span>  <span class="c1"># Trans. angle of P-wave.</span>
+    <span class="n">phi1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arcsin</span><span class="p">(</span><span class="n">p</span> <span class="o">*</span> <span class="n">vs1</span><span class="p">)</span>    <span class="c1"># Refl. angle of converted S-wave.</span>
+    <span class="n">phi2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arcsin</span><span class="p">(</span><span class="n">p</span> <span class="o">*</span> <span class="n">vs2</span><span class="p">)</span>    <span class="c1"># Trans. angle of converted S-wave.</span>
+
+    <span class="c1"># Matrix form of Zoeppritz equations... M &amp; N are matrices.</span>
+    <span class="n">M</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">theta1</span><span class="p">),</span> <span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">phi1</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">theta2</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">phi2</span><span class="p">)],</span>
+                  <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">theta1</span><span class="p">),</span> <span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">phi1</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">theta2</span><span class="p">),</span> <span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">phi2</span><span class="p">)],</span>
+                  <span class="p">[</span><span class="mi">2</span> <span class="o">*</span> <span class="n">rho1</span> <span class="o">*</span> <span class="n">vs1</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">phi1</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">theta1</span><span class="p">),</span>
+                   <span class="n">rho1</span> <span class="o">*</span> <span class="n">vs1</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">phi1</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span><span class="p">),</span>
+                   <span class="mi">2</span> <span class="o">*</span> <span class="n">rho2</span> <span class="o">*</span> <span class="n">vs2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">phi2</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">theta2</span><span class="p">),</span>
+                   <span class="n">rho2</span> <span class="o">*</span> <span class="n">vs2</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">phi2</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)],</span>
+                  <span class="p">[</span><span class="o">-</span><span class="n">rho1</span> <span class="o">*</span> <span class="n">vp1</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">phi1</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span><span class="p">),</span>
+                   <span class="n">rho1</span> <span class="o">*</span> <span class="n">vs1</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">phi1</span><span class="p">),</span>
+                   <span class="n">rho2</span> <span class="o">*</span> <span class="n">vp2</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">phi2</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span><span class="p">),</span>
+                   <span class="o">-</span><span class="n">rho2</span> <span class="o">*</span> <span class="n">vs2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">phi2</span><span class="p">)]])</span>
+
+    <span class="n">N</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">theta1</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">phi1</span><span class="p">),</span> <span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">theta2</span><span class="p">),</span> <span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">phi2</span><span class="p">)],</span>
+                  <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">theta1</span><span class="p">),</span> <span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">phi1</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">theta2</span><span class="p">),</span> <span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">phi2</span><span class="p">)],</span>
+                  <span class="p">[</span><span class="mi">2</span> <span class="o">*</span> <span class="n">rho1</span> <span class="o">*</span> <span class="n">vs1</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">phi1</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">theta1</span><span class="p">),</span>
+                   <span class="n">rho1</span> <span class="o">*</span> <span class="n">vs1</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">phi1</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span><span class="p">),</span>
+                   <span class="mi">2</span> <span class="o">*</span> <span class="n">rho2</span> <span class="o">*</span> <span class="n">vs2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">phi2</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">theta2</span><span class="p">),</span>
+                   <span class="n">rho2</span> <span class="o">*</span> <span class="n">vs2</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">phi2</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)],</span>
+                  <span class="p">[</span><span class="n">rho1</span> <span class="o">*</span> <span class="n">vp1</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">phi1</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span><span class="p">),</span>
+                   <span class="o">-</span><span class="n">rho1</span> <span class="o">*</span> <span class="n">vs1</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">phi1</span><span class="p">),</span>
+                   <span class="o">-</span> <span class="n">rho2</span> <span class="o">*</span> <span class="n">vp2</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">phi2</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span><span class="p">),</span>
+                   <span class="n">rho2</span> <span class="o">*</span> <span class="n">vs2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">phi2</span><span class="p">)]])</span>
+
+    <span class="n">M_</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">moveaxis</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">squeeze</span><span class="p">(</span><span class="n">M</span><span class="p">),</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+    <span class="n">A</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">inv</span><span class="p">(</span><span class="n">M_</span><span class="p">)</span>
+    <span class="n">N_</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">moveaxis</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">squeeze</span><span class="p">(</span><span class="n">N</span><span class="p">),</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+    <span class="n">Z_</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">matmul</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">N_</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="n">Z_</span><span class="p">,</span> <span class="n">axes</span><span class="o">=</span><span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">Z_</span><span class="o">.</span><span class="n">ndim</span> <span class="o">-</span> <span class="mi">2</span><span class="p">))</span> <span class="o">+</span> <span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">2</span><span class="p">])</span></div>
+
+
+<div class="viewcode-block" id="zoeppritz_element"><a class="viewcode-back" href="../../../bruges.reflection.html#bruges.reflection.reflection.zoeppritz_element">[docs]</a><span class="k">def</span> <span class="nf">zoeppritz_element</span><span class="p">(</span><span class="n">vp1</span><span class="p">,</span> <span class="n">vs1</span><span class="p">,</span> <span class="n">rho1</span><span class="p">,</span> <span class="n">vp2</span><span class="p">,</span> <span class="n">vs2</span><span class="p">,</span> <span class="n">rho2</span><span class="p">,</span> <span class="n">theta1</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">element</span><span class="o">=</span><span class="s1">'PdPu'</span><span class="p">):</span>
+    <span class="sd">"""</span>
+<span class="sd">    Returns any mode reflection coefficients from the Zoeppritz</span>
+<span class="sd">    scattering matrix. Pass in the mode as element, e.g. 'PdSu' for PS.</span>
+
+<span class="sd">    Wraps scattering_matrix().</span>
+
+<span class="sd">    Returns the complex reflectivity.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        vp1 (float): The upper P-wave velocity.</span>
+<span class="sd">        vs1 (float): The upper S-wave velocity.</span>
+<span class="sd">        rho1 (float): The upper layer's density.</span>
+<span class="sd">        vp2 (float): The lower P-wave velocity.</span>
+<span class="sd">        vs2 (float): The lower S-wave velocity.</span>
+<span class="sd">        rho2 (float): The lower layer's density.</span>
+<span class="sd">        theta1 (ndarray): The incidence angle; float or 1D array length n.</span>
+<span class="sd">        element (str): The name of the element to return, must be one of:</span>
+<span class="sd">            'PdPu', 'SdPu', 'PuPu', 'SuPu', 'PdSu', 'SdSu', 'PuSu', 'SuSu',</span>
+<span class="sd">            'PdPd', 'SdPd', 'PuPd', 'SuPd', 'PdSd', 'SdSd', 'PuSd', 'SuSd'.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        ndarray. Array length n of the exact Zoeppritz solution for the</span>
+<span class="sd">            specified modes at the interface, at the incident angle theta1.</span>
+<span class="sd">    """</span>
+    <span class="n">elements</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="s1">'PdPu'</span><span class="p">,</span> <span class="s1">'SdPu'</span><span class="p">,</span> <span class="s1">'PuPu'</span><span class="p">,</span> <span class="s1">'SuPu'</span><span class="p">],</span>
+                         <span class="p">[</span><span class="s1">'PdSu'</span><span class="p">,</span> <span class="s1">'SdSu'</span><span class="p">,</span> <span class="s1">'PuSu'</span><span class="p">,</span> <span class="s1">'SuSu'</span><span class="p">],</span>
+                         <span class="p">[</span><span class="s1">'PdPd'</span><span class="p">,</span> <span class="s1">'SdPd'</span><span class="p">,</span> <span class="s1">'PuPd'</span><span class="p">,</span> <span class="s1">'SuPd'</span><span class="p">],</span>
+                         <span class="p">[</span><span class="s1">'PdSd'</span><span class="p">,</span> <span class="s1">'SdSd'</span><span class="p">,</span> <span class="s1">'PuSd'</span><span class="p">,</span> <span class="s1">'SuSd'</span><span class="p">]])</span>
+
+    <span class="n">Z</span> <span class="o">=</span> <span class="n">scattering_matrix</span><span class="p">(</span><span class="n">vp1</span><span class="p">,</span> <span class="n">vs1</span><span class="p">,</span> <span class="n">rho1</span><span class="p">,</span> <span class="n">vp2</span><span class="p">,</span> <span class="n">vs2</span><span class="p">,</span> <span class="n">rho2</span><span class="p">,</span> <span class="n">theta1</span><span class="p">)</span><span class="o">.</span><span class="n">T</span>
+
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">squeeze</span><span class="p">(</span><span class="n">Z</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">elements</span> <span class="o">==</span> <span class="n">element</span><span class="p">)]</span><span class="o">.</span><span class="n">T</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="zoeppritz"><a class="viewcode-back" href="../../../bruges.reflection.html#bruges.reflection.reflection.zoeppritz">[docs]</a><span class="k">def</span> <span class="nf">zoeppritz</span><span class="p">(</span><span class="n">vp1</span><span class="p">,</span> <span class="n">vs1</span><span class="p">,</span> <span class="n">rho1</span><span class="p">,</span> <span class="n">vp2</span><span class="p">,</span> <span class="n">vs2</span><span class="p">,</span> <span class="n">rho2</span><span class="p">,</span> <span class="n">theta1</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+    <span class="sd">"""</span>
+<span class="sd">    Returns the PP reflection coefficients from the Zoeppritz</span>
+<span class="sd">    scattering matrix. Wraps zoeppritz_element().</span>
+
+<span class="sd">    Returns the complex reflectivity.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        vp1 (float): The upper P-wave velocity.</span>
+<span class="sd">        vs1 (float): The upper S-wave velocity.</span>
+<span class="sd">        rho1 (float): The upper layer's density.</span>
+<span class="sd">        vp2 (float): The lower P-wave velocity.</span>
+<span class="sd">        vs2 (float): The lower S-wave velocity.</span>
+<span class="sd">        rho2 (float): The lower layer's density.</span>
+<span class="sd">        theta1 (ndarray): The incidence angle; float or 1D array length n.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        ndarray. Array length n of the exact Zoeppritz solution for the</span>
+<span class="sd">            specified modes at the interface, at the incident angle theta1.</span>
+<span class="sd">    """</span>
+    <span class="k">return</span> <span class="n">zoeppritz_element</span><span class="p">(</span><span class="n">vp1</span><span class="p">,</span> <span class="n">vs1</span><span class="p">,</span> <span class="n">rho1</span><span class="p">,</span> <span class="n">vp2</span><span class="p">,</span> <span class="n">vs2</span><span class="p">,</span> <span class="n">rho2</span><span class="p">,</span> <span class="n">theta1</span><span class="p">,</span> <span class="s1">'PdPu'</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="zoeppritz_rpp"><a class="viewcode-back" href="../../../bruges.reflection.html#bruges.reflection.reflection.zoeppritz_rpp">[docs]</a><span class="nd">@preprocess</span>
+<span class="nd">@vectorize</span>
+<span class="k">def</span> <span class="nf">zoeppritz_rpp</span><span class="p">(</span><span class="n">vp1</span><span class="p">,</span> <span class="n">vs1</span><span class="p">,</span> <span class="n">rho1</span><span class="p">,</span> <span class="n">vp2</span><span class="p">,</span> <span class="n">vs2</span><span class="p">,</span> <span class="n">rho2</span><span class="p">,</span> <span class="n">theta1</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+    <span class="sd">"""</span>
+<span class="sd">    Exact Zoeppritz from expression.</span>
+
+<span class="sd">    This is useful because we can pass arrays to it, which we can't do to</span>
+<span class="sd">    scattering_matrix().</span>
+
+<span class="sd">    Dvorkin et al. (2014). Seismic Reflections of Rock Properties. Cambridge.</span>
+
+<span class="sd">    Returns the complex reflectivity.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        vp1 (ndarray): The upper P-wave velocity; float or 1D array length m.</span>
+<span class="sd">        vs1 (ndarray): The upper S-wave velocity; float or 1D array length m.</span>
+<span class="sd">        rho1 (ndarray): The upper layer's density; float or 1D array length m.</span>
+<span class="sd">        vp2 (ndarray): The lower P-wave velocity; float or 1D array length m.</span>
+<span class="sd">        vs2 (ndarray): The lower S-wave velocity; float or 1D array length m.</span>
+<span class="sd">        rho2 (ndarray): The lower layer's density; float or 1D array length m.</span>
+<span class="sd">        theta1 (ndarray): The incidence angle; float or 1D array length n.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        ndarray. The exact Zoeppritz solution for P-P reflectivity at the</span>
+<span class="sd">            interface. Will be a float (for float inputs and one angle), a</span>
+<span class="sd">            1 x n array (for float inputs and an array of angles), a 1 x m</span>
+<span class="sd">            array (for float inputs and one angle), or an n x m array (for</span>
+<span class="sd">            array inputs and an array of angles).</span>
+<span class="sd">    """</span>
+    <span class="n">p</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">theta1</span><span class="p">)</span> <span class="o">/</span> <span class="n">vp1</span>  <span class="c1"># Ray parameter</span>
+    <span class="n">theta2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arcsin</span><span class="p">(</span><span class="n">p</span> <span class="o">*</span> <span class="n">vp2</span><span class="p">)</span>
+    <span class="n">phi1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arcsin</span><span class="p">(</span><span class="n">p</span> <span class="o">*</span> <span class="n">vs1</span><span class="p">)</span>  <span class="c1"># Reflected S</span>
+    <span class="n">phi2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arcsin</span><span class="p">(</span><span class="n">p</span> <span class="o">*</span> <span class="n">vs2</span><span class="p">)</span>  <span class="c1"># Transmitted S</span>
+
+    <span class="n">a</span> <span class="o">=</span> <span class="n">rho2</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">phi2</span><span class="p">)</span><span class="o">**</span><span class="mf">2.</span><span class="p">)</span> <span class="o">-</span> <span class="n">rho1</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">phi1</span><span class="p">)</span><span class="o">**</span><span class="mf">2.</span><span class="p">)</span>
+    <span class="n">b</span> <span class="o">=</span> <span class="n">rho2</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">phi2</span><span class="p">)</span><span class="o">**</span><span class="mf">2.</span><span class="p">)</span> <span class="o">+</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">rho1</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">phi1</span><span class="p">)</span><span class="o">**</span><span class="mf">2.</span>
+    <span class="n">c</span> <span class="o">=</span> <span class="n">rho1</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">phi1</span><span class="p">)</span><span class="o">**</span><span class="mf">2.</span><span class="p">)</span> <span class="o">+</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">rho2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">phi2</span><span class="p">)</span><span class="o">**</span><span class="mf">2.</span>
+    <span class="n">d</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="p">(</span><span class="n">rho2</span> <span class="o">*</span> <span class="n">vs2</span><span class="o">**</span><span class="mi">2</span> <span class="o">-</span> <span class="n">rho1</span> <span class="o">*</span> <span class="n">vs1</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+
+    <span class="n">E</span> <span class="o">=</span> <span class="p">(</span><span class="n">b</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">theta1</span><span class="p">)</span> <span class="o">/</span> <span class="n">vp1</span><span class="p">)</span> <span class="o">+</span> <span class="p">(</span><span class="n">c</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">theta2</span><span class="p">)</span> <span class="o">/</span> <span class="n">vp2</span><span class="p">)</span>
+    <span class="n">F</span> <span class="o">=</span> <span class="p">(</span><span class="n">b</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">phi1</span><span class="p">)</span> <span class="o">/</span> <span class="n">vs1</span><span class="p">)</span> <span class="o">+</span> <span class="p">(</span><span class="n">c</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">phi2</span><span class="p">)</span> <span class="o">/</span> <span class="n">vs2</span><span class="p">)</span>
+    <span class="n">G</span> <span class="o">=</span> <span class="n">a</span> <span class="o">-</span> <span class="n">d</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">theta1</span><span class="p">)</span><span class="o">/</span><span class="n">vp1</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">phi2</span><span class="p">)</span><span class="o">/</span><span class="n">vs2</span>
+    <span class="n">H</span> <span class="o">=</span> <span class="n">a</span> <span class="o">-</span> <span class="n">d</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">theta2</span><span class="p">)</span><span class="o">/</span><span class="n">vp2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">phi1</span><span class="p">)</span><span class="o">/</span><span class="n">vs1</span>
+
+    <span class="n">D</span> <span class="o">=</span> <span class="n">E</span><span class="o">*</span><span class="n">F</span> <span class="o">+</span> <span class="n">G</span><span class="o">*</span><span class="n">H</span><span class="o">*</span><span class="n">p</span><span class="o">**</span><span class="mi">2</span>
+
+    <span class="n">rpp</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="n">D</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">F</span><span class="o">*</span><span class="p">(</span><span class="n">b</span><span class="o">*</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">theta1</span><span class="p">)</span><span class="o">/</span><span class="n">vp1</span><span class="p">)</span> <span class="o">-</span> <span class="n">c</span><span class="o">*</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">theta2</span><span class="p">)</span><span class="o">/</span><span class="n">vp2</span><span class="p">))</span> \
+                   <span class="o">-</span> <span class="n">H</span><span class="o">*</span><span class="n">p</span><span class="o">**</span><span class="mi">2</span> <span class="o">*</span> <span class="p">(</span><span class="n">a</span> <span class="o">+</span> <span class="n">d</span><span class="o">*</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">theta1</span><span class="p">)</span><span class="o">/</span><span class="n">vp1</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">phi2</span><span class="p">)</span><span class="o">/</span><span class="n">vs2</span><span class="p">)))</span>
+
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">squeeze</span><span class="p">(</span><span class="n">rpp</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="akirichards"><a class="viewcode-back" href="../../../bruges.reflection.html#bruges.reflection.reflection.akirichards">[docs]</a><span class="nd">@preprocess</span>
+<span class="nd">@vectorize</span>
+<span class="k">def</span> <span class="nf">akirichards</span><span class="p">(</span><span class="n">vp1</span><span class="p">,</span> <span class="n">vs1</span><span class="p">,</span> <span class="n">rho1</span><span class="p">,</span> <span class="n">vp2</span><span class="p">,</span> <span class="n">vs2</span><span class="p">,</span> <span class="n">rho2</span><span class="p">,</span> <span class="n">theta1</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">terms</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="sd">"""</span>
+<span class="sd">    The Aki-Richards approximation to the reflectivity.</span>
+
+<span class="sd">    This is the formulation from Avseth et al., Quantitative seismic</span>
+<span class="sd">    interpretation, Cambridge University Press, 2006. Adapted for a 4-term</span>
+<span class="sd">    formula. See http://subsurfwiki.org/wiki/Aki-Richards_equation.</span>
+
+<span class="sd">    Returns the complex reflectivity.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        vp1 (ndarray): The upper P-wave velocity; float or 1D array length m.</span>
+<span class="sd">        vs1 (ndarray): The upper S-wave velocity; float or 1D array length m.</span>
+<span class="sd">        rho1 (ndarray): The upper layer's density; float or 1D array length m.</span>
+<span class="sd">        vp2 (ndarray): The lower P-wave velocity; float or 1D array length m.</span>
+<span class="sd">        vs2 (ndarray): The lower S-wave velocity; float or 1D array length m.</span>
+<span class="sd">        rho2 (ndarray): The lower layer's density; float or 1D array length m.</span>
+<span class="sd">        theta1 (ndarray): The incidence angle; float or 1D array length n.</span>
+<span class="sd">        terms (bool): Whether or not to return a tuple of the terms of the</span>
+<span class="sd">            equation. The first term is the acoustic impedance.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        ndarray. The Aki-Richards approximation for P-P reflectivity at the</span>
+<span class="sd">            interface. Will be a float (for float inputs and one angle), a</span>
+<span class="sd">            1 x n array (for float inputs and an array of angles), a 1 x m</span>
+<span class="sd">            array (for float inputs and one angle), or an n x m array (for</span>
+<span class="sd">            array inputs and an array of angles).</span>
+<span class="sd">    """</span>
+    <span class="n">theta2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arcsin</span><span class="p">(</span><span class="n">vp2</span><span class="o">/</span><span class="n">vp1</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">theta1</span><span class="p">))</span>
+    <span class="n">drho</span> <span class="o">=</span> <span class="n">rho2</span><span class="o">-</span><span class="n">rho1</span>
+    <span class="n">dvp</span> <span class="o">=</span> <span class="n">vp2</span><span class="o">-</span><span class="n">vp1</span>
+    <span class="n">dvs</span> <span class="o">=</span> <span class="n">vs2</span><span class="o">-</span><span class="n">vs1</span>
+    <span class="n">meantheta</span> <span class="o">=</span> <span class="p">(</span><span class="n">theta1</span><span class="o">+</span><span class="n">theta2</span><span class="p">)</span> <span class="o">/</span> <span class="mf">2.0</span>
+    <span class="n">rho</span> <span class="o">=</span> <span class="p">(</span><span class="n">rho1</span><span class="o">+</span><span class="n">rho2</span><span class="p">)</span> <span class="o">/</span> <span class="mf">2.0</span>
+    <span class="n">vp</span> <span class="o">=</span> <span class="p">(</span><span class="n">vp1</span><span class="o">+</span><span class="n">vp2</span><span class="p">)</span> <span class="o">/</span> <span class="mf">2.0</span>
+    <span class="n">vs</span> <span class="o">=</span> <span class="p">(</span><span class="n">vs1</span><span class="o">+</span><span class="n">vs2</span><span class="p">)</span> <span class="o">/</span> <span class="mf">2.0</span>
+
+    <span class="c1"># Compute the coefficients</span>
+    <span class="n">w</span> <span class="o">=</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">drho</span><span class="o">/</span><span class="n">rho</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="p">(</span><span class="n">vs</span><span class="o">/</span><span class="n">vp1</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span> <span class="o">*</span> <span class="n">drho</span><span class="o">/</span><span class="n">rho</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="p">(</span><span class="n">dvp</span><span class="o">/</span><span class="n">vp</span><span class="p">)</span>
+    <span class="n">z</span> <span class="o">=</span> <span class="mi">4</span> <span class="o">*</span> <span class="p">(</span><span class="n">vs</span><span class="o">/</span><span class="n">vp1</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span> <span class="o">*</span> <span class="p">(</span><span class="n">dvs</span><span class="o">/</span><span class="n">vs</span><span class="p">)</span>
+
+    <span class="c1"># Compute the terms</span>
+    <span class="n">term1</span> <span class="o">=</span> <span class="n">w</span>
+    <span class="n">term2</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span> <span class="o">*</span> <span class="n">x</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">theta1</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span>
+    <span class="n">term3</span> <span class="o">=</span> <span class="n">y</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">meantheta</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span>
+    <span class="n">term4</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span> <span class="o">*</span> <span class="n">z</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">theta1</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span>
+
+    <span class="k">if</span> <span class="n">terms</span><span class="p">:</span>
+        <span class="n">fields</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'term1'</span><span class="p">,</span> <span class="s1">'term2'</span><span class="p">,</span> <span class="s1">'term3'</span><span class="p">,</span> <span class="s1">'term4'</span><span class="p">]</span>
+        <span class="n">AkiRichards</span> <span class="o">=</span> <span class="n">namedtuple</span><span class="p">(</span><span class="s1">'AkiRichards'</span><span class="p">,</span> <span class="n">fields</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">AkiRichards</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">squeeze</span><span class="p">([</span><span class="n">term1</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">theta1</span><span class="p">]),</span>
+                           <span class="n">np</span><span class="o">.</span><span class="n">squeeze</span><span class="p">(</span><span class="n">term2</span><span class="p">),</span>
+                           <span class="n">np</span><span class="o">.</span><span class="n">squeeze</span><span class="p">(</span><span class="n">term3</span><span class="p">),</span>
+                           <span class="n">np</span><span class="o">.</span><span class="n">squeeze</span><span class="p">(</span><span class="n">term4</span><span class="p">)</span>
+                           <span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">squeeze</span><span class="p">(</span><span class="n">term1</span> <span class="o">+</span> <span class="n">term2</span> <span class="o">+</span> <span class="n">term3</span> <span class="o">+</span> <span class="n">term4</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="akirichards_alt"><a class="viewcode-back" href="../../../bruges.reflection.html#bruges.reflection.reflection.akirichards_alt">[docs]</a><span class="nd">@preprocess</span>
+<span class="nd">@vectorize</span>
+<span class="k">def</span> <span class="nf">akirichards_alt</span><span class="p">(</span><span class="n">vp1</span><span class="p">,</span> <span class="n">vs1</span><span class="p">,</span> <span class="n">rho1</span><span class="p">,</span> <span class="n">vp2</span><span class="p">,</span> <span class="n">vs2</span><span class="p">,</span> <span class="n">rho2</span><span class="p">,</span> <span class="n">theta1</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">terms</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="sd">"""</span>
+<span class="sd">    This is another formulation of the Aki-Richards solution.</span>
+<span class="sd">    See http://subsurfwiki.org/wiki/Aki-Richards_equation</span>
+
+<span class="sd">    Returns the complex reflectivity.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        vp1 (ndarray): The upper P-wave velocity; float or 1D array length m.</span>
+<span class="sd">        vs1 (ndarray): The upper S-wave velocity; float or 1D array length m.</span>
+<span class="sd">        rho1 (ndarray): The upper layer's density; float or 1D array length m.</span>
+<span class="sd">        vp2 (ndarray): The lower P-wave velocity; float or 1D array length m.</span>
+<span class="sd">        vs2 (ndarray): The lower S-wave velocity; float or 1D array length m.</span>
+<span class="sd">        rho2 (ndarray): The lower layer's density; float or 1D array length m.</span>
+<span class="sd">        theta1 (ndarray): The incidence angle; float or 1D array length n.</span>
+<span class="sd">        terms (bool): Whether or not to return a tuple of the terms of the</span>
+<span class="sd">            equation. The first term is the acoustic impedance.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        ndarray. The Aki-Richards approximation for P-P reflectivity at the</span>
+<span class="sd">            interface. Will be a float (for float inputs and one angle), a</span>
+<span class="sd">            1 x n array (for float inputs and an array of angles), a 1 x m</span>
+<span class="sd">            array (for float inputs and one angle), or an n x m array (for</span>
+<span class="sd">            array inputs and an array of angles).</span>
+<span class="sd">    """</span>
+    <span class="n">theta2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arcsin</span><span class="p">(</span><span class="n">vp2</span><span class="o">/</span><span class="n">vp1</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">theta1</span><span class="p">))</span>
+    <span class="n">drho</span> <span class="o">=</span> <span class="n">rho2</span><span class="o">-</span><span class="n">rho1</span>
+    <span class="n">dvp</span> <span class="o">=</span> <span class="n">vp2</span><span class="o">-</span><span class="n">vp1</span>
+    <span class="n">dvs</span> <span class="o">=</span> <span class="n">vs2</span><span class="o">-</span><span class="n">vs1</span>
+    <span class="n">theta</span> <span class="o">=</span> <span class="p">(</span><span class="n">theta1</span><span class="o">+</span><span class="n">theta2</span><span class="p">)</span><span class="o">/</span><span class="mf">2.0</span>
+    <span class="n">rho</span> <span class="o">=</span> <span class="p">(</span><span class="n">rho1</span><span class="o">+</span><span class="n">rho2</span><span class="p">)</span><span class="o">/</span><span class="mf">2.0</span>
+    <span class="n">vp</span> <span class="o">=</span> <span class="p">(</span><span class="n">vp1</span><span class="o">+</span><span class="n">vp2</span><span class="p">)</span><span class="o">/</span><span class="mf">2.0</span>
+    <span class="n">vs</span> <span class="o">=</span> <span class="p">(</span><span class="n">vs1</span><span class="o">+</span><span class="n">vs2</span><span class="p">)</span><span class="o">/</span><span class="mf">2.0</span>
+
+    <span class="c1"># Compute the three terms</span>
+    <span class="n">term1</span> <span class="o">=</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="p">(</span><span class="n">dvp</span><span class="o">/</span><span class="n">vp</span> <span class="o">+</span> <span class="n">drho</span><span class="o">/</span><span class="n">rho</span><span class="p">)</span>
+    <span class="n">term2</span> <span class="o">=</span> <span class="p">(</span><span class="mf">0.5</span><span class="o">*</span><span class="n">dvp</span><span class="o">/</span><span class="n">vp</span><span class="o">-</span><span class="mi">2</span><span class="o">*</span><span class="p">(</span><span class="n">vs</span><span class="o">/</span><span class="n">vp</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="o">*</span><span class="p">(</span><span class="n">drho</span><span class="o">/</span><span class="n">rho</span><span class="o">+</span><span class="mi">2</span><span class="o">*</span><span class="n">dvs</span><span class="o">/</span><span class="n">vs</span><span class="p">))</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">theta</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span>
+    <span class="n">term3</span> <span class="o">=</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">dvp</span><span class="o">/</span><span class="n">vp</span> <span class="o">*</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">tan</span><span class="p">(</span><span class="n">theta</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">theta</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">terms</span><span class="p">:</span>
+        <span class="n">fields</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'term1'</span><span class="p">,</span> <span class="s1">'term2'</span><span class="p">,</span> <span class="s1">'term3'</span><span class="p">]</span>
+        <span class="n">AkiRichards</span> <span class="o">=</span> <span class="n">namedtuple</span><span class="p">(</span><span class="s1">'AkiRichards'</span><span class="p">,</span> <span class="n">fields</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">AkiRichards</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">squeeze</span><span class="p">([</span><span class="n">term1</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">theta1</span><span class="p">]),</span>
+                           <span class="n">np</span><span class="o">.</span><span class="n">squeeze</span><span class="p">(</span><span class="n">term2</span><span class="p">),</span>
+                           <span class="n">np</span><span class="o">.</span><span class="n">squeeze</span><span class="p">(</span><span class="n">term3</span><span class="p">)</span>
+                           <span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">squeeze</span><span class="p">(</span><span class="n">term1</span> <span class="o">+</span> <span class="n">term2</span> <span class="o">+</span> <span class="n">term3</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="fatti"><a class="viewcode-back" href="../../../bruges.reflection.html#bruges.reflection.reflection.fatti">[docs]</a><span class="nd">@preprocess</span>
+<span class="nd">@vectorize</span>
+<span class="k">def</span> <span class="nf">fatti</span><span class="p">(</span><span class="n">vp1</span><span class="p">,</span> <span class="n">vs1</span><span class="p">,</span> <span class="n">rho1</span><span class="p">,</span> <span class="n">vp2</span><span class="p">,</span> <span class="n">vs2</span><span class="p">,</span> <span class="n">rho2</span><span class="p">,</span> <span class="n">theta1</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">terms</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="sd">"""</span>
+<span class="sd">    Compute reflectivities with Fatti's formulation of the Aki-Richards</span>
+<span class="sd">    equation, which does not account for the critical angle. See Fatti et al.</span>
+<span class="sd">    (1994), Geophysics 59 (9). Real numbers only.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        vp1 (ndarray): The upper P-wave velocity; float or 1D array length m.</span>
+<span class="sd">        vs1 (ndarray): The upper S-wave velocity; float or 1D array length m.</span>
+<span class="sd">        rho1 (ndarray): The upper layer's density; float or 1D array length m.</span>
+<span class="sd">        vp2 (ndarray): The lower P-wave velocity; float or 1D array length m.</span>
+<span class="sd">        vs2 (ndarray): The lower S-wave velocity; float or 1D array length m.</span>
+<span class="sd">        rho2 (ndarray): The lower layer's density; float or 1D array length m.</span>
+<span class="sd">        theta1 (ndarray): The incidence angle; float or 1D array length n.</span>
+<span class="sd">        terms (bool): Whether or not to return a tuple of the terms of the</span>
+<span class="sd">            equation. The first term is the acoustic impedance.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        ndarray. The Fatti approximation for P-P reflectivity at the</span>
+<span class="sd">            interface. Will be a float (for float inputs and one angle), a</span>
+<span class="sd">            1 x n array (for float inputs and an array of angles), a 1 x m</span>
+<span class="sd">            array (for float inputs and one angle), or an n x m array (for</span>
+<span class="sd">            array inputs and an array of angles).</span>
+<span class="sd">    """</span>
+    <span class="n">theta1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">real</span><span class="p">(</span><span class="n">theta1</span><span class="p">)</span>
+
+    <span class="n">drho</span> <span class="o">=</span> <span class="n">rho2</span><span class="o">-</span><span class="n">rho1</span>
+    <span class="n">rho</span> <span class="o">=</span> <span class="p">(</span><span class="n">rho1</span><span class="o">+</span><span class="n">rho2</span><span class="p">)</span> <span class="o">/</span> <span class="mf">2.0</span>
+    <span class="n">vp</span> <span class="o">=</span> <span class="p">(</span><span class="n">vp1</span><span class="o">+</span><span class="n">vp2</span><span class="p">)</span> <span class="o">/</span> <span class="mf">2.0</span>
+    <span class="n">vs</span> <span class="o">=</span> <span class="p">(</span><span class="n">vs1</span><span class="o">+</span><span class="n">vs2</span><span class="p">)</span> <span class="o">/</span> <span class="mf">2.0</span>
+    <span class="n">dip</span> <span class="o">=</span> <span class="p">(</span><span class="n">vp2</span><span class="o">*</span><span class="n">rho2</span> <span class="o">-</span> <span class="n">vp1</span><span class="o">*</span><span class="n">rho1</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="n">vp2</span><span class="o">*</span><span class="n">rho2</span> <span class="o">+</span> <span class="n">vp1</span><span class="o">*</span><span class="n">rho1</span><span class="p">)</span>
+    <span class="n">dis</span> <span class="o">=</span> <span class="p">(</span><span class="n">vs2</span><span class="o">*</span><span class="n">rho2</span> <span class="o">-</span> <span class="n">vs1</span><span class="o">*</span><span class="n">rho1</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="n">vs2</span><span class="o">*</span><span class="n">rho2</span> <span class="o">+</span> <span class="n">vs1</span><span class="o">*</span><span class="n">rho1</span><span class="p">)</span>
+    <span class="n">d</span> <span class="o">=</span> <span class="n">drho</span><span class="o">/</span><span class="n">rho</span>
+
+    <span class="c1"># Compute the three terms</span>
+    <span class="n">term1</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">tan</span><span class="p">(</span><span class="n">theta1</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span> <span class="o">*</span> <span class="n">dip</span>
+    <span class="n">term2</span> <span class="o">=</span> <span class="o">-</span><span class="mi">8</span> <span class="o">*</span> <span class="p">(</span><span class="n">vs</span><span class="o">/</span><span class="n">vp</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span> <span class="o">*</span> <span class="n">dis</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">theta1</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span>
+    <span class="n">term3</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span> <span class="o">*</span> <span class="p">(</span><span class="mf">0.5</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">tan</span><span class="p">(</span><span class="n">theta1</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span> <span class="o">-</span> <span class="mi">2</span> <span class="o">*</span> <span class="p">(</span><span class="n">vs</span><span class="o">/</span><span class="n">vp</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">theta1</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span> <span class="o">*</span> <span class="n">d</span>
+
+    <span class="k">if</span> <span class="n">terms</span><span class="p">:</span>
+        <span class="n">fields</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'term1'</span><span class="p">,</span> <span class="s1">'term2'</span><span class="p">,</span> <span class="s1">'term3'</span><span class="p">]</span>
+        <span class="n">Fatti</span> <span class="o">=</span> <span class="n">namedtuple</span><span class="p">(</span><span class="s1">'Fatti'</span><span class="p">,</span> <span class="n">fields</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">Fatti</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">squeeze</span><span class="p">(</span><span class="n">term1</span><span class="p">),</span>
+                     <span class="n">np</span><span class="o">.</span><span class="n">squeeze</span><span class="p">(</span><span class="n">term2</span><span class="p">),</span>
+                     <span class="n">np</span><span class="o">.</span><span class="n">squeeze</span><span class="p">(</span><span class="n">term3</span><span class="p">)</span>
+                     <span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">squeeze</span><span class="p">(</span><span class="n">term1</span> <span class="o">+</span> <span class="n">term2</span> <span class="o">+</span> <span class="n">term3</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="shuey"><a class="viewcode-back" href="../../../bruges.reflection.html#bruges.reflection.reflection.shuey">[docs]</a><span class="nd">@preprocess</span>
+<span class="nd">@vectorize</span>
+<span class="k">def</span> <span class="nf">shuey</span><span class="p">(</span><span class="n">vp1</span><span class="p">,</span> <span class="n">vs1</span><span class="p">,</span> <span class="n">rho1</span><span class="p">,</span> <span class="n">vp2</span><span class="p">,</span> <span class="n">vs2</span><span class="p">,</span> <span class="n">rho2</span><span class="p">,</span> <span class="n">theta1</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+          <span class="n">terms</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+          <span class="n">return_gradient</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="sd">"""</span>
+<span class="sd">    Compute Shuey approximation with 3 terms.</span>
+<span class="sd">    http://subsurfwiki.org/wiki/Shuey_equation</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        vp1 (ndarray): The upper P-wave velocity; float or 1D array length m.</span>
+<span class="sd">        vs1 (ndarray): The upper S-wave velocity; float or 1D array length m.</span>
+<span class="sd">        rho1 (ndarray): The upper layer's density; float or 1D array length m.</span>
+<span class="sd">        vp2 (ndarray): The lower P-wave velocity; float or 1D array length m.</span>
+<span class="sd">        vs2 (ndarray): The lower S-wave velocity; float or 1D array length m.</span>
+<span class="sd">        rho2 (ndarray): The lower layer's density; float or 1D array length m.</span>
+<span class="sd">        theta1 (ndarray): The incidence angle; float or 1D array length n.</span>
+<span class="sd">        terms (bool): Whether or not to return a tuple of the terms of the</span>
+<span class="sd">            equation. The first term is the acoustic impedance.</span>
+<span class="sd">        return_gradient (bool): Whether to return a tuple of the intercept</span>
+<span class="sd">            and gradient (i.e. the second term divided by sin^2(theta)).</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        ndarray. The Aki-Richards approximation for P-P reflectivity at the</span>
+<span class="sd">            interface. Will be a float (for float inputs and one angle), a</span>
+<span class="sd">            1 x n array (for float inputs and an array of angles), a 1 x m</span>
+<span class="sd">            array (for float inputs and one angle), or an n x m array (for</span>
+<span class="sd">            array inputs and an array of angles).</span>
+<span class="sd">    """</span>
+    <span class="n">theta1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">real</span><span class="p">(</span><span class="n">theta1</span><span class="p">)</span>
+
+    <span class="n">drho</span> <span class="o">=</span> <span class="n">rho2</span><span class="o">-</span><span class="n">rho1</span>
+    <span class="n">dvp</span> <span class="o">=</span> <span class="n">vp2</span><span class="o">-</span><span class="n">vp1</span>
+    <span class="n">dvs</span> <span class="o">=</span> <span class="n">vs2</span><span class="o">-</span><span class="n">vs1</span>
+    <span class="n">rho</span> <span class="o">=</span> <span class="p">(</span><span class="n">rho1</span><span class="o">+</span><span class="n">rho2</span><span class="p">)</span><span class="o">/</span><span class="mf">2.0</span>
+    <span class="n">vp</span> <span class="o">=</span> <span class="p">(</span><span class="n">vp1</span><span class="o">+</span><span class="n">vp2</span><span class="p">)</span><span class="o">/</span><span class="mf">2.0</span>
+    <span class="n">vs</span> <span class="o">=</span> <span class="p">(</span><span class="n">vs1</span><span class="o">+</span><span class="n">vs2</span><span class="p">)</span><span class="o">/</span><span class="mf">2.0</span>
+
+    <span class="c1"># Compute three-term reflectivity</span>
+    <span class="n">r0</span> <span class="o">=</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="p">(</span><span class="n">dvp</span><span class="o">/</span><span class="n">vp</span> <span class="o">+</span> <span class="n">drho</span><span class="o">/</span><span class="n">rho</span><span class="p">)</span>
+    <span class="n">g</span> <span class="o">=</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">dvp</span><span class="o">/</span><span class="n">vp</span> <span class="o">-</span> <span class="mi">2</span> <span class="o">*</span> <span class="p">(</span><span class="n">vs</span><span class="o">**</span><span class="mi">2</span><span class="o">/</span><span class="n">vp</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">drho</span><span class="o">/</span><span class="n">rho</span> <span class="o">+</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">dvs</span><span class="o">/</span><span class="n">vs</span><span class="p">)</span>
+    <span class="n">f</span> <span class="o">=</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">dvp</span><span class="o">/</span><span class="n">vp</span>
+
+    <span class="n">term1</span> <span class="o">=</span> <span class="n">r0</span>
+    <span class="n">term2</span> <span class="o">=</span> <span class="n">g</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">theta1</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span>
+    <span class="n">term3</span> <span class="o">=</span> <span class="n">f</span> <span class="o">*</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">tan</span><span class="p">(</span><span class="n">theta1</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">theta1</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">return_gradient</span><span class="p">:</span>
+        <span class="n">fields</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'intercept'</span><span class="p">,</span> <span class="s1">'gradient'</span><span class="p">]</span>
+        <span class="n">Shuey</span> <span class="o">=</span> <span class="n">namedtuple</span><span class="p">(</span><span class="s1">'Shuey'</span><span class="p">,</span> <span class="n">fields</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">Shuey</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">squeeze</span><span class="p">(</span><span class="n">r0</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">squeeze</span><span class="p">(</span><span class="n">g</span><span class="p">))</span>
+    <span class="k">elif</span> <span class="n">terms</span><span class="p">:</span>
+        <span class="n">fields</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'R0'</span><span class="p">,</span> <span class="s1">'Rg'</span><span class="p">,</span> <span class="s1">'Rf'</span><span class="p">]</span>
+        <span class="n">Shuey</span> <span class="o">=</span> <span class="n">namedtuple</span><span class="p">(</span><span class="s1">'Shuey'</span><span class="p">,</span> <span class="n">fields</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">Shuey</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">squeeze</span><span class="p">([</span><span class="n">term1</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">theta1</span><span class="p">]),</span>
+                     <span class="n">np</span><span class="o">.</span><span class="n">squeeze</span><span class="p">(</span><span class="n">term2</span><span class="p">),</span>
+                     <span class="n">np</span><span class="o">.</span><span class="n">squeeze</span><span class="p">(</span><span class="n">term3</span><span class="p">)</span>
+                     <span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">squeeze</span><span class="p">(</span><span class="n">term1</span> <span class="o">+</span> <span class="n">term2</span> <span class="o">+</span> <span class="n">term3</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="shuey2"><a class="viewcode-back" href="../../../bruges.reflection.html#bruges.reflection.reflection.shuey2">[docs]</a><span class="nd">@deprecated</span><span class="p">(</span><span class="s1">'Please use shuey() instead.'</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">shuey2</span><span class="p">(</span><span class="n">vp1</span><span class="p">,</span> <span class="n">vs1</span><span class="p">,</span> <span class="n">rho1</span><span class="p">,</span> <span class="n">vp2</span><span class="p">,</span> <span class="n">vs2</span><span class="p">,</span> <span class="n">rho2</span><span class="p">,</span> <span class="n">theta1</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+    <span class="sd">"""</span>
+<span class="sd">    Compute Shuey approximation with 2 terms. Wraps `shuey()`. Deprecated,</span>
+<span class="sd">    use `shuey()` instead.</span>
+<span class="sd">    """</span>
+    <span class="n">r</span><span class="p">,</span> <span class="n">g</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">shuey</span><span class="p">(</span><span class="n">vp1</span><span class="p">,</span> <span class="n">vs1</span><span class="p">,</span> <span class="n">rho1</span><span class="p">,</span> <span class="n">vp2</span><span class="p">,</span> <span class="n">vs2</span><span class="p">,</span> <span class="n">rho2</span><span class="p">,</span> <span class="n">theta1</span><span class="o">=</span><span class="n">theta1</span><span class="p">,</span> <span class="n">terms</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">r</span> <span class="o">+</span> <span class="n">g</span></div>
+
+
+<div class="viewcode-block" id="shuey3"><a class="viewcode-back" href="../../../bruges.reflection.html#bruges.reflection.reflection.shuey3">[docs]</a><span class="nd">@deprecated</span><span class="p">(</span><span class="s1">'Please use shuey() instead.'</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">shuey3</span><span class="p">(</span><span class="n">vp1</span><span class="p">,</span> <span class="n">vs1</span><span class="p">,</span> <span class="n">rho1</span><span class="p">,</span> <span class="n">vp2</span><span class="p">,</span> <span class="n">vs2</span><span class="p">,</span> <span class="n">rho2</span><span class="p">,</span> <span class="n">theta1</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">terms</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="sd">"""</span>
+<span class="sd">    Compute Shuey approximation with 3 terms. Wraps `shuey()`. Deprecated,</span>
+<span class="sd">    use `shuey()` instead.</span>
+<span class="sd">    """</span>
+    <span class="k">return</span> <span class="n">shuey</span><span class="p">(</span><span class="n">vp1</span><span class="p">,</span> <span class="n">vs1</span><span class="p">,</span> <span class="n">rho1</span><span class="p">,</span> <span class="n">vp2</span><span class="p">,</span> <span class="n">vs2</span><span class="p">,</span> <span class="n">rho2</span><span class="p">,</span> <span class="n">theta1</span><span class="o">=</span><span class="n">theta1</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="bortfeld"><a class="viewcode-back" href="../../../bruges.reflection.html#bruges.reflection.reflection.bortfeld">[docs]</a><span class="nd">@preprocess</span>
+<span class="nd">@vectorize</span>
+<span class="k">def</span> <span class="nf">bortfeld</span><span class="p">(</span><span class="n">vp1</span><span class="p">,</span> <span class="n">vs1</span><span class="p">,</span> <span class="n">rho1</span><span class="p">,</span> <span class="n">vp2</span><span class="p">,</span> <span class="n">vs2</span><span class="p">,</span> <span class="n">rho2</span><span class="p">,</span> <span class="n">theta1</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">terms</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="sd">"""</span>
+<span class="sd">    Compute Bortfeld approximation with three terms.</span>
+<span class="sd">    http://sepwww.stanford.edu/public/docs/sep111/marie2/paper_html/node2.html</span>
+<span class="sd">    Real numbers only.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        vp1 (ndarray): The upper P-wave velocity; float or 1D array length m.</span>
+<span class="sd">        vs1 (ndarray): The upper S-wave velocity; float or 1D array length m.</span>
+<span class="sd">        rho1 (ndarray): The upper layer's density; float or 1D array length m.</span>
+<span class="sd">        vp2 (ndarray): The lower P-wave velocity; float or 1D array length m.</span>
+<span class="sd">        vs2 (ndarray): The lower S-wave velocity; float or 1D array length m.</span>
+<span class="sd">        rho2 (ndarray): The lower layer's density; float or 1D array length m.</span>
+<span class="sd">        theta1 (ndarray): The incidence angle; float or 1D array length n.</span>
+<span class="sd">        terms (bool): Whether or not to return a tuple of the terms of the</span>
+<span class="sd">            equation. The first term is the acoustic impedance.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        ndarray. The 3-term Bortfeld approximation for P-P reflectivity at the</span>
+<span class="sd">            interface. Will be a float (for float inputs and one angle), a</span>
+<span class="sd">            1 x n array (for float inputs and an array of angles), a 1 x m</span>
+<span class="sd">            array (for float inputs and one angle), or an n x m array (for</span>
+<span class="sd">            array inputs and an array of angles).</span>
+<span class="sd">    """</span>
+    <span class="n">theta1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">real</span><span class="p">(</span><span class="n">theta1</span><span class="p">)</span>
+
+    <span class="n">drho</span> <span class="o">=</span> <span class="n">rho2</span><span class="o">-</span><span class="n">rho1</span>
+    <span class="n">dvp</span> <span class="o">=</span> <span class="n">vp2</span><span class="o">-</span><span class="n">vp1</span>
+    <span class="n">dvs</span> <span class="o">=</span> <span class="n">vs2</span><span class="o">-</span><span class="n">vs1</span>
+    <span class="n">rho</span> <span class="o">=</span> <span class="p">(</span><span class="n">rho1</span><span class="o">+</span><span class="n">rho2</span><span class="p">)</span><span class="o">/</span><span class="mf">2.0</span>
+    <span class="n">vp</span> <span class="o">=</span> <span class="p">(</span><span class="n">vp1</span><span class="o">+</span><span class="n">vp2</span><span class="p">)</span><span class="o">/</span><span class="mf">2.0</span>
+    <span class="n">vs</span> <span class="o">=</span> <span class="p">(</span><span class="n">vs1</span><span class="o">+</span><span class="n">vs2</span><span class="p">)</span><span class="o">/</span><span class="mf">2.0</span>
+    <span class="n">k</span> <span class="o">=</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">vs</span><span class="o">/</span><span class="n">vp</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span>
+    <span class="n">rsh</span> <span class="o">=</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="p">(</span><span class="n">dvp</span><span class="o">/</span><span class="n">vp</span> <span class="o">-</span> <span class="n">k</span><span class="o">*</span><span class="n">drho</span><span class="o">/</span><span class="n">rho</span> <span class="o">-</span> <span class="mi">2</span><span class="o">*</span><span class="n">k</span><span class="o">*</span><span class="n">dvs</span><span class="o">/</span><span class="n">vs</span><span class="p">)</span>
+
+    <span class="c1"># Compute three-term reflectivity</span>
+    <span class="n">term1</span> <span class="o">=</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="p">(</span><span class="n">dvp</span><span class="o">/</span><span class="n">vp</span> <span class="o">+</span> <span class="n">drho</span><span class="o">/</span><span class="n">rho</span><span class="p">)</span>
+    <span class="n">term2</span> <span class="o">=</span> <span class="n">rsh</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">theta1</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span>
+    <span class="n">term3</span> <span class="o">=</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">dvp</span><span class="o">/</span><span class="n">vp</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">tan</span><span class="p">(</span><span class="n">theta1</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">theta1</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span>
+
+    <span class="k">if</span> <span class="n">terms</span><span class="p">:</span>
+        <span class="n">fields</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'term1'</span><span class="p">,</span> <span class="s1">'term2'</span><span class="p">,</span> <span class="s1">'term3'</span><span class="p">]</span>
+        <span class="n">Bortfeld</span> <span class="o">=</span> <span class="n">namedtuple</span><span class="p">(</span><span class="s1">'Bortfeld'</span><span class="p">,</span> <span class="n">fields</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">Bortfeld</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">squeeze</span><span class="p">([</span><span class="n">term1</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">theta1</span><span class="p">]),</span>
+                        <span class="n">np</span><span class="o">.</span><span class="n">squeeze</span><span class="p">(</span><span class="n">term2</span><span class="p">),</span>
+                        <span class="n">np</span><span class="o">.</span><span class="n">squeeze</span><span class="p">(</span><span class="n">term3</span><span class="p">)</span>
+                        <span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">squeeze</span><span class="p">(</span><span class="n">term1</span> <span class="o">+</span> <span class="n">term2</span> <span class="o">+</span> <span class="n">term3</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="bortfeld2"><a class="viewcode-back" href="../../../bruges.reflection.html#bruges.reflection.reflection.bortfeld2">[docs]</a><span class="nd">@deprecated</span><span class="p">(</span><span class="s1">'Please use bortfeld() instead.'</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">bortfeld2</span><span class="p">(</span><span class="n">vp1</span><span class="p">,</span> <span class="n">vs1</span><span class="p">,</span> <span class="n">rho1</span><span class="p">,</span> <span class="n">vp2</span><span class="p">,</span> <span class="n">vs2</span><span class="p">,</span> <span class="n">rho2</span><span class="p">,</span> <span class="n">theta1</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">terms</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="sd">"""</span>
+<span class="sd">    The 2-term Bortfeld approximation for ava analysis. Wraps `shuey()`.</span>
+<span class="sd">    Deprecated, use `bortfeld()` instead.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        vp1 (ndarray): The upper P-wave velocity; float or 1D array length m.</span>
+<span class="sd">        vs1 (ndarray): The upper S-wave velocity; float or 1D array length m.</span>
+<span class="sd">        rho1 (ndarray): The upper layer's density; float or 1D array length m.</span>
+<span class="sd">        vp2 (ndarray): The lower P-wave velocity; float or 1D array length m.</span>
+<span class="sd">        vs2 (ndarray): The lower S-wave velocity; float or 1D array length m.</span>
+<span class="sd">        rho2 (ndarray): The lower layer's density; float or 1D array length m.</span>
+<span class="sd">        theta1 (ndarray): The incidence angle; float or 1D array length n.</span>
+<span class="sd">        terms (bool): Whether or not to return a tuple of the terms of the</span>
+<span class="sd">            equation. The first term is the acoustic impedance.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        ndarray. The 2-term Bortfeld approximation for P-P reflectivity at the</span>
+<span class="sd">            interface. Will be a float (for float inputs and one angle), a</span>
+<span class="sd">            1 x n array (for float inputs and an array of angles), a 1 x m</span>
+<span class="sd">            array (for float inputs and one angle), or an n x m array (for</span>
+<span class="sd">            array inputs and an array of angles).</span>
+<span class="sd">    """</span>
+    <span class="n">theta1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">radians</span><span class="p">(</span><span class="n">theta1</span><span class="p">)</span>
+    <span class="n">theta2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arcsin</span><span class="p">(</span><span class="n">vp2</span><span class="o">/</span><span class="n">vp1</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">theta1</span><span class="p">))</span>
+    <span class="n">term1</span> <span class="o">=</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">((</span><span class="n">vp2</span><span class="o">*</span><span class="n">rho2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">theta1</span><span class="p">))</span> <span class="o">/</span> <span class="p">(</span><span class="n">vp1</span><span class="o">*</span><span class="n">rho1</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">theta2</span><span class="p">)))</span>
+    <span class="n">svp2</span> <span class="o">=</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">theta1</span><span class="p">)</span><span class="o">/</span><span class="n">vp1</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span>
+    <span class="n">dvs2</span> <span class="o">=</span> <span class="p">(</span><span class="n">vs1</span><span class="o">**</span><span class="mi">2</span><span class="o">-</span><span class="n">vs2</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+    <span class="n">term2</span> <span class="o">=</span> <span class="n">svp2</span> <span class="o">*</span> <span class="n">dvs2</span> <span class="o">*</span> <span class="p">(</span><span class="mi">2</span><span class="o">+</span><span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">rho2</span><span class="o">/</span><span class="n">rho1</span><span class="p">)</span><span class="o">/</span><span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">vs2</span><span class="o">/</span><span class="n">vs1</span><span class="p">))</span>
+
+    <span class="k">if</span> <span class="n">terms</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">term1</span><span class="p">,</span> <span class="n">term2</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="p">(</span><span class="n">term1</span> <span class="o">+</span> <span class="n">term2</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="bortfeld3"><a class="viewcode-back" href="../../../bruges.reflection.html#bruges.reflection.reflection.bortfeld3">[docs]</a><span class="nd">@deprecated</span><span class="p">(</span><span class="s1">'Please use bortfeld() instead.'</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">bortfeld3</span><span class="p">(</span><span class="n">vp1</span><span class="p">,</span> <span class="n">vs1</span><span class="p">,</span> <span class="n">rho1</span><span class="p">,</span> <span class="n">vp2</span><span class="p">,</span> <span class="n">vs2</span><span class="p">,</span> <span class="n">rho2</span><span class="p">,</span> <span class="n">theta1</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">terms</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">bortfeld</span><span class="p">(</span><span class="n">vp1</span><span class="p">,</span> <span class="n">vs1</span><span class="p">,</span> <span class="n">rho1</span><span class="p">,</span> <span class="n">vp2</span><span class="p">,</span> <span class="n">vs2</span><span class="p">,</span> <span class="n">rho2</span><span class="p">,</span> <span class="n">theta1</span><span class="o">=</span><span class="n">theta1</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="hilterman"><a class="viewcode-back" href="../../../bruges.reflection.html#bruges.reflection.reflection.hilterman">[docs]</a><span class="nd">@preprocess</span>
+<span class="nd">@vectorize</span>
+<span class="k">def</span> <span class="nf">hilterman</span><span class="p">(</span><span class="n">vp1</span><span class="p">,</span> <span class="n">vs1</span><span class="p">,</span> <span class="n">rho1</span><span class="p">,</span> <span class="n">vp2</span><span class="p">,</span> <span class="n">vs2</span><span class="p">,</span> <span class="n">rho2</span><span class="p">,</span> <span class="n">theta1</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">terms</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="sd">"""</span>
+<span class="sd">    Not recommended, only seems to match Zoeppritz to about 10 deg.</span>
+
+<span class="sd">    Hilterman (1989) approximation from Mavko et al. Rock Physics Handbook.</span>
+<span class="sd">    According to Dvorkin: "arguably the simplest and a very convenient</span>
+<span class="sd">    [approximation]." At least for small angles and small contrasts. Real</span>
+<span class="sd">    numbers only.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        vp1 (ndarray): The upper P-wave velocity; float or 1D array length m.</span>
+<span class="sd">        vs1 (ndarray): The upper S-wave velocity; float or 1D array length m.</span>
+<span class="sd">        rho1 (ndarray): The upper layer's density; float or 1D array length m.</span>
+<span class="sd">        vp2 (ndarray): The lower P-wave velocity; float or 1D array length m.</span>
+<span class="sd">        vs2 (ndarray): The lower S-wave velocity; float or 1D array length m.</span>
+<span class="sd">        rho2 (ndarray): The lower layer's density; float or 1D array length m.</span>
+<span class="sd">        theta1 (ndarray): The incidence angle; float or 1D array length n.</span>
+<span class="sd">        terms (bool): Whether or not to return a tuple of the terms of the</span>
+<span class="sd">            equation. The first term is the acoustic impedance.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        ndarray. The Hilterman approximation for P-P reflectivity at the</span>
+<span class="sd">            interface. Will be a float (for float inputs and one angle), a</span>
+<span class="sd">            1 x n array (for float inputs and an array of angles), a 1 x m</span>
+<span class="sd">            array (for float inputs and one angle), or an n x m array (for</span>
+<span class="sd">            array inputs and an array of angles).</span>
+<span class="sd">    """</span>
+    <span class="n">theta1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">real</span><span class="p">(</span><span class="n">theta1</span><span class="p">)</span>
+
+    <span class="n">ip1</span> <span class="o">=</span> <span class="n">vp1</span> <span class="o">*</span> <span class="n">rho1</span>
+    <span class="n">ip2</span> <span class="o">=</span> <span class="n">vp2</span> <span class="o">*</span> <span class="n">rho2</span>
+    <span class="n">rp0</span> <span class="o">=</span> <span class="p">(</span><span class="n">ip2</span> <span class="o">-</span> <span class="n">ip1</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">ip2</span> <span class="o">+</span> <span class="n">ip1</span><span class="p">)</span>
+
+    <span class="n">pr2</span><span class="p">,</span> <span class="n">pr1</span> <span class="o">=</span> <span class="n">moduli</span><span class="o">.</span><span class="n">pr</span><span class="p">(</span><span class="n">vp2</span><span class="p">,</span> <span class="n">vs2</span><span class="p">),</span> <span class="n">moduli</span><span class="o">.</span><span class="n">pr</span><span class="p">(</span><span class="n">vp1</span><span class="p">,</span> <span class="n">vs1</span><span class="p">)</span>
+    <span class="n">pravg</span> <span class="o">=</span> <span class="p">(</span><span class="n">pr2</span> <span class="o">+</span> <span class="n">pr1</span><span class="p">)</span> <span class="o">/</span> <span class="mf">2.</span>
+    <span class="n">pr</span> <span class="o">=</span> <span class="p">(</span><span class="n">pr2</span> <span class="o">-</span> <span class="n">pr1</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">pravg</span><span class="p">)</span><span class="o">**</span><span class="mf">2.</span>
+
+    <span class="n">term1</span> <span class="o">=</span> <span class="n">rp0</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">theta1</span><span class="p">)</span><span class="o">**</span><span class="mf">2.</span>
+    <span class="n">term2</span> <span class="o">=</span> <span class="n">pr</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">theta1</span><span class="p">)</span><span class="o">**</span><span class="mf">2.</span>
+
+    <span class="k">if</span> <span class="n">terms</span><span class="p">:</span>
+        <span class="n">fields</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'term1'</span><span class="p">,</span> <span class="s1">'term2'</span><span class="p">]</span>
+        <span class="n">Hilterman</span> <span class="o">=</span> <span class="n">namedtuple</span><span class="p">(</span><span class="s1">'Hilterman'</span><span class="p">,</span> <span class="n">fields</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">Hilterman</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">squeeze</span><span class="p">(</span><span class="n">term1</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">squeeze</span><span class="p">(</span><span class="n">term2</span><span class="p">))</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">squeeze</span><span class="p">(</span><span class="n">term1</span> <span class="o">+</span> <span class="n">term2</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="blangy"><a class="viewcode-back" href="../../../bruges.reflection.html#bruges.reflection.reflection.blangy">[docs]</a><span class="k">def</span> <span class="nf">blangy</span><span class="p">(</span><span class="n">vp1</span><span class="p">,</span> <span class="n">vs1</span><span class="p">,</span> <span class="n">rho1</span><span class="p">,</span> <span class="n">vp2</span><span class="p">,</span> <span class="n">vs2</span><span class="p">,</span> <span class="n">rho2</span><span class="p">,</span>
+           <span class="n">d1</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">e1</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">d2</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">e2</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+           <span class="n">theta1</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+    <span class="sd">"""Implements the Blangy equation with the same interface as the other</span>
+<span class="sd">    reflectivity equations. Wraps bruges.anisotropy.blangy(), which you may</span>
+<span class="sd">    prefer to use directly.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        vp1 (ndarray): The upper P-wave velocity; float or 1D array length m.</span>
+<span class="sd">        vs1 (ndarray): The upper S-wave velocity; float or 1D array length m.</span>
+<span class="sd">        rho1 (ndarray): The upper layer's density; float or 1D array length m.</span>
+<span class="sd">        vp2 (ndarray): The lower P-wave velocity; float or 1D array length m.</span>
+<span class="sd">        vs2 (ndarray): The lower S-wave velocity; float or 1D array length m.</span>
+<span class="sd">        rho2 (ndarray): The lower layer's density; float or 1D array length m.</span>
+<span class="sd">        d1 (ndarray): The upper delta; float or 1D array length m.</span>
+<span class="sd">        e1 (ndarray): The upper epsilon; float or 1D array length m.</span>
+<span class="sd">        d2 (ndarray): The lower delta; float or 1D array length m.</span>
+<span class="sd">        e2 (ndarray): The lower epsilon; float or 1D array length m.</span>
+<span class="sd">        theta1 (ndarray): The incidence angle; float or 1D array length n.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        ndarray. The Blangy approximation for P-P reflectivity at the</span>
+<span class="sd">            interface. Wraps `anisotropy.blangy()`.</span>
+<span class="sd">    """</span>
+    <span class="n">_</span><span class="p">,</span> <span class="n">anisotropic</span> <span class="o">=</span> <span class="n">anisotropy</span><span class="o">.</span><span class="n">blangy</span><span class="p">(</span><span class="n">vp1</span><span class="p">,</span> <span class="n">vs1</span><span class="p">,</span> <span class="n">rho1</span><span class="p">,</span> <span class="n">d1</span><span class="p">,</span> <span class="n">e1</span><span class="p">,</span>  <span class="c1"># UPPER</span>
+                                       <span class="n">vp2</span><span class="p">,</span> <span class="n">vs2</span><span class="p">,</span> <span class="n">rho2</span><span class="p">,</span> <span class="n">d2</span><span class="p">,</span> <span class="n">e2</span><span class="p">,</span>  <span class="c1"># LOWER</span>
+                                       <span class="n">theta1</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">anisotropic</span></div>
+</pre></div>
+        </article>
+      </div>
+      <footer>
+        
+        <div class="related-pages">
+          
+          
+        </div>
+        <div class="bottom-of-page">
+          <div class="left-details">
+            <div class="copyright">
+                Copyright &#169; 2022, Agile Scientific
+            </div>
+            Made with <a href="https://www.sphinx-doc.org/">Sphinx</a> and <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
+            
+            <a href="https://github.com/pradyunsg/furo">Furo</a>
+            
+          </div>
+          <div class="right-details">
+            <div class="icons">
+              
+            </div>
+          </div>
+        </div>
+        
+      </footer>
+    </div>
+    <aside class="toc-drawer no-toc">
+      
+      
+      
+    </aside>
+  </div>
+</div><script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+    <script src="../../../_static/jquery.js"></script>
+    <script src="../../../_static/underscore.js"></script>
+    <script src="../../../_static/doctools.js"></script>
+    <script src="../../../_static/scripts/furo.js"></script>
+    </body>
+</html>

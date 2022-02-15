@@ -1,0 +1,645 @@
+<!doctype html>
+<html class="no-js" lang="en">
+  <head><meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
+    <meta name="color-scheme" content="light dark"><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+<link rel="index" title="Index" href="genindex.html" /><link rel="search" title="Search" href="search.html" /><link rel="next" title="bruges.filters package" href="bruges.filters.html" /><link rel="prev" title="bruges package" href="bruges.html" />
+
+    <link rel="shortcut icon" href="_static/favicon.ico"/><meta name="generator" content="sphinx-4.4.0, furo 2022.02.14.1"/>
+        <title>bruges.attribute package - bruges documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/furo.css?digest=a8f031f701c6af50c9919b48f173a5785af06fac" />
+    <link rel="stylesheet" type="text/css" href="_static/plot_directive.css" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/furo-extensions.css?digest=25ceb02ed1c46dc30f2321ff83e92799f69dfdb9" />
+    <link rel="stylesheet" type="text/css" href="_static/custom.css" />
+    
+    
+
+
+<style>
+  body {
+    --color-code-background: #f8f8f8;
+  --color-code-foreground: black;
+  
+  }
+  body[data-theme="dark"] {
+    --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+  }
+  @media (prefers-color-scheme: dark) {
+    body:not([data-theme="light"]) {
+      --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+    }
+  }
+</style></head>
+  <body>
+    <script>
+      document.body.dataset.theme = localStorage.getItem("theme") || "auto";
+    </script>
+    
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="svg-toc" viewBox="0 0 24 24">
+    <title>Contents</title>
+    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 1024 1024">
+      <path d="M408 442h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8zm-8 204c0 4.4 3.6 8 8 8h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56zm504-486H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zm0 632H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zM115.4 518.9L271.7 642c5.8 4.6 14.4.5 14.4-6.9V388.9c0-7.4-8.5-11.5-14.4-6.9L115.4 505.1a8.74 8.74 0 0 0 0 13.8z"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-menu" viewBox="0 0 24 24">
+    <title>Menu</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-menu">
+      <line x1="3" y1="12" x2="21" y2="12"></line>
+      <line x1="3" y1="6" x2="21" y2="6"></line>
+      <line x1="3" y1="18" x2="21" y2="18"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+    <title>Expand</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-chevron-right">
+      <polyline points="9 18 15 12 9 6"></polyline>
+    </svg>
+  </symbol>
+  <symbol id="svg-sun" viewBox="0 0 24 24">
+    <title>Light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="feather-sun">
+      <circle cx="12" cy="12" r="5"></circle>
+      <line x1="12" y1="1" x2="12" y2="3"></line>
+      <line x1="12" y1="21" x2="12" y2="23"></line>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+      <line x1="1" y1="12" x2="3" y2="12"></line>
+      <line x1="21" y1="12" x2="23" y2="12"></line>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon" viewBox="0 0 24 24">
+    <title>Dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-moon">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
+    </svg>
+  </symbol>
+  <symbol id="svg-sun-half" viewBox="0 0 24 24">
+    <title>Auto light/dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-shadow">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+      <circle cx="12" cy="12" r="9" />
+      <path d="M13 12h5" />
+      <path d="M13 15h4" />
+      <path d="M13 18h1" />
+      <path d="M13 9h4" />
+      <path d="M13 6h1" />
+    </svg>
+  </symbol>
+</svg>
+
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation">
+<input type="checkbox" class="sidebar-toggle" name="__toc" id="__toc">
+<label class="overlay sidebar-overlay" for="__navigation">
+  <div class="visually-hidden">Hide navigation sidebar</div>
+</label>
+<label class="overlay toc-overlay" for="__toc">
+  <div class="visually-hidden">Hide table of contents sidebar</div>
+</label>
+
+
+
+<div class="page">
+  <header class="mobile-header">
+    <div class="header-left">
+      <label class="nav-overlay-icon" for="__navigation">
+        <div class="visually-hidden">Toggle site navigation sidebar</div>
+        <i class="icon"><svg><use href="#svg-menu"></use></svg></i>
+      </label>
+    </div>
+    <div class="header-center">
+      <a href="index.html"><div class="brand">bruges  documentation</div></a>
+    </div>
+    <div class="header-right">
+      <div class="theme-toggle-container theme-toggle-header">
+        <button class="theme-toggle">
+          <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+          <svg class="theme-icon-when-auto"><use href="#svg-sun-half"></use></svg>
+          <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+          <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+        </button>
+      </div>
+      <label class="toc-overlay-icon toc-header-icon" for="__toc">
+        <div class="visually-hidden">Toggle table of contents sidebar</div>
+        <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+      </label>
+    </div>
+  </header>
+  <aside class="sidebar-drawer">
+    <div class="sidebar-container">
+      
+      <div class="sidebar-sticky"><a class="sidebar-brand centered" href="index.html">
+  
+  <div class="sidebar-logo-container">
+    <img class="sidebar-logo" src="_static/bruges_logo.png" alt="Logo"/>
+  </div>
+  
+  
+</a><form class="sidebar-search-container" method="get" action="search.html" role="search">
+  <input class="sidebar-search" placeholder=Search name="q" aria-label="Search">
+  <input type="hidden" name="check_keywords" value="yes">
+  <input type="hidden" name="area" value="default">
+</form>
+<div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
+  <p class="caption" role="heading"><span class="caption-text">API reference</span></p>
+<ul class="current">
+<li class="toctree-l1 current has-children"><a class="reference internal" href="bruges.html">bruges package</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="current">
+<li class="toctree-l2 current current-page"><a class="current reference internal" href="#">bruges.attribute package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="bruges.filters.html">bruges.filters package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="bruges.models.html">bruges.models package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="bruges.noise.html">bruges.noise package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="bruges.petrophysics.html">bruges.petrophysics package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="bruges.reflection.html">bruges.reflection package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="bruges.rockphysics.html">bruges.rockphysics package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="bruges.transform.html">bruges.transform package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="bruges.unit.html">bruges.unit package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="bruges.util.html">bruges.util package</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Other resources</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="development.html">Development</a></li>
+<li class="toctree-l1"><a class="reference internal" href="authors.html">Authors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="license.html">License</a></li>
+<li class="toctree-l1"><a class="reference internal" href="changelog.html">Changelog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contributing.html">Contributing</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Project links</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="https://pypi.org/project/bruges/">PyPI releases</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/agile-geoscience/bruges">Code in GitHub</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/agile-geoscience/bruges/issues">Issue tracker</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://code.agilescientific.com/community">Community guidelines</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://code.agilescientific.com">Agile's software</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://www.agilescientific.com">Agile's website</a></li>
+</ul>
+
+</div>
+</div>
+
+      </div>
+      
+    </div>
+  </aside>
+  <div class="main">
+    <div class="content">
+      <div class="article-container">
+        <div class="content-icon-container"><div class="theme-toggle-container theme-toggle-content">
+            <button class="theme-toggle">
+              <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+              <svg class="theme-icon-when-auto"><use href="#svg-sun-half"></use></svg>
+              <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+              <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+            </button>
+          </div>
+          <label class="toc-overlay-icon toc-content-icon" for="__toc">
+            <div class="visually-hidden">Toggle table of contents sidebar</div>
+            <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+          </label>
+        </div>
+        <article role="main">
+          <section id="bruges-attribute-package">
+<h1>bruges.attribute package<a class="headerlink" href="#bruges-attribute-package" title="Permalink to this headline">#</a></h1>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">#</a></h2>
+</section>
+<section id="module-bruges.attribute.complex">
+<span id="bruges-attribute-complex-module"></span><h2>bruges.attribute.complex module<a class="headerlink" href="#module-bruges.attribute.complex" title="Permalink to this headline">#</a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="bruges.attribute.complex.envelope">
+<span class="sig-prename descclassname"><span class="pre">bruges.attribute.complex.</span></span><span class="sig-name descname"><span class="pre">envelope</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">traces</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bruges.attribute.complex.envelope" title="Permalink to this definition">#</a></dt>
+<dd><p>Compute instantaneous amplitude, also known as the envelope or
+reflection strength.</p>
+<p>The attribute is computed over the last dimension. That is, time should
+be in the last dimension, so a 100 inline, 100 crossline seismic volume
+with 250 time slices would have shape (100, 100, 250).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>traces</strong> (<em>ndarray</em>) – The data array to use for calculating energy.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>An array the same dimensions as the input array.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py function">
+<dt class="sig sig-object py" id="bruges.attribute.complex.instantaneous_amplitude">
+<span class="sig-prename descclassname"><span class="pre">bruges.attribute.complex.</span></span><span class="sig-name descname"><span class="pre">instantaneous_amplitude</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">traces</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bruges/attribute/complex.html#instantaneous_amplitude"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bruges.attribute.complex.instantaneous_amplitude" title="Permalink to this definition">#</a></dt>
+<dd><p>Compute instantaneous amplitude, also known as the envelope or
+reflection strength.</p>
+<p>The attribute is computed over the last dimension. That is, time should
+be in the last dimension, so a 100 inline, 100 crossline seismic volume
+with 250 time slices would have shape (100, 100, 250).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>traces</strong> (<em>ndarray</em>) – The data array to use for calculating energy.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>An array the same dimensions as the input array.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py function">
+<dt class="sig sig-object py" id="bruges.attribute.complex.instantaneous_frequency">
+<span class="sig-prename descclassname"><span class="pre">bruges.attribute.complex.</span></span><span class="sig-name descname"><span class="pre">instantaneous_frequency</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">traces</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dt</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">kind</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'so'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">percentile_clip</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">99</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bruges/attribute/complex.html#instantaneous_frequency"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bruges.attribute.complex.instantaneous_frequency" title="Permalink to this definition">#</a></dt>
+<dd><p>Compute instantaneous frequency with a discrete approximation.</p>
+<p>The attribute is computed over the last dimension. That is, time should
+be in the last dimension, so a 100 inline, 100 crossline seismic volume
+with 250 time slices would have shape (100, 100, 250).</p>
+<p>These attributes can be noisy so a percentile clips is applied.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>traces</strong> (<em>ndarray</em>) – The data array to use for calculating energy.</p></li>
+<li><p><strong>dt</strong> (<em>float</em>) – The sample interval in seconds, e.g. 0.004 for 4 ms sample
+interval (250 Hz sample frequency).</p></li>
+<li><p><strong>kind</strong> (<em>str</em>) – “scipy”, “claerbout” or “so” to denote a naive method from
+the SciPy docs, Claerbout’s (1985) method or that of Scheuer &amp; Oldenburg
+(1988). Claerbout’s approximation is not stable above about half the
+Nyquist frequency (i.e. one quarter of the sampling frequency). The
+SciPy implementation is not recommended for seismic data.</p></li>
+<li><p><strong>percentile_clip</strong> (<em>float</em>) – Percentile at which to clip the data.
+Computed from the absolute values, clipped symmetrically
+at -p and +p, where p is the value at the 98th percentile.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>An array the same dimensions as the input array.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py function">
+<dt class="sig sig-object py" id="bruges.attribute.complex.instantaneous_phase">
+<span class="sig-prename descclassname"><span class="pre">bruges.attribute.complex.</span></span><span class="sig-name descname"><span class="pre">instantaneous_phase</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">traces</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bruges/attribute/complex.html#instantaneous_phase"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bruges.attribute.complex.instantaneous_phase" title="Permalink to this definition">#</a></dt>
+<dd><p>Compute the instantaneous phase of the data.</p>
+<div class="math-wrapper"><div class="math notranslate nohighlight">
+\[\phi(t) = {\rm Im}[\ln h(t)]\]</div></div>
+<p>See <a class="reference external" href="https://wiki.seg.org/wiki/Instantaneous_attributes">https://wiki.seg.org/wiki/Instantaneous_attributes</a>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>traces</strong> (<em>ndarray</em>) – The data array to use for calculating energy.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>An array the same dimensions as the input array.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py function">
+<dt class="sig sig-object py" id="bruges.attribute.complex.quadrature">
+<span class="sig-prename descclassname"><span class="pre">bruges.attribute.complex.</span></span><span class="sig-name descname"><span class="pre">quadrature</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">traces</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bruges/attribute/complex.html#quadrature"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bruges.attribute.complex.quadrature" title="Permalink to this definition">#</a></dt>
+<dd><p>Compute the quadrature trace.</p>
+<p>See <a class="reference external" href="https://wiki.seg.org/wiki/Instantaneous_attributes">https://wiki.seg.org/wiki/Instantaneous_attributes</a>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>traces</strong> (<em>ndarray</em>) – The data array to use for calculating energy.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>An array the same dimensions as the input array.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py function">
+<dt class="sig sig-object py" id="bruges.attribute.complex.reflection_strength">
+<span class="sig-prename descclassname"><span class="pre">bruges.attribute.complex.</span></span><span class="sig-name descname"><span class="pre">reflection_strength</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">traces</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bruges.attribute.complex.reflection_strength" title="Permalink to this definition">#</a></dt>
+<dd><p>Compute instantaneous amplitude, also known as the envelope or
+reflection strength.</p>
+<p>The attribute is computed over the last dimension. That is, time should
+be in the last dimension, so a 100 inline, 100 crossline seismic volume
+with 250 time slices would have shape (100, 100, 250).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>traces</strong> (<em>ndarray</em>) – The data array to use for calculating energy.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>An array the same dimensions as the input array.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+</section>
+<section id="module-bruges.attribute.dipsteer">
+<span id="bruges-attribute-dipsteer-module"></span><h2>bruges.attribute.dipsteer module<a class="headerlink" href="#module-bruges.attribute.dipsteer" title="Permalink to this headline">#</a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="bruges.attribute.dipsteer.dipsteer">
+<span class="sig-prename descclassname"><span class="pre">bruges.attribute.dipsteer.</span></span><span class="sig-name descname"><span class="pre">dipsteer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">window_length</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stepout</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">maxlag</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">overlap</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dt</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">return_correlation</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bruges/attribute/dipsteer.html#dipsteer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bruges.attribute.dipsteer.dipsteer" title="Permalink to this definition">#</a></dt>
+<dd><p>Calculates a dip field by finding the maximum correlation between
+adjacent traces.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>(</strong><strong>ndarray</strong><strong>)</strong> (<em>data</em>) – A 2D seismic section (samples,traces) used to
+calculate dip.</p></li>
+<li><p><strong>(</strong><strong>float</strong><strong>)</strong> (<em>maxlag</em>) – The length [in ms] of the window to use.</p></li>
+<li><p><strong>(</strong><strong>int</strong><strong>)</strong> (<em>stepout</em>) – The number of traces on either side of each point
+to average when calculating the dip.</p></li>
+<li><p><strong>(</strong><strong>float</strong><strong>)</strong> – The maximum amount time lag to use when correlating
+the traces.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Keyword Arguments</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>(</strong><strong>float</strong><strong>)</strong> (<em>dt</em>) – The fractional overlap for each window. A value
+of 0 uses no redudant data, a value of 1 slides the dip correlator one
+sample at a time. Defaults to 1.</p></li>
+<li><p><strong>(</strong><strong>float</strong><strong>)</strong> – The time sample interval in ms.</p></li>
+<li><p><strong>(</strong><strong>bool</strong><strong>)</strong> (<em>return_correlation</em>) – Whether to return the correlation
+coefficients. If you choose True, you’ll get a tuple, not an ndarray.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>a dip field [samples/trace] of the same shape as the input data
+(and optionally correlation coefficients, in which case you’ll get a
+tuple of ndarrays back).</p>
+</dd>
+</dl>
+</dd></dl>
+</section>
+<section id="module-bruges.attribute.energy">
+<span id="bruges-attribute-energy-module"></span><h2>bruges.attribute.energy module<a class="headerlink" href="#module-bruges.attribute.energy" title="Permalink to this headline">#</a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="bruges.attribute.energy.energy">
+<span class="sig-prename descclassname"><span class="pre">bruges.attribute.energy.</span></span><span class="sig-name descname"><span class="pre">energy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">traces</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">duration</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dt</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bruges/attribute/energy.html#energy"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bruges.attribute.energy.energy" title="Permalink to this definition">#</a></dt>
+<dd><p>Compute an mean-squared energy measurement on seismic data.</p>
+<p>The attribute is computed over the last dimension. That is, time should
+be in the last dimension, so a 100 inline, 100 crossline seismic volume
+with 250 time slices would have shape (100, 100, 250).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>traces</strong> (<em>ndarray</em>) – The data array to use for calculating energy.</p></li>
+<li><p><strong>duration</strong> (<em>float</em>) – the time duration of the window (in seconds), or
+samples if dt=1.</p></li>
+<li><p><strong>dt</strong> (<em>float</em>) – the sample interval of the data (in seconds). Defaults
+to 1 so duration can be in samples.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>An array the same dimensions as the input array.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+</section>
+<section id="module-bruges.attribute.similarity">
+<span id="bruges-attribute-similarity-module"></span><h2>bruges.attribute.similarity module<a class="headerlink" href="#module-bruges.attribute.similarity" title="Permalink to this headline">#</a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="bruges.attribute.similarity.gersztenkorn">
+<span class="sig-prename descclassname"><span class="pre">bruges.attribute.similarity.</span></span><span class="sig-name descname"><span class="pre">gersztenkorn</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">traces</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bruges/attribute/similarity.html#gersztenkorn"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bruges.attribute.similarity.gersztenkorn" title="Permalink to this definition">#</a></dt>
+<dd><p>Gersztenkorn, A., and K. J. Marfurt, 1999, Eigenstructure‐based coherence
+computations as an aid to 3-D structural and stratigraphic mapping:
+GEOPHYSICS, 64, 1468-1479. doi:10.1190/1.1444651</p>
+</dd></dl>
+<dl class="py function">
+<dt class="sig sig-object py" id="bruges.attribute.similarity.gradient_structure_tensor">
+<span class="sig-prename descclassname"><span class="pre">bruges.attribute.similarity.</span></span><span class="sig-name descname"><span class="pre">gradient_structure_tensor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">seismic</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">window</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sigma</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bruges/attribute/similarity.html#gradient_structure_tensor"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bruges.attribute.similarity.gradient_structure_tensor" title="Permalink to this definition">#</a></dt>
+<dd><p>Randen, T., E. Monsen, C. Singe, A. Abrahamsen, J. Hansen, T. Saeter, and J. Schlaf, 2000,
+Three-dimensional texture attributes for seismic data analysis, 70th Annual International Meeting,
+SEG, Expanded Abstracts, 668-671.</p>
+</dd></dl>
+<dl class="py function">
+<dt class="sig sig-object py" id="bruges.attribute.similarity.gradients">
+<span class="sig-prename descclassname"><span class="pre">bruges.attribute.similarity.</span></span><span class="sig-name descname"><span class="pre">gradients</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">traces</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sigma</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bruges/attribute/similarity.html#gradients"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bruges.attribute.similarity.gradients" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+<dl class="py function">
+<dt class="sig sig-object py" id="bruges.attribute.similarity.gst_coherence_calc">
+<span class="sig-prename descclassname"><span class="pre">bruges.attribute.similarity.</span></span><span class="sig-name descname"><span class="pre">gst_coherence_calc</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">region</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bruges/attribute/similarity.html#gst_coherence_calc"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bruges.attribute.similarity.gst_coherence_calc" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+<dl class="py function">
+<dt class="sig sig-object py" id="bruges.attribute.similarity.marfurt">
+<span class="sig-prename descclassname"><span class="pre">bruges.attribute.similarity.</span></span><span class="sig-name descname"><span class="pre">marfurt</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">traces</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bruges/attribute/similarity.html#marfurt"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bruges.attribute.similarity.marfurt" title="Permalink to this definition">#</a></dt>
+<dd><p>Marfurt, K., V. Sudhaker, A. Gersztenkorn, K. D. Crawford, and S. E. Nissen, 1999,
+Coherency calculations in the presence of structural dip: GEOPHYSICS, 64, 104-111.
+doi:10.1190/1.1444508</p>
+</dd></dl>
+<dl class="py function">
+<dt class="sig sig-object py" id="bruges.attribute.similarity.moving_window">
+<span class="sig-prename descclassname"><span class="pre">bruges.attribute.similarity.</span></span><span class="sig-name descname"><span class="pre">moving_window</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">traces</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">func</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">window</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bruges/attribute/similarity.html#moving_window"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bruges.attribute.similarity.moving_window" title="Permalink to this definition">#</a></dt>
+<dd><p>Helper function for multi-trace attribute generation.
+This function applies a 3D function func to process a
+region of shape <cite>window</cite> over a dataset <cite>data</cite>.</p>
+</dd></dl>
+<dl class="py function">
+<dt class="sig sig-object py" id="bruges.attribute.similarity.moving_window4d">
+<span class="sig-prename descclassname"><span class="pre">bruges.attribute.similarity.</span></span><span class="sig-name descname"><span class="pre">moving_window4d</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">grad</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">window</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">func</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bruges/attribute/similarity.html#moving_window4d"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bruges.attribute.similarity.moving_window4d" title="Permalink to this definition">#</a></dt>
+<dd><p>Applies the given function <em>func</em> over a moving <em>window</em>, reducing
+the input <em>grad</em> array from 4D to 3D.</p>
+</dd></dl>
+<dl class="py function">
+<dt class="sig sig-object py" id="bruges.attribute.similarity.similarity">
+<span class="sig-prename descclassname"><span class="pre">bruges.attribute.similarity.</span></span><span class="sig-name descname"><span class="pre">similarity</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">traces</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">duration</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dt</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">step_out</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">kind</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'gst'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sigma</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bruges/attribute/similarity.html#similarity"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bruges.attribute.similarity.similarity" title="Permalink to this definition">#</a></dt>
+<dd><p>Compute similarity for a seismic section using one of various methods.</p>
+<p>Expects time or depth to be in the last axis of a 2D or 3D input.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>traces</strong> – A 2D or 3D NumPy array arranged as (cdp, twt) or
+(iline, xline, twt).</p></li>
+<li><p><strong>duration</strong> – The length in seconds of the window trace kernel
+used to calculate the similarity.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Keyword Arguments</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>(</strong><strong>default=1</strong><strong>)</strong> (<em>sigma</em>) – The sample interval of the traces in sec.
+(eg. 0.001, 0.002, …). Will default to one, allowing
+duration to be given in samples.</p></li>
+<li><p><strong>(</strong><strong>default=1</strong><strong>)</strong> – The number of adjacent traces to the kernel to compute similarity over.</p></li>
+<li><p><strong>(</strong><strong>default='gst'</strong><strong>)</strong> (<em>kind</em>) – The method to use for the computation. Can be “marfurt”, “gersztenkorn”
+or “gst” (gradient structure tensor).</p></li>
+<li><p><strong>(</strong><strong>default=1</strong><strong>)</strong> – The width of the Gaussian function used to compute gradients.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+</section>
+<section id="module-bruges.attribute.spectraldecomp">
+<span id="bruges-attribute-spectraldecomp-module"></span><h2>bruges.attribute.spectraldecomp module<a class="headerlink" href="#module-bruges.attribute.spectraldecomp" title="Permalink to this headline">#</a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="bruges.attribute.spectraldecomp.spectraldecomp">
+<span class="sig-prename descclassname"><span class="pre">bruges.attribute.spectraldecomp.</span></span><span class="sig-name descname"><span class="pre">spectraldecomp</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">f</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">(0.1,</span> <span class="pre">0.25,</span> <span class="pre">0.4)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">window_length</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">32</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dt</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">window_type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'hann'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">overlap</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">normalize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bruges/attribute/spectraldecomp.html#spectraldecomp"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bruges.attribute.spectraldecomp.spectraldecomp" title="Permalink to this definition">#</a></dt>
+<dd><p>Uses the STFT to decompose traces into normalized spectra. Only
+frequencies defined by the user will be output. Using 3
+frequencies will work for RGB color plots.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>data</strong> – A 1/2D array (samples, traces) of data that will
+be decomposed.</p>
+</dd>
+<dt class="field-even">Keyword Arguments</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>f</strong> – A list of frequencies to select from the spectra.</p></li>
+<li><p><strong>window_length</strong> – The length of fft window to use for
+the STFTs. Defaults to 32. Can be
+provided in seconds if dt is specified.</p></li>
+<li><p><strong>dt</strong> – The time sample interval of the traces.</p></li>
+<li><p><strong>window_type</strong> – The type of window to use for the STFT. The
+same input as scipy.signal.get_window.</p></li>
+<li><p><strong>overlap</strong> – The fraction of overlap between adjacent
+STFT windows</p></li>
+<li><p><strong>normalize</strong> – Normalize the energy in each STFT window</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>an array of shape (samples, traces, f)</p>
+</dd>
+</dl>
+</dd></dl>
+</section>
+<section id="module-bruges.attribute.spectrogram">
+<span id="bruges-attribute-spectrogram-module"></span><h2>bruges.attribute.spectrogram module<a class="headerlink" href="#module-bruges.attribute.spectrogram" title="Permalink to this headline">#</a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="bruges.attribute.spectrogram.spectrogram">
+<span class="sig-prename descclassname"><span class="pre">bruges.attribute.spectrogram.</span></span><span class="sig-name descname"><span class="pre">spectrogram</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">window_length</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dt</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">window_type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'boxcar'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">overlap</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">normalize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">zero_padding</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bruges/attribute/spectrogram.html#spectrogram"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bruges.attribute.spectrogram.spectrogram" title="Permalink to this definition">#</a></dt>
+<dd><p>Calculates a spectrogram using windowed STFTs.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> (<em>array</em>) – 1D numpy array to process into spectra.</p></li>
+<li><p><strong>window_length</strong> (<em>float</em>) – The length of the window in seconds if dt is set, otherwise in samples. Will zero pad to the closest power  of two.</p></li>
+<li><p><strong>window_type</strong> – A string specifying the type of window to use for the STFT. The same input as scipy.signal.get_window</p></li>
+<li><p><strong>dt</strong> (<em>float</em><em> or </em><em>int</em>) – The time sample interval of the trace. Defaults to 1, which allows window_length to be in seconds.</p></li>
+<li><p><strong>overlap</strong> (<em>float</em>) – The fractional overlap for each window. A value of 0 uses no redudant data, a value of 1 slides the STFT window one sample at a time. Defaults to 0.5</p></li>
+<li><p><strong>normalize</strong> (<em>bool</em>) – Normalizes the each spectral slice to have unity energy.</p></li>
+<li><p><strong>zero_padding</strong> (<em>float</em><em> or </em><em>int</em>) – The amount of zero padding to when creating the spectra.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>out</strong></p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>A spectrogram of the data ([time, freq]). (2D array for 1D input)</p>
+</dd>
+</dl>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<dl class="simple">
+<dt><code class="xref py py-obj docutils literal notranslate"><span class="pre">spectraldecomp</span></code></dt><dd><p>Spectral decomposition</p>
+</dd>
+</dl>
+</div>
+</dd></dl>
+</section>
+<section id="module-bruges.attribute">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-bruges.attribute" title="Permalink to this headline">#</a></h2>
+</section>
+</section>
+
+        </article>
+      </div>
+      <footer>
+        
+        <div class="related-pages">
+          <a class="next-page" href="bruges.filters.html">
+              <div class="page-info">
+                <div class="context">
+                  <span>Next</span>
+                </div>
+                <div class="title">bruges.filters package</div>
+              </div>
+              <svg><use href="#svg-arrow-right"></use></svg>
+            </a>
+          <a class="prev-page" href="bruges.html">
+              <svg><use href="#svg-arrow-right"></use></svg>
+              <div class="page-info">
+                <div class="context">
+                  <span>Previous</span>
+                </div>
+                
+                <div class="title">bruges package</div>
+                
+              </div>
+            </a>
+        </div>
+        <div class="bottom-of-page">
+          <div class="left-details">
+            <div class="copyright">
+                Copyright &#169; 2022, Agile Scientific
+            </div>
+            Made with <a href="https://www.sphinx-doc.org/">Sphinx</a> and <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
+            
+            <a href="https://github.com/pradyunsg/furo">Furo</a>
+            
+          </div>
+          <div class="right-details">
+            <div class="icons">
+              
+            </div>
+          </div>
+        </div>
+        
+      </footer>
+    </div>
+    <aside class="toc-drawer">
+      
+      
+      <div class="toc-sticky toc-scroll">
+        <div class="toc-title-container">
+          <span class="toc-title">
+            Contents
+          </span>
+        </div>
+        <div class="toc-tree-container">
+          <div class="toc-tree">
+            <ul>
+<li><a class="reference internal" href="#">bruges.attribute package</a><ul>
+<li><a class="reference internal" href="#submodules">Submodules</a></li>
+<li><a class="reference internal" href="#module-bruges.attribute.complex">bruges.attribute.complex module</a></li>
+<li><a class="reference internal" href="#module-bruges.attribute.dipsteer">bruges.attribute.dipsteer module</a></li>
+<li><a class="reference internal" href="#module-bruges.attribute.energy">bruges.attribute.energy module</a></li>
+<li><a class="reference internal" href="#module-bruges.attribute.similarity">bruges.attribute.similarity module</a></li>
+<li><a class="reference internal" href="#module-bruges.attribute.spectraldecomp">bruges.attribute.spectraldecomp module</a></li>
+<li><a class="reference internal" href="#module-bruges.attribute.spectrogram">bruges.attribute.spectrogram module</a></li>
+<li><a class="reference internal" href="#module-bruges.attribute">Module contents</a></li>
+</ul>
+</li>
+</ul>
+
+          </div>
+        </div>
+      </div>
+      
+      
+    </aside>
+  </div>
+</div><script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/scripts/furo.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    </body>
+</html>

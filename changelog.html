@@ -1,0 +1,510 @@
+<!doctype html>
+<html class="no-js" lang="en">
+  <head><meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
+    <meta name="color-scheme" content="light dark"><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+<link rel="index" title="Index" href="genindex.html" /><link rel="search" title="Search" href="search.html" /><link rel="next" title="Contributing" href="contributing.html" /><link rel="prev" title="License" href="license.html" />
+
+    <link rel="shortcut icon" href="_static/favicon.ico"/><meta name="generator" content="sphinx-4.4.0, furo 2022.02.14.1"/>
+        <title>Changelog - bruges documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/furo.css?digest=a8f031f701c6af50c9919b48f173a5785af06fac" />
+    <link rel="stylesheet" type="text/css" href="_static/plot_directive.css" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/furo-extensions.css?digest=25ceb02ed1c46dc30f2321ff83e92799f69dfdb9" />
+    <link rel="stylesheet" type="text/css" href="_static/custom.css" />
+    
+    
+
+
+<style>
+  body {
+    --color-code-background: #f8f8f8;
+  --color-code-foreground: black;
+  
+  }
+  body[data-theme="dark"] {
+    --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+  }
+  @media (prefers-color-scheme: dark) {
+    body:not([data-theme="light"]) {
+      --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+    }
+  }
+</style></head>
+  <body>
+    <script>
+      document.body.dataset.theme = localStorage.getItem("theme") || "auto";
+    </script>
+    
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="svg-toc" viewBox="0 0 24 24">
+    <title>Contents</title>
+    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 1024 1024">
+      <path d="M408 442h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8zm-8 204c0 4.4 3.6 8 8 8h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56zm504-486H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zm0 632H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zM115.4 518.9L271.7 642c5.8 4.6 14.4.5 14.4-6.9V388.9c0-7.4-8.5-11.5-14.4-6.9L115.4 505.1a8.74 8.74 0 0 0 0 13.8z"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-menu" viewBox="0 0 24 24">
+    <title>Menu</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-menu">
+      <line x1="3" y1="12" x2="21" y2="12"></line>
+      <line x1="3" y1="6" x2="21" y2="6"></line>
+      <line x1="3" y1="18" x2="21" y2="18"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+    <title>Expand</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-chevron-right">
+      <polyline points="9 18 15 12 9 6"></polyline>
+    </svg>
+  </symbol>
+  <symbol id="svg-sun" viewBox="0 0 24 24">
+    <title>Light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="feather-sun">
+      <circle cx="12" cy="12" r="5"></circle>
+      <line x1="12" y1="1" x2="12" y2="3"></line>
+      <line x1="12" y1="21" x2="12" y2="23"></line>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+      <line x1="1" y1="12" x2="3" y2="12"></line>
+      <line x1="21" y1="12" x2="23" y2="12"></line>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon" viewBox="0 0 24 24">
+    <title>Dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-moon">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
+    </svg>
+  </symbol>
+  <symbol id="svg-sun-half" viewBox="0 0 24 24">
+    <title>Auto light/dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-shadow">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+      <circle cx="12" cy="12" r="9" />
+      <path d="M13 12h5" />
+      <path d="M13 15h4" />
+      <path d="M13 18h1" />
+      <path d="M13 9h4" />
+      <path d="M13 6h1" />
+    </svg>
+  </symbol>
+</svg>
+
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation">
+<input type="checkbox" class="sidebar-toggle" name="__toc" id="__toc">
+<label class="overlay sidebar-overlay" for="__navigation">
+  <div class="visually-hidden">Hide navigation sidebar</div>
+</label>
+<label class="overlay toc-overlay" for="__toc">
+  <div class="visually-hidden">Hide table of contents sidebar</div>
+</label>
+
+
+
+<div class="page">
+  <header class="mobile-header">
+    <div class="header-left">
+      <label class="nav-overlay-icon" for="__navigation">
+        <div class="visually-hidden">Toggle site navigation sidebar</div>
+        <i class="icon"><svg><use href="#svg-menu"></use></svg></i>
+      </label>
+    </div>
+    <div class="header-center">
+      <a href="index.html"><div class="brand">bruges  documentation</div></a>
+    </div>
+    <div class="header-right">
+      <div class="theme-toggle-container theme-toggle-header">
+        <button class="theme-toggle">
+          <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+          <svg class="theme-icon-when-auto"><use href="#svg-sun-half"></use></svg>
+          <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+          <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+        </button>
+      </div>
+      <label class="toc-overlay-icon toc-header-icon" for="__toc">
+        <div class="visually-hidden">Toggle table of contents sidebar</div>
+        <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+      </label>
+    </div>
+  </header>
+  <aside class="sidebar-drawer">
+    <div class="sidebar-container">
+      
+      <div class="sidebar-sticky"><a class="sidebar-brand centered" href="index.html">
+  
+  <div class="sidebar-logo-container">
+    <img class="sidebar-logo" src="_static/bruges_logo.png" alt="Logo"/>
+  </div>
+  
+  
+</a><form class="sidebar-search-container" method="get" action="search.html" role="search">
+  <input class="sidebar-search" placeholder=Search name="q" aria-label="Search">
+  <input type="hidden" name="check_keywords" value="yes">
+  <input type="hidden" name="area" value="default">
+</form>
+<div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
+  <p class="caption" role="heading"><span class="caption-text">API reference</span></p>
+<ul>
+<li class="toctree-l1 has-children"><a class="reference internal" href="bruges.html">bruges package</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="bruges.attribute.html">bruges.attribute package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="bruges.filters.html">bruges.filters package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="bruges.models.html">bruges.models package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="bruges.noise.html">bruges.noise package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="bruges.petrophysics.html">bruges.petrophysics package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="bruges.reflection.html">bruges.reflection package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="bruges.rockphysics.html">bruges.rockphysics package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="bruges.transform.html">bruges.transform package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="bruges.unit.html">bruges.unit package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="bruges.util.html">bruges.util package</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Other resources</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="development.html">Development</a></li>
+<li class="toctree-l1"><a class="reference internal" href="authors.html">Authors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="license.html">License</a></li>
+<li class="toctree-l1 current current-page"><a class="current reference internal" href="#">Changelog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contributing.html">Contributing</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Project links</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="https://pypi.org/project/bruges/">PyPI releases</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/agile-geoscience/bruges">Code in GitHub</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/agile-geoscience/bruges/issues">Issue tracker</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://code.agilescientific.com/community">Community guidelines</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://code.agilescientific.com">Agile's software</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://www.agilescientific.com">Agile's website</a></li>
+</ul>
+
+</div>
+</div>
+
+      </div>
+      
+    </div>
+  </aside>
+  <div class="main">
+    <div class="content">
+      <div class="article-container">
+        <div class="content-icon-container"><div class="theme-toggle-container theme-toggle-content">
+            <button class="theme-toggle">
+              <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+              <svg class="theme-icon-when-auto"><use href="#svg-sun-half"></use></svg>
+              <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+              <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+            </button>
+          </div>
+          <label class="toc-overlay-icon toc-content-icon" for="__toc">
+            <div class="visually-hidden">Toggle table of contents sidebar</div>
+            <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+          </label>
+        </div>
+        <article role="main">
+          <section class="tex2jax_ignore mathjax_ignore" id="changelog">
+<h1>Changelog<a class="headerlink" href="#changelog" title="Permalink to this headline">#</a></h1>
+<section id="v0-4-5-8-december-2021">
+<h2>v0.4.5 — 8 December 2021<a class="headerlink" href="#v0-4-5-8-december-2021" title="Permalink to this headline">#</a></h2>
+<ul class="simple">
+<li><p><strong>Breaking change:</strong> <code class="docutils literal notranslate"><span class="pre">bruges.attribute.similarity</span></code> has a new interface and computes its result(s) differently. I added several seismic coherence attributes as options to <code class="docutils literal notranslate"><span class="pre">bruges.attribute.similarity</span></code>. Methods include Marfurt coherence, that of Gersztenkorn, A., and K. J. Marfurt, 1999, and gradient structure tensor coherence (T Randen et al., 2000, 70th Annual International Meeting, SEG, Expanded Abstracts, 668-671.). Choose the method with the ‘kind’ argument. These functions were written by Joe Kington and published in The Leading Edge in the June 2015 issue.</p></li>
+<li><p>Complex trace attributes <code class="docutils literal notranslate"><span class="pre">instantaneous_amplitude</span></code> (envelope), <code class="docutils literal notranslate"><span class="pre">instantaneous_phase</span></code> and <code class="docutils literal notranslate"><span class="pre">instantaneous_frequency</span></code>, along with the <code class="docutils literal notranslate"><span class="pre">quadrature</span></code>, were added to <code class="docutils literal notranslate"><span class="pre">bruges.attribute</span></code>.</p></li>
+<li><p>Fixed a bug in <code class="docutils literal notranslate"><span class="pre">bruges.models.wedge</span></code> that led to some wedge models not having the correct total size in the ‘depth’ dimension (e.g. sometimes being off by one pixel.)</p></li>
+<li><p>Now tested on Python 3.8, 3.9 (should have been working, just catching up!). Removing Python 3.4 and 3.5 from testing.</p></li>
+<li><p>Coming soon: dynamic-time-warp-assisted panel interpolation.</p></li>
+</ul>
+</section>
+<section id="v0-4-4-27-september-2021">
+<h2>v0.4.4 — 27 September 2021<a class="headerlink" href="#v0-4-4-27-september-2021" title="Permalink to this headline">#</a></h2>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">bruges.reflection.acoustic_reflectivity()</span></code> and <code class="docutils literal notranslate"><span class="pre">bruges.reflection.reflectivity()</span></code> now allow you to pass the <code class="docutils literal notranslate"><span class="pre">axis</span></code> to compute on (axis 0 by default, which results in a reflectivity series for each <em>column</em> in a 2D array). You can also set a ‘mode’, which is currently ‘valid’ and results in one less sample in the <code class="docutils literal notranslate"><span class="pre">axis</span></code> dimension. In the next release, v0.5, it will be ‘same’ by default, so the output is the same shape as the input.</p></li>
+</ul>
+</section>
+<section id="v0-4-3-30-june-2021">
+<h2>v0.4.3 — 30 June 2021<a class="headerlink" href="#v0-4-3-30-june-2021" title="Permalink to this headline">#</a></h2>
+<ul class="simple">
+<li><p>New in the <code class="docutils literal notranslate"><span class="pre">models</span></code> submodule: <code class="docutils literal notranslate"><span class="pre">panel</span></code> allows you to pass in two or more 1D arrays, which can be of different lengths, and linearly interpolate in between them, sample by sample. Note: there is no attempt to correlate them; the assumption is that the top and bottom correlate and everything in between correlates in a linear way.</p></li>
+<li><p>New in <code class="docutils literal notranslate"><span class="pre">models.wedge</span></code>: varying net:gross along the ‘breadth’ (3rd) dimension of a wedge model. The wedge must be ‘binary’; that is, the middle (wedge) layer must only contain 2 components. The 3rd dimension will then show pinch-out geometries that vary from one lithology to the other.</p></li>
+<li><p>It is now possible to choose <code class="docutils literal notranslate"><span class="pre">power</span></code> and <code class="docutils literal notranslate"><span class="pre">root</span></code> shapes for <code class="docutils literal notranslate"><span class="pre">models.wedge</span></code>, as well as <code class="docutils literal notranslate"><span class="pre">linear</span></code> and <code class="docutils literal notranslate"><span class="pre">sigmoid</span></code>.</p></li>
+<li><p>Fixed a bug in <code class="docutils literal notranslate"><span class="pre">models.wedge</span></code> that caused some wedges to fail with single values for the <code class="docutils literal notranslate"><span class="pre">width</span></code> argument.</p></li>
+</ul>
+</section>
+<section id="v0-4-2-1-march-2021">
+<h2>v0.4.2 — 1 March 2021<a class="headerlink" href="#v0-4-2-1-march-2021" title="Permalink to this headline">#</a></h2>
+<ul class="simple">
+<li><p>The Ormsby wavelet now has the option of passing in the relative power (in dB) of the f2 and f3 corner frequencies, e.g. <code class="docutils literal notranslate"><span class="pre">P=(0,</span> <span class="pre">-5)</span></code>. Default: <code class="docutils literal notranslate"><span class="pre">(0,</span> <span class="pre">0)</span></code> (the conventional trapezoidal Ormsby bandpass filter).</p></li>
+<li><p>Wavelets now have the option of returning an odd number of samples for ‘even’ time periods, like 0.128 s at 0.004 s sample interval. This used to return 32 samples; now if you set <code class="docutils literal notranslate"><span class="pre">sym</span></code> to <code class="docutils literal notranslate"><span class="pre">True</span></code>, you’ll get 33 samples. <strong>Future change:</strong> From v0.5, this will be the default.</p></li>
+<li><p>Wavelet time shoud no longer suffer from floating point imprecision (previously common near t = 0).</p></li>
+<li><p>You can now optionally pass a time series to a wavelet function, and the wavelet will be evaluated at those times. This overrides <code class="docutils literal notranslate"><span class="pre">duration</span></code> and <code class="docutils literal notranslate"><span class="pre">dt</span></code>, so you should pass <code class="docutils literal notranslate"><span class="pre">None</span></code> to those parameters (or get a warning).</p></li>
+<li><p>Added a new module, <code class="docutils literal notranslate"><span class="pre">models</span></code>, which contains a new function, <code class="docutils literal notranslate"><span class="pre">wedge</span></code>. For now this generates 2D wedge models; in the future it will also provide 3D models.</p></li>
+<li><p><strong>Future change:</strong> Reminder: wavelets in v0.5 will no longer have <code class="docutils literal notranslate"><span class="pre">return_t=True</span></code> by default.</p></li>
+</ul>
+</section>
+<section id="v0-4-1-21-february-2021">
+<h2>v0.4.1 — 21 February 2021<a class="headerlink" href="#v0-4-1-21-february-2021" title="Permalink to this headline">#</a></h2>
+<ul class="simple">
+<li><p>Moved <code class="docutils literal notranslate"><span class="pre">phase_rotate()</span></code> to <code class="docutils literal notranslate"><span class="pre">bruges.filters</span></code> and it now should handle 2D and 3D seismic correctly. You can also pass an array-like of phases to get a ‘phase bank’ of rotations, similar to how this works with frequencies and wavelet banks.</p></li>
+</ul>
+</section>
+<section id="v0-4-27-november-2020">
+<h2>v0.4 — 27 November 2020<a class="headerlink" href="#v0-4-27-november-2020" title="Permalink to this headline">#</a></h2>
+<ul class="simple">
+<li><p><strong>Breaking change:</strong> fixed numerous minor issues with <code class="docutils literal notranslate"><span class="pre">attribute.energy()</span></code>, see <a class="reference external" href="https://github.com/agile-geoscience/bruges/issues/78">issue 78</a>. Note that it now expects time to be in the last dimension of the array. The function now runs on n-D data and is also about 15 times faster.</p></li>
+<li><p>Multiple fixes to the documentation, thanks especially to Jesper Dramsch and Adriana Gordon.</p></li>
+<li><p>Added the <code class="docutils literal notranslate"><span class="pre">filters.berlage()</span></code> wavelet, a causal, minimum phase wavelet good for marine airgun sources.</p></li>
+<li><p>Added the <code class="docutils literal notranslate"><span class="pre">filters.generalized()</span></code> wavelet, of which the Ricker is a special case, as defined by Wang 2015, Geophys J Int 203, p1172ff.</p></li>
+<li><p>Added a FutureWarning that wavelets in the next release will have <code class="docutils literal notranslate"><span class="pre">return_t=True</span></code> by default. In a later release, the option will likely disappear completely.</p></li>
+<li><p>Added <code class="docutils literal notranslate"><span class="pre">fluids.rho_water()</span></code>, <code class="docutils literal notranslate"><span class="pre">fluids.rho_brine()</span></code>, <code class="docutils literal notranslate"><span class="pre">fluids.v_water()</span></code>, and <code class="docutils literal notranslate"><span class="pre">fluids.v_brine()</span></code>, implementing equations from Batzle &amp; Wang (1992).</p></li>
+<li><p>Added <code class="docutils literal notranslate"><span class="pre">filters.convolve()</span></code>, which implements multi-dimensional convolution for 1D and 2D reflectivities and wavelets (or wavelet banks), and for 3D reflectivity with 1D wavelets. <code class="docutils literal notranslate"><span class="pre">convolve(rc_panel,</span> <span class="pre">wavelet_bank)</span></code> results in a 3D synthetic, with axes of frequency, offset, and time.</p></li>
+<li><p>Added <code class="docutils literal notranslate"><span class="pre">util.convolve_many()</span></code> to implement a fast way to convolve a 1D kernel over multiple signals whose domain (time or distance) is in the last axis.</p></li>
+<li><p>The reflectivity equations now accept a tuple for <code class="docutils literal notranslate"><span class="pre">theta1</span></code>, as well as a scalar value (interpreted as one angle, in degrees), or a list or array (interpreted as an array of angles). If you pass a 2-tuple, it is interpreted as a start and stop for a linear space; the step size will be 1.0 degrees. A 3-tuple is interpreted as a start, stop, and step size (note, not number of steps). The intervals specified will be open; the end-points will be included. So <code class="docutils literal notranslate"><span class="pre">theta1=(0,</span> <span class="pre">5)</span></code> is equivalent to <code class="docutils literal notranslate"><span class="pre">theta1=[0,1,2,3,4,5]</span></code> and <code class="docutils literal notranslate"><span class="pre">theta1=(0,</span> <span class="pre">10,</span> <span class="pre">2)</span></code> is the same as <code class="docutils literal notranslate"><span class="pre">theta1=[0,2,4,6]</span></code>.</p></li>
+</ul>
+</section>
+<section id="v0-3-4-13-october-2018">
+<h2>v0.3.4 — 13 October 2018<a class="headerlink" href="#v0-3-4-13-october-2018" title="Permalink to this headline">#</a></h2>
+<ul class="simple">
+<li><p>Added the NMO equation from Leo Uieda’s TLE tutorial. This is a work in progress.</p></li>
+<li><p>Implemented <code class="docutils literal notranslate"><span class="pre">generic</span></code> (a windowed function), <code class="docutils literal notranslate"><span class="pre">cosine</span></code>, and <code class="docutils literal notranslate"><span class="pre">gabor</span></code> wavelets in <code class="docutils literal notranslate"><span class="pre">filters</span></code>. The <code class="docutils literal notranslate"><span class="pre">cosine</span></code> and <code class="docutils literal notranslate"><span class="pre">gabor</span></code> filters are implemented via <code class="docutils literal notranslate"><span class="pre">generic</span></code>.</p></li>
+<li><p>Fixed a bug in <code class="docutils literal notranslate"><span class="pre">filters.sinc</span></code> that caused the wavelet to have the wrong amplitude with no taper. Implemented <code class="docutils literal notranslate"><span class="pre">sinc</span></code> using <code class="docutils literal notranslate"><span class="pre">generic</span></code>.</p></li>
+<li><p>Fixed a bug in <code class="docutils literal notranslate"><span class="pre">reflection.critical_angles</span></code> that was preventing valid values from being computed.</p></li>
+<li><p>Fixed a bug in <code class="docutils literal notranslate"><span class="pre">CoordTransform</span></code> that broke Python 2.7 compatibility.</p></li>
+<li><p>Fixed up the documentation.</p></li>
+</ul>
+</section>
+<section id="v0-3-3-7-february-2018">
+<h2>v0.3.3 — 7 February 2018<a class="headerlink" href="#v0-3-3-7-february-2018" title="Permalink to this headline">#</a></h2>
+<ul class="simple">
+<li><p>Fixed some bugs in v0.3.2, including a problem with non-integer indices in the windowed mean that <code class="docutils literal notranslate"><span class="pre">backus()</span></code> uses.</p></li>
+<li><p>Improved the time and depth conversion functions by adding the ability to return the new basis array (i.e. the new time or depth vector).</p></li>
+</ul>
+</section>
+<section id="v0-3-2-7-february-2018">
+<h2>v0.3.2 — 7 February 2018<a class="headerlink" href="#v0-3-2-7-february-2018" title="Permalink to this headline">#</a></h2>
+<ul class="simple">
+<li><p>Fixed a bug in <code class="docutils literal notranslate"><span class="pre">bruges.filters</span></code> that was returning the results from integer arrays as integers, giving incorrect results in those cases. Fixed tests.</p></li>
+<li><p>Reflectivity equations in <code class="docutils literal notranslate"><span class="pre">reflection</span></code> module now work on vectors, so you can use ndarrays for both the Vp, Vs, and rho values, and the theta values. They are about 10 times faster than running a loop over elements; the Zoeppritz is over 100 times faster. The results put the angles in the first dimension, so you can simply index in to get one offset.</p></li>
+<li><p>The Zoeppritz solutions and the Aki–Richards approximations now return the complex reflectivity and therefore show post-critical behaviour.</p></li>
+<li><p>New reflection coefficient series function, <code class="docutils literal notranslate"><span class="pre">reflection.reflectivity()</span></code> makes it easier to make offset reflectivities from logs.</p></li>
+<li><p>New acoustic reflection coefficient series function, <code class="docutils literal notranslate"><span class="pre">acoustic_reflectivity()</span></code>.</p></li>
+<li><p>Added <code class="docutils literal notranslate"><span class="pre">critical_angles()</span></code> and <code class="docutils literal notranslate"><span class="pre">reflection_phase()</span></code> functions to make it easier to compute the PP and PS critical angle(s), and to get the phase of a post-critical reflection.</p></li>
+<li><p>Improvements to <code class="docutils literal notranslate"><span class="pre">reflection</span></code> module docs.</p></li>
+<li><p>Deprecating  <code class="docutils literal notranslate"><span class="pre">moving_avg_conv</span></code> and <code class="docutils literal notranslate"><span class="pre">moving_avg_fft</span></code>, and for now the function <code class="docutils literal notranslate"><span class="pre">moving_average()</span></code> will return the convolutional solution.</p></li>
+<li><p>Several more simple linear and non-linear filters in <code class="docutils literal notranslate"><span class="pre">bruges.filters</span></code>, including <code class="docutils literal notranslate"><span class="pre">median</span></code> (good for seismic horizons) and <code class="docutils literal notranslate"><span class="pre">mode</span></code> (good for waveform classification).</p></li>
+<li><p>You can no longer import ‘all’ from a module. This is a bad idea anyway, so I’m not calling it a breaking change.</p></li>
+<li><p>The wavelets <code class="docutils literal notranslate"><span class="pre">ricker()</span></code> and <code class="docutils literal notranslate"><span class="pre">sweep()</span></code> now return transposed matrices if you ask for a wavelet bank by providing several frequencies. This is so the wavelets are in the first dimension, so you get get one by simply indexing.</p></li>
+<li><p>The <code class="docutils literal notranslate"><span class="pre">ormsby()</span></code> wavelet now also works for a sequence of frequency tuples, returning a wavelet bank.</p></li>
+<li><p>Fixed a bug in the <code class="docutils literal notranslate"><span class="pre">sweep()</span></code> wavelet that caused a time shift in the sweep function. Also added the taper option to the <code class="docutils literal notranslate"><span class="pre">sweep()</span></code> wavelet.</p></li>
+<li><p>Added a <code class="docutils literal notranslate"><span class="pre">sinc()</span></code> wavelet, with a taper option to attenuate the sidelobes.</p></li>
+<li><p>Added <code class="docutils literal notranslate"><span class="pre">inverse_gardner</span></code>, and other density and velocity transforms, to <code class="docutils literal notranslate"><span class="pre">petrophysics</span></code>.</p></li>
+<li><p>Added <code class="docutils literal notranslate"><span class="pre">transform.v_rms()</span></code> (RMS velocity), <code class="docutils literal notranslate"><span class="pre">transform.v_avg()</span></code> (average velocity) and <code class="docutils literal notranslate"><span class="pre">transform.v_bac()</span></code> (naïve Backus average). These all operate in a ‘cumulative’ average-down-to sense, per Liner (2004), Elements of 3D Seismology.</p></li>
+</ul>
+</section>
+<section id="v0-3-1-21-january-2018">
+<h2>v0.3.1 — 21 January 2018<a class="headerlink" href="#v0-3-1-21-january-2018" title="Permalink to this headline">#</a></h2>
+<ul class="simple">
+<li><p>Repaired the <code class="docutils literal notranslate"><span class="pre">rockphysics.elastic_impedance()</span></code> function, which had various issues, including not applying normalization correctly and not working on vectors.</p></li>
+</ul>
+</section>
+<section id="v0-3-0-12-january-2018">
+<h2>v0.3.0 — 12 January 2018<a class="headerlink" href="#v0-3-0-12-january-2018" title="Permalink to this headline">#</a></h2>
+<ul class="simple">
+<li><p><strong>Breaking change:</strong> <code class="docutils literal notranslate"><span class="pre">anisotropy.backus</span></code> now always returns <code class="docutils literal notranslate"><span class="pre">Vp0</span></code>, <code class="docutils literal notranslate"><span class="pre">Vs0</span></code>, and <code class="docutils literal notranslate"><span class="pre">rho</span></code>.</p></li>
+<li><p>Non-compatible change: <code class="docutils literal notranslate"><span class="pre">filters.wavelets.ricker</span></code> no longer normalizes the output, to avoid a problem with amplitude dependence on filter length.</p></li>
+<li><p>Functions returning tuples now return a <code class="docutils literal notranslate"><span class="pre">collections.namedtuple</span></code> so it’s more obvious what you’re getting back.</p></li>
+<li><p>New nonlinear filters (plus tests): <code class="docutils literal notranslate"><span class="pre">filters.snn()</span></code>, <code class="docutils literal notranslate"><span class="pre">filters.kuwahara()</span></code> and <code class="docutils literal notranslate"><span class="pre">filters.conservative()</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">sweep()</span></code> optionally returns time basis, like the other wavelets.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">reflection.shuey()</span></code> optionally returns intercept and gradient instead of the terms. Set <code class="docutils literal notranslate"><span class="pre">return_gradient=True</span></code>.</p></li>
+<li><p>No more <code class="docutils literal notranslate"><span class="pre">shuey2()</span></code>, <code class="docutils literal notranslate"><span class="pre">shuey3()</span></code>, <code class="docutils literal notranslate"><span class="pre">bortfeld2()</span></code>, <code class="docutils literal notranslate"><span class="pre">bortfeld3()</span></code>. Use <code class="docutils literal notranslate"><span class="pre">shuey()</span></code> and <code class="docutils literal notranslate"><span class="pre">bortfeld()</span></code> instead.</p></li>
+<li><p>Zoeppritz calculation is now fully vectorized and 75% faster. Also added the full <code class="docutils literal notranslate"><span class="pre">scattering_matrix()</span></code> function to the list of available functions (it was previously a private function).</p></li>
+<li><p>Better tests of the <code class="docutils literal notranslate"><span class="pre">reflection</span></code> algorithms (lower numerical tolerance).</p></li>
+<li><p>Tidied up code.</p></li>
+</ul>
+</section>
+<hr class="docutils"/>
+<section id="v0-2-3-27-november-2017">
+<h2>v0.2.3 — 27 November 2017<a class="headerlink" href="#v0-2-3-27-november-2017" title="Permalink to this headline">#</a></h2>
+<ul class="simple">
+<li><p>Coordinate transformation for (x,y) and (inline, line).</p></li>
+<li><p>Fixed documentation.</p></li>
+</ul>
+</section>
+<section id="v0-2-2-23-october-2017">
+<h2>v0.2.2 — 23 October 2017<a class="headerlink" href="#v0-2-2-23-october-2017" title="Permalink to this headline">#</a></h2>
+<ul class="simple">
+<li><p>Fixes to elastic impedance.</p></li>
+<li><p>Returning rho from Backus average.</p></li>
+<li><p>Fixed Travis.</p></li>
+</ul>
+</section>
+<section id="v0-2-1-7-august-2015">
+<h2>v0.2.1 — 7 August 2015<a class="headerlink" href="#v0-2-1-7-august-2015" title="Permalink to this headline">#</a></h2>
+<ul class="simple">
+<li><p>Fixed spectrogram bug.</p></li>
+<li><p>Fixed moduli warnings.</p></li>
+</ul>
+</section>
+<section id="v0-2-0-13-july-2015">
+<h2>v0.2.0 — 13 July 2015<a class="headerlink" href="#v0-2-0-13-july-2015" title="Permalink to this headline">#</a></h2>
+<ul class="simple">
+<li><p>Anisotropy equations.</p></li>
+</ul>
+</section>
+<hr class="docutils"/>
+<section id="v0-1-6-11-april-2015">
+<h2>v0.1.6 — 11 April 2015<a class="headerlink" href="#v0-1-6-11-april-2015" title="Permalink to this headline">#</a></h2>
+<ul class="simple">
+<li><p>Float conversion in reflectivity.</p></li>
+</ul>
+</section>
+<section id="v0-1-5-11-april-2015">
+<h2>v0.1.5 — 11 April 2015<a class="headerlink" href="#v0-1-5-11-april-2015" title="Permalink to this headline">#</a></h2>
+<ul class="simple">
+<li><p>Added keywords and changed defaults to spectral decomp.</p></li>
+<li><p>Added rock moduli.</p></li>
+<li><p>Fixed divide by zero in time to depth.</p></li>
+</ul>
+</section>
+<section id="v0-1-4-31-august-2014">
+<h2>v0.1.4 — 31 August 2014<a class="headerlink" href="#v0-1-4-31-august-2014" title="Permalink to this headline">#</a></h2>
+<ul class="simple">
+<li><p>Added noise utility functions and rock physics calculators.</p></li>
+</ul>
+</section>
+<section id="v0-1-3-19-june-2014">
+<h2>v0.1.3 — 19 June 2014<a class="headerlink" href="#v0-1-3-19-june-2014" title="Permalink to this headline">#</a></h2>
+<ul class="simple">
+<li><p>Made time to depth compatible for TWT.</p></li>
+</ul>
+</section>
+<section id="v0-1-2-13-june-2014">
+<h2>v0.1.2 — 13 June 2014<a class="headerlink" href="#v0-1-2-13-june-2014" title="Permalink to this headline">#</a></h2>
+<ul class="simple">
+<li><p>Added data edge handling in time to depth conversion.</p></li>
+</ul>
+</section>
+<section id="v0-1-1-december-12-2013">
+<h2>v0.1.1 — December 12 2013<a class="headerlink" href="#v0-1-1-december-12-2013" title="Permalink to this headline">#</a></h2>
+<ul class="simple">
+<li><p>Added AVO reflection models.</p></li>
+<li><p>Added time to depth conversions</p></li>
+<li><p>Added dip filters.</p></li>
+<li><p>Added spectral decomposition.</p></li>
+<li><p>Updated APIs to use time intervals and wavelet banks.</p></li>
+</ul>
+</section>
+<section id="v0-1-0-16-october-2013">
+<h2>v0.1.0 — 16 October 2013<a class="headerlink" href="#v0-1-0-16-october-2013" title="Permalink to this headline">#</a></h2>
+<ul class="simple">
+<li><p>Initial release, a re-write of the agilegeo library.</p></li>
+</ul>
+</section>
+</section>
+
+        </article>
+      </div>
+      <footer>
+        
+        <div class="related-pages">
+          <a class="next-page" href="contributing.html">
+              <div class="page-info">
+                <div class="context">
+                  <span>Next</span>
+                </div>
+                <div class="title">Contributing</div>
+              </div>
+              <svg><use href="#svg-arrow-right"></use></svg>
+            </a>
+          <a class="prev-page" href="license.html">
+              <svg><use href="#svg-arrow-right"></use></svg>
+              <div class="page-info">
+                <div class="context">
+                  <span>Previous</span>
+                </div>
+                
+                <div class="title">License</div>
+                
+              </div>
+            </a>
+        </div>
+        <div class="bottom-of-page">
+          <div class="left-details">
+            <div class="copyright">
+                Copyright &#169; 2022, Agile Scientific
+            </div>
+            Made with <a href="https://www.sphinx-doc.org/">Sphinx</a> and <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
+            
+            <a href="https://github.com/pradyunsg/furo">Furo</a>
+            
+          </div>
+          <div class="right-details">
+            <div class="icons">
+              
+            </div>
+          </div>
+        </div>
+        
+      </footer>
+    </div>
+    <aside class="toc-drawer">
+      
+      
+      <div class="toc-sticky toc-scroll">
+        <div class="toc-title-container">
+          <span class="toc-title">
+            Contents
+          </span>
+        </div>
+        <div class="toc-tree-container">
+          <div class="toc-tree">
+            <ul>
+<li><a class="reference internal" href="#">Changelog</a><ul>
+<li><a class="reference internal" href="#v0-4-5-8-december-2021">v0.4.5 — 8 December 2021</a></li>
+<li><a class="reference internal" href="#v0-4-4-27-september-2021">v0.4.4 — 27 September 2021</a></li>
+<li><a class="reference internal" href="#v0-4-3-30-june-2021">v0.4.3 — 30 June 2021</a></li>
+<li><a class="reference internal" href="#v0-4-2-1-march-2021">v0.4.2 — 1 March 2021</a></li>
+<li><a class="reference internal" href="#v0-4-1-21-february-2021">v0.4.1 — 21 February 2021</a></li>
+<li><a class="reference internal" href="#v0-4-27-november-2020">v0.4 — 27 November 2020</a></li>
+<li><a class="reference internal" href="#v0-3-4-13-october-2018">v0.3.4 — 13 October 2018</a></li>
+<li><a class="reference internal" href="#v0-3-3-7-february-2018">v0.3.3 — 7 February 2018</a></li>
+<li><a class="reference internal" href="#v0-3-2-7-february-2018">v0.3.2 — 7 February 2018</a></li>
+<li><a class="reference internal" href="#v0-3-1-21-january-2018">v0.3.1 — 21 January 2018</a></li>
+<li><a class="reference internal" href="#v0-3-0-12-january-2018">v0.3.0 — 12 January 2018</a></li>
+<li><a class="reference internal" href="#v0-2-3-27-november-2017">v0.2.3 — 27 November 2017</a></li>
+<li><a class="reference internal" href="#v0-2-2-23-october-2017">v0.2.2 — 23 October 2017</a></li>
+<li><a class="reference internal" href="#v0-2-1-7-august-2015">v0.2.1 — 7 August 2015</a></li>
+<li><a class="reference internal" href="#v0-2-0-13-july-2015">v0.2.0 — 13 July 2015</a></li>
+<li><a class="reference internal" href="#v0-1-6-11-april-2015">v0.1.6 — 11 April 2015</a></li>
+<li><a class="reference internal" href="#v0-1-5-11-april-2015">v0.1.5 — 11 April 2015</a></li>
+<li><a class="reference internal" href="#v0-1-4-31-august-2014">v0.1.4 — 31 August 2014</a></li>
+<li><a class="reference internal" href="#v0-1-3-19-june-2014">v0.1.3 — 19 June 2014</a></li>
+<li><a class="reference internal" href="#v0-1-2-13-june-2014">v0.1.2 — 13 June 2014</a></li>
+<li><a class="reference internal" href="#v0-1-1-december-12-2013">v0.1.1 — December 12 2013</a></li>
+<li><a class="reference internal" href="#v0-1-0-16-october-2013">v0.1.0 — 16 October 2013</a></li>
+</ul>
+</li>
+</ul>
+
+          </div>
+        </div>
+      </div>
+      
+      
+    </aside>
+  </div>
+</div><script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/scripts/furo.js"></script>
+    </body>
+</html>
