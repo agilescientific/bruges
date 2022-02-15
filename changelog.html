@@ -219,20 +219,22 @@
         <article role="main">
           <section class="tex2jax_ignore mathjax_ignore" id="changelog">
 <h1>Changelog<a class="headerlink" href="#changelog" title="Permalink to this headline">#</a></h1>
-<section id="february-2022">
-<h2>0.4.6 — February 2022<a class="headerlink" href="#february-2022" title="Permalink to this headline">#</a></h2>
+<section id="coming-february-2022">
+<h2>0.5.0 — coming, February 2022<a class="headerlink" href="#coming-february-2022" title="Permalink to this headline">#</a></h2>
 <ul class="simple">
 <li><p>In all wavelets, <code class="docutils literal notranslate"><span class="pre">sym</span></code> is now <code class="docutils literal notranslate"><span class="pre">True</span></code> by default.</p></li>
 <li><p>In all wavelets, <code class="docutils literal notranslate"><span class="pre">return_t</span></code> is now <code class="docutils literal notranslate"><span class="pre">True</span></code> by default. you can still set it to false but…</p></li>
-<li><p><strong>Breaking change in the future:</strong> In the next minor release, <code class="docutils literal notranslate"><span class="pre">return_t</span></code> will always be <code class="docutils literal notranslate"><span class="pre">True</span></code>. <strong>If you are setting it to <code class="docutils literal notranslate"><span class="pre">False</span></code>, please change your code.</strong> We will continue to accept the argument for the time being, so if you’re setting it to <code class="docutils literal notranslate"><span class="pre">True</span></code>, you can stop doing that, and leave it out of future code.</p></li>
+<li><p><strong>Future breaking change:</strong> In the next minor release, <code class="docutils literal notranslate"><span class="pre">return_t</span></code> will always be <code class="docutils literal notranslate"><span class="pre">True</span></code>. <strong>If you are setting it to <code class="docutils literal notranslate"><span class="pre">False</span></code>, please change your code.</strong> We will continue to accept the argument for the time being, so if you’re setting it to <code class="docutils literal notranslate"><span class="pre">True</span></code>, you can stop doing that, and leave it out of future code.</p></li>
+<li><p><strong>Breaking change:</strong> I changed the names of several of the new discontinuity attributes to use the word ‘discontinuity’, instead of ‘coherency’, ‘similarity’, etc. This is in line with Art Barnes’s classic paper “Too many seismic attributes”. It was too confusing.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">bruges.filters.wavelets.rotate_phase()</span></code>, deprecated in v0.4.1, has now gone away and is available in improved form as <code class="docutils literal notranslate"><span class="pre">bruges.filters.rotate_phase()</span></code>.</p></li>
+<li><p>Allowed discontinuity attributes to work properly on 2D data.</p></li>
 <li><p>The docs have been substantially overhauled; we hope you notice an improvement.</p></li>
 </ul>
 </section>
 <section id="v0-4-5-8-december-2021">
 <h2>v0.4.5 — 8 December 2021<a class="headerlink" href="#v0-4-5-8-december-2021" title="Permalink to this headline">#</a></h2>
 <ul class="simple">
-<li><p><strong>Breaking change:</strong> <code class="docutils literal notranslate"><span class="pre">bruges.attribute.similarity</span></code> has a new interface and computes its result(s) differently. I added several seismic coherence attributes as options to <code class="docutils literal notranslate"><span class="pre">bruges.attribute.similarity</span></code>. Methods include Marfurt coherence, that of Gersztenkorn, A., and K. J. Marfurt, 1999, and gradient structure tensor coherence (T Randen et al., 2000, 70th Annual International Meeting, SEG, Expanded Abstracts, 668-671.). Choose the method with the ‘kind’ argument. These functions were written by Joe Kington and published in The Leading Edge in the June 2015 issue.</p></li>
+<li><p><strong>Breaking change:</strong> <code class="docutils literal notranslate"><span class="pre">bruges.attribute.similarity</span></code> (n.b. now renamed <code class="docutils literal notranslate"><span class="pre">discontinuity</span></code> in version 0.4.6) has a new interface and computes its result(s) differently. I added several seismic coherence attributes as options to <code class="docutils literal notranslate"><span class="pre">bruges.attribute.similarity</span></code>. Methods include Marfurt coherence, that of Gersztenkorn, A., and K. J. Marfurt, 1999, and gradient structure tensor coherence (T Randen et al., 2000, 70th Annual International Meeting, SEG, Expanded Abstracts, 668-671.). Choose the method with the ‘kind’ argument. These functions were written by Joe Kington and published in The Leading Edge in the June 2015 issue.</p></li>
 <li><p>Complex trace attributes <code class="docutils literal notranslate"><span class="pre">instantaneous_amplitude</span></code> (envelope), <code class="docutils literal notranslate"><span class="pre">instantaneous_phase</span></code> and <code class="docutils literal notranslate"><span class="pre">instantaneous_frequency</span></code>, along with the <code class="docutils literal notranslate"><span class="pre">quadrature</span></code>, were added to <code class="docutils literal notranslate"><span class="pre">bruges.attribute</span></code>.</p></li>
 <li><p>Fixed a bug in <code class="docutils literal notranslate"><span class="pre">bruges.models.wedge</span></code> that led to some wedge models not having the correct total size in the ‘depth’ dimension (e.g. sometimes being off by one pixel.)</p></li>
 <li><p>Now tested on Python 3.8, 3.9 (should have been working, just catching up!). Removing Python 3.4 and 3.5 from testing.</p></li>
@@ -483,7 +485,7 @@
           <div class="toc-tree">
             <ul>
 <li><a class="reference internal" href="#">Changelog</a><ul>
-<li><a class="reference internal" href="#february-2022">0.4.6 — February 2022</a></li>
+<li><a class="reference internal" href="#coming-february-2022">0.5.0 — coming, February 2022</a></li>
 <li><a class="reference internal" href="#v0-4-5-8-december-2021">v0.4.5 — 8 December 2021</a></li>
 <li><a class="reference internal" href="#v0-4-4-27-september-2021">v0.4.4 — 27 September 2021</a></li>
 <li><a class="reference internal" href="#v0-4-3-30-june-2021">v0.4.3 — 30 June 2021</a></li>

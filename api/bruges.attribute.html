@@ -390,6 +390,106 @@ tuple of ndarrays back).</p>
 </dl>
 </dd></dl>
 </section>
+<section id="module-bruges.attribute.discontinuity">
+<span id="bruges-attribute-discontinuity-module"></span><h2>bruges.attribute.discontinuity module<a class="headerlink" href="#module-bruges.attribute.discontinuity" title="Permalink to this headline">#</a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="bruges.attribute.discontinuity.discontinuity">
+<span class="sig-prename descclassname"><span class="pre">bruges.attribute.discontinuity.</span></span><span class="sig-name descname"><span class="pre">discontinuity</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">traces</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">duration</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dt</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">step_out</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">kind</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'gst'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sigma</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/bruges/attribute/discontinuity.html#discontinuity"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bruges.attribute.discontinuity.discontinuity" title="Permalink to this definition">#</a></dt>
+<dd><p>Compute discontinuity for a seismic section using one of various methods.</p>
+<p>Expects time or depth to be in the last axis of a 2D or 3D input.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>traces</strong> – A 2D or 3D NumPy array arranged as (cdp, twt) or
+(iline, xline, twt).</p></li>
+<li><p><strong>duration</strong> – The length in seconds of the window trace kernel
+used to calculate the discontinuity.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Keyword Arguments</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>(</strong><strong>default=1</strong><strong>)</strong> (<em>sigma</em>) – The sample interval of the traces in sec.
+(eg. 0.001, 0.002, …). Will default to one, allowing
+duration to be given in samples.</p></li>
+<li><p><strong>(</strong><strong>default=1</strong><strong>)</strong> – The number of adjacent traces to the kernel to compute discontinuity over.</p></li>
+<li><p><strong>(</strong><strong>default='gst'</strong><strong>)</strong> (<em>kind</em>) – The method to use for the computation. Can be “marfurt”, “gersztenkorn”
+or “gst” (gradient structure tensor).</p></li>
+<li><p><strong>(</strong><strong>default=1</strong><strong>)</strong> – The width of the Gaussian function used to compute gradients.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py function">
+<dt class="sig sig-object py" id="bruges.attribute.discontinuity.gersztenkorn">
+<span class="sig-prename descclassname"><span class="pre">bruges.attribute.discontinuity.</span></span><span class="sig-name descname"><span class="pre">gersztenkorn</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">traces</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/bruges/attribute/discontinuity.html#gersztenkorn"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bruges.attribute.discontinuity.gersztenkorn" title="Permalink to this definition">#</a></dt>
+<dd><p>Gersztenkorn, A., and K. J. Marfurt, 1999, Eigenstructure‐based coherence
+computations as an aid to 3-D structural and stratigraphic mapping:
+GEOPHYSICS, 64, 1468-1479. doi:10.1190/1.1444651</p>
+</dd></dl>
+<dl class="py function">
+<dt class="sig sig-object py" id="bruges.attribute.discontinuity.gradients">
+<span class="sig-prename descclassname"><span class="pre">bruges.attribute.discontinuity.</span></span><span class="sig-name descname"><span class="pre">gradients</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">traces</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sigma</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/bruges/attribute/discontinuity.html#gradients"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bruges.attribute.discontinuity.gradients" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+<dl class="py function">
+<dt class="sig sig-object py" id="bruges.attribute.discontinuity.gst_calc">
+<span class="sig-prename descclassname"><span class="pre">bruges.attribute.discontinuity.</span></span><span class="sig-name descname"><span class="pre">gst_calc</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">region</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/bruges/attribute/discontinuity.html#gst_calc"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bruges.attribute.discontinuity.gst_calc" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+<dl class="py function">
+<dt class="sig sig-object py" id="bruges.attribute.discontinuity.gst_discontinuity">
+<span class="sig-prename descclassname"><span class="pre">bruges.attribute.discontinuity.</span></span><span class="sig-name descname"><span class="pre">gst_discontinuity</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">seismic</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">window</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sigma</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/bruges/attribute/discontinuity.html#gst_discontinuity"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bruges.attribute.discontinuity.gst_discontinuity" title="Permalink to this definition">#</a></dt>
+<dd><p>Gradient structure tensor discontinuity.</p>
+<p>Randen, T., E. Monsen, C. Singe, A. Abrahamsen, J. Hansen, T. Saeter, and J. Schlaf, 2000,
+Three-dimensional texture attributes for seismic data analysis, 70th Annual International Meeting,
+SEG, Expanded Abstracts, 668-671.</p>
+</dd></dl>
+<dl class="py function">
+<dt class="sig sig-object py" id="bruges.attribute.discontinuity.marfurt">
+<span class="sig-prename descclassname"><span class="pre">bruges.attribute.discontinuity.</span></span><span class="sig-name descname"><span class="pre">marfurt</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">traces</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/bruges/attribute/discontinuity.html#marfurt"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bruges.attribute.discontinuity.marfurt" title="Permalink to this definition">#</a></dt>
+<dd><p>Marfurt, K., V. Sudhaker, A. Gersztenkorn, K. D. Crawford, and S. E. Nissen, 1999,
+Coherency calculations in the presence of structural dip: GEOPHYSICS, 64, 104-111.
+doi:10.1190/1.1444508</p>
+</dd></dl>
+<dl class="py function">
+<dt class="sig sig-object py" id="bruges.attribute.discontinuity.moving_window">
+<span class="sig-prename descclassname"><span class="pre">bruges.attribute.discontinuity.</span></span><span class="sig-name descname"><span class="pre">moving_window</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">traces</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">func</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">window</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/bruges/attribute/discontinuity.html#moving_window"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bruges.attribute.discontinuity.moving_window" title="Permalink to this definition">#</a></dt>
+<dd><p>Helper function for multi-trace attribute generation.
+This function applies a 3D function func to process a
+region of shape <cite>window</cite> over a dataset <cite>data</cite>.</p>
+</dd></dl>
+<dl class="py function">
+<dt class="sig sig-object py" id="bruges.attribute.discontinuity.moving_window4d">
+<span class="sig-prename descclassname"><span class="pre">bruges.attribute.discontinuity.</span></span><span class="sig-name descname"><span class="pre">moving_window4d</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">grad</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">window</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">func</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/bruges/attribute/discontinuity.html#moving_window4d"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bruges.attribute.discontinuity.moving_window4d" title="Permalink to this definition">#</a></dt>
+<dd><p>Applies the given function <em>func</em> over a moving <em>window</em>, reducing
+the input <em>grad</em> array from 4D to 3D.</p>
+</dd></dl>
+<dl class="py function">
+<dt class="sig sig-object py" id="bruges.attribute.discontinuity.similarity">
+<span class="sig-prename descclassname"><span class="pre">bruges.attribute.discontinuity.</span></span><span class="sig-name descname"><span class="pre">similarity</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">traces</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">duration</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dt</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">step_out</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">kind</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'gst'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sigma</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bruges.attribute.discontinuity.similarity" title="Permalink to this definition">#</a></dt>
+<dd><p>Compute discontinuity for a seismic section using one of various methods.</p>
+<p>Expects time or depth to be in the last axis of a 2D or 3D input.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>traces</strong> – A 2D or 3D NumPy array arranged as (cdp, twt) or
+(iline, xline, twt).</p></li>
+<li><p><strong>duration</strong> – The length in seconds of the window trace kernel
+used to calculate the discontinuity.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Keyword Arguments</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>(</strong><strong>default=1</strong><strong>)</strong> (<em>sigma</em>) – The sample interval of the traces in sec.
+(eg. 0.001, 0.002, …). Will default to one, allowing
+duration to be given in samples.</p></li>
+<li><p><strong>(</strong><strong>default=1</strong><strong>)</strong> – The number of adjacent traces to the kernel to compute discontinuity over.</p></li>
+<li><p><strong>(</strong><strong>default='gst'</strong><strong>)</strong> (<em>kind</em>) – The method to use for the computation. Can be “marfurt”, “gersztenkorn”
+or “gst” (gradient structure tensor).</p></li>
+<li><p><strong>(</strong><strong>default=1</strong><strong>)</strong> – The width of the Gaussian function used to compute gradients.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+</section>
 <section id="module-bruges.attribute.energy">
 <span id="bruges-attribute-energy-module"></span><h2>bruges.attribute.energy module<a class="headerlink" href="#module-bruges.attribute.energy" title="Permalink to this headline">#</a></h2>
 <dl class="py function">
@@ -417,6 +517,13 @@ to 1 so duration can be in samples.</p></li>
 </dd>
 </dl>
 </dd></dl>
+</section>
+<section id="module-bruges.attribute.horizon">
+<span id="bruges-attribute-horizon-module"></span><h2>bruges.attribute.horizon module<a class="headerlink" href="#module-bruges.attribute.horizon" title="Permalink to this headline">#</a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="bruges.attribute.horizon.dip">
+<span class="sig-prename descclassname"><span class="pre">bruges.attribute.horizon.</span></span><span class="sig-name descname"><span class="pre">dip</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">arr</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/bruges/attribute/horizon.html#dip"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bruges.attribute.horizon.dip" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
 </section>
 <section id="module-bruges.attribute.similarity">
 <span id="bruges-attribute-similarity-module"></span><h2>bruges.attribute.similarity module<a class="headerlink" href="#module-bruges.attribute.similarity" title="Permalink to this headline">#</a></h2>
@@ -623,7 +730,9 @@ STFT windows</p></li>
 <li><a class="reference internal" href="#submodules">Submodules</a></li>
 <li><a class="reference internal" href="#module-bruges.attribute.complex">bruges.attribute.complex module</a></li>
 <li><a class="reference internal" href="#module-bruges.attribute.dipsteer">bruges.attribute.dipsteer module</a></li>
+<li><a class="reference internal" href="#module-bruges.attribute.discontinuity">bruges.attribute.discontinuity module</a></li>
 <li><a class="reference internal" href="#module-bruges.attribute.energy">bruges.attribute.energy module</a></li>
+<li><a class="reference internal" href="#module-bruges.attribute.horizon">bruges.attribute.horizon module</a></li>
 <li><a class="reference internal" href="#module-bruges.attribute.similarity">bruges.attribute.similarity module</a></li>
 <li><a class="reference internal" href="#module-bruges.attribute.spectraldecomp">bruges.attribute.spectraldecomp module</a></li>
 <li><a class="reference internal" href="#module-bruges.attribute.spectrogram">bruges.attribute.spectrogram module</a></li>

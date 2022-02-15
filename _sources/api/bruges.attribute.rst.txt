@@ -20,10 +20,26 @@ bruges.attribute.dipsteer module
    :undoc-members:
    :show-inheritance:
 
+bruges.attribute.discontinuity module
+-------------------------------------
+
+.. automodule:: bruges.attribute.discontinuity
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 bruges.attribute.energy module
 ------------------------------
 
 .. automodule:: bruges.attribute.energy
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+bruges.attribute.horizon module
+-------------------------------
+
+.. automodule:: bruges.attribute.horizon
    :members:
    :undoc-members:
    :show-inheritance:

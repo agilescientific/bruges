@@ -12,6 +12,14 @@ bruges.models.panel module
    :undoc-members:
    :show-inheritance:
 
+bruges.models.polarity module
+-----------------------------
+
+.. automodule:: bruges.models.polarity
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 bruges.models.wedge module
 --------------------------
 
