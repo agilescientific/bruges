@@ -5,7 +5,6 @@
 
    `Fork on GitHub <https://github.com/agile-geoscience/bruges>`_
 
-===========
 bruges is a
 ===========
 
@@ -14,26 +13,42 @@ bruges is a
 In other words, it's just a load of functions that implement important equations in (mostly seismic) geophysics, from Aki-Richards to Zoeppritz.
 
 
-Installation
-------------
+Quick start
+-----------
 
 .. toctree::
     :caption: Quick start
 
-To install ``bruges``, simply type the following into a terminal::
+To install ``bruges``, simply type the following into a terminal:
+
+.. code-block:: shell
 
     pip install bruges
 
-To create an Ormsby Wavelet::
+To create an Ormsby wavelet:
 
-    from bruges.filters.wavelets import ormbsy:
-    w = ormsby(duration=0.5, dt=0.002, f=[5, 10, 40, 80])
+.. code-block:: python
+
+    from bruges.filters import ormbsy
+    w, t = ormsby(duration=0.5, dt=0.002, f=[5, 10, 40, 80])
+
+The function passes back the wavelet amplitude samples ``w`` and the time
+of each sample, ``t``. You can plot the wavelet with ``matplotlib`` like so:
+
+.. code-block:: python
+
+    import matplotlib.pyplot as plt
+    plt.plot(t, w)
 
 
 User Guide
 ----------
 
-    Coming soon!
+.. toctree::
+    :maxdepth: 2
+    :caption: User guide
+
+    installation
 
 
 API reference
@@ -43,7 +58,7 @@ API reference
     :maxdepth: 3
     :caption: API reference
 
-    bruges
+    api/bruges.rst
 
 
 Other resources
@@ -78,10 +93,3 @@ Indices and tables
     Community guidelines <https://code.agilescientific.com/community>
     Agile's software <https://code.agilescientific.com>
     Agile's website <https://www.agilescientific.com>
-
-
-.. include:: source/intro.rst
-
-.. include:: source/status.rst
-
-.. include:: source/install.rst

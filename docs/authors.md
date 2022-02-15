@@ -1,4 +1,4 @@
 # Authors
 
-```{include} ../contributors.md
+```{include} ../AUTHORS.md
 ```

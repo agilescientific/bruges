@@ -5,8 +5,6 @@
 
 In other words, it's just a load of functions that implement important equations in (mostly seismic) geophysics, from Aki-Richards to Zoeppritz.
 
-## Status
-
 ```{image} https://img.shields.io/travis/agile-geoscience/bruges.svg
 :alt: Travis build status
 :target: https://travis-ci.org/agile-geoscience/bruges
@@ -57,11 +55,11 @@ pip install bruges
 
 ## Links
 
-- [Documentation](https://bruges.readthedocs.org)
+- [Documentation](https://code.agilescientific.com/bruges)
 - [Project page](http://agile-geoscience.github.com/bruges/)
 - [Issue Tracker](https://github.com/agile-geoscience/bruges/issues/)
 - [PyPi](http://pypi.python.org/pypi/bruges/)
-- [Agile Geoscience](http://www.agilegeoscience.com)
+- [Agile's website](http://www.agilescientific.com)
 
 ```{image} https://www.dropbox.com/s/tzvi22ujq6rozdb/bruges_long_rooves.png?raw=1
 ```

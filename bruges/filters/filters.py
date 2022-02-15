@@ -272,6 +272,6 @@ def rotate_phase(s, phi, degrees=False):
     phi = np.asanyarray(phi).reshape(-1, 1, 1)
     if degrees:
         phi = np.radians(phi)
-        
+
     rotated = np.real(a) * np.cos(phi)  -  np.imag(a) * np.sin(phi)
     return np.squeeze(rotated)

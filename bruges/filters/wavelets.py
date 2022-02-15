@@ -13,7 +13,7 @@ import matplotlib.pyplot as plt
 from bruges.util import deprecated
 
 
-def _get_time(duration, dt, sym=None):
+def _get_time(duration, dt, sym=True):
     """
     Make a time vector.
 
@@ -21,12 +21,6 @@ def _get_time(duration, dt, sym=None):
     and will be symmetric about 0. If it's False, and the number of samples
     is even (e.g. duration = 0.016, dt = 0.004), then 0 will bot be center.
     """
-    if sym is None:
-        m = "In future releases, the default legacy behaviour will be removed. "
-        m += "We recommend setting sym=True. This will be the default in v0.5+."
-        warnings.warn(m, category=FutureWarning, stacklevel=2)
-        return np.arange(-duration/2, duration/2, dt)
-    
     # This business is to avoid some of the issues with `np.arange`:
     # (1) unpredictable length and (2) floating point weirdness, like
     # 1.234e-17 instead of 0. Not using `linspace` because figuring out
@@ -35,22 +29,22 @@ def _get_time(duration, dt, sym=None):
     odd = n % 2
     k = int(10**-np.floor(np.log10(dt)))
     dti = int(k * dt)  # integer dt
-        
+
     if (odd and sym):
         t = np.arange(n)
     if (not odd and sym):
         t = np.arange(n + 1)
-    if (odd and not sym): 
+    if (odd and not sym):
         t = np.arange(n)
     if (not odd and not sym):
         t = np.arange(n) - 1
-        
+
     t -= t[-1] // 2
-    
+
     return dti * t / k
 
 
-def _generic(func, duration, dt, f, t=None, return_t=False, taper='blackman', sym=None):
+def _generic(func, duration, dt, f, t=None, return_t=True, taper='blackman', sym=True):
     """
     Generic wavelet generator: applies a window to a continuous function.
 
@@ -80,8 +74,8 @@ def _generic(func, duration, dt, f, t=None, return_t=False, taper='blackman', sy
             passed `return_t=True` then a tuple of (wavelet, t) is returned.
     """
     if not return_t:
-        m = "In future releases, return_t will be True by default."
-        warnings.warn(m, FutureWarning, stacklevel=2)
+        m = "return_t is deprecated. In future releases, return_t will always be True."
+        warnings.warn(m, DeprecationWarning, stacklevel=2)
 
     f = np.asanyarray(f).reshape(-1, 1)
 
@@ -116,7 +110,7 @@ def _generic(func, duration, dt, f, t=None, return_t=False, taper='blackman', sy
         return w
 
 
-def sinc(duration, dt, f, t=None, return_t=False, taper='blackman', sym=None):
+def sinc(duration, dt, f, t=None, return_t=True, taper='blackman', sym=True):
     """
     sinc function centered on t=0, with a dominant frequency of f Hz.
 
@@ -126,7 +120,8 @@ def sinc(duration, dt, f, t=None, return_t=False, taper='blackman', sym=None):
 
         import matplotlib.pyplot as plt
         import bruges
-        plt.plot(bruges.filters.sinc(.5, 0.002, 40))
+        w, t = bruges.filters.sinc(0.256, 0.002, 40)
+        plt.plot(t, w)
 
     Args:
         duration (float): The length in seconds of the wavelet.
@@ -155,7 +150,7 @@ def sinc(duration, dt, f, t=None, return_t=False, taper='blackman', sym=None):
     return _generic(func, duration, dt, f, t, return_t, taper)
 
 
-def cosine(duration, dt, f, t=None, return_t=False, taper='gaussian', sigma=None, sym=None):
+def cosine(duration, dt, f, t=None, return_t=True, taper='gaussian', sigma=None, sym=True):
     """
     With the default Gaussian window, equivalent to a 'modified Morlet'
     also sometimes called a 'Gabor' wavelet. The `bruges.filters.gabor`
@@ -168,8 +163,8 @@ def cosine(duration, dt, f, t=None, return_t=False, taper='gaussian', sigma=None
 
         import matplotlib.pyplot as plt
         import bruges
-        plt.plot(bruges.filters.cosine(.5, 0.002, 40))
-        plt.show()
+        w, t = bruges.filters.cosine(0.256, 0.002, 40)
+        plt.plot(t, w)
 
     Args:
         duration (float): The length in seconds of the wavelet.
@@ -206,7 +201,7 @@ def cosine(duration, dt, f, t=None, return_t=False, taper='gaussian', sigma=None
     return _generic(func, duration, dt, f, t, return_t, taper)
 
 
-def gabor(duration, dt, f, t=None, return_t=False, sym=None):
+def gabor(duration, dt, f, t=None, return_t=True, sym=True):
     """
     Generates a Gabor wavelet with a peak frequency f0 at time t.
 
@@ -218,7 +213,8 @@ def gabor(duration, dt, f, t=None, return_t=False, sym=None):
 
         import matplotlib.pyplot as plt
         import bruges
-        plt.plot(bruges.filters.gabor(.5, 0.002, 40))
+        w, t = bruges.filters.gabor(0.256, 0.002, 40)
+        plt.plot(t, w)
 
     Args:
         duration (float): The length in seconds of the wavelet.
@@ -242,7 +238,7 @@ def gabor(duration, dt, f, t=None, return_t=False, sym=None):
     return _generic(func, duration, dt, f, t, return_t)
 
 
-def ricker(duration, dt, f, t=None, return_t=False, sym=None):
+def ricker(duration, dt, f, t=None, return_t=True, sym=True):
     """
     Also known as the mexican hat wavelet, models the function:
 
@@ -255,7 +251,8 @@ def ricker(duration, dt, f, t=None, return_t=False, sym=None):
 
         import matplotlib.pyplot as plt
         import bruges
-        plt.plot(bruges.filters.ricker(.5, 0.002, 40))
+        w, t = bruges.filters.ricker(0.256, 0.002, 40)
+        plt.plot(t, w)
 
     Args:
         duration (float): The length in seconds of the wavelet.
@@ -275,11 +272,11 @@ def ricker(duration, dt, f, t=None, return_t=False, sym=None):
     Returns:
         ndarray. Ricker wavelet(s) with centre frequency f sampled on t. If
             you passed `return_t=True` then a tuple of (wavelet, t) is returned.
-    
+
     """
     if not return_t:
-        m = "In future releases, return_t will be True by default."
-        warnings.warn(m, FutureWarning, stacklevel=2)
+        m = "return_t is deprecated. In future releases, return_t will always be True."
+        warnings.warn(m, DeprecationWarning, stacklevel=2)
 
     f = np.asanyarray(f).reshape(-1, 1)
 
@@ -303,13 +300,20 @@ def ricker(duration, dt, f, t=None, return_t=False, sym=None):
 def klauder(duration, dt, f,
             autocorrelate=True,
             t=None,
-            return_t=False,
+            return_t=True,
             taper='blackman',
-            sym=None,
+            sym=True,
             **kwargs):
     """
     By default, gives the autocorrelation of a linear frequency modulated
     wavelet (sweep). Uses scipy.signal.chirp, adding dimensions as necessary.
+
+    .. plot::
+
+        import matplotlib.pyplot as plt
+        import bruges
+        w, t = bruges.filters.klauder(0.256, 0.002, [12, 48])
+        plt.plot(t, w)
 
     Args:
         duration (float): The length in seconds of the wavelet.
@@ -341,8 +345,8 @@ def klauder(duration, dt, f,
             (wavelet, t) is returned.
     """
     if not return_t:
-        m = "In future releases, return_t will be True by default."
-        warnings.warn(m, FutureWarning, stacklevel=2)
+        m = "return_t is deprecated. In future releases, return_t will always be True."
+        warnings.warn(m, DeprecationWarning, stacklevel=2)
 
     if t is None:
         t = _get_time(duration, dt, sym=sym)
@@ -387,17 +391,18 @@ def klauder(duration, dt, f,
 sweep = klauder
 
 
-def ormsby(duration, dt, f, t=None, return_t=False, sym=None):
+def ormsby(duration, dt, f, t=None, return_t=True, sym=True):
     """
     The Ormsby wavelet requires four frequencies which together define a
     trapezoid shape in the spectrum. The Ormsby wavelet has several sidelobes,
     unlike Ricker wavelets.
 
     .. plot::
-        
+
         import matplotlib.pyplot as plt
         import bruges
-        plt.plot(bruges.filters.ormsby(.5, 0.002, [5, 10, 40, 80]))
+        w, t = bruges.filters.ormsby(0.256, 0.002, [5, 10, 40, 80])
+        plt.plot(t, w)
 
     Args:
         duration (float): The length in seconds of the wavelet.
@@ -420,8 +425,8 @@ def ormsby(duration, dt, f, t=None, return_t=False, sym=None):
 
     """
     if not return_t:
-        m = "In future releases, return_t will be True by default."
-        warnings.warn(m, FutureWarning, stacklevel=2)
+        m = "return_t is deprecated. In future releases, return_t will always be True."
+        warnings.warn(m, DeprecationWarning, stacklevel=2)
 
     f = np.asanyarray(f).reshape(-1, 1)
 
@@ -458,7 +463,7 @@ def ormsby(duration, dt, f, t=None, return_t=False, sym=None):
 def ormsby_fft(duration, dt, f, P=(0, 0), return_t=True, sym=True):
     """
     Non-white Ormsby, with arbitary amplitudes.
-    
+
     Can use as many points as you like. The power of f1 and f4 is assumed to be 0,
     so you only need to provide p2 and p3 (the corners). (You can actually provide
     as many f points as you like, as long as there are n - 2 matching p points.)
@@ -467,7 +472,8 @@ def ormsby_fft(duration, dt, f, P=(0, 0), return_t=True, sym=True):
 
         import matplotlib.pyplot as plt
         import bruges
-        plt.plot(bruges.filters.ormsby(.5, 0.002, [5, 10, 40, 80]))
+        w, t = bruges.filters.ormsby(0.256, 0.002, [5, 10, 40, 80])
+        plt.plot(t, w)
 
     Args:
         duration (float): The length in seconds of the wavelet.
@@ -491,6 +497,10 @@ def ormsby_fft(duration, dt, f, P=(0, 0), return_t=True, sym=True):
         ndarray: A vector containing the Ormsby wavelet, or a bank of them. If
             you passed `return_t=True` then a tuple of (wavelet, t) is returned.
     """
+    if not return_t:
+        m = "return_t is deprecated. In future releases, return_t will always be True."
+        warnings.warn(m, DeprecationWarning, stacklevel=2)
+
     fs = 1 / dt
     fN = fs // 2
     n = int(duration / dt)
@@ -516,13 +526,13 @@ def ormsby_fft(duration, dt, f, P=(0, 0), return_t=True, sym=True):
         return w
 
 
-def berlage(duration, dt, f, n=2, alpha=180, phi=-np.pi/2, t=None, return_t=False, sym=None):
-    """
+def berlage(duration, dt, f, n=2, alpha=180, phi=-np.pi/2, t=None, return_t=True, sym=True):
+    r"""
     Generates a Berlage wavelet with a peak frequency f. Implements
 
     .. math::
 
-        w(t) = AH(t) t^n \mathrm{e}^{-\alpha t} \cos(2 \pi f_0 t + \phi_0)
+        w(t) = AH(t) t^n \mathrm{e}^{- \alpha t} \cos(2 \pi f_0 t + \phi_0)
 
     as described in Aldridge, DF (1990), The Berlage wavelet, GEOPHYSICS
     55 (11), p 1508-1511. Berlage wavelets are causal, minimum phase and
@@ -534,8 +544,8 @@ def berlage(duration, dt, f, n=2, alpha=180, phi=-np.pi/2, t=None, return_t=Fals
 
         import matplotlib.pyplot as plt
         import bruges
-        plt.plot(bruges.filters.berlage(0.5, 0.002, 40))
-        plt.show()
+        w, t = bruges.filters.berlage(0.256, 0.002, 40)
+        plt.plot(t, w)
 
     Args:
         duration (float): The length in seconds of the wavelet.
@@ -560,8 +570,8 @@ def berlage(duration, dt, f, n=2, alpha=180, phi=-np.pi/2, t=None, return_t=Fals
             you passed `return_t=True` then a tuple of (wavelet, t) is returned.
     """
     if not return_t:
-        m = "In future releases, return_t will be True by default."
-        warnings.warn(m, FutureWarning, stacklevel=2)
+        m = "return_t is deprecated. In future releases, return_t will always be True."
+        warnings.warn(m, DeprecationWarning, stacklevel=2)
 
     f = np.asanyarray(f).reshape(-1, 1)
     if t is None:
@@ -584,7 +594,7 @@ def berlage(duration, dt, f, n=2, alpha=180, phi=-np.pi/2, t=None, return_t=Fals
         return w
 
 
-def generalized(duration, dt, f, u=2, t=None, return_t=False, imag=False, sym=None):
+def generalized(duration, dt, f, u=2, t=None, return_t=True, imag=False, sym=True):
     """
     Wang's generalized wavelet, of which the Ricker is a special case where
     u = 2. The parameter u is the order of the time-domain derivative, which
@@ -598,7 +608,8 @@ def generalized(duration, dt, f, u=2, t=None, return_t=False, imag=False, sym=No
 
         import matplotlib.pyplot as plt
         import bruges
-        plt.plot(bruges.filters.generalized(.5, 0.002, 40, u=1.0))
+        w, t = bruges.filters.generalized(0.256, 0.002, 40, u=1.0)
+        plt.plot(t, w)
 
     Args:
         duration (float): The length of the wavelet, in s.
@@ -625,8 +636,8 @@ def generalized(duration, dt, f, u=2, t=None, return_t=False, imag=False, sym=No
             of (wavelet, t) is returned.
     """
     if not return_t:
-        m = "In future releases, return_t will be True by default."
-        warnings.warn(m, FutureWarning, stacklevel=2)
+        m = "return_t is deprecated. In future releases, return_t will always be True."
+        warnings.warn(m, DeprecationWarning, stacklevel=2)
 
     # Make sure we can do banks.
     f = np.asanyarray(f).reshape(-1, 1)
@@ -671,37 +682,3 @@ def generalized(duration, dt, f, u=2, t=None, return_t=False, imag=False, sym=No
         return GeneralizedWavelet(w, t)
     else:
         return w
-
-
-@deprecated('bruges.filters.wavelets.rotate_phase() is deprecated. Please use bruges.filters.rotate_phase() instead.')
-def rotate_phase(w, phi, degrees=False):
-    """
-    Performs a phase rotation of wavelet or wavelet bank using:
-
-    .. math::
-
-        A = w(t)\cos(\phi) - h(t)\sin(\phi)
-
-    where w(t) is the wavelet and h(t) is its Hilbert transform.
-
-    The analytic signal can be written in the form S(t) = A(t)exp(j*theta(t))
-    where A(t) = magnitude(hilbert(w(t))) and theta(t) = angle(hilbert(w(t))
-    then a constant phase rotation phi would produce the analytic signal
-    S(t) = A(t)exp(j*(theta(t) + phi)). To get the non analytic signal
-    we take real(S(t)) == A(t)cos(theta(t) + phi)
-    == A(t)(cos(theta(t))cos(phi) - sin(theta(t))sin(phi)) <= trig identity
-    == w(t)cos(phi) - h(t)sin(phi)
-
-    Args:
-        w (ndarray): The wavelet vector, can be a 2D wavelet bank.
-        phi (float): The phase rotation angle (in radians) to apply.
-        degrees (bool): If phi is in degrees not radians.
-
-    Returns:
-        The phase rotated signal (or bank of signals).
-    """
-    if degrees:
-        phi = phi * np.pi / 180.0
-    a = scipy.signal.hilbert(w, axis=0)
-    w = np.real(a) * np.cos(phi)  -  np.imag(a) * np.sin(phi)
-    return w

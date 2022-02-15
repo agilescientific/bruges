@@ -23,16 +23,16 @@ class WaveletTest(unittest.TestCase):
         x = array([-0.        ,  0.        ,  0.        ,  0.        , -0.15321277,
                    -0.1887466 ,  0.17251039,  0.72943393,  1.        ,  0.72943393,
                     0.17251039, -0.1887466 , -0.        ,  0.        ,  0.        ,  0.        ])
-        y = sinc(0.064, 0.004, np.arange(50, 100), taper=self.taper)[3]
-        self.assertTrue(np.allclose(x, y))
+        y, t = sinc(0.064, 0.004, np.arange(50, 100), taper=self.taper)
+        self.assertTrue(np.allclose(x, y[3]))
 
     def test_ricker(self):
         x = array([0.88273185,  0.90950743,  0.9330604 ,  0.95324475,  0.96993473,
                    0.9830259 ,  0.99243608,  0.99810603,  1.        ,  0.99810603,
                    0.99243608,  0.9830259 ,  0.96993473,  0.95324475,  0.9330604 ,
                    0.90950743])
-        y = ricker(0.064, 0.004, np.arange(1, 10))[1]
-        self.assertTrue(np.allclose(x, y))
+        y, t = ricker(0.064, 0.004, np.arange(1, 10))
+        self.assertTrue(np.allclose(x, y[1]))
 
     def test_sweep(self):
         x = array([-1.59650205e-18,   2.75409007e-03,  -3.01670223e-03,
@@ -41,7 +41,7 @@ class WaveletTest(unittest.TestCase):
                     2.38730442e-01,  -2.10312350e-01,  -3.25806534e-02,
                    -8.30581776e-03,  -1.39615614e-02,  -6.55916221e-04,
                    -2.28078034e-18])
-        y = sweep(0.064, 0.004, [10, 100])
+        y, t = sweep(0.064, 0.004, [10, 100])
         self.assertTrue(np.allclose(x, y))
 
     def test_berlage(self):
@@ -49,7 +49,7 @@ class WaveletTest(unittest.TestCase):
                    -0.00000000e+00, -0.00000000e+00, -0.00000000e+00, -0.00000000e+00,
                     0.00000000e+00,  2.89837052e-01,  9.13081427e-01,  1.00000000e+00,
                     5.34807890e-01, -5.72248038e-16, -2.85099378e-01, -3.05622598e-01])
-        y = berlage(0.064, 0.004, 25)
+        y, t = berlage(0.064, 0.004, 25)
         self.assertTrue(np.allclose(x, y))
 
     def test_ormsby(self):

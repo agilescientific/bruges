@@ -51,7 +51,7 @@ extensions = ['sphinx.ext.githubpages',
               'sphinxcontrib.apidoc',
               'sphinx.ext.napoleon',
               'myst_parser',
-              'sphinx.ext.viewcode', 
+              'sphinx.ext.viewcode',
               'matplotlib.sphinxext.plot_directive',
               'sphinx.ext.mathjax',
 ]
@@ -62,7 +62,7 @@ myst_enable_extensions = ["dollarmath", "amsmath"]
 # https://pypi.org/project/sphinxcontrib-apidoc/
 # The apidoc extension and this code automatically update apidoc.
 apidoc_module_dir = '../bruges'
-apidoc_output_dir = './'
+apidoc_output_dir = './api'
 apidoc_excluded_paths = []
 apidoc_toc_file = False
 apidoc_separate_modules = False

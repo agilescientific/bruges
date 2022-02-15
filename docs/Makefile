@@ -1,5 +1,3 @@
-# Minimal makefile for Sphinx documentation
-#
 
 # You can set these variables from the command line, and also
 # from the environment for the first two.
@@ -14,11 +12,9 @@ help:
 
 .PHONY: help html
 
-# Catch-all target: route all unknown targets to Sphinx using the new
-# "make mode" option.  $(O) is meant as a shortcut for $(SPHINXOPTS).
 html:
-	#   python pre_process_ipynb.py $(SOURCEDIR)/notebooks
+	python pre_process_ipynb.py $(SOURCEDIR)/notebooks
 	$(SPHINXBUILD) -E -b html $(SPHINXOPTS) $(SOURCEDIR) $(BUILDDIR)/html
-	#	python post_process_html.py $(BUILDDIR)/html
+	python post_process_html.py $(BUILDDIR)/html
 	@echo
 	@echo "Build finished. The HTML pages are in $(BUILDDIR)/html."
