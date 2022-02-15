@@ -19,7 +19,7 @@ def deprecated(instructions):
     is used.
     Args:
         instructions (str): A human-friendly string of instructions, such
-            as: 'Please migrate to add_proxy() ASAP.'
+        as: 'Please migrate to add_proxy() ASAP.'
     Returns:
         The decorated function.
     """
@@ -37,11 +37,8 @@ def deprecated(instructions):
                                    category=DeprecationWarning,
                                    filename=inspect.getfile(frame.f_code),
                                    lineno=frame.f_lineno)
-
             return func(*args, **kwargs)
-
         return wrapper
-
     return decorator
 
 
@@ -241,24 +238,20 @@ def error_flag(pred, actual, dev=1.0, method=1):
     and return a log flagging large differences based on a user-defined
     distance (in standard deviation units) from the mean difference.
 
+    Author:
+        Matteo Niccoli, 2018
+
     Args:
         predicted (ndarray): predicted log.
         actual (ndarray):  original log.
         dev (float): standard deviations to use, default 1
         error calcluation method (int): default 1
             1: difference between curves larger than mean difference plus dev
-            2: curve slopes have opposite sign. Will require depth log for
-               .diff method
-            3: curve slopes of opposite sign OR difference larger than mean
-               plus dev
-
+            2: curve slopes have opposite sign. Will require depth log for .diff method
+            3: curve slopes of opposite sign OR difference larger than mean plus dev
     Returns:
         flag (ndarray) =  error flag curve
-
-    Author:
-        Matteo Niccoli, 2018
     """
-
     flag = np.zeros(len(pred))
     err = np.abs(pred-actual)
     err_mean = np.mean(err)

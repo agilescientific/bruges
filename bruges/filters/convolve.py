@@ -12,10 +12,15 @@ def convolve(reflectivity, wavelet):
     """
     Convolve n-dimensional reflectivity with a 1D wavelet or 2D wavelet bank.
     
-    Args
-    reflectivity (ndarray): The reflectivity trace, or 2D section, or volume.
-    wavelet (ndarray): The wavelet, must be 1D function or a 2D wavelet 'bank'.
-        If a wavelet bank, time should be on the last axis.
+    Args:
+        reflectivity (ndarray): The reflectivity trace, or 2D section, or volume.
+        
+        wavelet (ndarray): The wavelet, must be 1D function or a 2D wavelet 'bank'. If a wavelet bank, time should be on the last axis.
+
+    Returns
+    -------
+    out : ndarray
+        Discrete, linear convolution of `reflectivity` and `wavelet`
     """
     # Compute the target shape of the final synthetic.
     outshape = wavelet.shape[:-1] + reflectivity.shape

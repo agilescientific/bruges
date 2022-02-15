@@ -1,5 +1,6 @@
 Contributors
 ++++++++++++
+* Martin Bentley
 * Evan Bianco
 * Ben Bougher
 * Matt Hall

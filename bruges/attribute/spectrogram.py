@@ -21,29 +21,26 @@ def spectrogram(data, window_length,
     """
     Calculates a spectrogram using windowed STFTs.
 
-    :param data: 1D numpy array to process into spectra.
-    :param window_length: The length of the window in seconds if
-                          dt is set, otherwise in samples. Will
-                          zero pad to the closest power of two.
-    :keyword window_type: A string specifying the type of window to
-                          use for the STFT. The same input as
-                          scipy.signal.get_window
-    :keyword dt: The time sample interval of the trace. Defaults to
-                 1, which allows window_length to be in seconds.
-
-    :keyword overlap: The fractional overlap for each window.
-                      A value of 0 uses no redudant data, a value of 1
-                      slides the STFT window one sample at a time.
-                      Defaults to 0.5
-    :keyword normalize: Normalizes the each spectral slice to have
-                        unity energy.
-    :keyword zero_padding: The amount of zero padding to when creating
-                           the spectra.
-
-    :returns: A spectrogram of the data ([time, freq]).
-            ( 2D array for 1D input )
+    Args:
+        data (array): 1D numpy array to process into spectra.
     
-     See Also
+        window_length (float): The length of the window in seconds if dt is set, otherwise in samples. Will zero pad to the closest power  of two.
+    
+        window_type: A string specifying the type of window to use for the STFT. The same input as scipy.signal.get_window
+    
+        dt (float or int): The time sample interval of the trace. Defaults to 1, which allows window_length to be in seconds.
+    
+        overlap (float): The fractional overlap for each window. A value of 0 uses no redudant data, a value of 1 slides the STFT window one sample at a time. Defaults to 0.5
+        
+        normalize (bool): Normalizes the each spectral slice to have unity energy.
+        
+        zero_padding (float or int): The amount of zero padding to when creating the spectra.
+
+    Returns
+    -------
+    out : A spectrogram of the data ([time, freq]). (2D array for 1D input)
+    
+    See Also
     --------
     spectraldecomp : Spectral decomposition
     
