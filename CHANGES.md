@@ -1,15 +1,17 @@
 # Changelog
 
-## 0.4.6 — February 2022
+## 0.5.0 — coming, February 2022
 
 - In all wavelets, `sym` is now `True` by default.
 - In all wavelets, `return_t` is now `True` by default. you can still set it to false but...
-- **Breaking change in the future:** In the next minor release, `return_t` will always be `True`. **If you are setting it to `False`, please change your code.** We will continue to accept the argument for the time being, so if you're setting it to `True`, you can stop doing that, and leave it out of future code.
+- **Future breaking change:** In the next minor release, `return_t` will always be `True`. **If you are setting it to `False`, please change your code.** We will continue to accept the argument for the time being, so if you're setting it to `True`, you can stop doing that, and leave it out of future code.
+- **Breaking change:** I changed the names of several of the new discontinuity attributes to use the word 'discontinuity', instead of 'coherency', 'similarity', etc. This is in line with Art Barnes's classic paper "Too many seismic attributes". It was too confusing.
 - `bruges.filters.wavelets.rotate_phase()`, deprecated in v0.4.1, has now gone away and is available in improved form as `bruges.filters.rotate_phase()`.
+- Allowed discontinuity attributes to work properly on 2D data.
 - The docs have been substantially overhauled; we hope you notice an improvement.
 
 ## v0.4.5 — 8 December 2021
-- **Breaking change:** `bruges.attribute.similarity` has a new interface and computes its result(s) differently. I added several seismic coherence attributes as options to `bruges.attribute.similarity`. Methods include Marfurt coherence, that of Gersztenkorn, A., and K. J. Marfurt, 1999, and gradient structure tensor coherence (T Randen et al., 2000, 70th Annual International Meeting, SEG, Expanded Abstracts, 668-671.). Choose the method with the 'kind' argument. These functions were written by Joe Kington and published in The Leading Edge in the June 2015 issue.
+- **Breaking change:** `bruges.attribute.similarity` (n.b. now renamed `discontinuity` in version 0.4.6) has a new interface and computes its result(s) differently. I added several seismic coherence attributes as options to `bruges.attribute.similarity`. Methods include Marfurt coherence, that of Gersztenkorn, A., and K. J. Marfurt, 1999, and gradient structure tensor coherence (T Randen et al., 2000, 70th Annual International Meeting, SEG, Expanded Abstracts, 668-671.). Choose the method with the 'kind' argument. These functions were written by Joe Kington and published in The Leading Edge in the June 2015 issue.
 - Complex trace attributes `instantaneous_amplitude` (envelope), `instantaneous_phase` and `instantaneous_frequency`, along with the `quadrature`, were added to `bruges.attribute`.
 - Fixed a bug in `bruges.models.wedge` that led to some wedge models not having the correct total size in the 'depth' dimension (e.g. sometimes being off by one pixel.)
 - Now tested on Python 3.8, 3.9 (should have been working, just catching up!). Removing Python 3.4 and 3.5 from testing.
