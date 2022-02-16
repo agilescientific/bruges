@@ -1,3 +1,5 @@
+_version.py
+
 *.py[cod]
 
 .DS_Store
