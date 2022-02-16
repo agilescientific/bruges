@@ -236,8 +236,8 @@
 <span class="sd">    Args:</span>
 <span class="sd">        f: list or array of N volume fractions (must sum to 1 or 100).</span>
 <span class="sd">        m: elastic modulus of N constituents (list or array).</span>
-
-<span class="sd">     Returns:</span>
+<span class="sd">        </span>
+<span class="sd">    Returns:</span>
 <span class="sd">        mv: Voigt upper bound.</span>
 
 <span class="sd">    """</span>
@@ -263,7 +263,7 @@
 <span class="sd">        f: list or array of N volume fractions (must sum to 1 or 100).</span>
 <span class="sd">        m: elastic modulus of N constituents (list or array).</span>
 
-<span class="sd">     Returns:</span>
+<span class="sd">    Returns:</span>
 <span class="sd">        mr: Reuss lower bound.</span>
 <span class="sd">    """</span>
     <span class="n">f</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">f</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">float</span><span class="p">)</span>
@@ -286,9 +286,9 @@
 
 <span class="sd">    Args:</span>
 <span class="sd">        f: list or array of N volume fractions (must sum to 1 or 100).</span>
-<span class="sd">        m: elastic modulus of N constituents (list or array).</span>
-
-<span class="sd">     Returns:</span>
+<span class="sd">        m:elastic modulus of N constituents (list or array).</span>
+<span class="sd">        </span>
+<span class="sd">    Returns:</span>
 <span class="sd">        mh: Hill average.</span>
 <span class="sd">    """</span>
     <span class="n">mv</span> <span class="o">=</span> <span class="n">voigt_bound</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">m</span><span class="p">)</span>

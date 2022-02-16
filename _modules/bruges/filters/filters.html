@@ -456,22 +456,31 @@
 
 
 <div class="viewcode-block" id="rotate_phase"><a class="viewcode-back" href="../../../api/bruges.filters.html#bruges.filters.filters.rotate_phase">[docs]</a><span class="k">def</span> <span class="nf">rotate_phase</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">phi</span><span class="p">,</span> <span class="n">degrees</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
-    <span class="sd">"""</span>
+    <span class="sa">r</span><span class="sd">"""</span>
 <span class="sd">    Performs a phase rotation of wavelet or wavelet bank using:</span>
 
 <span class="sd">    .. math::</span>
 
-<span class="sd">        A = w(t)\cos(\phi) - h(t)\sin(\phi)</span>
+<span class="sd">        A = w(t)\cos\phi - h(t)\sin\phi</span>
 
-<span class="sd">    where w(t) is the wavelet and h(t) is its Hilbert transform.</span>
+<span class="sd">    where `w(t)` is the wavelet, `h(t)` is its Hilbert transform, and \phi is</span>
+<span class="sd">    the phase rotation angle (default is radians).</span>
 
-<span class="sd">    The analytic signal can be written in the form S(t) = A(t)exp(j*theta(t))</span>
-<span class="sd">    where A(t) = magnitude(hilbert(w(t))) and theta(t) = angle(hilbert(w(t))</span>
-<span class="sd">    then a constant phase rotation phi would produce the analytic signal</span>
-<span class="sd">    S(t) = A(t)exp(j*(theta(t) + phi)). To get the non analytic signal</span>
-<span class="sd">    we take real(S(t)) == A(t)cos(theta(t) + phi)</span>
-<span class="sd">    == A(t)(cos(theta(t))cos(phi) - sin(theta(t))sin(phi)) &lt;= trig identity</span>
-<span class="sd">    == w(t)cos(phi) - h(t)sin(phi)</span>
+<span class="sd">    The analytic signal can be written in the form :math:`S(t) = A(t)e^{j\theta (t)}`</span>
+<span class="sd">    where :math:`A(t) = \left| h(w(t)) \right|` and :math:`\theta(t) = \tan^{-1}[h(w(t))]`. </span>
+<span class="sd">    `A(t)` is called the "reflection strength" and :math:`\phi(t)` is called the "instantaneous</span>
+<span class="sd">    phase".</span>
+
+<span class="sd">    A constant phase rotation :math:`\phi` would produce the analytic signal</span>
+<span class="sd">    :math:`S(t)=A(t)e^{j(\theta(t) + \phi)}`. To get the non-analytic signal,</span>
+<span class="sd">    we take </span>
+
+<span class="sd">    .. math::</span>
+
+<span class="sd">        real(S(t)) &amp;= A(t)\cos(\theta(t) + \phi) \\</span>
+<span class="sd">        &amp;= A(t)\cos\theta(t)\cos(\phi)-\sin\theta(t)\sin(\phi))\\</span>
+<span class="sd">        &amp;= w(t)\cos\phi-h(t)\sin\phi</span>
+<span class="sd">        </span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        w (ndarray): The wavelet vector, can be a 2D wavelet bank.</span>

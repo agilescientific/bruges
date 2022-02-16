@@ -228,13 +228,14 @@
 <dt class="sig sig-object py" id="bruges.noise.noise.noise_db">
 <span class="sig-prename descclassname"><span class="pre">bruges.noise.noise.</span></span><span class="sig-name descname"><span class="pre">noise_db</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">a</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">snr</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/bruges/noise/noise.html#noise_db"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bruges.noise.noise.noise_db" title="Permalink to this definition">#</a></dt>
 <dd><p>Takes an array of seismic amplitudes and SNR in dB.</p>
-<blockquote>
-<div><dl class="simple">
-<dt>Args:</dt><dd><p>a (array) : seismic amplitude array.
-snr (int): signal to noise ratio.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>a</strong> (<em>ndarray</em>) – seismic amplitude array.</p></li>
+<li><p><strong>snr</strong> (<em>int</em>) – signal to noise ratio.</p></li>
+</ul>
 </dd>
 </dl>
-</div></blockquote>
 <p>Returns:  Noise array, the same shape as the input.</p>
 <blockquote>
 <div><p>Note: it does <em>not</em> return the input array with the noise added.</p>

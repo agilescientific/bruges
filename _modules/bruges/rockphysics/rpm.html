@@ -228,17 +228,21 @@
 
 
 <div class="viewcode-block" id="critpor"><a class="viewcode-back" href="../../../api/bruges.rockphysics.html#bruges.rockphysics.rpm.critpor">[docs]</a><span class="k">def</span> <span class="nf">critpor</span><span class="p">(</span><span class="n">K0</span><span class="p">,</span> <span class="n">G0</span><span class="p">,</span> <span class="n">phi</span><span class="p">,</span> <span class="n">phic</span><span class="o">=</span><span class="mf">0.4</span><span class="p">):</span>
-    <span class="sd">'''</span>
-<span class="sd">    Critical porosity, Nur et al. (1991, 1995)</span>
-<span class="sd">    written by Alessandro Amato del Monte (2015)</span>
-<span class="sd">    from Mavko et al., Rock Physics Handbook, p.353</span>
-<span class="sd">    INPUT</span>
-<span class="sd">    K0, G0: mineral bulk &amp; shear modulus in GPa</span>
-<span class="sd">    phi: porosity</span>
-<span class="sd">    phic: critical porosity (default 0.4)</span>
-<span class="sd">    OUTPUT</span>
-<span class="sd">    K_DRY, G_DRY: dry rock bulk &amp; shear modulus in GPa</span>
-<span class="sd">    '''</span>
+    <span class="sd">"""</span>
+<span class="sd">    Critical porosity, Nur et al. (1991, 1995) written by Alessandro Amato</span>
+<span class="sd">    del Monte (2015) from Mavko et al., Rock Physics Handbook, p.353.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        K0, G0: float or array_like</span>
+<span class="sd">            Mineral bulk &amp; shear modulus in GPa</span>
+<span class="sd">        phi: float or array_like</span>
+<span class="sd">            porosity</span>
+<span class="sd">        phic: float or array_like</span>
+<span class="sd">            critical porosity (default 0.4)</span>
+<span class="sd">    </span>
+<span class="sd">    Returns:</span>
+<span class="sd">        Tuple: K_DRY, G_DRY: dry rock bulk &amp; shear modulus in GPa</span>
+<span class="sd">    """</span>
     <span class="n">K_DRY</span>  <span class="o">=</span> <span class="n">K0</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">phi</span><span class="o">/</span><span class="n">phic</span><span class="p">)</span>
     <span class="n">G_DRY</span>  <span class="o">=</span> <span class="n">G0</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">phi</span><span class="o">/</span><span class="n">phic</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">K_DRY</span><span class="p">,</span> <span class="n">G_DRY</span></div>
@@ -249,16 +253,17 @@
 <span class="sd">    Hertz-Mindlin model</span>
 <span class="sd">    written by Alessandro Amato del Monte (2015)</span>
 <span class="sd">    from Mavko et al., Rock Physics Handbook, p.246</span>
-<span class="sd">    INPUT</span>
-<span class="sd">    K0, G0: mineral bulk &amp; shear modulus in GPa</span>
-<span class="sd">    phi: porosity</span>
-<span class="sd">    phic: critical porosity (default 0.4)</span>
-<span class="sd">    Cn: coordination nnumber (default 8.6)</span>
-<span class="sd">    P: confining pressure in MPa (default 10)</span>
-<span class="sd">    f: shear modulus correction factor, f=1 for dry pack with perfect adhesion</span>
-<span class="sd">    between particles and f=0 for dry frictionless pack</span>
-<span class="sd">    OUTPUT</span>
-<span class="sd">    K_DRY, G_DRY: dry rock bulk &amp; shear modulus in GPa</span>
+<span class="sd">    </span>
+<span class="sd">    Args:</span>
+<span class="sd">        K0, G0: mineral bulk &amp; shear modulus in GPa</span>
+<span class="sd">        phi: porosity</span>
+<span class="sd">        phic: critical porosity (default 0.4)</span>
+<span class="sd">        Cn: coordination nnumber (default 8.6)</span>
+<span class="sd">        P: confining pressure in MPa (default 10)</span>
+<span class="sd">        f: shear modulus correction factor, f=1 for dry pack with perfect adhesion between particles and f=0 for dry frictionless pack.</span>
+<span class="sd">    </span>
+<span class="sd">    Returns:</span>
+<span class="sd">        Tuple: K_DRY, G_DRY: dry rock bulk &amp; shear modulus in GPa</span>
 <span class="sd">    '''</span>
     <span class="n">P</span> <span class="o">/=</span> <span class="mf">1e3</span> <span class="c1"># converts pressure in same units as solid moduli (GPa)</span>
     <span class="n">PR0</span><span class="o">=</span><span class="p">(</span><span class="mi">3</span><span class="o">*</span><span class="n">K0</span><span class="o">-</span><span class="mi">2</span><span class="o">*</span><span class="n">G0</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="mi">6</span><span class="o">*</span><span class="n">K0</span><span class="o">+</span><span class="mi">2</span><span class="o">*</span><span class="n">G0</span><span class="p">)</span> <span class="c1"># poisson's ratio of mineral mixture</span>
@@ -271,16 +276,17 @@
 <span class="sd">    Soft-sand (uncemented) model</span>
 <span class="sd">    written by Alessandro Amato del Monte (2015)</span>
 <span class="sd">    from Mavko et al., Rock Physics Handbook, p.258</span>
-<span class="sd">    INPUT</span>
-<span class="sd">    K0, G0: mineral bulk &amp; shear modulus in GPa</span>
-<span class="sd">    phi: porosity</span>
-<span class="sd">    phic: critical porosity (default 0.4)</span>
-<span class="sd">    Cn: coordination nnumber (default 8.6)</span>
-<span class="sd">    P: confining pressure in MPa (default 10)</span>
-<span class="sd">    f: shear modulus correction factor, f=1 for dry pack with perfect adhesion</span>
-<span class="sd">    between particles and f=0 for dry frictionless pack</span>
-<span class="sd">    OUTPUT</span>
-<span class="sd">    K_DRY, G_DRY: dry rock bulk &amp; shear modulus in GPa</span>
+<span class="sd">    </span>
+<span class="sd">    Args:</span>
+<span class="sd">        K0, G0: mineral bulk &amp; shear modulus in GPa</span>
+<span class="sd">        phi: porosity</span>
+<span class="sd">        phic: critical porosity (default 0.4)</span>
+<span class="sd">        Cn: coordination nnumber (default 8.6)</span>
+<span class="sd">        P: confining pressure in MPa (default 10)</span>
+<span class="sd">        f: shear modulus correction factor, f=1 for dry pack with perfect adhesion between particles and f=0 for dry frictionless pack</span>
+<span class="sd">    </span>
+<span class="sd">    Returns:</span>
+<span class="sd">        Tuple: K_DRY, G_DRY: dry rock bulk &amp; shear modulus in GPa</span>
 <span class="sd">    '''</span>
     <span class="n">K_HM</span><span class="p">,</span> <span class="n">G_HM</span> <span class="o">=</span> <span class="n">hertzmindlin</span><span class="p">(</span><span class="n">K0</span><span class="p">,</span> <span class="n">G0</span><span class="p">,</span> <span class="n">phi</span><span class="p">,</span> <span class="n">phic</span><span class="p">,</span> <span class="n">Cn</span><span class="p">,</span> <span class="n">P</span><span class="p">,</span> <span class="n">f</span><span class="p">)</span>
     <span class="n">K_DRY</span> <span class="o">=-</span><span class="mi">4</span><span class="o">/</span><span class="mi">3</span><span class="o">*</span><span class="n">G_HM</span> <span class="o">+</span> <span class="p">(((</span><span class="n">phi</span><span class="o">/</span><span class="n">phic</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="n">K_HM</span><span class="o">+</span><span class="mi">4</span><span class="o">/</span><span class="mi">3</span><span class="o">*</span><span class="n">G_HM</span><span class="p">))</span> <span class="o">+</span> <span class="p">((</span><span class="mi">1</span><span class="o">-</span><span class="n">phi</span><span class="o">/</span><span class="n">phic</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="n">K0</span><span class="o">+</span><span class="mi">4</span><span class="o">/</span><span class="mi">3</span><span class="o">*</span><span class="n">G_HM</span><span class="p">)))</span><span class="o">**-</span><span class="mi">1</span>
@@ -293,16 +299,17 @@
 <span class="sd">    Stiff-sand model</span>
 <span class="sd">    written by Alessandro Amato del Monte (2015)</span>
 <span class="sd">    from Mavko et al., Rock Physics Handbook, p.260</span>
-<span class="sd">    INPUT</span>
-<span class="sd">    K0, G0: mineral bulk &amp; shear modulus in GPa</span>
-<span class="sd">    phi: porosity</span>
-<span class="sd">    phic: critical porosity (default 0.4)</span>
-<span class="sd">    Cn: coordination nnumber (default 8.6)</span>
-<span class="sd">    P: confining pressure in MPa (default 10)</span>
-<span class="sd">    f: shear modulus correction factor, f=1 for dry pack with perfect adhesion</span>
-<span class="sd">    between particles and f=0 for dry frictionless pack</span>
-<span class="sd">    OUTPUT</span>
-<span class="sd">    K_DRY, G_DRY: dry rock bulk &amp; shear modulus in GPa</span>
+<span class="sd">    </span>
+<span class="sd">    Args:</span>
+<span class="sd">        K0, G0: mineral bulk &amp; shear modulus in GPa</span>
+<span class="sd">        phi: porosity</span>
+<span class="sd">        phic: critical porosity (default 0.4)</span>
+<span class="sd">        Cn: coordination nnumber (default 8.6)</span>
+<span class="sd">        P: confining pressure in MPa (default 10)</span>
+<span class="sd">        f: shear modulus correction factor, f=1 for dry pack with perfect adhesion between particles and f=0 for dry frictionless pack</span>
+<span class="sd">    </span>
+<span class="sd">    Returns</span>
+<span class="sd">        Tuple: K_DRY, G_DRY: dry rock bulk &amp; shear modulus in GPa</span>
 <span class="sd">    '''</span>
     <span class="n">K_HM</span><span class="p">,</span> <span class="n">G_HM</span> <span class="o">=</span> <span class="n">hertzmindlin</span><span class="p">(</span><span class="n">K0</span><span class="p">,</span> <span class="n">G0</span><span class="p">,</span> <span class="n">phi</span><span class="p">,</span> <span class="n">phic</span><span class="p">,</span> <span class="n">Cn</span><span class="p">,</span> <span class="n">P</span><span class="p">,</span> <span class="n">f</span><span class="p">)</span>
     <span class="n">K_DRY</span> <span class="o">=</span> <span class="o">-</span><span class="mi">4</span><span class="o">/</span><span class="mi">3</span><span class="o">*</span><span class="n">G0</span> <span class="o">+</span> <span class="p">(((</span><span class="n">phi</span><span class="o">/</span><span class="n">phic</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="n">K_HM</span><span class="o">+</span><span class="mi">4</span><span class="o">/</span><span class="mi">3</span><span class="o">*</span><span class="n">G0</span><span class="p">))</span> <span class="o">+</span> <span class="p">((</span><span class="mi">1</span><span class="o">-</span><span class="n">phi</span><span class="o">/</span><span class="n">phic</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="n">K0</span><span class="o">+</span><span class="mi">4</span><span class="o">/</span><span class="mi">3</span><span class="o">*</span><span class="n">G0</span><span class="p">)))</span><span class="o">**-</span><span class="mi">1</span>
@@ -315,15 +322,16 @@
 <span class="sd">    Contact cement (cemented sand) model, Dvorkin-Nur (1996)</span>
 <span class="sd">    written by Alessandro Amato del Monte (2015)</span>
 <span class="sd">    from Mavko et al., Rock Physics Handbook, p.255</span>
-<span class="sd">    INPUT</span>
-<span class="sd">    K0, G0: mineral bulk &amp; shear modulus in GPa</span>
-<span class="sd">    phi: porosity</span>
-<span class="sd">    phic: critical porosity (default 0.4)</span>
-<span class="sd">    Cn: coordination nnumber (default 8.6)</span>
-<span class="sd">    Kc, Gc: cement bulk &amp; shear modulus in GPa (default 37, 45 i.e. quartz)</span>
-<span class="sd">    scheme: 1=cement deposited at grain contacts, 2=in uniform layer around grains (default 2)</span>
-<span class="sd">    OUTPUT</span>
-<span class="sd">    K_DRY, G_DRY: dry rock bulk &amp; shear modulus in GPa</span>
+<span class="sd">    </span>
+<span class="sd">    Args:</span>
+<span class="sd">        K0, G0: mineral bulk &amp; shear modulus in GPa</span>
+<span class="sd">        phi: porosity</span>
+<span class="sd">        phic: critical porosity (default 0.4)</span>
+<span class="sd">        Cn: coordination nnumber (default 8.6)</span>
+<span class="sd">        Kc, Gc: cement bulk &amp; shear modulus in GPa (default 37, 45 i.e. quartz)</span>
+<span class="sd">        scheme: 1=cement deposited at grain contacts, 2=in uniform layer around grains (default 2)</span>
+<span class="sd">    Returns:</span>
+<span class="sd">        Tuple: K_DRY, G_DRY: dry rock bulk &amp; shear modulus in GPa</span>
 <span class="sd">    '''</span>
     <span class="n">PR0</span><span class="o">=</span><span class="p">(</span><span class="mi">3</span><span class="o">*</span><span class="n">K0</span><span class="o">-</span><span class="mi">2</span><span class="o">*</span><span class="n">G0</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="mi">6</span><span class="o">*</span><span class="n">K0</span><span class="o">+</span><span class="mi">2</span><span class="o">*</span><span class="n">G0</span><span class="p">)</span>
     <span class="n">PRc</span> <span class="o">=</span> <span class="p">(</span><span class="mi">3</span><span class="o">*</span><span class="n">Kc</span><span class="o">-</span><span class="mi">2</span><span class="o">*</span><span class="n">Gc</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="mi">6</span><span class="o">*</span><span class="n">Kc</span><span class="o">+</span><span class="mi">2</span><span class="o">*</span><span class="n">Gc</span><span class="p">)</span>

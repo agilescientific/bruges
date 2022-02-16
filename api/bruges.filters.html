@@ -456,15 +456,20 @@ rounded up if not.</p></li>
 <span class="sig-prename descclassname"><span class="pre">bruges.filters.filters.</span></span><span class="sig-name descname"><span class="pre">rotate_phase</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">s</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">phi</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">degrees</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/bruges/filters/filters.html#rotate_phase"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bruges.filters.filters.rotate_phase" title="Permalink to this definition">#</a></dt>
 <dd><p>Performs a phase rotation of wavelet or wavelet bank using:</p>
 <div class="math-wrapper"><div class="math notranslate nohighlight">
-\[A = w(t)\cos(\phi) - h(t)\sin(\phi)\]</div></div>
-<p>where w(t) is the wavelet and h(t) is its Hilbert transform.</p>
-<p>The analytic signal can be written in the form S(t) = A(t)exp(j*theta(t))
-where A(t) = magnitude(hilbert(w(t))) and theta(t) = angle(hilbert(w(t))
-then a constant phase rotation phi would produce the analytic signal
-S(t) = A(t)exp(j*(theta(t) + phi)). To get the non analytic signal
-we take real(S(t)) == A(t)cos(theta(t) + phi)
-== A(t)(cos(theta(t))cos(phi) - sin(theta(t))sin(phi)) &lt;= trig identity
-== w(t)cos(phi) - h(t)sin(phi)</p>
+\[A = w(t)\cos\phi - h(t)\sin\phi\]</div></div>
+<p>where <cite>w(t)</cite> is the wavelet, <cite>h(t)</cite> is its Hilbert transform, and phi is
+the phase rotation angle (default is radians).</p>
+<p>The analytic signal can be written in the form <span class="math notranslate nohighlight">\(S(t) = A(t)e^{j\theta (t)}\)</span>
+where <span class="math notranslate nohighlight">\(A(t) = \left| h(w(t)) \right|\)</span> and <span class="math notranslate nohighlight">\(\theta(t) = \tan^{-1}[h(w(t))]\)</span>.
+<cite>A(t)</cite> is called the “reflection strength” and <span class="math notranslate nohighlight">\(\phi(t)\)</span> is called the “instantaneous
+phase”.</p>
+<p>A constant phase rotation <span class="math notranslate nohighlight">\(\phi\)</span> would produce the analytic signal
+<span class="math notranslate nohighlight">\(S(t)=A(t)e^{j(\theta(t) + \phi)}\)</span>. To get the non-analytic signal,
+we take</p>
+<div class="math-wrapper"><div class="math notranslate nohighlight">
+\[\begin{split}real(S(t)) &amp;= A(t)\cos(\theta(t) + \phi) \\
+&amp;= A(t)\cos\theta(t)\cos(\phi)-\sin\theta(t)\sin(\phi))\\
+&amp;= w(t)\cos\phi-h(t)\sin\phi\end{split}\]</div></div>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -904,7 +909,7 @@ the length of the window and returning the window function.</p></li>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p><dl class="simple">
-<dt>ndarray. sinc wavelet(s) with centre frequency f sampled on t. If</dt><dd><p>you passed <cite>return_t=True</cite> then a tuple of (wavelet, t) is returned.</p>
+<dt>ndarray. sinc wavelet(s) with centre frequency f sampled on t. If</dt><dd><p>you passed <cite>return_t = True</cite> then a tuple of (wavelet, t) is returned.</p>
 </dd>
 </dl>
 </p>

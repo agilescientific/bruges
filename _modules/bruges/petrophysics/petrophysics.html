@@ -227,6 +227,8 @@
 <span class="sd">:license: Apache 2.0</span>
 <span class="sd">"""</span>
 
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
 
 <div class="viewcode-block" id="gardner"><a class="viewcode-back" href="../../../api/bruges.petrophysics.html#bruges.petrophysics.petrophysics.gardner">[docs]</a><span class="k">def</span> <span class="nf">gardner</span><span class="p">(</span><span class="n">vp</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mi">310</span><span class="p">,</span> <span class="n">beta</span><span class="o">=</span><span class="mf">0.25</span><span class="p">,</span> <span class="n">fps</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
     <span class="sd">"""</span>
@@ -241,7 +243,7 @@
 <span class="sd">            you own alpha, regardless of units, set this to False.</span>
 
 <span class="sd">    Returns:</span>
-<span class="sd">        ndarray: RHOB estimate in kg/m^3.</span>
+<span class="sd">        ndarray: RHOB estimate in :math:`kg/m^3`.</span>
 <span class="sd">    """</span>
     <span class="n">alpha</span> <span class="o">=</span> <span class="mi">230</span> <span class="k">if</span> <span class="n">fps</span> <span class="k">else</span> <span class="n">alpha</span>
     <span class="k">return</span> <span class="n">alpha</span> <span class="o">*</span> <span class="n">vp</span> <span class="o">**</span> <span class="n">beta</span></div>
@@ -278,14 +280,14 @@
     <span class="sd">"""</span>
 <span class="sd">    Get density from a porosity log. Typical values:</span>
 
-<span class="sd">        rho_matrix (sandstone) : 2650 kg/m^3</span>
-<span class="sd">        rho_matrix (limestome): 2710 kg/m^3</span>
-<span class="sd">        rho_matrix (dolomite): 2876 kg/m^3</span>
-<span class="sd">        rho_matrix (anyhydrite): 2977 kg/m^3</span>
-<span class="sd">        rho_matrix (salt): 20320 kg/m^3</span>
+<span class="sd">        - rho_matrix (sandstone) : 2650 kg/m^3</span>
+<span class="sd">        - rho_matrix (limestome): 2710 kg/m^3</span>
+<span class="sd">        - rho_matrix (dolomite): 2876 kg/m^3</span>
+<span class="sd">        - rho_matrix (anyhydrite): 2977 kg/m^3</span>
+<span class="sd">        - rho_matrix (salt): 20320 kg/m^3</span>
 
-<span class="sd">        rho_fluid (fresh water): 1000 kg/m^3</span>
-<span class="sd">        rho_fluid (salt water): 1100 kg/m^3</span>
+<span class="sd">        - rho_fluid (fresh water): 1000 kg/m^3</span>
+<span class="sd">        - rho_fluid (salt water): 1100 kg/m^3</span>
 
 <span class="sd">    See wiki.aapg.org/Density-neutron_log_porosity.</span>
 
@@ -304,14 +306,14 @@
     <span class="sd">"""</span>
 <span class="sd">    Get density from a porosity log. Typical values:</span>
 
-<span class="sd">        rho_matrix (sandstone) : 2650 kg/m^3</span>
-<span class="sd">        rho_matrix (limestome): 2710 kg/m^3</span>
-<span class="sd">        rho_matrix (dolomite): 2876 kg/m^3</span>
-<span class="sd">        rho_matrix (anyhydrite): 2977 kg/m^3</span>
-<span class="sd">        rho_matrix (salt): 20320 kg/m^3</span>
+<span class="sd">        - rho_matrix (sandstone) : 2650 kg/m^3</span>
+<span class="sd">        - rho_matrix (limestome): 2710 kg/m^3</span>
+<span class="sd">        - rho_matrix (dolomite): 2876 kg/m^3</span>
+<span class="sd">        - rho_matrix (anyhydrite): 2977 kg/m^3</span>
+<span class="sd">        - rho_matrix (salt): 20320 kg/m^3</span>
 
-<span class="sd">        rho_fluid (fresh water): 1000 kg/m^3</span>
-<span class="sd">        rho_fluid (salt water): 1100 kg/m^3</span>
+<span class="sd">        - rho_fluid (fresh water): 1000 kg/m^3</span>
+<span class="sd">        - rho_fluid (salt water): 1100 kg/m^3</span>
 
 <span class="sd">    See wiki.aapg.org/Density-neutron_log_porosity.</span>
 
@@ -343,12 +345,11 @@
 <span class="n">velocity_to_slowness</span> <span class="o">=</span> <span class="n">slowness_to_velocity</span>
 
 
-<div class="viewcode-block" id="gardner_param"><a class="viewcode-back" href="../../../api/bruges.petrophysics.html#bruges.petrophysics.petrophysics.gardner_param">[docs]</a><span class="k">def</span> <span class="nf">gardner_param</span><span class="p">(</span><span class="n">vp</span><span class="p">,</span><span class="n">rhob</span><span class="p">):</span>
+<div class="viewcode-block" id="gardner_param"><a class="viewcode-back" href="../../../api/bruges.petrophysics.html#bruges.petrophysics.petrophysics.gardner_param">[docs]</a><span class="k">def</span> <span class="nf">gardner_param</span><span class="p">(</span><span class="n">vp</span><span class="p">,</span> <span class="n">rhob</span><span class="p">):</span>
      <span class="sd">"""</span>
 <span class="sd">     Finds optimal alpha and beta parameters for the gardner</span>
 
 <span class="sd">     Volodymyr Vragov, October 2018</span>
-
 
 <span class="sd">     Args:</span>
 <span class="sd">         rho(ndarray): Density.</span>
@@ -402,7 +403,6 @@
      <span class="sd">""" Wrapper function to pass inverse_gardner to scipy.curve_fit</span>
 <span class="sd">     to get optimal alpha and beta parameters</span>
 
-
 <span class="sd">     Matteo Niccoli and Volodymyr Vragov, October 2018</span>
 
 <span class="sd">     Args:</span>
@@ -413,7 +413,7 @@
 <span class="sd">     Returns:</span>
 <span class="sd">         inverse_gardner: this is passed to scipy.curve_fit as, for example:</span>
 <span class="sd">         popt_synt, pcov = scipy.curve_fit(optimize_inverse_gardner, rho, vp)</span>
-<span class="sd">         For a ull example, please read:</span>
+<span class="sd">         For a full example, please read:</span>
 <span class="sd">         mycarta.wordpress.com/2018/10/28/geophysics-python-sprint-2018-day-2-and-beyond-part-i</span>
 <span class="sd">     """</span>
      <span class="k">return</span> <span class="n">inverse_gardner</span><span class="p">(</span><span class="n">rho</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="n">alpha</span><span class="p">,</span> <span class="n">beta</span><span class="o">=</span><span class="n">beta</span><span class="p">)</span></div>

@@ -235,14 +235,16 @@
 <div class="viewcode-block" id="vrh"><a class="viewcode-back" href="../../../api/bruges.rockphysics.html#bruges.rockphysics.rpt.vrh">[docs]</a><span class="k">def</span> <span class="nf">vrh</span><span class="p">(</span><span class="n">volumes</span><span class="p">,</span><span class="n">k</span><span class="p">,</span><span class="n">mu</span><span class="p">):</span>
     <span class="sd">'''</span>
 <span class="sd">    Calculates Voigt-Reuss-Hill bounds.</span>
-<span class="sd">    INPUT</span>
-<span class="sd">    volumes: array with volumetric fractions</span>
-<span class="sd">    k: array with bulk modulus</span>
-<span class="sd">    mu: array with shear modulus</span>
-<span class="sd">    OUTPUT</span>
-<span class="sd">    k_u, k_l: upper (Voigt) and lower (Reuss) average for k</span>
-<span class="sd">    mu_u, mu_l: upper (Voigt) and lower (Reuss) average for mu</span>
-<span class="sd">    k0, mu0: Hill average of k and mu</span>
+<span class="sd">    </span>
+<span class="sd">    Args:</span>
+<span class="sd">        volumes: array with volumetric fractions</span>
+<span class="sd">        k: array with bulk modulus</span>
+<span class="sd">        mu: array with shear modulus</span>
+<span class="sd">    </span>
+<span class="sd">    Returns:</span>
+<span class="sd">        k_u, k_l: upper (Voigt) and lower (Reuss) average for k</span>
+<span class="sd">        mu_u, mu_l: upper (Voigt) and lower (Reuss) average for mu</span>
+<span class="sd">        k0, mu0: Hill average of k and mu</span>
 <span class="sd">    '''</span>
     <span class="n">f</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">volumes</span><span class="p">)</span><span class="o">.</span><span class="n">T</span>
     <span class="n">k</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">resize</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">k</span><span class="p">),</span><span class="n">np</span><span class="o">.</span><span class="n">shape</span><span class="p">(</span><span class="n">f</span><span class="p">))</span>

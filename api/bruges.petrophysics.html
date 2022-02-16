@@ -229,13 +229,15 @@
 <span class="sig-prename descclassname"><span class="pre">bruges.petrophysics.petrophysics.</span></span><span class="sig-name descname"><span class="pre">density_to_porosity</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">rho</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rho_matrix</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rho_fluid</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/bruges/petrophysics/petrophysics.html#density_to_porosity"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bruges.petrophysics.petrophysics.density_to_porosity" title="Permalink to this definition">#</a></dt>
 <dd><p>Get density from a porosity log. Typical values:</p>
 <blockquote>
-<div><p>rho_matrix (sandstone) : 2650 kg/m^3
-rho_matrix (limestome): 2710 kg/m^3
-rho_matrix (dolomite): 2876 kg/m^3
-rho_matrix (anyhydrite): 2977 kg/m^3
-rho_matrix (salt): 20320 kg/m^3</p>
-<p>rho_fluid (fresh water): 1000 kg/m^3
-rho_fluid (salt water): 1100 kg/m^3</p>
+<div><ul class="simple">
+<li><p>rho_matrix (sandstone) : 2650 kg/m^3</p></li>
+<li><p>rho_matrix (limestome): 2710 kg/m^3</p></li>
+<li><p>rho_matrix (dolomite): 2876 kg/m^3</p></li>
+<li><p>rho_matrix (anyhydrite): 2977 kg/m^3</p></li>
+<li><p>rho_matrix (salt): 20320 kg/m^3</p></li>
+<li><p>rho_fluid (fresh water): 1000 kg/m^3</p></li>
+<li><p>rho_fluid (salt water): 1100 kg/m^3</p></li>
+</ul>
 </div></blockquote>
 <p>See wiki.aapg.org/Density-neutron_log_porosity.</p>
 <dl class="field-list simple">
@@ -312,7 +314,7 @@ you own alpha, regardless of units, set this to False.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p>RHOB estimate in kg/m^3.</p>
+<dd class="field-even"><p>RHOB estimate in <span class="math notranslate nohighlight">\(kg/m^3\)</span>.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p>ndarray</p>
@@ -380,7 +382,7 @@ to get optimal alpha and beta parameters</p>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>this is passed to scipy.curve_fit as, for example:
 popt_synt, pcov = scipy.curve_fit(optimize_inverse_gardner, rho, vp)
-For a ull example, please read:
+For a full example, please read:
 mycarta.wordpress.com/2018/10/28/geophysics-python-sprint-2018-day-2-and-beyond-part-i</p>
 </dd>
 <dt class="field-odd">Return type</dt>
@@ -393,13 +395,15 @@ mycarta.wordpress.com/2018/10/28/geophysics-python-sprint-2018-day-2-and-beyond-
 <span class="sig-prename descclassname"><span class="pre">bruges.petrophysics.petrophysics.</span></span><span class="sig-name descname"><span class="pre">porosity_to_density</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">phi</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rho_matrix</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rho_fluid</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/bruges/petrophysics/petrophysics.html#porosity_to_density"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bruges.petrophysics.petrophysics.porosity_to_density" title="Permalink to this definition">#</a></dt>
 <dd><p>Get density from a porosity log. Typical values:</p>
 <blockquote>
-<div><p>rho_matrix (sandstone) : 2650 kg/m^3
-rho_matrix (limestome): 2710 kg/m^3
-rho_matrix (dolomite): 2876 kg/m^3
-rho_matrix (anyhydrite): 2977 kg/m^3
-rho_matrix (salt): 20320 kg/m^3</p>
-<p>rho_fluid (fresh water): 1000 kg/m^3
-rho_fluid (salt water): 1100 kg/m^3</p>
+<div><ul class="simple">
+<li><p>rho_matrix (sandstone) : 2650 kg/m^3</p></li>
+<li><p>rho_matrix (limestome): 2710 kg/m^3</p></li>
+<li><p>rho_matrix (dolomite): 2876 kg/m^3</p></li>
+<li><p>rho_matrix (anyhydrite): 2977 kg/m^3</p></li>
+<li><p>rho_matrix (salt): 20320 kg/m^3</p></li>
+<li><p>rho_fluid (fresh water): 1000 kg/m^3</p></li>
+<li><p>rho_fluid (salt water): 1100 kg/m^3</p></li>
+</ul>
 </div></blockquote>
 <p>See wiki.aapg.org/Density-neutron_log_porosity.</p>
 <dl class="field-list simple">
@@ -448,7 +452,7 @@ you own alpha, regardless of units, set this to False.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p>RHOB estimate in kg/m^3.</p>
+<dd class="field-even"><p>RHOB estimate in <span class="math notranslate nohighlight">\(kg/m^3\)</span>.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p>ndarray</p>
@@ -555,5 +559,7 @@ per second.</p>
     <script src="../_static/underscore.js"></script>
     <script src="../_static/doctools.js"></script>
     <script src="../_static/scripts/furo.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     </body>
 </html>

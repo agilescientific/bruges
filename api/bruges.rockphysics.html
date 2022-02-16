@@ -556,13 +556,14 @@ average of the Reuss (lower) and Voigt (upper) bounds.</p>
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>f</strong> – list or array of N volume fractions (must sum to 1 or 100).</p></li>
-<li><p><strong>m</strong> – <p>elastic modulus of N constituents (list or array).</p>
-<dl class="simple">
-<dt>Returns:</dt><dd><p>mh: Hill average.</p>
-</dd>
-</dl>
-</p></li>
+<li><p><strong>m</strong> – elastic modulus of N constituents (list or array).</p></li>
 </ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Hill average.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>mh</p>
 </dd>
 </dl>
 </dd></dl>
@@ -576,13 +577,14 @@ average of the constituents. Same as Wood’s equation for homogeneous mixed flu
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>f</strong> – list or array of N volume fractions (must sum to 1 or 100).</p></li>
-<li><p><strong>m</strong> – <p>elastic modulus of N constituents (list or array).</p>
-<dl class="simple">
-<dt>Returns:</dt><dd><p>mr: Reuss lower bound.</p>
-</dd>
-</dl>
-</p></li>
+<li><p><strong>m</strong> – elastic modulus of N constituents (list or array).</p></li>
 </ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Reuss lower bound.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>mr</p>
 </dd>
 </dl>
 </dd></dl>
@@ -596,13 +598,14 @@ average of the constituents.</p>
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>f</strong> – list or array of N volume fractions (must sum to 1 or 100).</p></li>
-<li><p><strong>m</strong> – <p>elastic modulus of N constituents (list or array).</p>
-<dl class="simple">
-<dt>Returns:</dt><dd><p>mv: Voigt upper bound.</p>
-</dd>
-</dl>
-</p></li>
+<li><p><strong>m</strong> – elastic modulus of N constituents (list or array).</p></li>
 </ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Voigt upper bound.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>mv</p>
 </dd>
 </dl>
 </dd></dl>
@@ -1553,80 +1556,129 @@ Default: 20.</p></li>
 <span class="sig-prename descclassname"><span class="pre">bruges.rockphysics.rpm.</span></span><span class="sig-name descname"><span class="pre">contactcement</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">K0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">G0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">phi</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">phic</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.4</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Cn</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">8.6</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Kc</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">37</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Gc</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">45</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scheme</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/bruges/rockphysics/rpm.html#contactcement"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bruges.rockphysics.rpm.contactcement" title="Permalink to this definition">#</a></dt>
 <dd><p>Contact cement (cemented sand) model, Dvorkin-Nur (1996)
 written by Alessandro Amato del Monte (2015)
-from Mavko et al., Rock Physics Handbook, p.255
-INPUT
-K0, G0: mineral bulk &amp; shear modulus in GPa
-phi: porosity
-phic: critical porosity (default 0.4)
-Cn: coordination nnumber (default 8.6)
-Kc, Gc: cement bulk &amp; shear modulus in GPa (default 37, 45 i.e. quartz)
-scheme: 1=cement deposited at grain contacts, 2=in uniform layer around grains (default 2)
-OUTPUT
-K_DRY, G_DRY: dry rock bulk &amp; shear modulus in GPa</p>
+from Mavko et al., Rock Physics Handbook, p.255</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>K0</strong> – mineral bulk &amp; shear modulus in GPa</p></li>
+<li><p><strong>G0</strong> – mineral bulk &amp; shear modulus in GPa</p></li>
+<li><p><strong>phi</strong> – porosity</p></li>
+<li><p><strong>phic</strong> – critical porosity (default 0.4)</p></li>
+<li><p><strong>Cn</strong> – coordination nnumber (default 8.6)</p></li>
+<li><p><strong>Kc</strong> – cement bulk &amp; shear modulus in GPa (default 37, 45 i.e. quartz)</p></li>
+<li><p><strong>Gc</strong> – cement bulk &amp; shear modulus in GPa (default 37, 45 i.e. quartz)</p></li>
+<li><p><strong>scheme</strong> – 1=cement deposited at grain contacts, 2=in uniform layer around grains (default 2)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>K_DRY, G_DRY: dry rock bulk &amp; shear modulus in GPa</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>Tuple</p>
+</dd>
+</dl>
 </dd></dl>
 <dl class="py function">
 <dt class="sig sig-object py" id="bruges.rockphysics.rpm.critpor">
 <span class="sig-prename descclassname"><span class="pre">bruges.rockphysics.rpm.</span></span><span class="sig-name descname"><span class="pre">critpor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">K0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">G0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">phi</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">phic</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.4</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/bruges/rockphysics/rpm.html#critpor"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bruges.rockphysics.rpm.critpor" title="Permalink to this definition">#</a></dt>
-<dd><p>Critical porosity, Nur et al. (1991, 1995)
-written by Alessandro Amato del Monte (2015)
-from Mavko et al., Rock Physics Handbook, p.353
-INPUT
-K0, G0: mineral bulk &amp; shear modulus in GPa
-phi: porosity
-phic: critical porosity (default 0.4)
-OUTPUT
-K_DRY, G_DRY: dry rock bulk &amp; shear modulus in GPa</p>
+<dd><p>Critical porosity, Nur et al. (1991, 1995) written by Alessandro Amato
+del Monte (2015) from Mavko et al., Rock Physics Handbook, p.353.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>K0</strong> – float or array_like
+Mineral bulk &amp; shear modulus in GPa</p></li>
+<li><p><strong>G0</strong> – float or array_like
+Mineral bulk &amp; shear modulus in GPa</p></li>
+<li><p><strong>phi</strong> – float or array_like
+porosity</p></li>
+<li><p><strong>phic</strong> – float or array_like
+critical porosity (default 0.4)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>K_DRY, G_DRY: dry rock bulk &amp; shear modulus in GPa</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>Tuple</p>
+</dd>
+</dl>
 </dd></dl>
 <dl class="py function">
 <dt class="sig sig-object py" id="bruges.rockphysics.rpm.hertzmindlin">
 <span class="sig-prename descclassname"><span class="pre">bruges.rockphysics.rpm.</span></span><span class="sig-name descname"><span class="pre">hertzmindlin</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">K0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">G0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">phi</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">phic</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.4</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Cn</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">8.6</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">P</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">f</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/bruges/rockphysics/rpm.html#hertzmindlin"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bruges.rockphysics.rpm.hertzmindlin" title="Permalink to this definition">#</a></dt>
 <dd><p>Hertz-Mindlin model
 written by Alessandro Amato del Monte (2015)
-from Mavko et al., Rock Physics Handbook, p.246
-INPUT
-K0, G0: mineral bulk &amp; shear modulus in GPa
-phi: porosity
-phic: critical porosity (default 0.4)
-Cn: coordination nnumber (default 8.6)
-P: confining pressure in MPa (default 10)
-f: shear modulus correction factor, f=1 for dry pack with perfect adhesion
-between particles and f=0 for dry frictionless pack
-OUTPUT
-K_DRY, G_DRY: dry rock bulk &amp; shear modulus in GPa</p>
+from Mavko et al., Rock Physics Handbook, p.246</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>K0</strong> – mineral bulk &amp; shear modulus in GPa</p></li>
+<li><p><strong>G0</strong> – mineral bulk &amp; shear modulus in GPa</p></li>
+<li><p><strong>phi</strong> – porosity</p></li>
+<li><p><strong>phic</strong> – critical porosity (default 0.4)</p></li>
+<li><p><strong>Cn</strong> – coordination nnumber (default 8.6)</p></li>
+<li><p><strong>P</strong> – confining pressure in MPa (default 10)</p></li>
+<li><p><strong>f</strong> – shear modulus correction factor, f=1 for dry pack with perfect adhesion between particles and f=0 for dry frictionless pack.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>K_DRY, G_DRY: dry rock bulk &amp; shear modulus in GPa</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>Tuple</p>
+</dd>
+</dl>
 </dd></dl>
 <dl class="py function">
 <dt class="sig sig-object py" id="bruges.rockphysics.rpm.softsand">
 <span class="sig-prename descclassname"><span class="pre">bruges.rockphysics.rpm.</span></span><span class="sig-name descname"><span class="pre">softsand</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">K0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">G0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">phi</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">phic</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.4</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Cn</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">8.6</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">P</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">f</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/bruges/rockphysics/rpm.html#softsand"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bruges.rockphysics.rpm.softsand" title="Permalink to this definition">#</a></dt>
 <dd><p>Soft-sand (uncemented) model
 written by Alessandro Amato del Monte (2015)
-from Mavko et al., Rock Physics Handbook, p.258
-INPUT
-K0, G0: mineral bulk &amp; shear modulus in GPa
-phi: porosity
-phic: critical porosity (default 0.4)
-Cn: coordination nnumber (default 8.6)
-P: confining pressure in MPa (default 10)
-f: shear modulus correction factor, f=1 for dry pack with perfect adhesion
-between particles and f=0 for dry frictionless pack
-OUTPUT
-K_DRY, G_DRY: dry rock bulk &amp; shear modulus in GPa</p>
+from Mavko et al., Rock Physics Handbook, p.258</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>K0</strong> – mineral bulk &amp; shear modulus in GPa</p></li>
+<li><p><strong>G0</strong> – mineral bulk &amp; shear modulus in GPa</p></li>
+<li><p><strong>phi</strong> – porosity</p></li>
+<li><p><strong>phic</strong> – critical porosity (default 0.4)</p></li>
+<li><p><strong>Cn</strong> – coordination nnumber (default 8.6)</p></li>
+<li><p><strong>P</strong> – confining pressure in MPa (default 10)</p></li>
+<li><p><strong>f</strong> – shear modulus correction factor, f=1 for dry pack with perfect adhesion between particles and f=0 for dry frictionless pack</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>K_DRY, G_DRY: dry rock bulk &amp; shear modulus in GPa</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>Tuple</p>
+</dd>
+</dl>
 </dd></dl>
 <dl class="py function">
 <dt class="sig sig-object py" id="bruges.rockphysics.rpm.stiffsand">
 <span class="sig-prename descclassname"><span class="pre">bruges.rockphysics.rpm.</span></span><span class="sig-name descname"><span class="pre">stiffsand</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">K0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">G0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">phi</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">phic</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.4</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Cn</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">8.6</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">P</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">f</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/bruges/rockphysics/rpm.html#stiffsand"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bruges.rockphysics.rpm.stiffsand" title="Permalink to this definition">#</a></dt>
 <dd><p>Stiff-sand model
 written by Alessandro Amato del Monte (2015)
-from Mavko et al., Rock Physics Handbook, p.260
-INPUT
-K0, G0: mineral bulk &amp; shear modulus in GPa
-phi: porosity
-phic: critical porosity (default 0.4)
-Cn: coordination nnumber (default 8.6)
-P: confining pressure in MPa (default 10)
-f: shear modulus correction factor, f=1 for dry pack with perfect adhesion
-between particles and f=0 for dry frictionless pack
-OUTPUT
-K_DRY, G_DRY: dry rock bulk &amp; shear modulus in GPa</p>
+from Mavko et al., Rock Physics Handbook, p.260</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>K0</strong> – mineral bulk &amp; shear modulus in GPa</p></li>
+<li><p><strong>G0</strong> – mineral bulk &amp; shear modulus in GPa</p></li>
+<li><p><strong>phi</strong> – porosity</p></li>
+<li><p><strong>phic</strong> – critical porosity (default 0.4)</p></li>
+<li><p><strong>Cn</strong> – coordination nnumber (default 8.6)</p></li>
+<li><p><strong>P</strong> – confining pressure in MPa (default 10)</p></li>
+<li><p><strong>f</strong> – shear modulus correction factor, f=1 for dry pack with perfect adhesion between particles and f=0 for dry frictionless pack</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="simple">
+<dt>Returns</dt><dd><p>Tuple: K_DRY, G_DRY: dry rock bulk &amp; shear modulus in GPa</p>
+</dd>
+</dl>
 </dd></dl>
 </section>
 <section id="module-bruges.rockphysics.rpt">
@@ -1638,15 +1690,24 @@ K_DRY, G_DRY: dry rock bulk &amp; shear modulus in GPa</p>
 <dl class="py function">
 <dt class="sig sig-object py" id="bruges.rockphysics.rpt.vrh">
 <span class="sig-prename descclassname"><span class="pre">bruges.rockphysics.rpt.</span></span><span class="sig-name descname"><span class="pre">vrh</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">volumes</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">k</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mu</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/bruges/rockphysics/rpt.html#vrh"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bruges.rockphysics.rpt.vrh" title="Permalink to this definition">#</a></dt>
-<dd><p>Calculates Voigt-Reuss-Hill bounds.
-INPUT
-volumes: array with volumetric fractions
-k: array with bulk modulus
-mu: array with shear modulus
-OUTPUT
-k_u, k_l: upper (Voigt) and lower (Reuss) average for k
+<dd><p>Calculates Voigt-Reuss-Hill bounds.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>volumes</strong> – array with volumetric fractions</p></li>
+<li><p><strong>k</strong> – array with bulk modulus</p></li>
+<li><p><strong>mu</strong> – array with shear modulus</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>upper (Voigt) and lower (Reuss) average for k
 mu_u, mu_l: upper (Voigt) and lower (Reuss) average for mu
 k0, mu0: Hill average of k and mu</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>k_u, k_l</p>
+</dd>
+</dl>
 </dd></dl>
 </section>
 <section id="module-bruges.rockphysics">
