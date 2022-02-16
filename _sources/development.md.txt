@@ -5,7 +5,9 @@ If you'd like to develop `bruges`, this page should help you get started.
 
 ## Installation
 
-You can install this package with `pip`. The `dev` option will install the packages you need for testing and building the documentation.
+For development, you will usually want to clone or fork the repo.
+
+For running tests or building docs, the `dev` option will install the extra dependencies.
 
     pip install bruges[dev]
 
@@ -41,11 +43,11 @@ This builds both `.tar.gz` and `.whl` files, either of which you can install wit
 
 ## Building the docs
 
-You can build the docs with the following command in the root directory:
+You can build the docs with the following command in the `docs` directory:
 
-    sphinx-build -E -b html docs docs/_build/html
+    make html
 
-You can also run `make html` from the `docs` directory.
+Don't use `sphinx-build` directly, because there are other commands in the `Makefile` that would not run.
 
 There is a continuous integration script to update welly's docs on all published releases.
 

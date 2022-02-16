@@ -222,7 +222,8 @@
 <p>If you’d like to develop <code class="docutils literal notranslate"><span class="pre">bruges</span></code>, this page should help you get started.</p>
 <section id="installation">
 <h2>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">#</a></h2>
-<p>You can install this package with <code class="docutils literal notranslate"><span class="pre">pip</span></code>. The <code class="docutils literal notranslate"><span class="pre">dev</span></code> option will install the packages you need for testing and building the documentation.</p>
+<p>For development, you will usually want to clone or fork the repo.</p>
+<p>For running tests or building docs, the <code class="docutils literal notranslate"><span class="pre">dev</span></code> option will install the extra dependencies.</p>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>pip install bruges[dev]
 </pre></div>
 </div>
@@ -254,11 +255,11 @@
 </section>
 <section id="building-the-docs">
 <h2>Building the docs<a class="headerlink" href="#building-the-docs" title="Permalink to this headline">#</a></h2>
-<p>You can build the docs with the following command in the root directory:</p>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>sphinx-build -E -b html docs docs/_build/html
+<p>You can build the docs with the following command in the <code class="docutils literal notranslate"><span class="pre">docs</span></code> directory:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>make html
 </pre></div>
 </div>
-<p>You can also run <code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">html</span></code> from the <code class="docutils literal notranslate"><span class="pre">docs</span></code> directory.</p>
+<p>Don’t use <code class="docutils literal notranslate"><span class="pre">sphinx-build</span></code> directly, because there are other commands in the <code class="docutils literal notranslate"><span class="pre">Makefile</span></code> that would not run.</p>
 <p>There is a continuous integration script to update welly’s docs on all published releases.</p>
 </section>
 <section id="continuous-integration">
