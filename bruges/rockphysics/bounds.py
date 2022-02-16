@@ -17,8 +17,8 @@ def voigt_bound(f, m):
     Args:
         f: list or array of N volume fractions (must sum to 1 or 100).
         m: elastic modulus of N constituents (list or array).
-
-     Returns:
+        
+    Returns:
         mv: Voigt upper bound.
 
     """
@@ -44,7 +44,7 @@ def reuss_bound(f, m):
         f: list or array of N volume fractions (must sum to 1 or 100).
         m: elastic modulus of N constituents (list or array).
 
-     Returns:
+    Returns:
         mr: Reuss lower bound.
     """
     f = np.array(f).astype(float)
@@ -67,9 +67,9 @@ def hill_average(f, m):
 
     Args:
         f: list or array of N volume fractions (must sum to 1 or 100).
-        m: elastic modulus of N constituents (list or array).
-
-     Returns:
+        m:elastic modulus of N constituents (list or array).
+        
+    Returns:
         mh: Hill average.
     """
     mv = voigt_bound(f, m)

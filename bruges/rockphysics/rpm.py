@@ -9,17 +9,21 @@ import numpy as np
 
 
 def critpor(K0, G0, phi, phic=0.4):
-    '''
-    Critical porosity, Nur et al. (1991, 1995)
-    written by Alessandro Amato del Monte (2015)
-    from Mavko et al., Rock Physics Handbook, p.353
-    INPUT
-    K0, G0: mineral bulk & shear modulus in GPa
-    phi: porosity
-    phic: critical porosity (default 0.4)
-    OUTPUT
-    K_DRY, G_DRY: dry rock bulk & shear modulus in GPa
-    '''
+    """
+    Critical porosity, Nur et al. (1991, 1995) written by Alessandro Amato
+    del Monte (2015) from Mavko et al., Rock Physics Handbook, p.353.
+
+    Args:
+        K0, G0: float or array_like
+            Mineral bulk & shear modulus in GPa
+        phi: float or array_like
+            porosity
+        phic: float or array_like
+            critical porosity (default 0.4)
+    
+    Returns:
+        Tuple: K_DRY, G_DRY: dry rock bulk & shear modulus in GPa
+    """
     K_DRY  = K0 * (1-phi/phic)
     G_DRY  = G0 * (1-phi/phic)
     return K_DRY, G_DRY
@@ -30,16 +34,17 @@ def hertzmindlin(K0, G0, phi, phic=0.4, Cn=8.6, P=10, f=1):
     Hertz-Mindlin model
     written by Alessandro Amato del Monte (2015)
     from Mavko et al., Rock Physics Handbook, p.246
-    INPUT
-    K0, G0: mineral bulk & shear modulus in GPa
-    phi: porosity
-    phic: critical porosity (default 0.4)
-    Cn: coordination nnumber (default 8.6)
-    P: confining pressure in MPa (default 10)
-    f: shear modulus correction factor, f=1 for dry pack with perfect adhesion
-    between particles and f=0 for dry frictionless pack
-    OUTPUT
-    K_DRY, G_DRY: dry rock bulk & shear modulus in GPa
+    
+    Args:
+        K0, G0: mineral bulk & shear modulus in GPa
+        phi: porosity
+        phic: critical porosity (default 0.4)
+        Cn: coordination nnumber (default 8.6)
+        P: confining pressure in MPa (default 10)
+        f: shear modulus correction factor, f=1 for dry pack with perfect adhesion between particles and f=0 for dry frictionless pack.
+    
+    Returns:
+        Tuple: K_DRY, G_DRY: dry rock bulk & shear modulus in GPa
     '''
     P /= 1e3 # converts pressure in same units as solid moduli (GPa)
     PR0=(3*K0-2*G0)/(6*K0+2*G0) # poisson's ratio of mineral mixture
@@ -52,16 +57,17 @@ def softsand(K0, G0, phi, phic=0.4, Cn=8.6, P=10, f=1):
     Soft-sand (uncemented) model
     written by Alessandro Amato del Monte (2015)
     from Mavko et al., Rock Physics Handbook, p.258
-    INPUT
-    K0, G0: mineral bulk & shear modulus in GPa
-    phi: porosity
-    phic: critical porosity (default 0.4)
-    Cn: coordination nnumber (default 8.6)
-    P: confining pressure in MPa (default 10)
-    f: shear modulus correction factor, f=1 for dry pack with perfect adhesion
-    between particles and f=0 for dry frictionless pack
-    OUTPUT
-    K_DRY, G_DRY: dry rock bulk & shear modulus in GPa
+    
+    Args:
+        K0, G0: mineral bulk & shear modulus in GPa
+        phi: porosity
+        phic: critical porosity (default 0.4)
+        Cn: coordination nnumber (default 8.6)
+        P: confining pressure in MPa (default 10)
+        f: shear modulus correction factor, f=1 for dry pack with perfect adhesion between particles and f=0 for dry frictionless pack
+    
+    Returns:
+        Tuple: K_DRY, G_DRY: dry rock bulk & shear modulus in GPa
     '''
     K_HM, G_HM = hertzmindlin(K0, G0, phi, phic, Cn, P, f)
     K_DRY =-4/3*G_HM + (((phi/phic)/(K_HM+4/3*G_HM)) + ((1-phi/phic)/(K0+4/3*G_HM)))**-1
@@ -74,16 +80,17 @@ def stiffsand(K0, G0, phi, phic=0.4, Cn=8.6, P=10, f=1):
     Stiff-sand model
     written by Alessandro Amato del Monte (2015)
     from Mavko et al., Rock Physics Handbook, p.260
-    INPUT
-    K0, G0: mineral bulk & shear modulus in GPa
-    phi: porosity
-    phic: critical porosity (default 0.4)
-    Cn: coordination nnumber (default 8.6)
-    P: confining pressure in MPa (default 10)
-    f: shear modulus correction factor, f=1 for dry pack with perfect adhesion
-    between particles and f=0 for dry frictionless pack
-    OUTPUT
-    K_DRY, G_DRY: dry rock bulk & shear modulus in GPa
+    
+    Args:
+        K0, G0: mineral bulk & shear modulus in GPa
+        phi: porosity
+        phic: critical porosity (default 0.4)
+        Cn: coordination nnumber (default 8.6)
+        P: confining pressure in MPa (default 10)
+        f: shear modulus correction factor, f=1 for dry pack with perfect adhesion between particles and f=0 for dry frictionless pack
+    
+    Returns
+        Tuple: K_DRY, G_DRY: dry rock bulk & shear modulus in GPa
     '''
     K_HM, G_HM = hertzmindlin(K0, G0, phi, phic, Cn, P, f)
     K_DRY = -4/3*G0 + (((phi/phic)/(K_HM+4/3*G0)) + ((1-phi/phic)/(K0+4/3*G0)))**-1
@@ -96,15 +103,16 @@ def contactcement(K0, G0, phi, phic=0.4, Cn=8.6, Kc=37, Gc=45, scheme=2):
     Contact cement (cemented sand) model, Dvorkin-Nur (1996)
     written by Alessandro Amato del Monte (2015)
     from Mavko et al., Rock Physics Handbook, p.255
-    INPUT
-    K0, G0: mineral bulk & shear modulus in GPa
-    phi: porosity
-    phic: critical porosity (default 0.4)
-    Cn: coordination nnumber (default 8.6)
-    Kc, Gc: cement bulk & shear modulus in GPa (default 37, 45 i.e. quartz)
-    scheme: 1=cement deposited at grain contacts, 2=in uniform layer around grains (default 2)
-    OUTPUT
-    K_DRY, G_DRY: dry rock bulk & shear modulus in GPa
+    
+    Args:
+        K0, G0: mineral bulk & shear modulus in GPa
+        phi: porosity
+        phic: critical porosity (default 0.4)
+        Cn: coordination nnumber (default 8.6)
+        Kc, Gc: cement bulk & shear modulus in GPa (default 37, 45 i.e. quartz)
+        scheme: 1=cement deposited at grain contacts, 2=in uniform layer around grains (default 2)
+    Returns:
+        Tuple: K_DRY, G_DRY: dry rock bulk & shear modulus in GPa
     '''
     PR0=(3*K0-2*G0)/(6*K0+2*G0)
     PRc = (3*Kc-2*Gc)/(6*Kc+2*Gc)

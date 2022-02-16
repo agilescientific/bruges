@@ -16,14 +16,16 @@ from bruges.rockphysics import fluidsub
 def vrh(volumes,k,mu):
     '''
     Calculates Voigt-Reuss-Hill bounds.
-    INPUT
-    volumes: array with volumetric fractions
-    k: array with bulk modulus
-    mu: array with shear modulus
-    OUTPUT
-    k_u, k_l: upper (Voigt) and lower (Reuss) average for k
-    mu_u, mu_l: upper (Voigt) and lower (Reuss) average for mu
-    k0, mu0: Hill average of k and mu
+    
+    Args:
+        volumes: array with volumetric fractions
+        k: array with bulk modulus
+        mu: array with shear modulus
+    
+    Returns:
+        k_u, k_l: upper (Voigt) and lower (Reuss) average for k
+        mu_u, mu_l: upper (Voigt) and lower (Reuss) average for mu
+        k0, mu0: Hill average of k and mu
     '''
     f=np.array(volumes).T
     k=np.resize(np.array(k),np.shape(f))

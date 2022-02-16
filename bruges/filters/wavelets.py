@@ -142,7 +142,7 @@ def sinc(duration, dt, f, t=None, return_t=True, taper='blackman', sym=True):
 
     Returns:
         ndarray. sinc wavelet(s) with centre frequency f sampled on t. If
-            you passed `return_t=True` then a tuple of (wavelet, t) is returned.
+            you passed `return_t = True` then a tuple of (wavelet, t) is returned.
     """
     def func(t_, f_):
         return np.sin(2*np.pi*f_*t_) / (2*np.pi*f_*t_)

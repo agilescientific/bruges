@@ -237,22 +237,31 @@ def conservative(arr, size=5, supercon=False):
 
 
 def rotate_phase(s, phi, degrees=False):
-    """
+    r"""
     Performs a phase rotation of wavelet or wavelet bank using:
 
     .. math::
 
-        A = w(t)\cos(\phi) - h(t)\sin(\phi)
+        A = w(t)\cos\phi - h(t)\sin\phi
 
-    where w(t) is the wavelet and h(t) is its Hilbert transform.
+    where `w(t)` is the wavelet, `h(t)` is its Hilbert transform, and \phi is
+    the phase rotation angle (default is radians).
 
-    The analytic signal can be written in the form S(t) = A(t)exp(j*theta(t))
-    where A(t) = magnitude(hilbert(w(t))) and theta(t) = angle(hilbert(w(t))
-    then a constant phase rotation phi would produce the analytic signal
-    S(t) = A(t)exp(j*(theta(t) + phi)). To get the non analytic signal
-    we take real(S(t)) == A(t)cos(theta(t) + phi)
-    == A(t)(cos(theta(t))cos(phi) - sin(theta(t))sin(phi)) <= trig identity
-    == w(t)cos(phi) - h(t)sin(phi)
+    The analytic signal can be written in the form :math:`S(t) = A(t)e^{j\theta (t)}`
+    where :math:`A(t) = \left| h(w(t)) \right|` and :math:`\theta(t) = \tan^{-1}[h(w(t))]`. 
+    `A(t)` is called the "reflection strength" and :math:`\phi(t)` is called the "instantaneous
+    phase".
+
+    A constant phase rotation :math:`\phi` would produce the analytic signal
+    :math:`S(t)=A(t)e^{j(\theta(t) + \phi)}`. To get the non-analytic signal,
+    we take 
+
+    .. math::
+
+        real(S(t)) &= A(t)\cos(\theta(t) + \phi) \\
+        &= A(t)\cos\theta(t)\cos(\phi)-\sin\theta(t)\sin(\phi))\\
+        &= w(t)\cos\phi-h(t)\sin\phi
+        
 
     Args:
         w (ndarray): The wavelet vector, can be a 2D wavelet bank.

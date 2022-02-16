@@ -53,6 +53,7 @@ def rho_brine(temperature, pressure, salinity):
         salinity (array): The weight fraction of NaCl, e.g. 35e-3
             for 35 parts per thousand, or 3.5% (the salinity of
             seawater).
+
     Returns:
         array: The density in kg/m3.
     """
@@ -75,6 +76,7 @@ def rho_gas(temperature, pressure, molecular_weight):
         temperature (array): The temperature in degrees Celsius.
         pressure (array): The pressure in pascals.
         molecular_weight (array): The molecular weight.
+        
     Returns:
         array: The density in kg/m3.
     """

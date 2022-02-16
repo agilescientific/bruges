@@ -13,9 +13,9 @@ from bruges.util import rms
 def noise_db(a, snr):
     """
     Takes an array of seismic amplitudes and SNR in dB.
-
-     Args:
-        a (array) : seismic amplitude array.
+    
+    Args:
+        a (ndarray): seismic amplitude array.
         snr (int): signal to noise ratio.
 
     Returns:  Noise array, the same shape as the input.
