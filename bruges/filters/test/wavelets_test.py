@@ -32,7 +32,7 @@ class WaveletTest(unittest.TestCase):
                    0.9830259 , 0.99243608, 0.99810603, 1.        , 0.99810603,
                    0.99243608, 0.9830259 , 0.96993473, 0.95324475, 0.9330604 ,
                    0.90950743, 0.88273185])
-        y = ricker(0.064, 0.004, np.arange(1, 10))
+        y, t = ricker(0.064, 0.004, np.arange(1, 10))
         self.assertTrue(np.allclose(x, y[1]))
 
     def test_sweep(self):
@@ -41,7 +41,7 @@ class WaveletTest(unittest.TestCase):
                     1.00000000e+00,  1.55666436e-01, -2.19384783e-01,  7.71109377e-04,
                    -4.51870411e-02, -2.92402444e-02,  4.47812005e-03,  1.98145073e-03,
                    -4.05494502e-21])
-        y = sweep(0.064, 0.004, [10, 100])
+        y, t = sweep(0.064, 0.004, [10, 100])
         self.assertTrue(np.allclose(x, y))
 
     def test_berlage(self):
@@ -50,7 +50,7 @@ class WaveletTest(unittest.TestCase):
                     0.00000000e+00,  2.89837052e-01,  9.13081427e-01,  1.00000000e+00,
                     5.34807890e-01,  4.23728793e-17, -2.85099378e-01, -3.05622598e-01,
                     -1.94302026e-01])
-        y = berlage(0.064, 0.004, 25)
+        y, t = berlage(0.064, 0.004, 25)
         self.assertTrue(np.allclose(x, y))
 
     def test_ormsby(self):
@@ -58,7 +58,7 @@ class WaveletTest(unittest.TestCase):
                    -0.39791603, -0.37263257,  0.43754754,  1.        ,  0.43754754,
                    -0.37263257, -0.39791603, -0.06901495, -0.06436394, -0.15655105,
                    -0.05796127,  0.03109604])
-        y = ormsby(0.064, 0.004, [10, 20, 60, 80])
+        y, t = ormsby(0.064, 0.004, [10, 20, 60, 80])
         self.assertTrue(np.allclose(x, y))
 
 
