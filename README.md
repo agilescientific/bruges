@@ -1,4 +1,4 @@
-# bruges is a library of geophysical equations
+# bruges is a
 
 ![Bruges](http://agile.geosci.ai/bruges.png)
 
