@@ -50,7 +50,7 @@ language = 'en'
 extensions = ['sphinx.ext.githubpages',
               'sphinxcontrib.apidoc',
               'sphinx.ext.napoleon',
-              'myst_parser',
+              'myst_nb',
               'sphinx.ext.viewcode',
               'matplotlib.sphinxext.plot_directive',
               'sphinx.ext.mathjax',
