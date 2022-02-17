@@ -1,6 +1,6 @@
 # Changelog
 
-## 0.5.0 — coming, February 2022
+## 0.5.0 — 16 February 2022
 
 - In all wavelets, `sym` is now `True` by default.
 - In all wavelets, `return_t` is now `True` by default. you can still set it to false but...
