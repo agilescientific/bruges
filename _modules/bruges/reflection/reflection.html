@@ -8,6 +8,8 @@
         <title>bruges.reflection.reflection - bruges documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="../../../_static/styles/furo.css?digest=a8f031f701c6af50c9919b48f173a5785af06fac" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.css" />
     <link rel="stylesheet" type="text/css" href="../../../_static/plot_directive.css" />
     <link rel="stylesheet" type="text/css" href="../../../_static/styles/furo-extensions.css?digest=25ceb02ed1c46dc30f2321ff83e92799f69dfdb9" />
     <link rel="stylesheet" type="text/css" href="../../../_static/custom.css" />
@@ -153,7 +155,7 @@
   <input type="hidden" name="area" value="default">
 </form>
 <div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
-  <p class="caption" role="heading"><span class="caption-text">User guide</span></p>
+  <p class="caption" role="heading"><span class="caption-text">Getting Started</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../installation.html">Installation</a></li>
 </ul>
@@ -279,7 +281,7 @@
     <span class="k">return</span> <span class="n">ph</span></div>
 
 
-<div class="viewcode-block" id="acoustic_reflectivity"><a class="viewcode-back" href="../../../api/bruges.reflection.html#bruges.reflection.reflection.acoustic_reflectivity">[docs]</a><span class="k">def</span> <span class="nf">acoustic_reflectivity</span><span class="p">(</span><span class="n">vp</span><span class="p">,</span> <span class="n">rho</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">'valid'</span><span class="p">):</span>
+<div class="viewcode-block" id="acoustic_reflectivity"><a class="viewcode-back" href="../../../api/bruges.reflection.html#bruges.reflection.reflection.acoustic_reflectivity">[docs]</a><span class="k">def</span> <span class="nf">acoustic_reflectivity</span><span class="p">(</span><span class="n">vp</span><span class="p">,</span> <span class="n">rho</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">'same'</span><span class="p">):</span>
     <span class="sd">"""</span>
 <span class="sd">    The acoustic reflectivity, given Vp and RHOB logs.</span>
 
@@ -294,9 +296,6 @@
 <span class="sd">    Returns:</span>
 <span class="sd">        ndarray: The reflectivity coefficient series.</span>
 <span class="sd">    """</span>
-    <span class="n">m</span> <span class="o">=</span> <span class="s2">"In future releases, mode will be 'same' by default."</span>
-    <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="ne">FutureWarning</span><span class="p">,</span> <span class="n">stacklevel</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
-
     <span class="k">if</span> <span class="n">axis</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
         <span class="n">axis</span> <span class="o">=</span> <span class="n">vp</span><span class="o">.</span><span class="n">ndim</span> <span class="o">+</span> <span class="n">axis</span>
 
@@ -317,7 +316,7 @@
         <span class="k">return</span> <span class="n">rc</span></div>
 
 
-<div class="viewcode-block" id="reflectivity"><a class="viewcode-back" href="../../../api/bruges.reflection.html#bruges.reflection.reflection.reflectivity">[docs]</a><span class="k">def</span> <span class="nf">reflectivity</span><span class="p">(</span><span class="n">vp</span><span class="p">,</span> <span class="n">vs</span><span class="p">,</span> <span class="n">rho</span><span class="p">,</span> <span class="n">theta</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s1">'zoeppritz_rpp'</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">'valid'</span><span class="p">):</span>
+<div class="viewcode-block" id="reflectivity"><a class="viewcode-back" href="../../../api/bruges.reflection.html#bruges.reflection.reflection.reflectivity">[docs]</a><span class="k">def</span> <span class="nf">reflectivity</span><span class="p">(</span><span class="n">vp</span><span class="p">,</span> <span class="n">vs</span><span class="p">,</span> <span class="n">rho</span><span class="p">,</span> <span class="n">theta</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s1">'zoeppritz_rpp'</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">'same'</span><span class="p">):</span>
     <span class="sd">"""</span>
 <span class="sd">    Offset reflectivity, given Vp, Vs, rho, and offset.</span>
 
@@ -382,9 +381,6 @@
         <span class="s1">'bortfeld'</span><span class="p">:</span> <span class="n">bortfeld</span><span class="p">,</span>
         <span class="s1">'hilterman'</span><span class="p">:</span> <span class="n">hilterman</span><span class="p">,</span>
     <span class="p">}</span>
-
-    <span class="n">m</span> <span class="o">=</span> <span class="s2">"In future releases, mode will be 'same' by default."</span>
-    <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="ne">FutureWarning</span><span class="p">,</span> <span class="n">stacklevel</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
 
     <span class="k">if</span> <span class="n">axis</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
         <span class="n">axis</span> <span class="o">=</span> <span class="n">vp</span><span class="o">.</span><span class="n">ndim</span> <span class="o">+</span> <span class="n">axis</span>
@@ -1104,5 +1100,10 @@
     <script src="../../../_static/underscore.js"></script>
     <script src="../../../_static/doctools.js"></script>
     <script src="../../../_static/scripts/furo.js"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
     </body>
 </html>

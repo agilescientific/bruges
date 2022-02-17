@@ -1,0 +1,514 @@
+<!doctype html>
+<html class="no-js" lang="en">
+  <head><meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
+    <meta name="color-scheme" content="light dark"><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+<link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" />
+
+    <link rel="shortcut icon" href="../_static/favicon.ico"/><meta name="generator" content="sphinx-4.4.0, furo 2022.02.14.1"/>
+        <title>Quick start - bruges documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?digest=a8f031f701c6af50c9919b48f173a5785af06fac" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/plot_directive.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?digest=25ceb02ed1c46dc30f2321ff83e92799f69dfdb9" />
+    <link rel="stylesheet" type="text/css" href="../_static/custom.css" />
+    
+    
+
+
+<style>
+  body {
+    --color-code-background: #f8f8f8;
+  --color-code-foreground: black;
+  
+  }
+  body[data-theme="dark"] {
+    --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+  }
+  @media (prefers-color-scheme: dark) {
+    body:not([data-theme="light"]) {
+      --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+    }
+  }
+</style></head>
+  <body>
+    <script>
+      document.body.dataset.theme = localStorage.getItem("theme") || "auto";
+    </script>
+    
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="svg-toc" viewBox="0 0 24 24">
+    <title>Contents</title>
+    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 1024 1024">
+      <path d="M408 442h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8zm-8 204c0 4.4 3.6 8 8 8h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56zm504-486H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zm0 632H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zM115.4 518.9L271.7 642c5.8 4.6 14.4.5 14.4-6.9V388.9c0-7.4-8.5-11.5-14.4-6.9L115.4 505.1a8.74 8.74 0 0 0 0 13.8z"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-menu" viewBox="0 0 24 24">
+    <title>Menu</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-menu">
+      <line x1="3" y1="12" x2="21" y2="12"></line>
+      <line x1="3" y1="6" x2="21" y2="6"></line>
+      <line x1="3" y1="18" x2="21" y2="18"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+    <title>Expand</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-chevron-right">
+      <polyline points="9 18 15 12 9 6"></polyline>
+    </svg>
+  </symbol>
+  <symbol id="svg-sun" viewBox="0 0 24 24">
+    <title>Light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="feather-sun">
+      <circle cx="12" cy="12" r="5"></circle>
+      <line x1="12" y1="1" x2="12" y2="3"></line>
+      <line x1="12" y1="21" x2="12" y2="23"></line>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+      <line x1="1" y1="12" x2="3" y2="12"></line>
+      <line x1="21" y1="12" x2="23" y2="12"></line>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon" viewBox="0 0 24 24">
+    <title>Dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-moon">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
+    </svg>
+  </symbol>
+  <symbol id="svg-sun-half" viewBox="0 0 24 24">
+    <title>Auto light/dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-shadow">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+      <circle cx="12" cy="12" r="9" />
+      <path d="M13 12h5" />
+      <path d="M13 15h4" />
+      <path d="M13 18h1" />
+      <path d="M13 9h4" />
+      <path d="M13 6h1" />
+    </svg>
+  </symbol>
+</svg>
+
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation">
+<input type="checkbox" class="sidebar-toggle" name="__toc" id="__toc">
+<label class="overlay sidebar-overlay" for="__navigation">
+  <div class="visually-hidden">Hide navigation sidebar</div>
+</label>
+<label class="overlay toc-overlay" for="__toc">
+  <div class="visually-hidden">Hide table of contents sidebar</div>
+</label>
+
+
+
+<div class="page">
+  <header class="mobile-header">
+    <div class="header-left">
+      <label class="nav-overlay-icon" for="__navigation">
+        <div class="visually-hidden">Toggle site navigation sidebar</div>
+        <i class="icon"><svg><use href="#svg-menu"></use></svg></i>
+      </label>
+    </div>
+    <div class="header-center">
+      <a href="../index.html"><div class="brand">bruges  documentation</div></a>
+    </div>
+    <div class="header-right">
+      <div class="theme-toggle-container theme-toggle-header">
+        <button class="theme-toggle">
+          <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+          <svg class="theme-icon-when-auto"><use href="#svg-sun-half"></use></svg>
+          <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+          <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+        </button>
+      </div>
+      <label class="toc-overlay-icon toc-header-icon" for="__toc">
+        <div class="visually-hidden">Toggle table of contents sidebar</div>
+        <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+      </label>
+    </div>
+  </header>
+  <aside class="sidebar-drawer">
+    <div class="sidebar-container">
+      
+      <div class="sidebar-sticky"><a class="sidebar-brand centered" href="../index.html">
+  
+  <div class="sidebar-logo-container">
+    <img class="sidebar-logo" src="../_static/bruges_logo.png" alt="Logo"/>
+  </div>
+  
+  
+</a><form class="sidebar-search-container" method="get" action="../search.html" role="search">
+  <input class="sidebar-search" placeholder=Search name="q" aria-label="Search">
+  <input type="hidden" name="check_keywords" value="yes">
+  <input type="hidden" name="area" value="default">
+</form>
+<div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
+  <p class="caption" role="heading"><span class="caption-text">Getting Started</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">API reference</span></p>
+<ul>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../api/bruges.html">bruges package</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../api/bruges.attribute.html">bruges.attribute package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api/bruges.filters.html">bruges.filters package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api/bruges.models.html">bruges.models package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api/bruges.noise.html">bruges.noise package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api/bruges.petrophysics.html">bruges.petrophysics package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api/bruges.reflection.html">bruges.reflection package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api/bruges.rockphysics.html">bruges.rockphysics package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api/bruges.transform.html">bruges.transform package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api/bruges.unit.html">bruges.unit package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api/bruges.util.html">bruges.util package</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Other resources</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../development.html">Development</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../authors.html">Authors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../authors.html#id1">Authors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../license.html">License</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../changelog.html">Changelog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contributing.html">Contributing</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Project links</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="https://pypi.org/project/bruges/">PyPI releases</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/agile-geoscience/bruges">Code in GitHub</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/agile-geoscience/bruges/issues">Issue tracker</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://code.agilescientific.com/community">Community guidelines</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://code.agilescientific.com">Agile's software</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://www.agilescientific.com">Agile's website</a></li>
+</ul>
+
+</div>
+</div>
+
+      </div>
+      
+    </div>
+  </aside>
+  <div class="main">
+    <div class="content">
+      <div class="article-container">
+        <div class="content-icon-container"><div class="theme-toggle-container theme-toggle-content">
+            <button class="theme-toggle">
+              <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+              <svg class="theme-icon-when-auto"><use href="#svg-sun-half"></use></svg>
+              <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+              <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+            </button>
+          </div>
+          <label class="toc-overlay-icon toc-content-icon" for="__toc">
+            <div class="visually-hidden">Toggle table of contents sidebar</div>
+            <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+          </label>
+        </div>
+        <article role="main">
+          <section class="tex2jax_ignore mathjax_ignore" id="quick-start">
+<h1>Quick start<a class="headerlink" href="#quick-start" title="Permalink to this headline">#</a></h1>
+<p>**Welcome to <code class="docutils literal notranslate"><span class="pre">bruges</span></code>!</p>
+<p>This library does all sorts of things so it’s hard to show you a single workflow and say, “here’s how to use <code class="docutils literal notranslate"><span class="pre">bruges</span></code>”. But making a simple wedge model will let us show you several features, and maybe it will help you see how to use <code class="docutils literal notranslate"><span class="pre">bruges</span></code> in your own work.</p>
+<p>Seismic wedge models provide seismic interpreters a quantitative way of studying thin-bed stratigraphy at or below seismic resolution. Here’s the workflow:</p>
+<ol class="simple">
+<li><p>Define the layer geometries.</p></li>
+<li><p>Give those layers rock properties.</p></li>
+<li><p>Calculate reflection coefficients.</p></li>
+<li><p>Make a seismic wavelet.</p></li>
+<li><p>Model the seismic response by convolving the reflectivities with the wavelet.</p></li>
+</ol>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">bruges</span> <span class="k">as</span> <span class="nn">bg</span>
+</pre></div>
+</div>
+</div>
+</div>
+<section id="make-a-wedge">
+<h2>Make a wedge<a class="headerlink" href="#make-a-wedge" title="Permalink to this headline">#</a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">wedge</span></code> function in <code class="docutils literal notranslate"><span class="pre">models</span></code> submodule allows you to generate a variety of stratigraphic geometries. The default gives us a model <code class="docutils literal notranslate"><span class="pre">m</span></code> which is a 2-D NumPy array of size <code class="docutils literal notranslate"><span class="pre">(100,</span> <span class="pre">100)</span></code>. It has 3 layers in it.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">m</span><span class="p">,</span> <span class="n">top</span><span class="p">,</span> <span class="n">base</span><span class="p">,</span> <span class="n">ref</span> <span class="o">=</span> <span class="n">bg</span><span class="o">.</span><span class="n">models</span><span class="o">.</span><span class="n">wedge</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">wedge</span></code> function returns a tuple containing the model <code class="docutils literal notranslate"><span class="pre">m</span></code>, as well as the a <code class="docutils literal notranslate"><span class="pre">top</span></code>, <code class="docutils literal notranslate"><span class="pre">base</span></code> and <code class="docutils literal notranslate"><span class="pre">ref</span></code> denoting some key boundaries in the model. Let’s put these objects on a plot.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">m</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">top</span><span class="p">,</span> <span class="s1">'r'</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">base</span><span class="p">,</span> <span class="s1">'r'</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">ref</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="s1">'k'</span><span class="p">,</span> <span class="n">ls</span><span class="o">=</span><span class="s1">'--'</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/Quick_start_7_0.png" src="../_images/Quick_start_7_0.png"/>
+</div>
+</div>
+<p>The model <code class="docutils literal notranslate"><span class="pre">m</span></code> is a 2-D NumPy array where each element is an index corresponding to each layer. The purple layer region has <code class="docutils literal notranslate"><span class="pre">0</span></code>, the green layer has <code class="docutils literal notranslate"><span class="pre">1</span></code> and the yellow layer is <code class="docutils literal notranslate"><span class="pre">2</span></code> . <code class="docutils literal notranslate"><span class="pre">top</span></code> and <code class="docutils literal notranslate"><span class="pre">base</span></code>, shown in red, are the depths down to the “top” of wedge layer and “base” of the wedge layer respectively. <code class="docutils literal notranslate"><span class="pre">ref</span></code> stands for “reference trace” and it denotes the position where the wedge has a thickness factor of 1.</p>
+</section>
+<section id="fill-it-with-rock-properties">
+<h2>Fill it with rock properties<a class="headerlink" href="#fill-it-with-rock-properties" title="Permalink to this headline">#</a></h2>
+<p>Let’s define P-wave velocity, S-wave velocity, and rho (density) for our 3 rock types:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">vps</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">2320</span><span class="p">,</span> <span class="mi">2350</span><span class="p">,</span> <span class="mi">2350</span><span class="p">])</span>
+<span class="n">vss</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1150</span><span class="p">,</span> <span class="mi">1250</span><span class="p">,</span> <span class="mi">1200</span><span class="p">])</span>
+<span class="n">rhos</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">2650</span><span class="p">,</span> <span class="mi">2600</span><span class="p">,</span> <span class="mi">2620</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>We can use these to make <code class="docutils literal notranslate"><span class="pre">vp</span></code> and <code class="docutils literal notranslate"><span class="pre">rho</span></code> earth models. We can use NumPy’s fancy indexing by passing our array of indicies to access the rock properties (in this case acoustic impedance) for every element at once.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">vp</span> <span class="o">=</span> <span class="n">vps</span><span class="p">[</span><span class="n">m</span><span class="p">]</span>
+<span class="n">vs</span> <span class="o">=</span> <span class="n">vss</span><span class="p">[</span><span class="n">m</span><span class="p">]</span>
+<span class="n">rho</span> <span class="o">=</span> <span class="n">rhos</span><span class="p">[</span><span class="n">m</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>And plot the acoustic impedance to check it looks reasonable:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">vp</span><span class="o">*</span><span class="n">rho</span><span class="p">,</span> <span class="n">interpolation</span><span class="o">=</span><span class="s1">'none'</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">colorbar</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/Quick_start_14_0.png" src="../_images/Quick_start_14_0.png"/>
+</div>
+</div>
+<p>Or calculate the elastic impedance for a given angle <code class="docutils literal notranslate"><span class="pre">theta1</span></code>, say 10 degrees:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ei10</span> <span class="o">=</span> <span class="n">bg</span><span class="o">.</span><span class="n">rockphysics</span><span class="o">.</span><span class="n">elastic_impedance</span><span class="p">(</span><span class="n">vp</span><span class="p">,</span> <span class="n">vs</span><span class="p">,</span> <span class="n">rho</span><span class="p">,</span> <span class="n">theta1</span><span class="o">=</span><span class="mi">10</span><span class="p">,)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">ei10</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">interpolation</span><span class="o">=</span><span class="s1">'none'</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">colorbar</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/Quick_start_16_0.png" src="../_images/Quick_start_16_0.png"/>
+</div>
+</div>
+</section>
+<section id="calculate-acoustic-reflectivity">
+<h2>Calculate acoustic reflectivity<a class="headerlink" href="#calculate-acoustic-reflectivity" title="Permalink to this headline">#</a></h2>
+<p>We can create a section of normal incidence reflection coefficient. This will be what we convolve with a wavelet.</p>
+<p>Bruges can calculate the acoustic reflectivity:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">rc</span> <span class="o">=</span> <span class="n">bg</span><span class="o">.</span><span class="n">reflection</span><span class="o">.</span><span class="n">acoustic_reflectivity</span><span class="p">(</span><span class="n">vp</span><span class="p">,</span> <span class="n">rho</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">rc</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">colorbar</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/Quick_start_19_0.png" src="../_images/Quick_start_19_0.png"/>
+</div>
+</div>
+<p>The reflections coeffients are zero almost everywhere, except at the layer boundaries. The reflection coefficient between layer 1 and layer 2 is a negative, and between layer 2 and layer 3 is a positive number. This will determine the scale and polarity of the seismic amplitudes.</p>
+</section>
+<section id="offset-reflectivity">
+<h2>Offset reflectivity<a class="headerlink" href="#offset-reflectivity" title="Permalink to this headline">#</a></h2>
+<p>We can also calculate the exact Zoeppritz offset reflectivity. For example, to compute the reflectivity at 10 degrees of offset — note that this results in complex numbers, so we’ll only use the real part in the plot:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">rc10</span> <span class="o">=</span> <span class="n">bg</span><span class="o">.</span><span class="n">reflection</span><span class="o">.</span><span class="n">reflectivity</span><span class="p">(</span><span class="n">vp</span><span class="p">,</span> <span class="n">vs</span><span class="p">,</span> <span class="n">rho</span><span class="p">,</span> <span class="n">theta</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">rc10</span><span class="o">.</span><span class="n">real</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">colorbar</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/Quick_start_22_0.png" src="../_images/Quick_start_22_0.png"/>
+</div>
+</div>
+<section id="create-a-wavelet">
+<h3>Create a wavelet<a class="headerlink" href="#create-a-wavelet" title="Permalink to this headline">#</a></h3>
+<p>Let’s create a Ricker wavelet to serve as our seismic pulse. We specify it has a length of 0.256 s, a sample interval of 0.002 s, and corner frequencies of 8, 12, 20, and 40 Hz:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">w</span><span class="p">,</span> <span class="n">t</span> <span class="o">=</span> <span class="n">bg</span><span class="o">.</span><span class="n">filters</span><span class="o">.</span><span class="n">ormsby</span><span class="p">(</span><span class="mf">0.512</span><span class="p">,</span> <span class="mf">0.004</span><span class="p">,</span> <span class="p">[</span><span class="mi">8</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">40</span><span class="p">])</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">w</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&lt;matplotlib.lines.Line2D at 0x7f44a8d42350&gt;]
+</pre></div>
+</div>
+<img alt="../_images/Quick_start_24_1.png" src="../_images/Quick_start_24_1.png"/>
+</div>
+</div>
+<p>There are several wavelet functions; they can all take a sequence of frequencies and produce all of them at once as a filter bank:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">w_</span><span class="p">,</span> <span class="n">t</span> <span class="o">=</span> <span class="n">bg</span><span class="o">.</span><span class="n">filters</span><span class="o">.</span><span class="n">ricker</span><span class="p">(</span><span class="mf">0.256</span><span class="p">,</span> <span class="mf">0.004</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">50</span><span class="p">))</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">w_</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">'time [samples]'</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">'frequency [Hz]'</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(0, 0.5, 'frequency [Hz]')
+</pre></div>
+</div>
+<img alt="../_images/Quick_start_26_1.png" src="../_images/Quick_start_26_1.png"/>
+</div>
+</div>
+</section>
+</section>
+<section id="convolve-the-wavelet-with-the-reflectivity">
+<h2>Convolve the wavelet with the reflectivity<a class="headerlink" href="#convolve-the-wavelet-with-the-reflectivity" title="Permalink to this headline">#</a></h2>
+<p>We can use <code class="docutils literal notranslate"><span class="pre">np.convolve</span></code> to perform the convolution. Let’s look at a single waveform from the reference location <code class="docutils literal notranslate"><span class="pre">ref</span></code> in our model. The synthetic seismic trace is band-limited filtering of the reflectivity spikes. When these spikes get closer together the waveforms will “tune” with one another and won’t line up with the reflectivity series.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">rc_ref</span> <span class="o">=</span> <span class="n">rc</span><span class="p">[:,</span> <span class="n">ref</span><span class="p">]</span>
+<span class="n">syn</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">convolve</span><span class="p">(</span><span class="n">rc_ref</span><span class="p">,</span> <span class="n">w</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">'same'</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">rc_ref</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">syn</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/Quick_start_29_0.png" src="../_images/Quick_start_29_0.png"/>
+</div>
+</div>
+</section>
+<section id="create-a-synthetic-section">
+<h2>Create a synthetic section<a class="headerlink" href="#create-a-synthetic-section" title="Permalink to this headline">#</a></h2>
+<p>We can apply this convolution operation over all the reflectivity series in our section using NumPy’s <code class="docutils literal notranslate"><span class="pre">apply_along_axis</span></code> function.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">syn</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">apply_along_axis</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">convolve</span><span class="p">,</span> <span class="n">arr</span><span class="o">=</span><span class="n">rc</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">v</span><span class="o">=</span><span class="n">w</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">'same'</span><span class="p">)</span>
+
+<span class="n">ma</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">percentile</span><span class="p">(</span><span class="n">syn</span><span class="p">,</span> <span class="mf">99.9</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">syn</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">'seismic_r'</span><span class="p">,</span> <span class="n">vmin</span><span class="o">=-</span><span class="n">ma</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="n">ma</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">colorbar</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/Quick_start_32_0.png" src="../_images/Quick_start_32_0.png"/>
+</div>
+</div>
+</section>
+</section>
+
+        </article>
+      </div>
+      <footer>
+        
+        <div class="related-pages">
+          
+          
+        </div>
+        <div class="bottom-of-page">
+          <div class="left-details">
+            <div class="copyright">
+                Copyright &#169; 2022, Agile Scientific
+            </div>
+            Made with <a href="https://www.sphinx-doc.org/">Sphinx</a> and <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
+            
+            <a href="https://github.com/pradyunsg/furo">Furo</a>
+            
+          </div>
+          <div class="right-details">
+            <div class="icons">
+              <a class="muted-link " href="https://code.agilescientific.com" aria-label="Agile">
+                <svg width="200" height="200" version="1.1" viewBox="0 0 187.5 187.5" xmlns="http://www.w3.org/2000/svg">
+                <g transform="matrix(3.94 -1.28 1.28 3.94 -906.1 -3676)" style="color-rendering:auto;color:#000000;fill:#14ca29;image-rendering:auto;isolation:auto;mix-blend-mode:normal;shape-rendering:auto;solid-color:#000000;stroke-width:1px;text-decoration-color:#000000;text-decoration-line:none;text-decoration-style:solid;text-indent:0;text-transform:none;white-space:normal">
+                <path d="m-46.98 936.1q3.515-1.622 6.705-3.244t5.083-2.379 3.028-0.757q1.893 0 3.244 1.298 1.406 1.244 1.406 3.136 0 1.081-0.7029 2.271-0.6489 1.136-1.406 1.46-6.975 2.758-15.36 4.001 1.514 1.406 3.731 3.731t2.325 2.487q0.8111 1.136 2.271 2.812 1.46 1.676 2.001 2.65 0.5948 0.9192 0.5948 2.271 0 1.73-1.298 3.028t-3.352 1.298q-2.055 0-4.65-3.19-2.541-3.19-6.597-11.46-4.109 7.462-5.515 9.841t-2.704 3.623q-1.298 1.19-2.974 1.19-2.001 0-3.352-1.352-1.298-1.406-1.298-2.974 0-1.46 0.5407-2.217 4.975-6.759 10.38-11.73-4.542-0.7029-8.111-1.568t-7.57-2.541q-0.6489-0.3244-1.298-1.46-0.5948-1.19-0.5948-2.163 0-1.893 1.352-3.136 1.406-1.298 3.19-1.298 1.298 0 3.244 0.8111 1.947 0.757 4.921 2.271 3.028 1.46 6.867 3.298-0.7029-3.407-1.19-7.786-0.4326-4.434-0.4326-6.056 0-2.001 1.244-3.407 1.298-1.46 3.298-1.46 1.947 0 3.19 1.46 1.298 1.406 1.298 3.785 0 0.6489-0.2163 2.595-0.1622 1.893-0.5407 4.65-0.3244 2.704-0.757 6.218z" style="fill:#14ca29"/>
+                </g>
+                </svg>
+            </a>
+              
+            </div>
+          </div>
+        </div>
+        
+      </footer>
+    </div>
+    <aside class="toc-drawer">
+      
+      
+      <div class="toc-sticky toc-scroll">
+        <div class="toc-title-container">
+          <span class="toc-title">
+            Contents
+          </span>
+        </div>
+        <div class="toc-tree-container">
+          <div class="toc-tree">
+            <ul>
+<li><a class="reference internal" href="#">Quick start</a><ul>
+<li><a class="reference internal" href="#make-a-wedge">Make a wedge</a></li>
+<li><a class="reference internal" href="#fill-it-with-rock-properties">Fill it with rock properties</a></li>
+<li><a class="reference internal" href="#calculate-acoustic-reflectivity">Calculate acoustic reflectivity</a></li>
+<li><a class="reference internal" href="#offset-reflectivity">Offset reflectivity</a><ul>
+<li><a class="reference internal" href="#create-a-wavelet">Create a wavelet</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#convolve-the-wavelet-with-the-reflectivity">Convolve the wavelet with the reflectivity</a></li>
+<li><a class="reference internal" href="#create-a-synthetic-section">Create a synthetic section</a></li>
+</ul>
+</li>
+</ul>
+
+          </div>
+        </div>
+      </div>
+      
+      
+    </aside>
+  </div>
+</div><script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/scripts/furo.js"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    </body>
+</html>

@@ -41,14 +41,24 @@ of each sample, ``t``. You can plot the wavelet with ``matplotlib`` like so:
     plt.plot(t, w)
 
 
+Getting Started
+---------------
+
+.. toctree::
+    :maxdepth: 1
+    :caption: Getting Started
+
+    installation
+    tutorial/Getting_started_wedge_model.ipynb
+
 User Guide
 ----------
 
 .. toctree::
-    :maxdepth: 2
+    :maxdepth: 1
     :caption: User guide
 
-    installation
+Coming Soon
 
 
 API reference
