@@ -32,11 +32,11 @@ def _get_time(duration, dt, sym=True):
 
     if (odd and sym):
         t = np.arange(n)
-    if (not odd and sym):
+    elif (not odd and sym):
         t = np.arange(n + 1)
-    if (odd and not sym):
+    elif (odd and not sym):
         t = np.arange(n)
-    if (not odd and not sym):
+    elif (not odd and not sym):
         t = np.arange(n) - 1
 
     t -= t[-1] // 2
