@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 """
 Spectral decomposition
 
@@ -6,7 +5,7 @@ Spectral decomposition
 :license: Apache 2.0
 """
 import numpy as np
-from bruges.attribute import spectrogram
+from .spectrogram import spectrogram
 
 
 def spectraldecomp(data,

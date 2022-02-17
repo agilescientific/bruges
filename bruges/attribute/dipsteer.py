@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 """
 A dip attribute, probably most useful for guiding other attributes.
 
@@ -8,7 +7,7 @@ A dip attribute, probably most useful for guiding other attributes.
 from collections import namedtuple
 
 import numpy as np
-from bruges.attribute import energy
+from .energy import energy
 
 
 def dipsteer(data,
