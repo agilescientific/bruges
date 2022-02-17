@@ -60,7 +60,7 @@ def reflection_phase(reflectivity):
     return ph
 
 
-def acoustic_reflectivity(vp, rho, axis=0, mode='valid'):
+def acoustic_reflectivity(vp, rho, axis=0, mode='same'):
     """
     The acoustic reflectivity, given Vp and RHOB logs.
 
@@ -75,9 +75,6 @@ def acoustic_reflectivity(vp, rho, axis=0, mode='valid'):
     Returns:
         ndarray: The reflectivity coefficient series.
     """
-    m = "In future releases, mode will be 'same' by default."
-    warnings.warn(m, FutureWarning, stacklevel=2)
-
     if axis < 0:
         axis = vp.ndim + axis
 
@@ -98,7 +95,7 @@ def acoustic_reflectivity(vp, rho, axis=0, mode='valid'):
         return rc
 
 
-def reflectivity(vp, vs, rho, theta=0, method='zoeppritz_rpp', axis=0, mode='valid'):
+def reflectivity(vp, vs, rho, theta=0, method='zoeppritz_rpp', axis=0, mode='same'):
     """
     Offset reflectivity, given Vp, Vs, rho, and offset.
 
@@ -163,9 +160,6 @@ def reflectivity(vp, vs, rho, theta=0, method='zoeppritz_rpp', axis=0, mode='val
         'bortfeld': bortfeld,
         'hilterman': hilterman,
     }
-
-    m = "In future releases, mode will be 'same' by default."
-    warnings.warn(m, FutureWarning, stacklevel=2)
 
     if axis < 0:
         axis = vp.ndim + axis

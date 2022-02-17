@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.5.2 — coming February 2022
+
+- **Breaking change:** Mode is now 'same' by default on reflectivity functions. If you were assuming `mode='valid'` you should change your code.
+
+## 0.5.1 — 17 February 2022
+
+- Fixed a critical bug in 0.5.0 which prevented it from importing.
+
 ## 0.5.0 — 16 February 2022
 
 - In all wavelets, `sym` is now `True` by default.
