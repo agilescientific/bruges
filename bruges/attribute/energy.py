@@ -25,9 +25,8 @@ def energy(traces, duration, dt=1):
     Returns:
         ndarray: An array the same dimensions as the input array.
     """
-    data = traces.astype(np.float).reshape(-1, traces.shape[-1])
+    # data = traces.astype(np.float).reshape(-1, traces.shape[-1])
     n_samples = int(duration / dt)
     window = np.ones(n_samples) / n_samples
-    energy = convolve(data**2, window)
-    return energy.reshape(traces.shape)
+    return convolve(traces**2, window)
   

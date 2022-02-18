@@ -41,8 +41,3 @@ def convolve(reflectivity, wavelet, axis=-1):
     pos = wavelet.ndim - 1
 
     return np.moveaxis(syn.reshape(outshape), pos, axis)
-
-
-def apply_along_axis(func_1d, arr, *args, **kwargs):
-    mapobj = map(lambda tr: func_1d(tr, *args, **kwargs), arr)
-    return np.array(list(mapobj))

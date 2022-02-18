@@ -263,7 +263,7 @@ def error_flag(pred, actual, dev=1.0, method=1):
     return flag
 
 
-def apply_along_axis(func_1d, arr, kernel, **kwargs):
+def apply_along_axis(func_1d, arr, *args, **kwargs):
     """
     Apply 1D function across 2D slice as efficiently as possible.
 
@@ -277,7 +277,7 @@ def apply_along_axis(func_1d, arr, kernel, **kwargs):
     Example
     >>> apply_along_axes(np.convolve, reflectivity_2d, wavelet, mode='same') 
     """
-    mapobj = map(lambda tr: func_1d(tr, kernel, **kwargs), arr)
+    mapobj = map(lambda tr: func_1d(tr, *args, **kwargs), arr)
     return np.array(list(mapobj))
 
 

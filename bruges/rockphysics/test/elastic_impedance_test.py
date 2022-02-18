@@ -55,8 +55,8 @@ class ElasticImpedanceTest(unittest.TestCase):
         x3 = elastic_impedance(arr_vp, arr_vs, arr_rho, theta1=theta2)
 
         self.assertEqual(x1.shape, (ones_vp.size,))
-        self.assertEqual(x2.shape, (ones_vp.size, theta2.size))
-        self.assertEqual(x3.shape, (arr_vp.size, theta2.size))
+        self.assertEqual(x2.shape, (theta2.size, ones_vp.size))
+        self.assertEqual(x3.shape, (theta2.size, arr_vp.size))
 
     def test_ei_nan(self):
         """

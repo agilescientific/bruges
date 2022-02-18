@@ -44,6 +44,11 @@ class ModelTest(unittest.TestCase):
         self.assertTrue(np.allclose(base, b))
         self.assertTrue(ref == 6)
 
+    def test_wedge_numpy(self):
+        strat = np.array([2000, 2100, 2300])
+        w, *_ = wedge(depth=10, width=7, strat=strat)
+        self.assertTrue(w.shape == (10, 7))
+
     def test_netgross(self):
         w, top, *_ = wedge(depth=10, width=7, breadth=3, strat=(10, (20, 30), 40))
         self.assertTrue(w.sum() == 6003)

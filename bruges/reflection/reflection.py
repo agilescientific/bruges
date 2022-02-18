@@ -216,17 +216,18 @@ def vectorize(func):
     @wraps(func)
     def wrapper(vp1, vs1, rho1, vp2, vs2, rho2, theta1=0, **kwargs):
 
-        new_shape = [-1] + vp1.ndim * [1]
-        theta1 = theta1.reshape(*new_shape)
-        if (np.nan_to_num(theta1) > np.pi/2.).any():
-            raise ValueError("Incidence angle theta1 must be less than 90 deg.")
-
         vp1 = np.asanyarray(vp1, dtype=float)
         vs1 = np.asanyarray(vs1, dtype=float) + 1e-12  # Prevent singular matrix.
         rho1 = np.asanyarray(rho1, dtype=float)
         vp2 = np.asanyarray(vp2, dtype=float)
         vs2 = np.asanyarray(vs2, dtype=float) + 1e-12  # Prevent singular matrix.
         rho2 = np.asanyarray(rho2, dtype=float)
+
+        new_shape = [-1] + vp1.ndim * [1]
+        theta1 = theta1.reshape(*new_shape)
+        if (np.nan_to_num(theta1) > np.pi/2.).any():
+            raise ValueError("Incidence angle theta1 must be less than 90 deg.")
+
         return func(vp1, vs1, rho1, vp2, vs2, rho2, theta1, **kwargs)
     return wrapper
 

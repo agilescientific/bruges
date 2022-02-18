@@ -35,9 +35,9 @@ def get_strat(strat,
     orders = {'nearest': 0, 'linear': 1, 'quadratic': 2, 'cubic': 3}
     order = orders.get(kind, 0)
 
-    if isinstance(strat, int) and (order == 0):
+    if np.issubdtype(type(strat), int) and (order == 0):
         out = np.repeat([strat], thickness)
-    elif isinstance(strat, float) and (order == 0):
+    elif np.issubdtype(type(strat), float) and (order == 0):
         out = np.repeat([strat], thickness)
     elif isinstance(strat, tuple) and (order == 0):
         out = np.repeat(strat, int(round(thickness/len(strat))))
