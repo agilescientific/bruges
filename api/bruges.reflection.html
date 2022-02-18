@@ -553,13 +553,12 @@ the Vp log twice (it won’t be used anyway):</p>
 <li><p><strong>vs</strong> (<em>ndarray</em>) – The S-wave velocity; float or 1D array length m.</p></li>
 <li><p><strong>rho</strong> (<em>ndarray</em>) – The density; float or 1D array length m.</p></li>
 <li><p><strong>theta</strong> (<em>ndarray</em>) – The incidence angle; float or 1D array length n.</p></li>
-<li><p><strong>method</strong> (<em>str</em>) – The reflectivity equation to use; one of:</p></li>
 <li><p><strong>axis</strong> (<em>int</em>) – The dimension along which to compute the reflectivity.</p></li>
-<li><p><strong>mode</strong> (<em>str</em>) – <p>‘same’ means the output will be the same shape. ‘valid’
+<li><p><strong>mode</strong> (<em>str</em>) – ‘same’ means the output will be the same shape. ‘valid’
 means that only strictly valid reflectivities are computed so
-the result will be one sample shorted in the <cite>axis</cite> dimension.</p>
-<blockquote>
-<div><ul>
+the result will be one sample shorted in the <cite>axis</cite> dimension.</p></li>
+<li><p><strong>method</strong> (<em>str</em>) – <p>The reflectivity equation to use; one of:</p>
+<ul>
 <li><p>’scattering_matrix’: scattering_matrix</p></li>
 <li><p>’zoeppritz_element’: zoeppritz_element</p></li>
 <li><p>’zoeppritz’: zoeppritz</p></li>
@@ -571,13 +570,17 @@ the result will be one sample shorted in the <cite>axis</cite> dimension.</p>
 <li><p>’bortfeld’: bortfeld</p></li>
 <li><p>’hilterman’: hilterman</p></li>
 </ul>
-</div></blockquote>
 </p></li>
 <li><p><strong>Notes</strong> – <ul>
 <li><p>scattering_matrix gives the full solution</p></li>
 <li><p>zoeppritz_element gives a single element which you specify</p></li>
 <li><p>zoeppritz returns RPP element only; use zoeppritz_rpp instead</p></li>
 <li><p>zoeppritz_rpp is faster than zoeppritz or zoeppritz_element</p></li>
+<li><dl class="simple">
+<dt>You can also pass a function with the same API as these built-in</dt><dd><p>functions.</p>
+</dd>
+</dl>
+</li>
 </ul>
 </p></li>
 </ul>
