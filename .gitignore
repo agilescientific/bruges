@@ -1,5 +1,5 @@
 .ipynb_checkpoints 
-docs/_notebooks
+docs/userguide
 _version.py
 .vscode
 

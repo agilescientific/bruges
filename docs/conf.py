@@ -73,7 +73,7 @@ templates_path = ['_templates']
 
 # List of patterns, relative to source directory, that match files and
 # directories to ignore when looking for source files.
-exclude_patterns = ['_build', 'notebooks']
+exclude_patterns = ['_build', '_userguide']
 
 # Entire logo SVG
 # <svg width="800" height="600" version="1.1" viewBox="0 0 750 562.5" xmlns="http://www.w3.org/2000/svg">

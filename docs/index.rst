@@ -53,8 +53,8 @@ User guide
     :caption: User guide
 
     installation
-    _notebooks/Quick_start_wedge.ipynb
-    _notebooks/Wedges.ipynb
+    userguide/Quick_start_wedge.ipynb
+    userguide/Wedges.ipynb
 
 
 API reference
