@@ -54,6 +54,7 @@ User guide
 
     installation
     _notebooks/Quick_start_wedge.ipynb
+    _notebooks/Wedges.ipynb
 
 
 API reference
