@@ -60,13 +60,20 @@ def reflection_phase(reflectivity):
     return ph
 
 
-def acoustic_reflectivity(vp, rho, axis=0, mode='same'):
+def acoustic_reflectivity(vp=None, rho=None, axis=0, mode='same'):
     """
-    The acoustic reflectivity, given Vp and RHOB logs.
+    The acoustic reflectivity, given Vp and RHOB logs. You can also pass
+    either `vp` or `rho` and get velocity or density reflectivity; if you only
+    have an impedance log or dataset, pass it as `vp`.
+
+    For offset reflectivity, use `reflectivity()`.
 
     Args:
-        vp (ndarray): The P-wave velocity.
-        rho (ndarray): The bulk density.
+        vp (ndarray): The P-wave velocity. At least one of Vp and Rho is required.
+        rho (ndarray): The bulk density. At least one of Vp and Rho is required.
+            If you only have Impedance, pass it in as Vp and leave this as None.
+            It will use a value of 1 to compute impedance and you'll get velocity
+            reflectivity.
         axis (int): The dimension along which to compute the reflectivity.
         mode (str): 'same' means the output will be the same shape. 'valid'
             means that only strictly valid reflectivities are computed so
@@ -75,6 +82,13 @@ def acoustic_reflectivity(vp, rho, axis=0, mode='same'):
     Returns:
         ndarray: The reflectivity coefficient series.
     """
+    if (vp is None) and (rho is None):
+        raise ValueError("You must pass either `vp` or `rho`.")
+    elif vp is None:
+        vp = np.ones_like(rho)
+    elif rho is None:
+        rho = np.ones_like(vp)
+
     if axis < 0:
         axis = vp.ndim + axis
 
@@ -98,6 +112,8 @@ def acoustic_reflectivity(vp, rho, axis=0, mode='same'):
 def reflectivity(vp, vs, rho, theta=0, method='zoeppritz_rpp', axis=0, mode='same'):
     """
     Offset reflectivity, given Vp, Vs, rho, and offset.
+
+    For acoustic reflectivity, use `acoustic_reflectivity()`.
 
     Computes 'upper' and 'lower' intervals from the three provided arrays,
     then passes the result to the specified method to compute reflection
