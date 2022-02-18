@@ -1,6 +1,7 @@
 .ipynb_checkpoints 
-
+docs/_notebooks
 _version.py
+.vscode
 
 *.py[cod]
 

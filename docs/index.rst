@@ -40,25 +40,20 @@ of each sample, ``t``. You can plot the wavelet with ``matplotlib`` like so:
     import matplotlib.pyplot as plt
     plt.plot(t, w)
 
+.. image:: _static/example_plot.png
+  :width: 400
+  :alt: An Ormsby wavelet
 
-Getting Started
+
+User guide
 ---------------
 
 .. toctree::
-    :maxdepth: 1
-    :caption: Getting Started
-
-    installation
-    tutorial/Getting_started_wedge_model.ipynb
-
-User Guide
-----------
-
-.. toctree::
-    :maxdepth: 1
+    :maxdepth: 2
     :caption: User guide
 
-Coming Soon
+    installation
+    _notebooks/Quick_start_wedge.ipynb
 
 
 API reference
