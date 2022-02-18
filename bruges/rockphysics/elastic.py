@@ -40,7 +40,8 @@ def elastic_impedance(vp, vs, rho, theta1,
     Returns:
         ndarray: The elastic impedance log at the specficied angle or angles.
     """
-    theta1 = np.radians(theta1).reshape(-1, 1)
+    new_shape = [-1] + vp.ndim * [1]
+    theta1 = np.radians(theta1).reshape(*new_shape)
     if (np.nan_to_num(theta1) > np.pi/2.).any():
         raise ValueError("Incidence angle theta1 must be less than 90 deg.")
 
@@ -75,4 +76,4 @@ def elastic_impedance(vp, vs, rho, theta1,
     if ei.size == 1:
         return np.asscalar(ei)
     else:
-        return np.squeeze(ei.T)
+        return np.squeeze(ei)
