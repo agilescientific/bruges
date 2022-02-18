@@ -6,7 +6,7 @@
 <link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" />
 
     <link rel="shortcut icon" href="../_static/favicon.ico"/><meta name="generator" content="sphinx-4.4.0, furo 2022.02.14.1"/>
-        <title>Quick start - bruges documentation</title>
+        <title>Welcome to bruges - bruges documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?digest=a8f031f701c6af50c9919b48f173a5785af06fac" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
@@ -219,9 +219,9 @@
           </label>
         </div>
         <article role="main">
-          <section class="tex2jax_ignore mathjax_ignore" id="quick-start">
-<h1>Quick start<a class="headerlink" href="#quick-start" title="Permalink to this headline">#</a></h1>
-<p><strong>Welcome to <code class="docutils literal notranslate"><span class="pre">bruges</span></code>!</strong></p>
+          <section class="tex2jax_ignore mathjax_ignore" id="welcome-to-bruges">
+<h1>Welcome to <code class="docutils literal notranslate"><span class="pre">bruges</span></code><a class="headerlink" href="#welcome-to-bruges" title="Permalink to this headline">#</a></h1>
+<p><strong>This page gives a quick look at some of the things <code class="docutils literal notranslate"><span class="pre">bruges</span></code> can do.</strong></p>
 <p>This library does all sorts of things so it’s hard to show you a single workflow and say, “here’s how to use <code class="docutils literal notranslate"><span class="pre">bruges</span></code>”. But making a simple wedge model will let us show you several features, and maybe it will help you see how to use <code class="docutils literal notranslate"><span class="pre">bruges</span></code> in your own work.</p>
 <p>Seismic wedge models provide seismic interpreters a quantitative way of studying thin-bed stratigraphy at or below seismic resolution. Here’s the workflow:</p>
 <ol class="simple">
@@ -267,8 +267,9 @@
 </div>
 <p>The model <code class="docutils literal notranslate"><span class="pre">m</span></code> is a 2-D NumPy array where each element is an index corresponding to each layer. The purple layer region has <code class="docutils literal notranslate"><span class="pre">0</span></code>, the green layer has <code class="docutils literal notranslate"><span class="pre">1</span></code> and the yellow layer is <code class="docutils literal notranslate"><span class="pre">2</span></code> . <code class="docutils literal notranslate"><span class="pre">top</span></code> and <code class="docutils literal notranslate"><span class="pre">base</span></code>, shown in red, are the depths down to the “top” of wedge layer and “base” of the wedge layer respectively. <code class="docutils literal notranslate"><span class="pre">ref</span></code> stands for “reference trace” and it denotes the position where the wedge has a thickness factor of 1.</p>
 </section>
-<section id="fill-it-with-rock-properties">
-<h2>Fill it with rock properties<a class="headerlink" href="#fill-it-with-rock-properties" title="Permalink to this headline">#</a></h2>
+<section id="make-an-earth">
+<h2>Make an earth<a class="headerlink" href="#make-an-earth" title="Permalink to this headline">#</a></h2>
+<p>The model is filled with integers, but the earth is filled with rock properties. We need to replace those integers with rock properties.</p>
 <p>Let’s define P-wave velocity, S-wave velocity, and rho (density) for our 3 rock types:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -292,7 +293,9 @@
 <p>And plot the acoustic impedance to check it looks reasonable:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">vp</span><span class="o">*</span><span class="n">rho</span><span class="p">,</span> <span class="n">interpolation</span><span class="o">=</span><span class="s1">'none'</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">impedance</span> <span class="o">=</span> <span class="n">vp</span> <span class="o">*</span> <span class="n">rho</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">impedance</span><span class="p">,</span> <span class="n">interpolation</span><span class="o">=</span><span class="s1">'none'</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">colorbar</span><span class="p">()</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
@@ -302,54 +305,11 @@
 <img alt="../_images/Quick_start_new_14_0.png" src="../_images/Quick_start_new_14_0.png"/>
 </div>
 </div>
-<p>Or calculate the elastic impedance for a given angle <code class="docutils literal notranslate"><span class="pre">theta1</span></code>, say 10 degrees:</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ei_10</span> <span class="o">=</span> <span class="n">bg</span><span class="o">.</span><span class="n">rockphysics</span><span class="o">.</span><span class="n">elastic_impedance</span><span class="p">(</span><span class="n">vp</span><span class="p">,</span> <span class="n">vs</span><span class="p">,</span> <span class="n">rho</span><span class="p">,</span> <span class="n">theta1</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
-
-<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">ei_10</span><span class="p">,</span> <span class="n">interpolation</span><span class="o">=</span><span class="s1">'none'</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">colorbar</span><span class="p">()</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<img alt="../_images/Quick_start_new_16_0.png" src="../_images/Quick_start_new_16_0.png"/>
-</div>
-</div>
-<p>We can even compute the EI for a whole bunch of angles at once, like <code class="docutils literal notranslate"><span class="pre">np.arange(0,</span> <span class="pre">31)</span></code> (31 angles, from 0 to 30 degrees). The result is a 3D reflection coefficient volume:</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ei</span> <span class="o">=</span> <span class="n">bg</span><span class="o">.</span><span class="n">rockphysics</span><span class="o">.</span><span class="n">elastic_impedance</span><span class="p">(</span><span class="n">vp</span><span class="p">,</span> <span class="n">vs</span><span class="p">,</span> <span class="n">rho</span><span class="p">,</span> <span class="n">theta1</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">30</span><span class="p">))</span>
-
-<span class="n">ei</span><span class="o">.</span><span class="n">shape</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(30, 100, 100)
-</pre></div>
-</div>
-</div>
-</div>
-<p>We can plot the wedge at any angle:</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">ei</span><span class="p">[</span><span class="mi">25</span><span class="p">],</span> <span class="n">interpolation</span><span class="o">=</span><span class="s1">'none'</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">colorbar</span><span class="p">()</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<img alt="../_images/Quick_start_new_20_0.png" src="../_images/Quick_start_new_20_0.png"/>
-</div>
-</div>
 </section>
-<section id="calculate-acoustic-reflectivity">
-<h2>Calculate acoustic reflectivity<a class="headerlink" href="#calculate-acoustic-reflectivity" title="Permalink to this headline">#</a></h2>
-<p>We can create a section of normal incidence reflection coefficient. This will be what we convolve with a wavelet.</p>
-<p>Bruges can calculate the acoustic reflectivity:</p>
+<section id="acoustic-reflectivity">
+<h2>Acoustic reflectivity<a class="headerlink" href="#acoustic-reflectivity" title="Permalink to this headline">#</a></h2>
+<p>We don’t actually need impedance, we need reflectivity. We can use <code class="docutils literal notranslate"><span class="pre">bruges</span></code> to create a section of normal incidence reflection coefficient; this will be what we convolve with a wavelet.</p>
+<p>Here’s how to get the acoustic reflectivity:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">rc</span> <span class="o">=</span> <span class="n">bg</span><span class="o">.</span><span class="n">reflection</span><span class="o">.</span><span class="n">acoustic_reflectivity</span><span class="p">(</span><span class="n">vp</span><span class="p">,</span> <span class="n">rho</span><span class="p">)</span>
@@ -361,7 +321,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/Quick_start_new_23_0.png" src="../_images/Quick_start_new_23_0.png"/>
+<img alt="../_images/Quick_start_new_17_0.png" src="../_images/Quick_start_new_17_0.png"/>
 </div>
 </div>
 <p>The reflections coeffients are zero almost everywhere, except at the layer boundaries. The reflection coefficient between layer 1 and layer 2 is a negative, and between layer 2 and layer 3 is a positive number. This will determine the scale and polarity of the seismic amplitudes.</p>
@@ -380,7 +340,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/Quick_start_new_26_0.png" src="../_images/Quick_start_new_26_0.png"/>
+<img alt="../_images/Quick_start_new_20_0.png" src="../_images/Quick_start_new_20_0.png"/>
 </div>
 </div>
 <p>As with the elastic impedance calculation, we can create a range of angles at once:</p>
@@ -414,12 +374,12 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/Quick_start_new_30_0.png" src="../_images/Quick_start_new_30_0.png"/>
+<img alt="../_images/Quick_start_new_24_0.png" src="../_images/Quick_start_new_24_0.png"/>
 </div>
 </div>
 </section>
-<section id="create-a-wavelet">
-<h2>Create a wavelet<a class="headerlink" href="#create-a-wavelet" title="Permalink to this headline">#</a></h2>
+<section id="a-1d-wavelet">
+<h2>A 1D wavelet<a class="headerlink" href="#a-1d-wavelet" title="Permalink to this headline">#</a></h2>
 <p>Let’s create a Ricker wavelet to serve as our seismic pulse. We specify it has a length of 0.256 s, a sample interval of 0.002 s, and corner frequencies of 8, 12, 20, and 40 Hz:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -430,12 +390,15 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&lt;matplotlib.lines.Line2D at 0x7fd810f14130&gt;]
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&lt;matplotlib.lines.Line2D at 0x7f00f8853580&gt;]
 </pre></div>
 </div>
-<img alt="../_images/Quick_start_new_32_1.png" src="../_images/Quick_start_new_32_1.png"/>
+<img alt="../_images/Quick_start_new_26_1.png" src="../_images/Quick_start_new_26_1.png"/>
 </div>
 </div>
+</section>
+<section id="a-2d-wavelet-bank">
+<h2>A 2D wavelet bank<a class="headerlink" href="#a-2d-wavelet-bank" title="Permalink to this headline">#</a></h2>
 <p>There are several wavelet functions; they can all take a sequence of frequencies and produce all of them at once as a filter bank:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -451,12 +414,12 @@
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(0, 0.5, 'frequency [Hz]')
 </pre></div>
 </div>
-<img alt="../_images/Quick_start_new_34_1.png" src="../_images/Quick_start_new_34_1.png"/>
+<img alt="../_images/Quick_start_new_29_1.png" src="../_images/Quick_start_new_29_1.png"/>
 </div>
 </div>
 </section>
-<section id="convolve-the-wavelet-with-the-reflectivity">
-<h2>Convolve the wavelet with the reflectivity<a class="headerlink" href="#convolve-the-wavelet-with-the-reflectivity" title="Permalink to this headline">#</a></h2>
+<section id="a-1d-convolution">
+<h2>A 1D convolution<a class="headerlink" href="#a-1d-convolution" title="Permalink to this headline">#</a></h2>
 <p>We can use <code class="docutils literal notranslate"><span class="pre">bruges</span></code> to perform a convolution.</p>
 <p>Remember our RC series is 3D. Let’s keep it simple for now and look at a single waveform from the reference location <code class="docutils literal notranslate"><span class="pre">ref</span></code> in our model. The synthetic seismic trace is band-limited filtering of the reflectivity spikes. When these spikes get closer together the waveforms will “tune” with one another and won’t necessarily line up with the reflectivity series.</p>
 <div class="cell docutils container">
@@ -472,14 +435,17 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/Quick_start_new_37_0.png" src="../_images/Quick_start_new_37_0.png"/>
+<img alt="../_images/Quick_start_new_32_0.png" src="../_images/Quick_start_new_32_0.png"/>
 </div>
 </div>
 <p>In the 1D case, it would have been easy enough to use <code class="docutils literal notranslate"><span class="pre">np.convolve</span></code> to do this. The equivalent code is:</p>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>syn = np.convolve(rc_ref, w, mode='same')
 </pre></div>
 </div>
-<p>But when the reflectivity is two-dimensional, you need to use <code class="docutils literal notranslate"><span class="pre">np.apply_along_axis</span></code> or some other trick to essentially loop over the traces. But don’t worry! The <code class="docutils literal notranslate"><span class="pre">bruges</span></code> function will compute the convolution for you over all of the dimensions at once:</p>
+</section>
+<section id="d-convolution">
+<h2>2D convolution<a class="headerlink" href="#d-convolution" title="Permalink to this headline">#</a></h2>
+<p>But when the reflectivity is two-dimensional (or more!), you need to use <code class="docutils literal notranslate"><span class="pre">np.apply_along_axis</span></code> or some other trick to essentially loop over the traces. But don’t worry! The <code class="docutils literal notranslate"><span class="pre">bruges</span></code> function will compute the convolution for you over all of the dimensions at once:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">syn</span> <span class="o">=</span> <span class="n">bg</span><span class="o">.</span><span class="n">filters</span><span class="o">.</span><span class="n">convolve</span><span class="p">(</span><span class="n">rc</span><span class="p">,</span> <span class="n">w</span><span class="p">)</span>
@@ -512,7 +478,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/Quick_start_new_41_0.png" src="../_images/Quick_start_new_41_0.png"/>
+<img alt="../_images/Quick_start_new_36_0.png" src="../_images/Quick_start_new_36_0.png"/>
 </div>
 </div>
 <p>Or we could look at a single ‘angle gather’:</p>
@@ -529,7 +495,7 @@
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(0.5, 0, 'angle')
 </pre></div>
 </div>
-<img alt="../_images/Quick_start_new_43_1.png" src="../_images/Quick_start_new_43_1.png"/>
+<img alt="../_images/Quick_start_new_38_1.png" src="../_images/Quick_start_new_38_1.png"/>
 </div>
 </div>
 </section>
@@ -559,10 +525,10 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.image.AxesImage at 0x7fd81126bb80&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.image.AxesImage at 0x7f00f89fefb0&gt;
 </pre></div>
 </div>
-<img alt="../_images/Quick_start_new_47_1.png" src="../_images/Quick_start_new_47_1.png"/>
+<img alt="../_images/Quick_start_new_42_1.png" src="../_images/Quick_start_new_42_1.png"/>
 </div>
 </div>
 <p>But we could also look at how the amplitude varies in the stratigraphic middle (timeslice <code class="docutils literal notranslate"><span class="pre">50</span></code>) of the thickest part of the wedge (trace <code class="docutils literal notranslate"><span class="pre">ref</span></code>), when we vary frequency and offset:</p>
@@ -578,7 +544,7 @@
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(0, 0.5, 'frequency')
 </pre></div>
 </div>
-<img alt="../_images/Quick_start_new_49_1.png" src="../_images/Quick_start_new_49_1.png"/>
+<img alt="../_images/Quick_start_new_44_1.png" src="../_images/Quick_start_new_44_1.png"/>
 </div>
 </div>
 <p>Not surprisingly, we only see amplitudes here at low frequencies (it’s the middle of the wedge). Interestingly, we also need far offsets.</p>
@@ -631,13 +597,15 @@
         <div class="toc-tree-container">
           <div class="toc-tree">
             <ul>
-<li><a class="reference internal" href="#">Quick start</a><ul>
+<li><a class="reference internal" href="#">Welcome to <code class="docutils literal notranslate"><span class="pre">bruges</span></code></a><ul>
 <li><a class="reference internal" href="#make-a-wedge">Make a wedge</a></li>
-<li><a class="reference internal" href="#fill-it-with-rock-properties">Fill it with rock properties</a></li>
-<li><a class="reference internal" href="#calculate-acoustic-reflectivity">Calculate acoustic reflectivity</a></li>
+<li><a class="reference internal" href="#make-an-earth">Make an earth</a></li>
+<li><a class="reference internal" href="#acoustic-reflectivity">Acoustic reflectivity</a></li>
 <li><a class="reference internal" href="#offset-reflectivity">Offset reflectivity</a></li>
-<li><a class="reference internal" href="#create-a-wavelet">Create a wavelet</a></li>
-<li><a class="reference internal" href="#convolve-the-wavelet-with-the-reflectivity">Convolve the wavelet with the reflectivity</a></li>
+<li><a class="reference internal" href="#a-1d-wavelet">A 1D wavelet</a></li>
+<li><a class="reference internal" href="#a-2d-wavelet-bank">A 2D wavelet bank</a></li>
+<li><a class="reference internal" href="#a-1d-convolution">A 1D convolution</a></li>
+<li><a class="reference internal" href="#d-convolution">2D convolution</a></li>
 <li><a class="reference internal" href="#bend-your-mind">Bend your mind</a></li>
 </ul>
 </li>
