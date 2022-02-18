@@ -155,9 +155,10 @@
   <input type="hidden" name="area" value="default">
 </form>
 <div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
-  <p class="caption" role="heading"><span class="caption-text">Getting Started</span></p>
+  <p class="caption" role="heading"><span class="caption-text">User guide</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../userguide/Quick_start_wedge.html">Welcome to <code class="docutils literal notranslate"><span class="pre">bruges</span></code></a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">API reference</span></p>
 <ul>
@@ -256,9 +257,9 @@
     <span class="n">orders</span> <span class="o">=</span> <span class="p">{</span><span class="s1">'nearest'</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">'linear'</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">'quadratic'</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s1">'cubic'</span><span class="p">:</span> <span class="mi">3</span><span class="p">}</span>
     <span class="n">order</span> <span class="o">=</span> <span class="n">orders</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">kind</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
 
-    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">strat</span><span class="p">,</span> <span class="nb">int</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">order</span> <span class="o">==</span> <span class="mi">0</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">issubdtype</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">strat</span><span class="p">),</span> <span class="nb">int</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">order</span> <span class="o">==</span> <span class="mi">0</span><span class="p">):</span>
         <span class="n">out</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">repeat</span><span class="p">([</span><span class="n">strat</span><span class="p">],</span> <span class="n">thickness</span><span class="p">)</span>
-    <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">strat</span><span class="p">,</span> <span class="nb">float</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">order</span> <span class="o">==</span> <span class="mi">0</span><span class="p">):</span>
+    <span class="k">elif</span> <span class="n">np</span><span class="o">.</span><span class="n">issubdtype</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">strat</span><span class="p">),</span> <span class="nb">float</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">order</span> <span class="o">==</span> <span class="mi">0</span><span class="p">):</span>
         <span class="n">out</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">repeat</span><span class="p">([</span><span class="n">strat</span><span class="p">],</span> <span class="n">thickness</span><span class="p">)</span>
     <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">strat</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">order</span> <span class="o">==</span> <span class="mi">0</span><span class="p">):</span>
         <span class="n">out</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">repeat</span><span class="p">(</span><span class="n">strat</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="n">thickness</span><span class="o">/</span><span class="nb">len</span><span class="p">(</span><span class="n">strat</span><span class="p">))))</span>

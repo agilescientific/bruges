@@ -156,9 +156,10 @@
   <input type="hidden" name="area" value="default">
 </form>
 <div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
-  <p class="caption" role="heading"><span class="caption-text">Getting Started</span></p>
+  <p class="caption" role="heading"><span class="caption-text">User guide</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../userguide/Quick_start_wedge.html">Welcome to <code class="docutils literal notranslate"><span class="pre">bruges</span></code></a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">API reference</span></p>
 <ul class="current">
@@ -231,7 +232,7 @@
 <span id="bruges-util-util-module"></span><h2>bruges.util.util module<a class="headerlink" href="#module-bruges.util.util" title="Permalink to this headline">#</a></h2>
 <dl class="py function">
 <dt class="sig sig-object py" id="bruges.util.util.apply_along_axis">
-<span class="sig-prename descclassname"><span class="pre">bruges.util.util.</span></span><span class="sig-name descname"><span class="pre">apply_along_axis</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">func_1d</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">arr</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">kernel</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/bruges/util/util.html#apply_along_axis"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bruges.util.util.apply_along_axis" title="Permalink to this definition">#</a></dt>
+<span class="sig-prename descclassname"><span class="pre">bruges.util.util.</span></span><span class="sig-name descname"><span class="pre">apply_along_axis</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">func_1d</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">arr</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/bruges/util/util.html#apply_along_axis"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bruges.util.util.apply_along_axis" title="Permalink to this definition">#</a></dt>
 <dd><p>Apply 1D function across 2D slice as efficiently as possible.</p>
 <p>Although <cite>np.apply_along_axis</cite> seems to do well enough, map usually
 seems to end up beig a bit faster.</p>

@@ -156,9 +156,10 @@
   <input type="hidden" name="area" value="default">
 </form>
 <div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
-  <p class="caption" role="heading"><span class="caption-text">Getting Started</span></p>
+  <p class="caption" role="heading"><span class="caption-text">User guide</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="userguide/Quick_start_wedge.html">Welcome to <code class="docutils literal notranslate"><span class="pre">bruges</span></code></a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">API reference</span></p>
 <ul>
@@ -221,24 +222,26 @@
         <article role="main">
           <section class="tex2jax_ignore mathjax_ignore" id="changelog">
 <h1>Changelog<a class="headerlink" href="#changelog" title="Permalink to this headline">#</a></h1>
-<section id="coming-february-2022">
-<h2>0.5.2 — coming February 2022<a class="headerlink" href="#coming-february-2022" title="Permalink to this headline">#</a></h2>
+<section id="february-2022">
+<h2>0.5.2 — 18 February 2022<a class="headerlink" href="#february-2022" title="Permalink to this headline">#</a></h2>
 <ul class="simple">
-<li><p><strong>Breaking change:</strong> Mode is now ‘same’ by default on reflectivity functions. If you were assuming <code class="docutils literal notranslate"><span class="pre">mode='valid'</span></code> you should change your code.</p></li>
+<li><p><strong>Breaking change:</strong> Mode is now <code class="docutils literal notranslate"><span class="pre">'same'</span></code> by default on reflectivity functions. If you were assuming <code class="docutils literal notranslate"><span class="pre">mode='valid'</span></code> you should change your code.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">reflection.reflectivity()</span></code> now works properly on 2D panels of Vp, Vs, and rho.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">reflection.acoustic_reflectivity()</span></code> now optionally accepts <em>only</em> Vp (or impedance) or Rho. You should pass both if you have them, but if you only pass one, reflectivity will be computed from that alone.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">reflection.convolve()</span></code> now works properly on 2D and 3D reflectivity series, and even works with 2D wavelet banks (provided the bank is shorter in time than the model, which it usually will be).</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">reflection.elastic_impedance()</span></code> now works properly on 2D panels of Vp, Vs, and rho.</p></li>
 <li><p>We have started adding better documentation; check it out at <a class="reference external" href="https://code.agilescientific.com/bruges">code.agilescientific.com/bruges</a>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">models.wedge()</span></code> now behaves as expected if you pass a NumPy array of <code class="docutils literal notranslate"><span class="pre">int</span></code> values to <code class="docutils literal notranslate"><span class="pre">strat</span></code>.</p></li>
 </ul>
 </section>
-<section id="february-2022">
-<h2>0.5.1 — 17 February 2022<a class="headerlink" href="#february-2022" title="Permalink to this headline">#</a></h2>
+<section id="id1">
+<h2>0.5.1 — 17 February 2022<a class="headerlink" href="#id1" title="Permalink to this headline">#</a></h2>
 <ul class="simple">
 <li><p>Fixed a critical bug in 0.5.0 which prevented it from importing.</p></li>
 </ul>
 </section>
-<section id="id1">
-<h2>0.5.0 — 16 February 2022<a class="headerlink" href="#id1" title="Permalink to this headline">#</a></h2>
+<section id="id2">
+<h2>0.5.0 — 16 February 2022<a class="headerlink" href="#id2" title="Permalink to this headline">#</a></h2>
 <ul class="simple">
 <li><p>In all wavelets, <code class="docutils literal notranslate"><span class="pre">sym</span></code> is now <code class="docutils literal notranslate"><span class="pre">True</span></code> by default.</p></li>
 <li><p>In all wavelets, <code class="docutils literal notranslate"><span class="pre">return_t</span></code> is now <code class="docutils literal notranslate"><span class="pre">True</span></code> by default. you can still set it to false but…</p></li>
@@ -510,9 +513,9 @@
           <div class="toc-tree">
             <ul>
 <li><a class="reference internal" href="#">Changelog</a><ul>
-<li><a class="reference internal" href="#coming-february-2022">0.5.2 — coming February 2022</a></li>
-<li><a class="reference internal" href="#february-2022">0.5.1 — 17 February 2022</a></li>
-<li><a class="reference internal" href="#id1">0.5.0 — 16 February 2022</a></li>
+<li><a class="reference internal" href="#february-2022">0.5.2 — 18 February 2022</a></li>
+<li><a class="reference internal" href="#id1">0.5.1 — 17 February 2022</a></li>
+<li><a class="reference internal" href="#id2">0.5.0 — 16 February 2022</a></li>
 <li><a class="reference internal" href="#v0-4-5-8-december-2021">v0.4.5 — 8 December 2021</a></li>
 <li><a class="reference internal" href="#v0-4-4-27-september-2021">v0.4.4 — 27 September 2021</a></li>
 <li><a class="reference internal" href="#v0-4-3-30-june-2021">v0.4.3 — 30 June 2021</a></li>

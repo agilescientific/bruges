@@ -155,9 +155,10 @@
   <input type="hidden" name="area" value="default">
 </form>
 <div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
-  <p class="caption" role="heading"><span class="caption-text">Getting Started</span></p>
+  <p class="caption" role="heading"><span class="caption-text">User guide</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../userguide/Quick_start_wedge.html">Welcome to <code class="docutils literal notranslate"><span class="pre">bruges</span></code></a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">API reference</span></p>
 <ul>
@@ -246,11 +247,10 @@
 <span class="sd">    Returns:</span>
 <span class="sd">        ndarray: An array the same dimensions as the input array.</span>
 <span class="sd">    """</span>
-    <span class="n">data</span> <span class="o">=</span> <span class="n">traces</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">traces</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+    <span class="c1"># data = traces.astype(np.float).reshape(-1, traces.shape[-1])</span>
     <span class="n">n_samples</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">duration</span> <span class="o">/</span> <span class="n">dt</span><span class="p">)</span>
     <span class="n">window</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">n_samples</span><span class="p">)</span> <span class="o">/</span> <span class="n">n_samples</span>
-    <span class="n">energy</span> <span class="o">=</span> <span class="n">convolve</span><span class="p">(</span><span class="n">data</span><span class="o">**</span><span class="mi">2</span><span class="p">,</span> <span class="n">window</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">energy</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">traces</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span></div>
+    <span class="k">return</span> <span class="n">convolve</span><span class="p">(</span><span class="n">traces</span><span class="o">**</span><span class="mi">2</span><span class="p">,</span> <span class="n">window</span><span class="p">)</span></div>
   
 </pre></div>
         </article>

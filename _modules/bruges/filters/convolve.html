@@ -155,9 +155,10 @@
   <input type="hidden" name="area" value="default">
 </form>
 <div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
-  <p class="caption" role="heading"><span class="caption-text">Getting Started</span></p>
+  <p class="caption" role="heading"><span class="caption-text">User guide</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../userguide/Quick_start_wedge.html">Welcome to <code class="docutils literal notranslate"><span class="pre">bruges</span></code></a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">API reference</span></p>
 <ul>
@@ -262,11 +263,6 @@
     <span class="n">pos</span> <span class="o">=</span> <span class="n">wavelet</span><span class="o">.</span><span class="n">ndim</span> <span class="o">-</span> <span class="mi">1</span>
 
     <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">moveaxis</span><span class="p">(</span><span class="n">syn</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">outshape</span><span class="p">),</span> <span class="n">pos</span><span class="p">,</span> <span class="n">axis</span><span class="p">)</span></div>
-
-
-<div class="viewcode-block" id="apply_along_axis"><a class="viewcode-back" href="../../../api/bruges.filters.html#bruges.filters.convolve.apply_along_axis">[docs]</a><span class="k">def</span> <span class="nf">apply_along_axis</span><span class="p">(</span><span class="n">func_1d</span><span class="p">,</span> <span class="n">arr</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-    <span class="n">mapobj</span> <span class="o">=</span> <span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">tr</span><span class="p">:</span> <span class="n">func_1d</span><span class="p">(</span><span class="n">tr</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">),</span> <span class="n">arr</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">mapobj</span><span class="p">))</span></div>
 </pre></div>
         </article>
       </div>

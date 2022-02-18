@@ -156,9 +156,10 @@
   <input type="hidden" name="area" value="default">
 </form>
 <div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
-  <p class="caption" role="heading"><span class="caption-text">Getting Started</span></p>
+  <p class="caption" role="heading"><span class="caption-text">User guide</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../userguide/Quick_start_wedge.html">Welcome to <code class="docutils literal notranslate"><span class="pre">bruges</span></code></a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">API reference</span></p>
 <ul class="current">
@@ -228,13 +229,19 @@
 <span id="bruges-reflection-reflection-module"></span><h2>bruges.reflection.reflection module<a class="headerlink" href="#module-bruges.reflection.reflection" title="Permalink to this headline">#</a></h2>
 <dl class="py function">
 <dt class="sig sig-object py" id="bruges.reflection.reflection.acoustic_reflectivity">
-<span class="sig-prename descclassname"><span class="pre">bruges.reflection.reflection.</span></span><span class="sig-name descname"><span class="pre">acoustic_reflectivity</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">vp</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rho</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">axis</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mode</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'same'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/bruges/reflection/reflection.html#acoustic_reflectivity"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bruges.reflection.reflection.acoustic_reflectivity" title="Permalink to this definition">#</a></dt>
-<dd><p>The acoustic reflectivity, given Vp and RHOB logs.</p>
+<span class="sig-prename descclassname"><span class="pre">bruges.reflection.reflection.</span></span><span class="sig-name descname"><span class="pre">acoustic_reflectivity</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">vp</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rho</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">axis</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mode</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'same'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/bruges/reflection/reflection.html#acoustic_reflectivity"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bruges.reflection.reflection.acoustic_reflectivity" title="Permalink to this definition">#</a></dt>
+<dd><p>The acoustic reflectivity, given Vp and RHOB logs. You can also pass
+either <cite>vp</cite> or <cite>rho</cite> and get velocity or density reflectivity; if you only
+have an impedance log or dataset, pass it as <cite>vp</cite>.</p>
+<p>For offset reflectivity, use <cite>reflectivity()</cite>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>vp</strong> (<em>ndarray</em>) – The P-wave velocity.</p></li>
-<li><p><strong>rho</strong> (<em>ndarray</em>) – The bulk density.</p></li>
+<li><p><strong>vp</strong> (<em>ndarray</em>) – The P-wave velocity. At least one of Vp and Rho is required.</p></li>
+<li><p><strong>rho</strong> (<em>ndarray</em>) – The bulk density. At least one of Vp and Rho is required.
+If you only have Impedance, pass it in as Vp and leave this as None.
+It will use a value of 1 to compute impedance and you’ll get velocity
+reflectivity.</p></li>
 <li><p><strong>axis</strong> (<em>int</em>) – The dimension along which to compute the reflectivity.</p></li>
 <li><p><strong>mode</strong> (<em>str</em>) – ‘same’ means the output will be the same shape. ‘valid’
 means that only strictly valid reflectivities are computed so
@@ -535,6 +542,7 @@ phase. A value of 1.1 would be +1.1         imes pi rad.</p>
 <dt class="sig sig-object py" id="bruges.reflection.reflection.reflectivity">
 <span class="sig-prename descclassname"><span class="pre">bruges.reflection.reflection.</span></span><span class="sig-name descname"><span class="pre">reflectivity</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">vp</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">vs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rho</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">theta</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">method</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'zoeppritz_rpp'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">axis</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mode</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'same'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/bruges/reflection/reflection.html#reflectivity"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bruges.reflection.reflection.reflectivity" title="Permalink to this definition">#</a></dt>
 <dd><p>Offset reflectivity, given Vp, Vs, rho, and offset.</p>
+<p>For acoustic reflectivity, use <cite>acoustic_reflectivity()</cite>.</p>
 <p>Computes ‘upper’ and ‘lower’ intervals from the three provided arrays,
 then passes the result to the specified method to compute reflection
 coefficients.</p>
