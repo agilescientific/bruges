@@ -3,6 +3,10 @@
 ## 0.5.2 — coming February 2022
 
 - **Breaking change:** Mode is now 'same' by default on reflectivity functions. If you were assuming `mode='valid'` you should change your code.
+- `reflection.reflectivity()` now works properly on 2D panels of Vp, Vs, and rho.
+- `reflection.convolve()` now works properly on 2D and 3D reflectivity series, and even works with 2D wavelet banks (provided the bank is shorter in time than the model, which it usually will be).
+- `reflection.elastic_impedance()` now works properly on 2D panels of Vp, Vs, and rho.
+- We have started adding better documentation; check it out at [code.agilescientific.com/bruges](https://code.agilescientific.com/bruges).
 
 ## 0.5.1 — 17 February 2022
 
