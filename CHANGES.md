@@ -2,8 +2,8 @@
 
 ## 0.5.3 — in progress, coming soon
 
-- The Ormsby, Ormsby FFT and Klauder wavelets now behave as expected when 2D arrays (lists of frequency parameters, essentially) are passed. A filter bank (array of wavelets) is returned.
-- The Sinc, Cosine and Gabor wavelets now behave as expected when `sym` is passed.
+- Fixed [issue #92](https://github.com/agile-geoscience/bruges/issues/92): the Ormsby, Ormsby FFT and Klauder wavelets now behave as expected when 2D arrays (lists of frequency parameters, essentially) are passed. A filter bank (array of wavelets) is returned.
+- Fixed [issue #93](https://github.com/agile-geoscience/bruges/issues/93): the Sinc, Cosine and Gabor wavelets now behave as expected when `sym` is passed.
 
 ## 0.5.2 — 18 February 2022
 
