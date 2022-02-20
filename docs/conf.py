@@ -33,8 +33,8 @@ def setup(app):
 # -- Project information -----------------------------------------------------
 
 project = 'bruges'
-copyright = '2022, Agile Scientific'
-author = 'Agile Scientific'
+copyright = '2022, The Bruges Authors'
+author = 'The Bruges Authors'
 
 
 # This is also used if you do content translation via gettext catalogs.
