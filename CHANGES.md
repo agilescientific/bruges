@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.5.3 — in progress, coming soon
+
+- The Ormsby, Ormsby FFT and Klauder wavelets now behave as expected when 2D arrays (lists of frequency parameters, essentially) are passed. A filter bank (array of wavelets) is returned.
+- The Sinc, Cosine and Gabor wavelets now behave as expected when `sym` is passed.
+
 ## 0.5.2 — 18 February 2022
 
 - **Breaking change:** Mode is now `'same'` by default on reflectivity functions. If you were assuming `mode='valid'` you should change your code.
