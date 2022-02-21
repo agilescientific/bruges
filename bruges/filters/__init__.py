@@ -1,5 +1,4 @@
 from .convolve import convolve
-from .convolve import apply_along_axis
 
 from .wavelets import sinc
 from .wavelets import cosine

@@ -86,13 +86,14 @@ def _generic(func, duration, dt, f, t=None, return_t=True, taper='blackman', sym
         if (duration is not None) or (dt is not None):
             m = "`duration` and `dt` are ignored when `t` is passed."
             warnings.warn(m, UserWarning, stacklevel=2)
+        t = np.array(t)
 
     t[t == 0] = 1e-12  # Avoid division by zero.
     f[f == 0] = 1e-12  # Avoid division by zero.
 
     w = np.squeeze(func(t, f))
 
-    if taper:
+    if taper is not None:
         tapers = {
             'bartlett': np.bartlett,
             'blackman': np.blackman,

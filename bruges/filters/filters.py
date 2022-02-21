@@ -9,7 +9,7 @@ import scipy.ndimage
 import scipy.signal
 
 from bruges.bruges import BrugesError
-from bruges.filters import apply_along_axis
+from bruges.util import apply_along_axis
 from bruges.util import nearest
 from bruges.util import rms as rms_
 
