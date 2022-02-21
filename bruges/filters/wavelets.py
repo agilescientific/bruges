@@ -86,13 +86,14 @@ def _generic(func, duration, dt, f, t=None, return_t=True, taper='blackman', sym
         if (duration is not None) or (dt is not None):
             m = "`duration` and `dt` are ignored when `t` is passed."
             warnings.warn(m, UserWarning, stacklevel=2)
+        t = np.array(t)
 
     t[t == 0] = 1e-12  # Avoid division by zero.
     f[f == 0] = 1e-12  # Avoid division by zero.
 
     w = np.squeeze(func(t, f))
 
-    if taper:
+    if taper is not None:
         tapers = {
             'bartlett': np.bartlett,
             'blackman': np.blackman,
@@ -147,7 +148,7 @@ def sinc(duration, dt, f, t=None, return_t=True, taper='blackman', sym=True):
     def func(t_, f_):
         return np.sin(2*np.pi*f_*t_) / (2*np.pi*f_*t_)
 
-    return _generic(func, duration, dt, f, t, return_t, taper)
+    return _generic(func, duration, dt, f, t, return_t, taper, sym=sym)
 
 
 def cosine(duration, dt, f, t=None, return_t=True, taper='gaussian', sigma=None, sym=True):
@@ -198,7 +199,7 @@ def cosine(duration, dt, f, t=None, return_t=True, taper='gaussian', sigma=None,
     def taper(length):
         return scipy.signal.gaussian(length, sigma/dt)
 
-    return _generic(func, duration, dt, f, t, return_t, taper)
+    return _generic(func, duration, dt, f, t, return_t, taper, sym=sym)
 
 
 def gabor(duration, dt, f, t=None, return_t=True, sym=True):
@@ -235,7 +236,7 @@ def gabor(duration, dt, f, t=None, return_t=True, sym=True):
     def func(t_, f_):
         return np.exp(-2 * f_**2 * t_**2) * np.cos(2 * np.pi * f_ * t_)
 
-    return _generic(func, duration, dt, f, t, return_t)
+    return _generic(func, duration, dt, f, t, return_t, sym=sym)
 
 
 def ricker(duration, dt, f, t=None, return_t=True, sym=True):
@@ -358,7 +359,7 @@ def klauder(duration, dt, f,
 
     t0, t1 = -duration/2, duration/2
 
-    f = np.asanyarray(f).reshape(-1, 1)
+    f = np.asanyarray(f).reshape(2, -1)
     f1, f2 = f
 
     c = [scipy.signal.chirp(t, f1_+(f2_-f1_)/2., t1, f2_, **kwargs)
@@ -389,6 +390,23 @@ def klauder(duration, dt, f,
 
 
 sweep = klauder
+
+
+def _ormsby(t, f1, f2, f3, f4):
+    """
+    Compute a single Ormsby wavelet. Private function.
+    """
+    def numerator(f, t):
+        """The numerator in the Ormsby equation."""
+        return (np.sinc(f * t)**2) * ((np.pi * f) ** 2)
+
+    pf43 = (np.pi * f4) - (np.pi * f3)
+    pf21 = (np.pi * f2) - (np.pi * f1)
+
+    w = ((numerator(f4, t)/pf43) - (numerator(f3, t)/pf43) -
+         (numerator(f2, t)/pf21) + (numerator(f1, t)/pf21))
+
+    return np.squeeze(w) / np.amax(w)
 
 
 def ormsby(duration, dt, f, t=None, return_t=True, sym=True):
@@ -428,18 +446,10 @@ def ormsby(duration, dt, f, t=None, return_t=True, sym=True):
         m = "return_t is deprecated. In future releases, return_t will always be True."
         warnings.warn(m, DeprecationWarning, stacklevel=2)
 
-    f = np.asanyarray(f).reshape(-1, 1)
-
     try:
-        f1, f2, f3, f4 = f
-    except ValueError:
+        f = np.atleast_2d(f).reshape(-1, 4)
+    except ValueError as e:
         raise ValueError("The last dimension of the frequency array must be of size 4.")
-
-    def numerator(f, t):
-        return (np.sinc(f * t)**2) * ((np.pi * f) ** 2)
-
-    pf43 = (np.pi * f4) - (np.pi * f3)
-    pf21 = (np.pi * f2) - (np.pi * f1)
 
     if t is None:
         t = _get_time(duration, dt, sym=sym)
@@ -448,16 +458,32 @@ def ormsby(duration, dt, f, t=None, return_t=True, sym=True):
             m = "`duration` and `dt` are ignored when `t` is passed."
             warnings.warn(m, UserWarning, stacklevel=2)
 
-    w = ((numerator(f4, t)/pf43) - (numerator(f3, t)/pf43) -
-         (numerator(f2, t)/pf21) + (numerator(f1, t)/pf21))
-
-    w = np.squeeze(w) / np.amax(w)
+    w = np.squeeze([_ormsby(t, *fs) for fs in f])
 
     if return_t:
         OrmsbyWavelet = namedtuple('OrmsbyWavelet', ['amplitude', 'time'])
         return OrmsbyWavelet(w, t)
     else:
         return w
+
+
+def _ormsby_fft(duration, dt, f, P, sym):
+    fs = 1 / dt
+    fN = fs // 2
+    n = int(duration / dt)
+    a = map(lambda p: 10**(p/20), P)
+
+    # Linear interpolation of points.
+    x  = np.linspace(0, int(fN), int(10*n))
+    xp = [  0.] + list(f) +  [fN]
+    fp = [0., 0.] + list(a) + [0., 0.]
+    W = np.interp(x, xp, fp)
+
+    # Compute inverse FFT.
+    w_ = np.fft.fftshift(np.fft.irfft(W))
+    L = int(w_.size // 2)
+    normalize = lambda d: d / np.max(abs(d))
+    return normalize(w_[L-n//2:L+n//2+sym])
 
 
 def ormsby_fft(duration, dt, f, P=(0, 0), return_t=True, sym=True):
@@ -501,22 +527,12 @@ def ormsby_fft(duration, dt, f, P=(0, 0), return_t=True, sym=True):
         m = "return_t is deprecated. In future releases, return_t will always be True."
         warnings.warn(m, DeprecationWarning, stacklevel=2)
 
-    fs = 1 / dt
-    fN = fs // 2
-    n = int(duration / dt)
-    a = map(lambda p: 10**(p/20), P)
+    try:
+        f = np.atleast_2d(f).reshape(-1, 4)
+    except ValueError as e:
+        raise ValueError("The last dimension of the frequency array must be of size 4.")
 
-    # Linear interpolation of points.
-    x  = np.linspace(0, int(fN), int(10*n))
-    xp = [  0.] + list(f) +  [fN]
-    fp = [0., 0.] + list(a) + [0., 0.]
-    W = np.interp(x, xp, fp)
-
-    # Compute inverse FFT.
-    w_ = np.fft.fftshift(np.fft.irfft(W))
-    L = int(w_.size // 2)
-    normalize = lambda d: d / np.max(abs(d))
-    w = normalize(w_[L-n//2:L+n//2+sym])
+    w = np.squeeze([_ormsby_fft(duration, dt, fs, P, sym) for fs in f])
     t = _get_time(duration, dt, sym=sym)
 
     if return_t:

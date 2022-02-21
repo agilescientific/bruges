@@ -6,6 +6,24 @@ import pathlib
 import shutil
 
 
+def hide_cells(notebook, tags=None):
+    """
+    Finds the tags in each cell and removes it.
+    Returns dict without 'hide' tagged cells.
+    """
+    if tags is None:
+        tags = ['hide']
+
+    clean = []
+    for cell in notebook['cells']:
+        if not set(tags).intersection(cell['metadata'].get('tags', list())):
+            clean.append(cell)
+
+    notebook['cells'] = clean
+
+    return notebook
+
+
 def change_kernel(notebook):
     """
     Vanillafy the kernelspec.
@@ -33,11 +51,12 @@ def main(path):
         with open(fname, encoding='utf-8') as f:
             notebook = json.loads(f.read())
 
-        new_nb = change_kernel(notebook)
+        notebook = change_kernel(notebook)
+        notebook = hide_cells(notebook)
         filepart = pathlib.Path(fname).name
 
         with open(outpath / filepart, 'w') as f:
-            _ = f.write(json.dumps(new_nb))
+            _ = f.write(json.dumps(notebook))
 
     return
 

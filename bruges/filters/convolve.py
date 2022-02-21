@@ -8,36 +8,43 @@ import numpy as np
 from bruges.util import apply_along_axis
 
 
-def convolve(reflectivity, wavelet, axis=-1):
+def convolve(arr, wavelet, axis=-1, verbose=False):
     """
-    Convolve n-dimensional reflectivity with a 1D wavelet or 2D wavelet bank.
+    Convolve n-dimensional arr with a 1D wavelet or 2D wavelet bank.
     
     Args:
-        reflectivity (ndarray): The reflectivity trace, or 2D section, or volume.
+        arr (ndarray): The trace, or 2D section, or volume.
         wavelet (ndarray): The wavelet, must be 1D function or a 2D wavelet 'bank'.
             If a wavelet bank, time should be on the last axis.
-        axis (int): The time axis of the reflectivity data. In other words,
-            the axis corresponding to a single 'trace'. If you index into this
-            axis, you will get a single 'trace'.
+        axis (int): The time axis of the arr data. In other words, the axis
+            corresponding to a single 'trace'. If you index into this axis,
+            you will get a single 'trace'.
+        verbose (bool): If True, print out the shapes of the inputs and output.
 
     Returns:
-        ndarray: Discrete, linear convolution of `reflectivity` and `wavelet`.
+        ndarray: Discrete, linear convolution of `arr` and `wavelet`.
     """
-    if wavelet.shape[-1] > reflectivity.shape[axis]:
-        raise TypeError("Wavelet must shorter in time than the reflectivity.")
+    if wavelet.shape[-1] > arr.shape[axis]:
+        raise TypeError("Wavelet must shorter in time than the arr.")
 
-    reflectivity_ = np.moveaxis(np.asanyarray(reflectivity), axis, 0)
+    arr_ = np.moveaxis(np.asanyarray(arr), axis, -1)
 
     # Compute the target shape of the final synthetic.
-    outshape = wavelet.shape[:-1] + reflectivity_.shape
+    outshape = wavelet.shape[:-1] + arr_.shape
 
-    # Force wavelet and reflectivity to both be 2D.
+    # Force wavelet and arr to both be 2D.
     bank = np.atleast_2d(wavelet)   
-    reflectivity_2d = reflectivity_.reshape((-1, reflectivity_.shape[-1]))
+    arr_2d = arr_.reshape((-1, arr_.shape[-1]))
 
     # Compute synthetic.
-    syn = np.array([apply_along_axis(np.convolve, reflectivity_2d, w, mode='same') for w in bank])
+    syn = np.array([apply_along_axis(np.convolve, arr_2d, w, mode='same') for w in bank])
 
-    pos = wavelet.ndim - 1
+    pos = axis + wavelet.ndim - 1
 
-    return np.moveaxis(syn.reshape(outshape), pos, axis)
+    out = np.moveaxis(syn.reshape(outshape), -1, pos)
+
+    # Show the shapes of the data we're handling.
+    if verbose:
+        print(arr.shape, ' * ', wavelet.shape, ' -> ', out.shape)
+
+    return out

@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.5.3 — in progress, coming soon
+
+- Fixed [issue #92](https://github.com/agile-geoscience/bruges/issues/92): the Ormsby, Ormsby FFT and Klauder wavelets now behave as expected when 2D arrays (lists of frequency parameters, essentially) are passed. A filter bank (array of wavelets) is returned.
+- Fixed [issue #93](https://github.com/agile-geoscience/bruges/issues/93): the Sinc, Cosine and Gabor wavelets now behave as expected when `sym` is passed.
+- `reflection.convolve()` now works properly when the axis is specified, and a verbose option was added to show the input and output array shapes (helps with troubleshooting).
+
 ## 0.5.2 — 18 February 2022
 
 - **Breaking change:** Mode is now `'same'` by default on reflectivity functions. If you were assuming `mode='valid'` you should change your code.
