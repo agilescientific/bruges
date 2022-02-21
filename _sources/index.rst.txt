@@ -54,7 +54,7 @@ User guide
 
     installation
     userguide/Quick_start_wedge.ipynb
-    userguide/Wedges.ipynb
+    userguide/Wedge_models.ipynb
 
 
 API reference

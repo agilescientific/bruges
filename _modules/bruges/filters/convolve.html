@@ -159,6 +159,7 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../installation.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../userguide/Quick_start_wedge.html">Welcome to <code class="docutils literal notranslate"><span class="pre">bruges</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../userguide/Wedge_models.html">Wedge models</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">API reference</span></p>
 <ul>
@@ -230,39 +231,46 @@
 <span class="kn">from</span> <span class="nn">bruges.util</span> <span class="kn">import</span> <span class="n">apply_along_axis</span>
 
 
-<div class="viewcode-block" id="convolve"><a class="viewcode-back" href="../../../api/bruges.filters.html#bruges.filters.convolve.convolve">[docs]</a><span class="k">def</span> <span class="nf">convolve</span><span class="p">(</span><span class="n">reflectivity</span><span class="p">,</span> <span class="n">wavelet</span><span class="p">,</span> <span class="n">axis</span><span class="o">=-</span><span class="mi">1</span><span class="p">):</span>
+<div class="viewcode-block" id="convolve"><a class="viewcode-back" href="../../../api/bruges.filters.html#bruges.filters.convolve.convolve">[docs]</a><span class="k">def</span> <span class="nf">convolve</span><span class="p">(</span><span class="n">arr</span><span class="p">,</span> <span class="n">wavelet</span><span class="p">,</span> <span class="n">axis</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
     <span class="sd">"""</span>
-<span class="sd">    Convolve n-dimensional reflectivity with a 1D wavelet or 2D wavelet bank.</span>
+<span class="sd">    Convolve n-dimensional arr with a 1D wavelet or 2D wavelet bank.</span>
 <span class="sd">    </span>
 <span class="sd">    Args:</span>
-<span class="sd">        reflectivity (ndarray): The reflectivity trace, or 2D section, or volume.</span>
+<span class="sd">        arr (ndarray): The trace, or 2D section, or volume.</span>
 <span class="sd">        wavelet (ndarray): The wavelet, must be 1D function or a 2D wavelet 'bank'.</span>
 <span class="sd">            If a wavelet bank, time should be on the last axis.</span>
-<span class="sd">        axis (int): The time axis of the reflectivity data. In other words,</span>
-<span class="sd">            the axis corresponding to a single 'trace'. If you index into this</span>
-<span class="sd">            axis, you will get a single 'trace'.</span>
+<span class="sd">        axis (int): The time axis of the arr data. In other words, the axis</span>
+<span class="sd">            corresponding to a single 'trace'. If you index into this axis,</span>
+<span class="sd">            you will get a single 'trace'.</span>
+<span class="sd">        verbose (bool): If True, print out the shapes of the inputs and output.</span>
 
 <span class="sd">    Returns:</span>
-<span class="sd">        ndarray: Discrete, linear convolution of `reflectivity` and `wavelet`.</span>
+<span class="sd">        ndarray: Discrete, linear convolution of `arr` and `wavelet`.</span>
 <span class="sd">    """</span>
-    <span class="k">if</span> <span class="n">wavelet</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">reflectivity</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="n">axis</span><span class="p">]:</span>
-        <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">"Wavelet must shorter in time than the reflectivity."</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">wavelet</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">arr</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="n">axis</span><span class="p">]:</span>
+        <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">"Wavelet must shorter in time than the arr."</span><span class="p">)</span>
 
-    <span class="n">reflectivity_</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">moveaxis</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">asanyarray</span><span class="p">(</span><span class="n">reflectivity</span><span class="p">),</span> <span class="n">axis</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="n">arr_</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">moveaxis</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">asanyarray</span><span class="p">(</span><span class="n">arr</span><span class="p">),</span> <span class="n">axis</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
 
     <span class="c1"># Compute the target shape of the final synthetic.</span>
-    <span class="n">outshape</span> <span class="o">=</span> <span class="n">wavelet</span><span class="o">.</span><span class="n">shape</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">reflectivity_</span><span class="o">.</span><span class="n">shape</span>
+    <span class="n">outshape</span> <span class="o">=</span> <span class="n">wavelet</span><span class="o">.</span><span class="n">shape</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">arr_</span><span class="o">.</span><span class="n">shape</span>
 
-    <span class="c1"># Force wavelet and reflectivity to both be 2D.</span>
+    <span class="c1"># Force wavelet and arr to both be 2D.</span>
     <span class="n">bank</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">atleast_2d</span><span class="p">(</span><span class="n">wavelet</span><span class="p">)</span>   
-    <span class="n">reflectivity_2d</span> <span class="o">=</span> <span class="n">reflectivity_</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">reflectivity_</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]))</span>
+    <span class="n">arr_2d</span> <span class="o">=</span> <span class="n">arr_</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">arr_</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]))</span>
 
     <span class="c1"># Compute synthetic.</span>
-    <span class="n">syn</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">apply_along_axis</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">convolve</span><span class="p">,</span> <span class="n">reflectivity_2d</span><span class="p">,</span> <span class="n">w</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">'same'</span><span class="p">)</span> <span class="k">for</span> <span class="n">w</span> <span class="ow">in</span> <span class="n">bank</span><span class="p">])</span>
+    <span class="n">syn</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">apply_along_axis</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">convolve</span><span class="p">,</span> <span class="n">arr_2d</span><span class="p">,</span> <span class="n">w</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">'same'</span><span class="p">)</span> <span class="k">for</span> <span class="n">w</span> <span class="ow">in</span> <span class="n">bank</span><span class="p">])</span>
 
-    <span class="n">pos</span> <span class="o">=</span> <span class="n">wavelet</span><span class="o">.</span><span class="n">ndim</span> <span class="o">-</span> <span class="mi">1</span>
+    <span class="n">pos</span> <span class="o">=</span> <span class="n">axis</span> <span class="o">+</span> <span class="n">wavelet</span><span class="o">.</span><span class="n">ndim</span> <span class="o">-</span> <span class="mi">1</span>
 
-    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">moveaxis</span><span class="p">(</span><span class="n">syn</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">outshape</span><span class="p">),</span> <span class="n">pos</span><span class="p">,</span> <span class="n">axis</span><span class="p">)</span></div>
+    <span class="n">out</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">moveaxis</span><span class="p">(</span><span class="n">syn</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">outshape</span><span class="p">),</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">pos</span><span class="p">)</span>
+
+    <span class="c1"># Show the shapes of the data we're handling.</span>
+    <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">arr</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="s1">' * '</span><span class="p">,</span> <span class="n">wavelet</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="s1">' -&gt; '</span><span class="p">,</span> <span class="n">out</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">out</span></div>
 </pre></div>
         </article>
       </div>
@@ -275,7 +283,7 @@
         <div class="bottom-of-page">
           <div class="left-details">
             <div class="copyright">
-                Copyright &#169; 2022, Agile Scientific
+                Copyright &#169; 2022, The Bruges Authors
             </div>
             Made with <a href="https://www.sphinx-doc.org/">Sphinx</a> and <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
             

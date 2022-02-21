@@ -3,7 +3,7 @@
   <head><meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width,initial-scale=1"/>
     <meta name="color-scheme" content="light dark"><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
-<link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="next" title="bruges package" href="../api/bruges.html" /><link rel="prev" title="Installation" href="../installation.html" />
+<link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="next" title="Wedge models" href="Wedge_models.html" /><link rel="prev" title="Installation" href="../installation.html" />
 
     <link rel="shortcut icon" href="../_static/favicon.ico"/><meta name="generator" content="sphinx-4.4.0, furo 2022.02.14.1"/>
         <title>Welcome to bruges - bruges documentation</title>
@@ -160,6 +160,7 @@
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
 <li class="toctree-l1 current current-page"><a class="current reference internal" href="#">Welcome to <code class="docutils literal notranslate"><span class="pre">bruges</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="Wedge_models.html">Wedge models</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">API reference</span></p>
 <ul>
@@ -240,7 +241,7 @@
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">bruges</span> <span class="k">as</span> <span class="nn">bg</span>
 
-<span class="n">m</span><span class="p">,</span> <span class="n">top</span><span class="p">,</span> <span class="n">base</span><span class="p">,</span> <span class="n">ref</span> <span class="o">=</span> <span class="n">bg</span><span class="o">.</span><span class="n">models</span><span class="o">.</span><span class="n">wedge</span><span class="p">()</span>
+<span class="n">m</span><span class="p">,</span> <span class="n">top</span><span class="p">,</span> <span class="n">base</span><span class="p">,</span> <span class="n">ref</span> <span class="o">=</span> <span class="n">bg</span><span class="o">.</span><span class="n">models</span><span class="o">.</span><span class="n">wedge</span><span class="p">(</span><span class="n">width</span><span class="o">=</span><span class="mi">120</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -352,7 +353,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(60, 100, 100)
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(60, 100, 120)
 </pre></div>
 </div>
 </div>
@@ -389,7 +390,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&lt;matplotlib.lines.Line2D at 0x7fae4a78b670&gt;]
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&lt;matplotlib.lines.Line2D at 0x7f462f4dd5a0&gt;]
 </pre></div>
 </div>
 <img alt="../_images/Quick_start_wedge_25_1.png" src="../_images/Quick_start_wedge_25_1.png"/>
@@ -444,17 +445,18 @@
 </section>
 <section id="d-convolution">
 <h2>2D convolution<a class="headerlink" href="#d-convolution" title="Permalink to this headline">#</a></h2>
-<p>But when the reflectivity is two-dimensional (or more!), you need to use <code class="docutils literal notranslate"><span class="pre">np.apply_along_axis</span></code> or some other trick to essentially loop over the traces. But don’t worry! The <code class="docutils literal notranslate"><span class="pre">bruges</span></code> function will compute the convolution for you over all of the dimensions at once:</p>
+<p>But when the reflectivity is two-dimensional (or more!), you need to use <code class="docutils literal notranslate"><span class="pre">np.apply_along_axis</span></code> or some other trick to essentially loop over the traces. But don’t worry! The <code class="docutils literal notranslate"><span class="pre">bruges</span></code> function will compute the convolution for you over all of the dimensions at once.</p>
+<p>There’s a small catch, because of how models are organized. For plotting convenience, time is on the first axis of a model slice or profile, not the last axis (as is usual with, say, seismic data — with the result that you typically have to transpose such data for display). So we have to tell the <code class="docutils literal notranslate"><span class="pre">convolve()</span></code> function which is our Z (time) axis:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">syn</span> <span class="o">=</span> <span class="n">bg</span><span class="o">.</span><span class="n">filters</span><span class="o">.</span><span class="n">convolve</span><span class="p">(</span><span class="n">rc</span><span class="p">,</span> <span class="n">w</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">syn</span> <span class="o">=</span> <span class="n">bg</span><span class="o">.</span><span class="n">filters</span><span class="o">.</span><span class="n">convolve</span><span class="p">(</span><span class="n">rc</span><span class="p">,</span> <span class="n">w</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 
 <span class="n">syn</span><span class="o">.</span><span class="n">shape</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(60, 100, 100)
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(60, 100, 120)
 </pre></div>
 </div>
 </div>
@@ -504,18 +506,19 @@
 <p>Watch out: the result of this convolution will be 4-dimensional!</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">syn</span> <span class="o">=</span> <span class="n">bg</span><span class="o">.</span><span class="n">filters</span><span class="o">.</span><span class="n">convolve</span><span class="p">(</span><span class="n">rc</span><span class="p">,</span> <span class="n">w_bank</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">syn</span> <span class="o">=</span> <span class="n">bg</span><span class="o">.</span><span class="n">filters</span><span class="o">.</span><span class="n">convolve</span><span class="p">(</span><span class="n">rc</span><span class="p">,</span> <span class="n">w_bank</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 
 <span class="n">syn</span><span class="o">.</span><span class="n">shape</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(68, 60, 100, 100)
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(68, 60, 100, 120)
 </pre></div>
 </div>
 </div>
 </div>
+<p>Notice that the time axis has moved back to dimension 2 as a result of the wavelet having two dimensions: its frequency dimension is now in dimension 0 of the array.</p>
 <p>So we can look at the synthetic created with a 22 Hz wavelet (the wavelet bank started at 12 Hz, so this is slice 10 in the first dimension), and at 30 degrees of offset (slice 30 in the second dimension):</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -524,10 +527,10 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.image.AxesImage at 0x7fae4aade6b0&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.image.AxesImage at 0x7f462f810940&gt;
 </pre></div>
 </div>
-<img alt="../_images/Quick_start_wedge_41_1.png" src="../_images/Quick_start_wedge_41_1.png"/>
+<img alt="../_images/Quick_start_wedge_42_1.png" src="../_images/Quick_start_wedge_42_1.png"/>
 </div>
 </div>
 <p>But we could also look at how the amplitude varies in the stratigraphic middle (timeslice <code class="docutils literal notranslate"><span class="pre">50</span></code>) of the thickest part of the wedge (trace <code class="docutils literal notranslate"><span class="pre">ref</span></code>), when we vary frequency and offset:</p>
@@ -543,7 +546,7 @@
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(0, 0.5, 'frequency')
 </pre></div>
 </div>
-<img alt="../_images/Quick_start_wedge_43_1.png" src="../_images/Quick_start_wedge_43_1.png"/>
+<img alt="../_images/Quick_start_wedge_44_1.png" src="../_images/Quick_start_wedge_44_1.png"/>
 </div>
 </div>
 <p>Not surprisingly, we only see amplitudes here at low frequencies (it’s the middle of the wedge). Interestingly, we also need far offsets.</p>
@@ -555,12 +558,12 @@
       <footer>
         
         <div class="related-pages">
-          <a class="next-page" href="../api/bruges.html">
+          <a class="next-page" href="Wedge_models.html">
               <div class="page-info">
                 <div class="context">
                   <span>Next</span>
                 </div>
-                <div class="title">bruges package</div>
+                <div class="title">Wedge models</div>
               </div>
               <svg><use href="#svg-arrow-right"></use></svg>
             </a>
@@ -579,7 +582,7 @@
         <div class="bottom-of-page">
           <div class="left-details">
             <div class="copyright">
-                Copyright &#169; 2022, Agile Scientific
+                Copyright &#169; 2022, The Bruges Authors
             </div>
             Made with <a href="https://www.sphinx-doc.org/">Sphinx</a> and <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
             

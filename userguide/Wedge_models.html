@@ -1,0 +1,851 @@
+<!doctype html>
+<html class="no-js" lang="en">
+  <head><meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
+    <meta name="color-scheme" content="light dark"><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+<link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="next" title="bruges package" href="../api/bruges.html" /><link rel="prev" title="Welcome to bruges" href="Quick_start_wedge.html" />
+
+    <link rel="shortcut icon" href="../_static/favicon.ico"/><meta name="generator" content="sphinx-4.4.0, furo 2022.02.14.1"/>
+        <title>Wedge models - bruges documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?digest=a8f031f701c6af50c9919b48f173a5785af06fac" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/plot_directive.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?digest=25ceb02ed1c46dc30f2321ff83e92799f69dfdb9" />
+    <link rel="stylesheet" type="text/css" href="../_static/custom.css" />
+    
+    
+
+
+<style>
+  body {
+    --color-code-background: #f8f8f8;
+  --color-code-foreground: black;
+  
+  }
+  body[data-theme="dark"] {
+    --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+  }
+  @media (prefers-color-scheme: dark) {
+    body:not([data-theme="light"]) {
+      --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+    }
+  }
+</style></head>
+  <body>
+    <script>
+      document.body.dataset.theme = localStorage.getItem("theme") || "auto";
+    </script>
+    
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="svg-toc" viewBox="0 0 24 24">
+    <title>Contents</title>
+    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 1024 1024">
+      <path d="M408 442h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8zm-8 204c0 4.4 3.6 8 8 8h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56zm504-486H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zm0 632H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zM115.4 518.9L271.7 642c5.8 4.6 14.4.5 14.4-6.9V388.9c0-7.4-8.5-11.5-14.4-6.9L115.4 505.1a8.74 8.74 0 0 0 0 13.8z"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-menu" viewBox="0 0 24 24">
+    <title>Menu</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-menu">
+      <line x1="3" y1="12" x2="21" y2="12"></line>
+      <line x1="3" y1="6" x2="21" y2="6"></line>
+      <line x1="3" y1="18" x2="21" y2="18"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+    <title>Expand</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-chevron-right">
+      <polyline points="9 18 15 12 9 6"></polyline>
+    </svg>
+  </symbol>
+  <symbol id="svg-sun" viewBox="0 0 24 24">
+    <title>Light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="feather-sun">
+      <circle cx="12" cy="12" r="5"></circle>
+      <line x1="12" y1="1" x2="12" y2="3"></line>
+      <line x1="12" y1="21" x2="12" y2="23"></line>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+      <line x1="1" y1="12" x2="3" y2="12"></line>
+      <line x1="21" y1="12" x2="23" y2="12"></line>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon" viewBox="0 0 24 24">
+    <title>Dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-moon">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
+    </svg>
+  </symbol>
+  <symbol id="svg-sun-half" viewBox="0 0 24 24">
+    <title>Auto light/dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-shadow">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+      <circle cx="12" cy="12" r="9" />
+      <path d="M13 12h5" />
+      <path d="M13 15h4" />
+      <path d="M13 18h1" />
+      <path d="M13 9h4" />
+      <path d="M13 6h1" />
+    </svg>
+  </symbol>
+</svg>
+
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation">
+<input type="checkbox" class="sidebar-toggle" name="__toc" id="__toc">
+<label class="overlay sidebar-overlay" for="__navigation">
+  <div class="visually-hidden">Hide navigation sidebar</div>
+</label>
+<label class="overlay toc-overlay" for="__toc">
+  <div class="visually-hidden">Hide table of contents sidebar</div>
+</label>
+
+
+
+<div class="page">
+  <header class="mobile-header">
+    <div class="header-left">
+      <label class="nav-overlay-icon" for="__navigation">
+        <div class="visually-hidden">Toggle site navigation sidebar</div>
+        <i class="icon"><svg><use href="#svg-menu"></use></svg></i>
+      </label>
+    </div>
+    <div class="header-center">
+      <a href="../index.html"><div class="brand">bruges  documentation</div></a>
+    </div>
+    <div class="header-right">
+      <div class="theme-toggle-container theme-toggle-header">
+        <button class="theme-toggle">
+          <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+          <svg class="theme-icon-when-auto"><use href="#svg-sun-half"></use></svg>
+          <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+          <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+        </button>
+      </div>
+      <label class="toc-overlay-icon toc-header-icon" for="__toc">
+        <div class="visually-hidden">Toggle table of contents sidebar</div>
+        <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+      </label>
+    </div>
+  </header>
+  <aside class="sidebar-drawer">
+    <div class="sidebar-container">
+      
+      <div class="sidebar-sticky"><a class="sidebar-brand centered" href="../index.html">
+  
+  <div class="sidebar-logo-container">
+    <img class="sidebar-logo" src="../_static/bruges_logo.png" alt="Logo"/>
+  </div>
+  
+  
+</a><form class="sidebar-search-container" method="get" action="../search.html" role="search">
+  <input class="sidebar-search" placeholder=Search name="q" aria-label="Search">
+  <input type="hidden" name="check_keywords" value="yes">
+  <input type="hidden" name="area" value="default">
+</form>
+<div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
+  <p class="caption" role="heading"><span class="caption-text">User guide</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Quick_start_wedge.html">Welcome to <code class="docutils literal notranslate"><span class="pre">bruges</span></code></a></li>
+<li class="toctree-l1 current current-page"><a class="current reference internal" href="#">Wedge models</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">API reference</span></p>
+<ul>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../api/bruges.html">bruges package</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../api/bruges.attribute.html">bruges.attribute package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api/bruges.filters.html">bruges.filters package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api/bruges.models.html">bruges.models package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api/bruges.noise.html">bruges.noise package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api/bruges.petrophysics.html">bruges.petrophysics package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api/bruges.reflection.html">bruges.reflection package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api/bruges.rockphysics.html">bruges.rockphysics package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api/bruges.transform.html">bruges.transform package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api/bruges.unit.html">bruges.unit package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api/bruges.util.html">bruges.util package</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Other resources</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../development.html">Development</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../authors.html">Authors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../authors.html#id1">Authors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../license.html">License</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../changelog.html">Changelog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contributing.html">Contributing</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Project links</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="https://pypi.org/project/bruges/">PyPI releases</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/agile-geoscience/bruges">Code in GitHub</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/agile-geoscience/bruges/issues">Issue tracker</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://code.agilescientific.com/community">Community guidelines</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://code.agilescientific.com">Agile's software</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://www.agilescientific.com">Agile's website</a></li>
+</ul>
+
+</div>
+</div>
+
+      </div>
+      
+    </div>
+  </aside>
+  <div class="main">
+    <div class="content">
+      <div class="article-container">
+        <div class="content-icon-container"><div class="theme-toggle-container theme-toggle-content">
+            <button class="theme-toggle">
+              <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+              <svg class="theme-icon-when-auto"><use href="#svg-sun-half"></use></svg>
+              <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+              <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+            </button>
+          </div>
+          <label class="toc-overlay-icon toc-content-icon" for="__toc">
+            <div class="visually-hidden">Toggle table of contents sidebar</div>
+            <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+          </label>
+        </div>
+        <article role="main">
+          <section class="tex2jax_ignore mathjax_ignore" id="wedge-models">
+<h1>Wedge models<a class="headerlink" href="#wedge-models" title="Permalink to this headline">#</a></h1>
+<p>Let’s make wedge models!</p>
+<p>We’re going to make <strong>all sorts of models</strong> using one magical function. Here’s what it can do:</p>
+<ul class="simple">
+<li><p>Layer-cake models with no dip.</p></li>
+<li><p>Wedge models with arbitrary thickness on the left and right.</p></li>
+<li><p>Clinoform models.</p></li>
+<li><p>Models filled with arbitrary stratigraphy, from constant values to well logs.</p></li>
+</ul>
+<p>All these models can have varying amounts of rock above and below them, and can be extended left and right beyond the wedgy part. You can also dip the wedge in either direction.</p>
+<p><strong>This is a new feature introduced in v0.4.2; if you find bugs, please let us know by <a class="reference external" href="https://github.com/agile-geoscience/bruges/issues">raising an issue</a>.</strong></p>
+<hr class="docutils"/>
+<section id="the-default-model-and-a-basic-synthetic-workflow">
+<h2>The default model and a basic synthetic workflow<a class="headerlink" href="#the-default-model-and-a-basic-synthetic-workflow" title="Permalink to this headline">#</a></h2>
+<p>We can produce a simple wedge model just by calling the function.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">bruges</span> <span class="k">as</span> <span class="nn">bg</span>
+
+<span class="n">w</span><span class="p">,</span> <span class="n">top</span><span class="p">,</span> <span class="n">base</span><span class="p">,</span> <span class="n">ref</span> <span class="o">=</span> <span class="n">bg</span><span class="o">.</span><span class="n">models</span><span class="o">.</span><span class="n">wedge</span><span class="p">()</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">w</span><span class="p">,</span> <span class="n">interpolation</span><span class="o">=</span><span class="s1">'none'</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">ref</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">'k'</span><span class="p">,</span> <span class="n">ls</span><span class="o">=</span><span class="s1">'--'</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">top</span><span class="p">,</span> <span class="s1">'r-'</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">base</span><span class="p">,</span> <span class="s1">'r-'</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/Wedge_models_2_0.png" src="../_images/Wedge_models_2_0.png"/>
+</div>
+</div>
+<p>The function returns the following:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">w</span></code>: the model array.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">top</span></code>: a 1D array containing the index of the wedge top at each trace.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">base</span></code>: a 1D array containing the index of the wedge bottom at each trace.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ref</span></code>: the number of the trace with a reference thickness of 1. This is only really useful if you’re making the wedge from well data (See below).</p></li>
+</ul>
+<p>The array contains only the integers 0, 1, 2 by default, but you can easily change this. Let’s see how…</p>
+</section>
+<section id="alternative-workflow">
+<h2>Alternative workflow<a class="headerlink" href="#alternative-workflow" title="Permalink to this headline">#</a></h2>
+<p>In the last example, we made an array of integers, then used indexing to place rock properties in the array, using the index as a sort of look-up.</p>
+<p>But we could make the impedance model directly, passing rock properties in to the <code class="docutils literal notranslate"><span class="pre">wedge()</span></code> function via teh <code class="docutils literal notranslate"><span class="pre">strat</span></code> argument. It just depends how you want to make your models.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">strat</span></code> argument was the default <code class="docutils literal notranslate"><span class="pre">[0,</span> <span class="pre">1,</span> <span class="pre">2]</span></code> in the last example. Let’s pass in the rock properties instead.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="n">vps</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">2320</span><span class="p">,</span> <span class="mi">2350</span><span class="p">,</span> <span class="mi">2350</span><span class="p">])</span>
+<span class="n">rhos</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">2650</span><span class="p">,</span> <span class="mi">2600</span><span class="p">,</span> <span class="mi">2620</span><span class="p">])</span>
+
+<span class="n">impedances</span> <span class="o">=</span> <span class="n">vps</span> <span class="o">*</span> <span class="n">rhos</span>
+
+<span class="n">w</span><span class="p">,</span> <span class="n">top</span><span class="p">,</span> <span class="n">base</span><span class="p">,</span> <span class="n">ref</span> <span class="o">=</span> <span class="n">bg</span><span class="o">.</span><span class="n">models</span><span class="o">.</span><span class="n">wedge</span><span class="p">(</span><span class="n">strat</span><span class="o">=</span><span class="n">impedances</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>And look at the result:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">w</span><span class="p">,</span> <span class="n">interpolation</span><span class="o">=</span><span class="s1">'none'</span><span class="p">)</span> 
+<span class="n">plt</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">ref</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">'k'</span><span class="p">,</span> <span class="n">ls</span><span class="o">=</span><span class="s1">'--'</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">top</span><span class="p">,</span> <span class="s1">'r-'</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">base</span><span class="p">,</span> <span class="s1">'r-'</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">colorbar</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/Wedge_models_8_0.png" src="../_images/Wedge_models_8_0.png"/>
+</div>
+</div>
+<p>Now the wedge contains rock properties, not integer labels.</p>
+</section>
+<hr class="docutils"/>
+<section id="a-layered-wedge-model">
+<h2>A layered wedge model<a class="headerlink" href="#a-layered-wedge-model" title="Permalink to this headline">#</a></h2>
+<p>We can modify the stratigraphy of any layer. E.g., let’s pass <code class="docutils literal notranslate"><span class="pre">(1,</span> <span class="pre">2,</span> <span class="pre">1,</span> <span class="pre">2,</span> <span class="pre">1)</span></code> in as the wedge strat, instead of just <code class="docutils literal notranslate"><span class="pre">1</span></code>. We’ll also change the bottom layer to a <code class="docutils literal notranslate"><span class="pre">3</span></code>, so now we have 4 rocks.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">w</span><span class="p">,</span> <span class="n">top</span><span class="p">,</span> <span class="n">base</span><span class="p">,</span> <span class="n">ref</span> <span class="o">=</span> <span class="n">bg</span><span class="o">.</span><span class="n">models</span><span class="o">.</span><span class="n">wedge</span><span class="p">(</span><span class="n">depth</span><span class="o">=</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">600</span><span class="p">,</span> <span class="mi">100</span><span class="p">),</span>
+                                    <span class="n">width</span><span class="o">=</span><span class="p">(</span><span class="mi">200</span><span class="p">,</span> <span class="mi">1600</span><span class="p">,</span> <span class="mi">200</span><span class="p">),</span>
+                                    <span class="n">strat</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="mi">3</span><span class="p">),</span>
+                                    <span class="n">mode</span><span class="o">=</span><span class="s1">'linear'</span>
+                                    <span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">w</span><span class="p">,</span> <span class="n">interpolation</span><span class="o">=</span><span class="s1">'none'</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">ref</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">'k'</span><span class="p">,</span> <span class="n">ls</span><span class="o">=</span><span class="s1">'--'</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">top</span><span class="p">,</span> <span class="s1">'r-'</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">base</span><span class="p">,</span> <span class="s1">'r-'</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/Wedge_models_11_0.png" src="../_images/Wedge_models_11_0.png"/>
+</div>
+</div>
+<p>Notice that the <code class="docutils literal notranslate"><span class="pre">wedge</span></code> function returns 4 things:</p>
+<ul class="simple">
+<li><p>The wedge model as a 2D NumPy array of ints (or whatever numbers you gave as input).</p></li>
+<li><p>The top horizon, in pixel index units, for convenience.</p></li>
+<li><p>The base horizon, in pixel index units, for convenience.</p></li>
+<li><p>The horizontal (left-right) position, as an integer, of the ‘reference’ model. You may or may not be interested in this, depending on your application.</p></li>
+</ul>
+<p>If you only want the wedge, you can call the function like so:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>wedge, *_ = bg.models.wedge()
+</pre></div>
+</div>
+</section>
+<hr class="docutils"/>
+<section id="a-layer-cake-model">
+<h2>A layer-cake model<a class="headerlink" href="#a-layer-cake-model" title="Permalink to this headline">#</a></h2>
+<p>You can provide the minimum and maximum thickness of the wedge.</p>
+<p><strong>Note:</strong> If the maximum thickness of the wedge if more than 1, then the total depth (i.e. number of rows) of the model will be more than the sum of the <code class="docutils literal notranslate"><span class="pre">depth</span></code> argument, so that the entire model can be accommodated. If you don’t want the ‘extra’ depth, you can slice them off the model as with any NumPy array.</p>
+<p>Here’s a layer cake:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">w</span><span class="p">,</span> <span class="n">top</span><span class="p">,</span> <span class="n">base</span><span class="p">,</span> <span class="n">ref</span> <span class="o">=</span> <span class="n">bg</span><span class="o">.</span><span class="n">models</span><span class="o">.</span><span class="n">wedge</span><span class="p">(</span><span class="n">depth</span><span class="o">=</span><span class="p">(</span><span class="mf">10.</span><span class="p">,</span> <span class="mi">80</span><span class="p">,</span> <span class="mi">10</span><span class="p">),</span>
+                                    <span class="n">width</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">80</span><span class="p">,</span> <span class="mi">10</span><span class="p">),</span>
+                                    <span class="n">strat</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,),</span> <span class="mi">3</span><span class="p">),</span>  <span class="c1"># Floats in the wedge</span>
+                                    <span class="n">thickness</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span>
+                                    <span class="n">mode</span><span class="o">=</span><span class="s1">'linear'</span><span class="p">,</span>
+                                    <span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">w</span><span class="p">,</span> <span class="n">interpolation</span><span class="o">=</span><span class="s1">'none'</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">ref</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">'k'</span><span class="p">,</span> <span class="n">ls</span><span class="o">=</span><span class="s1">'--'</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">top</span><span class="p">,</span> <span class="s1">'r-'</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">base</span><span class="p">,</span> <span class="s1">'r-'</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/Wedge_models_14_0.png" src="../_images/Wedge_models_14_0.png"/>
+</div>
+</div>
+<p>Here’s another example. We can reverse the wedge direction by passing in (1, 0.5) for the thickess. As a result, the left-hand-side is the maximum thickness of 1, the right is half the thickness.</p>
+<p>This time we’ll also pass in floats — velocities perhaps.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">w</span><span class="p">,</span> <span class="n">top</span><span class="p">,</span> <span class="n">base</span><span class="p">,</span> <span class="n">ref</span> <span class="o">=</span> <span class="n">bg</span><span class="o">.</span><span class="n">models</span><span class="o">.</span><span class="n">wedge</span><span class="p">(</span><span class="n">depth</span><span class="o">=</span><span class="p">(</span><span class="mf">10.</span><span class="p">,</span> <span class="mi">80</span><span class="p">,</span> <span class="mi">10</span><span class="p">),</span>
+                                    <span class="n">width</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">80</span><span class="p">,</span> <span class="mi">10</span><span class="p">),</span>
+                                    <span class="n">strat</span><span class="o">=</span><span class="p">(</span><span class="mf">1.48</span><span class="p">,</span> <span class="p">(</span><span class="mf">2.10</span><span class="p">,</span> <span class="mf">2.25</span><span class="p">,</span> <span class="mf">2.35</span><span class="p">),</span> <span class="mf">2.40</span><span class="p">),</span>  <span class="c1"># Floats in the wedge.</span>
+                                    <span class="n">thickness</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">),</span>
+                                    <span class="n">mode</span><span class="o">=</span><span class="s1">'linear'</span><span class="p">,</span>
+                                    <span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">w</span><span class="p">,</span> <span class="n">interpolation</span><span class="o">=</span><span class="s1">'none'</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">ref</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">'k'</span><span class="p">,</span> <span class="n">ls</span><span class="o">=</span><span class="s1">'--'</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">top</span><span class="p">,</span> <span class="s1">'r-'</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">base</span><span class="p">,</span> <span class="s1">'r-'</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+<span class="n">cb</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">colorbar</span><span class="p">()</span>
+<span class="n">cb</span><span class="o">.</span><span class="n">ax</span><span class="o">.</span><span class="n">invert_yaxis</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/Wedge_models_16_0.png" src="../_images/Wedge_models_16_0.png"/>
+</div>
+</div>
+</section>
+<hr class="docutils"/>
+<section id="top-and-bottom-conformance">
+<h2>Top and bottom conformance<a class="headerlink" href="#top-and-bottom-conformance" title="Permalink to this headline">#</a></h2>
+<p>The layers in the wedge can also be top or bottom conforming, rather than proportionally adjusted.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">confs</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'both'</span><span class="p">,</span> <span class="s1">'top'</span><span class="p">,</span> <span class="s1">'bottom'</span><span class="p">]</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">axs</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">ncols</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">confs</span><span class="p">),</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+<span class="k">for</span> <span class="n">ax</span><span class="p">,</span> <span class="n">conf</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">axs</span><span class="p">,</span> <span class="n">confs</span><span class="p">):</span>
+    <span class="n">w</span><span class="p">,</span> <span class="n">top</span><span class="p">,</span> <span class="n">base</span><span class="p">,</span> <span class="n">ref</span> <span class="o">=</span> <span class="n">bg</span><span class="o">.</span><span class="n">models</span><span class="o">.</span><span class="n">wedge</span><span class="p">(</span><span class="n">strat</span><span class="o">=</span><span class="p">((</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">4</span><span class="p">)),</span>
+                                        <span class="n">conformance</span><span class="o">=</span><span class="n">conf</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">w</span><span class="p">,</span> <span class="n">interpolation</span><span class="o">=</span><span class="s1">'none'</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">ref</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">'k'</span><span class="p">,</span> <span class="n">ls</span><span class="o">=</span><span class="s1">'--'</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">top</span><span class="p">,</span> <span class="s1">'r-'</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">base</span><span class="p">,</span> <span class="s1">'r-'</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">conf</span><span class="si">}</span><span class="s2"> conformant"</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/Wedge_models_18_0.png" src="../_images/Wedge_models_18_0.png"/>
+</div>
+</div>
+</section>
+<hr class="docutils"/>
+<section id="different-wedge-shapes">
+<h2>Different ‘wedge’ shapes<a class="headerlink" href="#different-wedge-shapes" title="Permalink to this headline">#</a></h2>
+<p>The linear wedge is familiar, but you can also have other shapes (<code class="docutils literal notranslate"><span class="pre">power</span></code> and <code class="docutils literal notranslate"><span class="pre">root</span></code> were new in v0.4.3):</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">modes</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'linear'</span><span class="p">,</span> <span class="s1">'root'</span><span class="p">,</span> <span class="s1">'power'</span><span class="p">,</span> <span class="s1">'sigmoid'</span><span class="p">]</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">axs</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">ncols</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">modes</span><span class="p">),</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+<span class="k">for</span> <span class="n">ax</span><span class="p">,</span> <span class="n">mode</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">axs</span><span class="p">,</span> <span class="n">modes</span><span class="p">):</span>
+    <span class="n">w</span><span class="p">,</span> <span class="n">top</span><span class="p">,</span> <span class="n">base</span><span class="p">,</span> <span class="n">ref</span> <span class="o">=</span> <span class="n">bg</span><span class="o">.</span><span class="n">models</span><span class="o">.</span><span class="n">wedge</span><span class="p">(</span><span class="n">mode</span><span class="o">=</span><span class="n">mode</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">w</span><span class="p">,</span> <span class="n">interpolation</span><span class="o">=</span><span class="s1">'none'</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">ref</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">'k'</span><span class="p">,</span> <span class="n">ls</span><span class="o">=</span><span class="s1">'--'</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">top</span><span class="p">,</span> <span class="s1">'r-'</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">base</span><span class="p">,</span> <span class="s1">'r-'</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="n">mode</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/Wedge_models_20_0.png" src="../_images/Wedge_models_20_0.png"/>
+</div>
+</div>
+<p>If you’re feeling creative, you can also give <code class="docutils literal notranslate"><span class="pre">wedge()</span></code> your own function (since version 0.4.3). Your function should have an API like <code class="docutils literal notranslate"><span class="pre">np.linspace()</span></code> (the function that produces the standard wedge shape). Here’s an example:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">wavy</span><span class="p">(</span><span class="n">start</span><span class="p">,</span> <span class="n">stop</span><span class="p">,</span> <span class="n">num</span><span class="p">):</span>
+    <span class="sd">"""</span>
+<span class="sd">    Custom wedge shape.</span>
+<span class="sd">    """</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">10</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="n">num</span><span class="p">)</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">+</span> <span class="n">x</span>
+    
+    <span class="c1"># Normalize to 0-1.</span>
+    <span class="n">y_</span> <span class="o">=</span> <span class="p">(</span><span class="n">y</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">y</span><span class="p">))</span> <span class="o">/</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">y</span><span class="p">)</span><span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">y</span><span class="p">))</span>
+    
+    <span class="c1"># Scale to required output.</span>
+    <span class="k">return</span> <span class="nb">min</span><span class="p">(</span><span class="n">start</span><span class="p">,</span> <span class="n">stop</span><span class="p">)</span> <span class="o">+</span> <span class="nb">abs</span><span class="p">(</span><span class="n">stop</span><span class="o">-</span><span class="n">start</span><span class="p">)</span> <span class="o">*</span> <span class="n">y_</span>
+
+
+<span class="c1"># The wedge function will pass 'left' and 'right' thicknesses.</span>
+<span class="c1"># You only need to worry about the case where left &lt; right.</span>
+<span class="n">left</span><span class="p">,</span> <span class="n">right</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">wavy</span><span class="p">(</span><span class="n">left</span><span class="p">,</span> <span class="n">right</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="n">right</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/Wedge_models_22_0.png" src="../_images/Wedge_models_22_0.png"/>
+</div>
+</div>
+<p>Let’s use that function to make a model:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">w</span><span class="p">,</span> <span class="n">top</span><span class="p">,</span> <span class="n">base</span><span class="p">,</span> <span class="n">ref</span> <span class="o">=</span> <span class="n">bg</span><span class="o">.</span><span class="n">models</span><span class="o">.</span><span class="n">wedge</span><span class="p">(</span><span class="n">mode</span><span class="o">=</span><span class="n">wavy</span><span class="p">,</span> <span class="n">thickness</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">w</span><span class="p">,</span> <span class="n">interpolation</span><span class="o">=</span><span class="s1">'none'</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">ref</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">'k'</span><span class="p">,</span> <span class="n">ls</span><span class="o">=</span><span class="s1">'--'</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">top</span><span class="p">,</span> <span class="s1">'r-'</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">base</span><span class="p">,</span> <span class="s1">'r-'</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/Wedge_models_24_0.png" src="../_images/Wedge_models_24_0.png"/>
+</div>
+</div>
+</section>
+<hr class="docutils"/>
+<section id="varying-net-gross-across-breadth">
+<h2>Varying net:gross across <code class="docutils literal notranslate"><span class="pre">breadth</span></code><a class="headerlink" href="#varying-net-gross-across-breadth" title="Permalink to this headline">#</a></h2>
+<p><strong>This is a new feature introduced in v0.4.3; if you find bugs, please let us know by <a class="reference external" href="https://github.com/agile-geoscience/bruges/issues">raising an issue</a>.</strong></p>
+<p>If you define a <strong>binary wedge</strong> — i.e. exactly 2 lithologies in the wedge layer — then you can pass a <code class="docutils literal notranslate"><span class="pre">breadth</span></code> argument to get a 3D model. The new dimension contains the 2 pure litholgies at each end, and pinches them out across the model’s ‘breadth’. Now the top and base are 2D arrays (surfaces through the wedge volume), while <code class="docutils literal notranslate"><span class="pre">ref</span></code> is still a scalar (the lateral position of the reference ‘trace’).</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">w</span><span class="p">,</span> <span class="n">top</span><span class="p">,</span> <span class="n">base</span><span class="p">,</span> <span class="n">ref</span> <span class="o">=</span> <span class="n">bg</span><span class="o">.</span><span class="n">models</span><span class="o">.</span><span class="n">wedge</span><span class="p">(</span><span class="n">strat</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="mi">3</span><span class="p">),</span>  <span class="c1"># Binary wedge.</span>
+                                    <span class="n">breadth</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+
+<span class="n">w</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">top</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">base</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">ref</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>((100, 100, 100), (100, 100), (100, 100), 89)
+</pre></div>
+</div>
+</div>
+</div>
+<p>Let’s look at 3 slices: one from one end of the ‘net:gross’ axis (the last axis), one from the other end (right hand image), and one from halfway (middle image). These are the net:gross end-members.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">slices</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="mi">99</span><span class="p">]</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">axs</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">ncols</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">slices</span><span class="p">),</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">16</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+<span class="k">for</span> <span class="n">ax</span><span class="p">,</span> <span class="n">slic</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">axs</span><span class="p">,</span> <span class="n">slices</span><span class="p">):</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">w</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="n">slic</span><span class="p">],</span> <span class="n">interpolation</span><span class="o">=</span><span class="s1">'none'</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">top</span><span class="p">[:,</span> <span class="n">slic</span><span class="p">],</span> <span class="s1">'r-'</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">base</span><span class="p">[:,</span> <span class="n">slic</span><span class="p">],</span> <span class="s1">'r-'</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Wedge slice: </span><span class="si">{</span><span class="n">slic</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/Wedge_models_28_0.png" src="../_images/Wedge_models_28_0.png"/>
+</div>
+</div>
+<p>Slices in/out of the page, look like this:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">slices</span> <span class="o">=</span> <span class="p">[</span><span class="mi">30</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="mi">90</span><span class="p">]</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">axs</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">ncols</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">slices</span><span class="p">),</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">16</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+<span class="k">for</span> <span class="n">ax</span><span class="p">,</span> <span class="n">slic</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">axs</span><span class="p">,</span> <span class="n">slices</span><span class="p">):</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">w</span><span class="p">[:,</span> <span class="n">slic</span><span class="p">],</span> <span class="n">interpolation</span><span class="o">=</span><span class="s1">'none'</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">top</span><span class="p">[</span><span class="n">slic</span><span class="p">],</span> <span class="s1">'r-'</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">base</span><span class="p">[</span><span class="n">slic</span><span class="p">],</span> <span class="s1">'r-'</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Net:gross slice: </span><span class="si">{</span><span class="n">slic</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/Wedge_models_30_0.png" src="../_images/Wedge_models_30_0.png"/>
+</div>
+</div>
+<p>Let’s simulate the seismic. We’ll provide 4 ‘rocks’, one for each of the integers in the array:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">vps</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">2320</span><span class="p">,</span> <span class="mi">2350</span><span class="p">,</span> <span class="mi">2350</span><span class="p">,</span> <span class="mi">2370</span><span class="p">])</span>
+<span class="n">rhos</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">2650</span><span class="p">,</span> <span class="mi">2600</span><span class="p">,</span> <span class="mi">2620</span><span class="p">,</span> <span class="mi">2610</span><span class="p">])</span>
+
+<span class="n">vp</span> <span class="o">=</span> <span class="n">vps</span><span class="p">[</span><span class="n">w</span><span class="p">]</span>
+<span class="n">rho</span> <span class="o">=</span> <span class="n">rhos</span><span class="p">[</span><span class="n">w</span><span class="p">]</span>
+
+<span class="n">rc</span> <span class="o">=</span> <span class="n">bg</span><span class="o">.</span><span class="n">reflection</span><span class="o">.</span><span class="n">acoustic_reflectivity</span><span class="p">(</span><span class="n">vp</span><span class="p">,</span> <span class="n">rho</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>We can check the reflectivities on a vertical slice half-way through the ‘breadth’:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">rc</span><span class="p">[:,</span> <span class="p">:,</span> <span class="mi">50</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.image.AxesImage at 0x7fafc5bd99f0&gt;
+</pre></div>
+</div>
+<img alt="../_images/Wedge_models_34_1.png" src="../_images/Wedge_models_34_1.png"/>
+</div>
+</div>
+<p>Now we can convolve with a wavelet to get a synthetic. The synthetic will, like the RC series, be three-dimensional:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ricker</span><span class="p">,</span> <span class="n">t</span> <span class="o">=</span> <span class="n">bg</span><span class="o">.</span><span class="n">filters</span><span class="o">.</span><span class="n">ricker</span><span class="p">(</span><span class="n">duration</span><span class="o">=</span><span class="mf">0.064</span><span class="p">,</span> <span class="n">dt</span><span class="o">=</span><span class="mf">0.001</span><span class="p">,</span> <span class="n">f</span><span class="o">=</span><span class="mi">40</span><span class="p">)</span>
+
+<span class="n">syn</span> <span class="o">=</span> <span class="n">bg</span><span class="o">.</span><span class="n">filters</span><span class="o">.</span><span class="n">convolve</span><span class="p">(</span><span class="n">rc</span><span class="p">,</span> <span class="n">ricker</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>  <span class="c1"># Time is on the first axis.</span>
+<span class="n">syn</span><span class="o">.</span><span class="n">shape</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(100, 100, 100)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">syn</span><span class="p">[:,</span> <span class="p">:,</span> <span class="mi">50</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.image.AxesImage at 0x7fafc5c4c3d0&gt;
+</pre></div>
+</div>
+<img alt="../_images/Wedge_models_37_1.png" src="../_images/Wedge_models_37_1.png"/>
+</div>
+</div>
+<p>Let’s look at the three orthognal profiles through this synthetic:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ma</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">percentile</span><span class="p">(</span><span class="n">syn</span><span class="p">,</span> <span class="mf">99.9</span><span class="p">)</span>
+<span class="n">vols</span><span class="p">,</span> <span class="n">cmaps</span> <span class="o">=</span> <span class="p">[</span><span class="n">w</span><span class="p">,</span> <span class="n">syn</span><span class="p">],</span> <span class="p">[</span><span class="s1">'viridis'</span><span class="p">,</span> <span class="s1">'gray'</span><span class="p">]</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">axs</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">ncols</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">nrows</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">14</span><span class="p">,</span> <span class="mi">8</span><span class="p">))</span>
+<span class="k">for</span> <span class="n">row</span><span class="p">,</span> <span class="n">vol</span><span class="p">,</span> <span class="n">cm</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">axs</span><span class="p">,</span> <span class="n">vols</span><span class="p">,</span> <span class="n">cmaps</span><span class="p">):</span>
+    <span class="n">row</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">vol</span><span class="p">[:,</span> <span class="p">:,</span> <span class="mi">24</span><span class="p">],</span> <span class="n">aspect</span><span class="o">=</span><span class="s1">'auto'</span><span class="p">,</span> <span class="n">interpolation</span><span class="o">=</span><span class="s1">'none'</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="n">cm</span><span class="p">,</span> <span class="n">vmin</span><span class="o">=-</span><span class="n">ma</span> <span class="k">if</span> <span class="n">vol</span> <span class="ow">is</span> <span class="n">syn</span> <span class="k">else</span> <span class="kc">None</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="n">ma</span> <span class="k">if</span> <span class="n">vol</span> <span class="ow">is</span> <span class="n">syn</span> <span class="k">else</span> <span class="kc">None</span><span class="p">)</span>
+    <span class="n">row</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span><span class="mi">40</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="s1">'w'</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mf">0.67</span><span class="p">)</span>
+    <span class="n">row</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="mi">50</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="s1">'w'</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mf">0.67</span><span class="p">)</span>
+    <span class="n">row</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Wedge axis"</span><span class="p">)</span>
+    <span class="n">row</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">vol</span><span class="p">[:,</span> <span class="mi">50</span><span class="p">,</span> <span class="p">:],</span> <span class="n">aspect</span><span class="o">=</span><span class="s1">'auto'</span><span class="p">,</span> <span class="n">interpolation</span><span class="o">=</span><span class="s1">'none'</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="n">cm</span><span class="p">,</span> <span class="n">vmin</span><span class="o">=-</span><span class="n">ma</span> <span class="k">if</span> <span class="n">vol</span> <span class="ow">is</span> <span class="n">syn</span> <span class="k">else</span> <span class="kc">None</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="n">ma</span> <span class="k">if</span> <span class="n">vol</span> <span class="ow">is</span> <span class="n">syn</span> <span class="k">else</span> <span class="kc">None</span><span class="p">)</span>
+    <span class="n">row</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span><span class="mi">40</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="s1">'w'</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mf">0.67</span><span class="p">)</span>
+    <span class="n">row</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="mi">24</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="s1">'w'</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mf">0.67</span><span class="p">)</span>
+    <span class="n">row</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Net:gross axis"</span><span class="p">)</span>
+    <span class="n">row</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">vol</span><span class="p">[</span><span class="mi">40</span><span class="p">,</span> <span class="p">:,</span> <span class="p">:],</span> <span class="n">aspect</span><span class="o">=</span><span class="s1">'auto'</span><span class="p">,</span> <span class="n">interpolation</span><span class="o">=</span><span class="s1">'none'</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="n">cm</span><span class="p">,</span> <span class="n">vmin</span><span class="o">=</span><span class="mi">0</span> <span class="k">if</span> <span class="n">vol</span> <span class="ow">is</span> <span class="n">w</span> <span class="k">else</span> <span class="o">-</span><span class="n">ma</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="n">ma</span> <span class="k">if</span> <span class="n">vol</span> <span class="ow">is</span> <span class="n">syn</span> <span class="k">else</span> <span class="kc">None</span><span class="p">)</span>
+    <span class="n">row</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span><span class="mi">50</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="s1">'w'</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mf">0.67</span><span class="p">)</span>
+    <span class="n">row</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="mi">24</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="s1">'w'</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mf">0.67</span><span class="p">)</span>
+    <span class="n">row</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Timeslice axis"</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/Wedge_models_39_0.png" src="../_images/Wedge_models_39_0.png"/>
+</div>
+</div>
+</section>
+<hr class="docutils"/>
+<section id="models-from-well-logs">
+<h2>Models from well logs<a class="headerlink" href="#models-from-well-logs" title="Permalink to this headline">#</a></h2>
+<p>We can pass in arrays as <code class="docutils literal notranslate"><span class="pre">strat</span></code> and they will be used as the values in the model layers.</p>
+<p>We’ll start by loading a CSV file of a well log and dissecting it into three zones that we can pass in as <code class="docutils literal notranslate"><span class="pre">strat</span></code>. <a class="reference external" href="https://code.agilescientific.com/welly/">Welly</a> would but useful for this, but we can also select these segments using conditions on the key depth boundaries.</p>
+<p>Well load the well log as a 2D numpy array, and then pull out the <code class="docutils literal notranslate"><span class="pre">depths</span></code>, p-sonic (slowness) <code class="docutils literal notranslate"><span class="pre">dt</span></code>, and density <code class="docutils literal notranslate"><span class="pre">rhob</span></code>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">log_data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">loadtxt</span><span class="p">(</span><span class="s1">'../data/P-129.csv'</span><span class="p">,</span> <span class="n">delimiter</span><span class="o">=</span><span class="s1">','</span><span class="p">,</span> <span class="n">skiprows</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">depths</span><span class="p">,</span> <span class="n">dt</span><span class="p">,</span> <span class="n">rhob</span> <span class="o">=</span> <span class="n">log_data</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">log_data</span><span class="p">[:,</span> <span class="mi">2</span><span class="p">],</span> <span class="n">log_data</span><span class="p">[:,</span> <span class="mi">4</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>And calculate an acoustic impedance log as input into our model:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">impedance</span> <span class="o">=</span> <span class="p">(</span><span class="mf">1e6</span> <span class="o">/</span> <span class="n">dt</span><span class="p">)</span> <span class="o">*</span> <span class="n">rhob</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>And now we can segment this array into upper, middle, and lower segments.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">datum</span><span class="p">,</span> <span class="n">top</span><span class="p">,</span> <span class="n">base</span><span class="p">,</span> <span class="n">floor</span> <span class="o">=</span> <span class="mi">500</span><span class="p">,</span> <span class="mi">701</span><span class="p">,</span> <span class="mi">805</span><span class="p">,</span> <span class="mi">1005</span> 
+
+<span class="n">log_upper</span> <span class="o">=</span> <span class="n">impedance</span><span class="p">[(</span><span class="n">depths</span> <span class="o">&gt;=</span> <span class="n">datum</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">depths</span> <span class="o">&lt;</span> <span class="n">top</span><span class="p">)]</span>
+<span class="n">log_wedge</span> <span class="o">=</span> <span class="n">impedance</span><span class="p">[(</span><span class="n">depths</span> <span class="o">&gt;=</span> <span class="n">top</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">depths</span> <span class="o">&lt;</span> <span class="n">base</span><span class="p">)]</span>
+<span class="n">log_lower</span> <span class="o">=</span> <span class="n">impedance</span><span class="p">[(</span><span class="n">depths</span> <span class="o">&gt;=</span> <span class="n">base</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">depths</span> <span class="o">&lt;</span> <span class="n">floor</span><span class="p">)]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>We’ll create arrays of depths for the corresponding zones as well:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">upper_depths</span> <span class="o">=</span> <span class="n">depths</span><span class="p">[(</span><span class="n">depths</span> <span class="o">&gt;=</span> <span class="n">datum</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">depths</span> <span class="o">&lt;</span> <span class="n">top</span><span class="p">)]</span>
+<span class="n">wedge_depths</span> <span class="o">=</span> <span class="n">depths</span><span class="p">[(</span><span class="n">depths</span> <span class="o">&gt;=</span> <span class="n">top</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">depths</span> <span class="o">&lt;</span> <span class="n">base</span><span class="p">)]</span>
+<span class="n">lower_depths</span> <span class="o">=</span> <span class="n">depths</span><span class="p">[(</span><span class="n">depths</span> <span class="o">&gt;=</span> <span class="n">base</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">depths</span> <span class="o">&lt;</span> <span class="n">floor</span><span class="p">)]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>A quick plot of the three zones shows us the stratigraphic inputs to the <code class="docutils literal notranslate"><span class="pre">wedge</span></code> function.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">8</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">log_upper</span><span class="p">,</span> <span class="n">upper_depths</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">log_wedge</span><span class="p">,</span> <span class="n">wedge_depths</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">log_lower</span><span class="p">,</span> <span class="n">lower_depths</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="n">floor</span><span class="p">,</span> <span class="n">datum</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(1005.0, 500.0)
+</pre></div>
+</div>
+<img alt="../_images/Wedge_models_49_1.png" src="../_images/Wedge_models_49_1.png"/>
+</div>
+</div>
+<p>The middle piece (orange) will be fitted to the middle layer of the wedge (resulting in the number of pixels given in the <code class="docutils literal notranslate"><span class="pre">depth</span></code> argument. The upper (blue) and lower (green) pieces will then be cropped to fit their layers, so you must provide enough data for this to happen. The safest thing to do is to provide the <em>entire</em> log above and the same below.</p>
+<p>Now we can send these pieces to <code class="docutils literal notranslate"><span class="pre">wedge</span></code>. At the reference location <code class="docutils literal notranslate"><span class="pre">ref</span></code>, it will squeeze all of <code class="docutils literal notranslate"><span class="pre">log_upper</span></code> array into the 400 samples allocated to the upper layer, <code class="docutils literal notranslate"><span class="pre">log_wedge</span></code> will be squeezed into 208 samples in wedge layer, and <code class="docutils literal notranslate"><span class="pre">log_lower</span></code> will be squeezed into 400 samples in lower layer. We’ve chosen these depth sizes to be proportional to the the thicknesses of these three zones. This is not a requirement however, it simply prevents distorting the individual segments at the reference trace.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">w</span><span class="p">,</span> <span class="n">top</span><span class="p">,</span> <span class="n">base</span><span class="p">,</span> <span class="n">ref</span> <span class="o">=</span> <span class="n">bg</span><span class="o">.</span><span class="n">models</span><span class="o">.</span><span class="n">wedge</span><span class="p">(</span><span class="n">depth</span><span class="o">=</span><span class="p">(</span><span class="mi">400</span><span class="p">,</span> <span class="mi">208</span><span class="p">,</span> <span class="mi">400</span><span class="p">),</span>
+                                    <span class="n">width</span><span class="o">=</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="mi">260</span><span class="p">,</span> <span class="mi">20</span><span class="p">),</span>
+                                    <span class="n">strat</span><span class="o">=</span><span class="p">(</span><span class="n">log_upper</span><span class="p">,</span> <span class="n">log_wedge</span><span class="p">,</span> <span class="n">log_lower</span><span class="p">),</span>
+                                    <span class="n">mode</span><span class="o">=</span><span class="s1">'sigmoid'</span><span class="p">,</span> <span class="n">conformance</span><span class="o">=</span><span class="s1">'bottom'</span><span class="p">,</span>
+                                    <span class="n">thickness</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+                                    <span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">log</span> <span class="o">=</span> <span class="n">w</span><span class="p">[:,</span> <span class="n">ref</span><span class="p">]</span>
+
+<span class="c1"># Make a scaled version of the log for the section plot.</span>
+<span class="n">log_</span> <span class="o">=</span> <span class="p">(</span><span class="n">log</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">log</span><span class="p">))</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">log</span><span class="p">)</span>
+<span class="n">depth</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">log</span><span class="p">))</span>
+<span class="n">sf</span> <span class="o">=</span> <span class="mf">2.5</span>
+<span class="n">log_bias</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ptp</span><span class="p">(</span><span class="n">log_</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Now we can plot everything together:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">axs</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">16</span><span class="p">,</span> <span class="mi">8</span><span class="p">),</span> <span class="n">ncols</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">gridspec_kw</span><span class="o">=</span><span class="p">{</span><span class="s1">'width_ratios'</span><span class="p">:</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">)})</span>
+
+<span class="n">axs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">log</span><span class="p">,</span> <span class="n">depth</span><span class="p">)</span>
+<span class="n">axs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="n">depth</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">depth</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<span class="n">axs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">'Impedance'</span><span class="p">)</span>
+
+<span class="n">im</span><span class="o">=</span><span class="n">axs</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">w</span><span class="p">,</span> <span class="n">aspect</span><span class="o">=</span><span class="s1">'auto'</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">'viridis'</span><span class="p">)</span>
+<span class="n">axs</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">top</span><span class="p">,</span> <span class="s1">'r-'</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+<span class="n">axs</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">base</span><span class="p">,</span> <span class="s1">'r-'</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+<span class="n">axs</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">fill_betweenx</span><span class="p">(</span><span class="n">depth</span><span class="p">,</span> <span class="n">ref</span> <span class="o">+</span> <span class="n">log_bias</span> <span class="o">+</span> <span class="p">(</span><span class="n">sf</span><span class="o">*</span><span class="n">log_</span><span class="p">),</span> <span class="n">ref</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">'k'</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
+<span class="c1"># axs[1].plot(ref + log_bias + (sf*log), depth, c='k', lw=1)</span>
+<span class="n">axs</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">ref</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">'k'</span><span class="p">,</span> <span class="n">ls</span><span class="o">=</span><span class="s1">'--'</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">axs</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">'Well A'</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/Wedge_models_54_0.png" src="../_images/Wedge_models_54_0.png"/>
+</div>
+</div>
+<p>Now we can use this highly detailed rock property model for any seismic simulations you may want to do.</p>
+</section>
+</section>
+
+        </article>
+      </div>
+      <footer>
+        
+        <div class="related-pages">
+          <a class="next-page" href="../api/bruges.html">
+              <div class="page-info">
+                <div class="context">
+                  <span>Next</span>
+                </div>
+                <div class="title">bruges package</div>
+              </div>
+              <svg><use href="#svg-arrow-right"></use></svg>
+            </a>
+          <a class="prev-page" href="Quick_start_wedge.html">
+              <svg><use href="#svg-arrow-right"></use></svg>
+              <div class="page-info">
+                <div class="context">
+                  <span>Previous</span>
+                </div>
+                
+                <div class="title">Welcome to <code class="docutils literal notranslate"><span class="pre">bruges</span></code></div>
+                
+              </div>
+            </a>
+        </div>
+        <div class="bottom-of-page">
+          <div class="left-details">
+            <div class="copyright">
+                Copyright &#169; 2022, The Bruges Authors
+            </div>
+            Made with <a href="https://www.sphinx-doc.org/">Sphinx</a> and <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
+            
+            <a href="https://github.com/pradyunsg/furo">Furo</a>
+            
+          </div>
+          <div class="right-details">
+            <div class="icons">
+              <a class="muted-link " href="https://code.agilescientific.com" aria-label="Agile">
+                <svg width="200" height="200" version="1.1" viewBox="0 0 187.5 187.5" xmlns="http://www.w3.org/2000/svg">
+                <g transform="matrix(3.94 -1.28 1.28 3.94 -906.1 -3676)" style="color-rendering:auto;color:#000000;fill:#14ca29;image-rendering:auto;isolation:auto;mix-blend-mode:normal;shape-rendering:auto;solid-color:#000000;stroke-width:1px;text-decoration-color:#000000;text-decoration-line:none;text-decoration-style:solid;text-indent:0;text-transform:none;white-space:normal">
+                <path d="m-46.98 936.1q3.515-1.622 6.705-3.244t5.083-2.379 3.028-0.757q1.893 0 3.244 1.298 1.406 1.244 1.406 3.136 0 1.081-0.7029 2.271-0.6489 1.136-1.406 1.46-6.975 2.758-15.36 4.001 1.514 1.406 3.731 3.731t2.325 2.487q0.8111 1.136 2.271 2.812 1.46 1.676 2.001 2.65 0.5948 0.9192 0.5948 2.271 0 1.73-1.298 3.028t-3.352 1.298q-2.055 0-4.65-3.19-2.541-3.19-6.597-11.46-4.109 7.462-5.515 9.841t-2.704 3.623q-1.298 1.19-2.974 1.19-2.001 0-3.352-1.352-1.298-1.406-1.298-2.974 0-1.46 0.5407-2.217 4.975-6.759 10.38-11.73-4.542-0.7029-8.111-1.568t-7.57-2.541q-0.6489-0.3244-1.298-1.46-0.5948-1.19-0.5948-2.163 0-1.893 1.352-3.136 1.406-1.298 3.19-1.298 1.298 0 3.244 0.8111 1.947 0.757 4.921 2.271 3.028 1.46 6.867 3.298-0.7029-3.407-1.19-7.786-0.4326-4.434-0.4326-6.056 0-2.001 1.244-3.407 1.298-1.46 3.298-1.46 1.947 0 3.19 1.46 1.298 1.406 1.298 3.785 0 0.6489-0.2163 2.595-0.1622 1.893-0.5407 4.65-0.3244 2.704-0.757 6.218z" style="fill:#14ca29"/>
+                </g>
+                </svg>
+            </a>
+              
+            </div>
+          </div>
+        </div>
+        
+      </footer>
+    </div>
+    <aside class="toc-drawer">
+      
+      
+      <div class="toc-sticky toc-scroll">
+        <div class="toc-title-container">
+          <span class="toc-title">
+            Contents
+          </span>
+        </div>
+        <div class="toc-tree-container">
+          <div class="toc-tree">
+            <ul>
+<li><a class="reference internal" href="#">Wedge models</a><ul>
+<li><a class="reference internal" href="#the-default-model-and-a-basic-synthetic-workflow">The default model and a basic synthetic workflow</a></li>
+<li><a class="reference internal" href="#alternative-workflow">Alternative workflow</a></li>
+<li><a class="reference internal" href="#a-layered-wedge-model">A layered wedge model</a></li>
+<li><a class="reference internal" href="#a-layer-cake-model">A layer-cake model</a></li>
+<li><a class="reference internal" href="#top-and-bottom-conformance">Top and bottom conformance</a></li>
+<li><a class="reference internal" href="#different-wedge-shapes">Different ‘wedge’ shapes</a></li>
+<li><a class="reference internal" href="#varying-net-gross-across-breadth">Varying net:gross across <code class="docutils literal notranslate"><span class="pre">breadth</span></code></a></li>
+<li><a class="reference internal" href="#models-from-well-logs">Models from well logs</a></li>
+</ul>
+</li>
+</ul>
+
+          </div>
+        </div>
+      </div>
+      
+      
+    </aside>
+  </div>
+</div><script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/scripts/furo.js"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    </body>
+</html>

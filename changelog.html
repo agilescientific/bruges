@@ -160,6 +160,7 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="userguide/Quick_start_wedge.html">Welcome to <code class="docutils literal notranslate"><span class="pre">bruges</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="userguide/Wedge_models.html">Wedge models</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">API reference</span></p>
 <ul>
@@ -223,7 +224,15 @@
           <section class="tex2jax_ignore mathjax_ignore" id="changelog">
 <h1>Changelog<a class="headerlink" href="#changelog" title="Permalink to this headline">#</a></h1>
 <section id="february-2022">
-<h2>0.5.2 — 18 February 2022<a class="headerlink" href="#february-2022" title="Permalink to this headline">#</a></h2>
+<h2>0.5.3 — 21 February 2022<a class="headerlink" href="#february-2022" title="Permalink to this headline">#</a></h2>
+<ul class="simple">
+<li><p>Fixed <a class="reference external" href="https://github.com/agile-geoscience/bruges/issues/92">issue #92</a>: the Ormsby, Ormsby FFT and Klauder wavelets now behave as expected when 2D arrays (lists of frequency parameters, essentially) are passed. A filter bank (array of wavelets) is returned.</p></li>
+<li><p>Fixed <a class="reference external" href="https://github.com/agile-geoscience/bruges/issues/93">issue #93</a>: the Sinc, Cosine and Gabor wavelets now behave as expected when <code class="docutils literal notranslate"><span class="pre">sym</span></code> is passed.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">reflection.convolve()</span></code> now works properly when the axis is specified, and a verbose option was added to show the input and output array shapes (helps with troubleshooting).</p></li>
+</ul>
+</section>
+<section id="id1">
+<h2>0.5.2 — 18 February 2022<a class="headerlink" href="#id1" title="Permalink to this headline">#</a></h2>
 <ul class="simple">
 <li><p><strong>Breaking change:</strong> Mode is now <code class="docutils literal notranslate"><span class="pre">'same'</span></code> by default on reflectivity functions. If you were assuming <code class="docutils literal notranslate"><span class="pre">mode='valid'</span></code> you should change your code.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">reflection.reflectivity()</span></code> now works properly on 2D panels of Vp, Vs, and rho.</p></li>
@@ -234,14 +243,14 @@
 <li><p><code class="docutils literal notranslate"><span class="pre">models.wedge()</span></code> now behaves as expected if you pass a NumPy array of <code class="docutils literal notranslate"><span class="pre">int</span></code> values to <code class="docutils literal notranslate"><span class="pre">strat</span></code>.</p></li>
 </ul>
 </section>
-<section id="id1">
-<h2>0.5.1 — 17 February 2022<a class="headerlink" href="#id1" title="Permalink to this headline">#</a></h2>
+<section id="id2">
+<h2>0.5.1 — 17 February 2022<a class="headerlink" href="#id2" title="Permalink to this headline">#</a></h2>
 <ul class="simple">
 <li><p>Fixed a critical bug in 0.5.0 which prevented it from importing.</p></li>
 </ul>
 </section>
-<section id="id2">
-<h2>0.5.0 — 16 February 2022<a class="headerlink" href="#id2" title="Permalink to this headline">#</a></h2>
+<section id="id3">
+<h2>0.5.0 — 16 February 2022<a class="headerlink" href="#id3" title="Permalink to this headline">#</a></h2>
 <ul class="simple">
 <li><p>In all wavelets, <code class="docutils literal notranslate"><span class="pre">sym</span></code> is now <code class="docutils literal notranslate"><span class="pre">True</span></code> by default.</p></li>
 <li><p>In all wavelets, <code class="docutils literal notranslate"><span class="pre">return_t</span></code> is now <code class="docutils literal notranslate"><span class="pre">True</span></code> by default. you can still set it to false but…</p></li>
@@ -477,7 +486,7 @@
         <div class="bottom-of-page">
           <div class="left-details">
             <div class="copyright">
-                &#169; 2022, Agile Scientific | <a href="https://creativecommons.org/licenses/by/4.0/">CC BY</a>
+                &#169; 2022, The Bruges Authors | <a href="https://creativecommons.org/licenses/by/4.0/">CC BY</a>
             </div>
             Made with <a href="https://www.sphinx-doc.org/">Sphinx</a> and 
             
@@ -513,9 +522,10 @@
           <div class="toc-tree">
             <ul>
 <li><a class="reference internal" href="#">Changelog</a><ul>
-<li><a class="reference internal" href="#february-2022">0.5.2 — 18 February 2022</a></li>
-<li><a class="reference internal" href="#id1">0.5.1 — 17 February 2022</a></li>
-<li><a class="reference internal" href="#id2">0.5.0 — 16 February 2022</a></li>
+<li><a class="reference internal" href="#february-2022">0.5.3 — 21 February 2022</a></li>
+<li><a class="reference internal" href="#id1">0.5.2 — 18 February 2022</a></li>
+<li><a class="reference internal" href="#id2">0.5.1 — 17 February 2022</a></li>
+<li><a class="reference internal" href="#id3">0.5.0 — 16 February 2022</a></li>
 <li><a class="reference internal" href="#v0-4-5-8-december-2021">v0.4.5 — 8 December 2021</a></li>
 <li><a class="reference internal" href="#v0-4-4-27-september-2021">v0.4.4 — 27 September 2021</a></li>
 <li><a class="reference internal" href="#v0-4-3-30-june-2021">v0.4.3 — 30 June 2021</a></li>
