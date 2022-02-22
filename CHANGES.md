@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.5.4 — coming soon
+
+- Fixed small issue with the Klauder wavelet not working when `autocorrelation` was `False`.
+- Changed the names of the `convolve` arguments to `arr` and `v` to better match NumPy.
+
 ## 0.5.3 — 21 February 2022
 
 - Fixed [issue #92](https://github.com/agile-geoscience/bruges/issues/92): the Ormsby, Ormsby FFT and Klauder wavelets now behave as expected when 2D arrays (lists of frequency parameters, essentially) are passed. A filter bank (array of wavelets) is returned.

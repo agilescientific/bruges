@@ -54,6 +54,7 @@ User guide
 
     installation
     userguide/Quick_start_wedge.ipynb
+    userguide/Making_wavelets.ipynb
     userguide/Wedge_models.ipynb
 
 
