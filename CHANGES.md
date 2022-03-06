@@ -4,11 +4,12 @@
 
 - Fixed small issue with the Klauder wavelet not working when `autocorrelation` was `False`.
 - Changed the names of the `convolve` arguments to `arr` and `v` to better match NumPy.
+- The version number is now correctly stored in the `__version__` attribute.
 
 ## 0.5.3 — 21 February 2022
 
-- Fixed [issue #92](https://github.com/agile-geoscience/bruges/issues/92): the Ormsby, Ormsby FFT and Klauder wavelets now behave as expected when 2D arrays (lists of frequency parameters, essentially) are passed. A filter bank (array of wavelets) is returned.
-- Fixed [issue #93](https://github.com/agile-geoscience/bruges/issues/93): the Sinc, Cosine and Gabor wavelets now behave as expected when `sym` is passed.
+- Fixed [issue #92](https://github.com/agilescientific/bruges/issues/92): the Ormsby, Ormsby FFT and Klauder wavelets now behave as expected when 2D arrays (lists of frequency parameters, essentially) are passed. A filter bank (array of wavelets) is returned.
+- Fixed [issue #93](https://github.com/agilescientific/bruges/issues/93): the Sinc, Cosine and Gabor wavelets now behave as expected when `sym` is passed.
 - `reflection.convolve()` now works properly when the axis is specified, and a verbose option was added to show the input and output array shapes (helps with troubleshooting).
 
 ## 0.5.2 — 18 February 2022
@@ -63,7 +64,7 @@
 - Moved `rotate_phase()` to `bruges.filters` and it now should handle 2D and 3D seismic correctly. You can also pass an array-like of phases to get a 'phase bank' of rotations, similar to how this works with frequencies and wavelet banks.
 
 ## v0.4 — 27 November 2020
-- **Breaking change:** fixed numerous minor issues with `attribute.energy()`, see [issue 78](https://github.com/agile-geoscience/bruges/issues/78). Note that it now expects time to be in the last dimension of the array. The function now runs on n-D data and is also about 15 times faster.
+- **Breaking change:** fixed numerous minor issues with `attribute.energy()`, see [issue 78](https://github.com/agilescientific/bruges/issues/78). Note that it now expects time to be in the last dimension of the array. The function now runs on n-D data and is also about 15 times faster.
 - Multiple fixes to the documentation, thanks especially to Jesper Dramsch and Adriana Gordon.
 - Added the `filters.berlage()` wavelet, a causal, minimum phase wavelet good for marine airgun sources.
 - Added the `filters.generalized()` wavelet, of which the Ricker is a special case, as defined by Wang 2015, Geophys J Int 203, p1172ff.
