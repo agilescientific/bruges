@@ -368,6 +368,8 @@ def klauder(duration, dt, f,
 
     if autocorrelate:
         w = [np.correlate(c_, c_, mode='same') for c_ in c]
+    else:
+        w = c
 
     w = np.squeeze(w) / np.amax(w)
 
