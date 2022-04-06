@@ -58,6 +58,10 @@ extensions = ['sphinx.ext.githubpages',
 
 myst_enable_extensions = ["dollarmath", "amsmath"]
 
+# MyST notebook execution
+jupyter_execute_notebooks = 'force'
+execution_timeout = 120
+
 # Apidoc automation
 # https://pypi.org/project/sphinxcontrib-apidoc/
 # The apidoc extension and this code automatically update apidoc.

@@ -1,10 +1,12 @@
 # Changelog
 
-## 0.5.4 — coming soon
+## 0.5.4 — 6 April 2022
 
 - Fixed small issue with the Klauder wavelet not working when `autocorrelation` was `False`.
 - Changed the names of the `convolve` arguments to `arr` and `v` to better match NumPy.
 - The version number is now correctly stored in the `__version__` attribute.
+- Added a User Guide notebook on [making wavelets](https://code.agilescientific.com/bruges/userguide/Making_wavelets.html).
+- Added a User Guide notebook on [seismic attributes](https://code.agilescientific.com/bruges/userguide/Seismic_attributes.html).
 
 ## 0.5.3 — 21 February 2022
 
