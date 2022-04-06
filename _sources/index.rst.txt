@@ -3,7 +3,7 @@
 .. container:: noclass
    :name: forkongithub
 
-   `Fork on GitHub <https://github.com/agile-geoscience/bruges>`_
+   `Fork on GitHub <https://github.com/agilescientific/bruges>`_
 
 bruges is a
 ===========
@@ -54,7 +54,9 @@ User guide
 
     installation
     userguide/Quick_start_wedge.ipynb
+    userguide/Making_wavelets.ipynb
     userguide/Wedge_models.ipynb
+    userguide/Seismic_attributes.ipynb
 
 
 API reference
@@ -94,8 +96,8 @@ Indices and tables
     :hidden:
 
     PyPI releases <https://pypi.org/project/bruges/>
-    Code in GitHub <https://github.com/agile-geoscience/bruges>
-    Issue tracker <https://github.com/agile-geoscience/bruges/issues>
+    Code in GitHub <https://github.com/agilescientific/bruges>
+    Issue tracker <https://github.com/agilescientific/bruges/issues>
     Community guidelines <https://code.agilescientific.com/community>
     Agile's software <https://code.agilescientific.com>
     Agile's website <https://www.agilescientific.com>
