@@ -109,10 +109,19 @@ def rms(a, axis=None):
     return np.sqrt(ms)
 
 
+@deprecated("Use bruges.filters for moving linear and nonlinear statistics")
 def moving_average(a, length, mode='same'):
     """
     Computes the mean in a moving window using convolution. For an alternative,
     as well as other kinds of average (median, mode, etc.), see bruges.filters.
+
+    Args:
+        a (ndarray): The array to average.
+        length (int): The length of the moving window.
+        mode (str): The mode of the convolution, see np.convolve.
+
+    Returns:
+        ndarray: The moving average.
 
     Example:
         >>> test = np.array([1,1,9,9,9,9,9,2,3,9,2,2,np.nan,1,1,1,1])
@@ -120,8 +129,10 @@ def moving_average(a, length, mode='same'):
         array([ 2.2,  4. ,  5.8,  7.4,  9. ,  7.6,  6.4,  6.4,  5. ,  3.6,  nan,
                 nan,  nan,  nan,  nan,  0.8,  0.6])
     """
+    warnings.warn("Use bruges.filters for moving linear and nonlinear statistics", DeprecationWarning)
+    warnings.warn("The mode argument is ignored in this function. Use bruges.filters for moving linear and nonlinear statistics", stacklevel=2)
     padded = np.pad(a, int(length/2), mode='edge')
-    boxcar = np.ones(int(length))/length
+    boxcar = np.ones(int(length))/int(length)
     smooth = np.convolve(padded, boxcar, mode='same')
     return smooth[int(length/2):-int(length/2)]
 
