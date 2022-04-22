@@ -200,3 +200,22 @@ def optimize_inverse_gardner(rho, alpha, beta):
      return inverse_gardner(rho, alpha=alpha, beta=beta)
 
 
+def archie_sw(phi, rw, rt, a=1, m=2, n=2):
+    """
+    Computes Archie water (fluid) saturation
+    Args:
+        a   (float): Cementation exponet, generally 1, 
+              can range from ~0.5 to ~4 (empirical)
+        m   (float): Cementation factor, commonly 2,
+              decreases with more clay content (empirical)
+        n   (float): Saturation exponet, commonly 2,
+              generally ranges from 1.5 to 2.5 (empirical)
+        rw  (float): Formation water (fluid) resistivity in ohmm
+        rt  (float): Formation resistivity in ohmm
+        phi (float): porosity, ranging from 0-1       
+
+    Returns:
+        ndarray: Water saturation estimation (Sw)
+    """
+    
+    return ((a*rw)/(rt*phi**m))**(1/n)
