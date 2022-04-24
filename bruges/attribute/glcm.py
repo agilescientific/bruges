@@ -1,7 +1,7 @@
 """
 GLCM (gray level co-occurrence matrices)
 :copyright: 2022 Software Underground 
-:license: Apache 2.0
+:license: Apache 2.0 
 """
 
 from patchify import patchify, unpatchify
