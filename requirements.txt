@@ -1,1 +1,7 @@
-.
+scikit-image>=0.16.2
+scikit-learn>=0.23.2
+tqdm>=4.47.0
+patchify
+opencv-python>=4.5.1
+numpy>=1.19.5
+3.2.2
