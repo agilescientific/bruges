@@ -1,4 +1,4 @@
 scikit-image>=0.16.2
 tqdm>=4.47.0
-patchify
 numpy>=1.19.5
+scipy>=1.5.0
