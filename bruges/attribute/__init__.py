@@ -21,3 +21,5 @@ from .complex import instantaneous_frequency
 from .complex import quadrature
 
 from .horizon import *
+
+from .glcm import glcm2d
