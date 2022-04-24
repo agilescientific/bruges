@@ -4,12 +4,11 @@ GLCM (gray level co-occurrence matrices)
 :license: Apache 2.0
 """
 
-from patchify import patchify, unpatchify
+from bruges.util.util import patchify, unpatchify
 from skimage.feature.texture import greycomatrix, greycoprops
-from skimage.transform import resize
+from skimage.transform import resize, warp
 import skimage
-from sklearn.feature_extraction.image import extract_patches_2d, reconstruct_from_patches_2d
-import cv2
+from scipy.ndimage import convolve
 import numpy as np
 from tqdm import tqdm
 
@@ -57,9 +56,8 @@ def glcm2d(img, vmin=None, vmax=None, levels=8, kernel_size=5, distance=1.0, ang
     feature: string
         statistical feature from GLCM ('contrast','dissimilarity','homogeneity','ASM','energy')
     method: string
-        method to use : ('skimage', 'skimage_patchify', 'fast')
-            'skimage': default, 
-            'skimage_patchify': same as default, but using patchify to make patches and merge results, somewhat more 'right' 
+        method to use : ('skimage', 'fast')
+            'skimage': default,
             'fast': Fastest GLCM calculation using opencv warp affine and 2D Convolution
         
     Returns:
@@ -79,19 +77,8 @@ def glcm2d(img, vmin=None, vmax=None, levels=8, kernel_size=5, distance=1.0, ang
     bins = np.linspace(mi, ma+1, levels+1)
     gl1 = np.digitize(img, bins) - 1
 
-    if method == 'skimage':
-        patches = extract_patches_2d(gl1, (kernel_size, kernel_size))
-        glcmstat_pcs = np.zeros_like(patches)
-        for i in tqdm(range(patches.shape[0]), desc="GLCM statistic calculation"):
-            glcm2 = greycomatrix(patches[i], distances=[int(distance)], angles=[int(angle)], levels=levels,
-                            #symmetric=True, 
-                            normed=True
-                            )
-            result2 = greycoprops(glcm2, feature)
-            glcmstat_pcs[i] = result2[0][0]
-        result = reconstruct_from_patches_2d(glcmstat_pcs, gl1.shape)    
 
-    if method == 'skimage_patchify':        
+    if method == 'skimage':        
         patches = patchify(gl1, (kernel_size, kernel_size), step=1)
         glcmstat = np.zeros_like(patches[:,:,0,0])
         with tqdm(total=patches.shape[0]*patches.shape[1], desc="GLCM statistic calculation") as pbar:
@@ -111,10 +98,9 @@ def glcm2d(img, vmin=None, vmax=None, levels=8, kernel_size=5, distance=1.0, ang
         # make shifted image
         dx = distance*np.cos(np.deg2rad(angle))
         dy = distance*np.sin(np.deg2rad(-angle))
-        mat = np.array([[1.0,0.0,-dx], [0.0,1.0,-dy]], dtype=np.float32)
-        gl2 = cv2.warpAffine(gl1, mat, (w,h), flags=cv2.INTER_NEAREST,
-                             borderMode=cv2.BORDER_REPLICATE)
-
+        #mat = np.array([[1.0,0.0,-dx], [0.0,1.0,-dy]], dtype=np.float32)
+        mat2 = np.array([[1.0,0.0,-dx], [0.0,1.0,-dy], [0.0,0.0,1.0]], dtype=np.float32)
+        gl2 = warp(gl1.astype(float), mat2, mode='edge')
         # make glcm
         glcm = np.zeros((levels, levels, h, w), dtype=np.uint8)
         for i in range(levels):
@@ -125,7 +111,7 @@ def glcm2d(img, vmin=None, vmax=None, levels=8, kernel_size=5, distance=1.0, ang
         kernel = np.ones((ks, ks), dtype=np.uint8)
         for i in range(levels):
             for j in range(levels):
-                glcm[i,j] = cv2.filter2D(glcm[i,j], -1, kernel)
+                glcm[i,j] = convolve(glcm[i,j], kernel, mode='nearest')
 
         glcm = glcm.astype(np.float32)
 
