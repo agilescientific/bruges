@@ -71,7 +71,7 @@ def glcm2d(img, vmin=None, vmax=None, levels=8, kernel_size=5, distance=1.0, ang
     ks = kernel_size
     h,w = img.shape
 
-    # digitize
+    #digitize/binning
     bins = np.linspace(mi, ma+1, levels+1)
     gl1 = np.digitize(img, bins) - 1
 
