@@ -1,13 +1,17 @@
 """
 GLCM (gray level co-occurrence matrices)
 :copyright: 2022 Software Underground 
-:license: Apache 2.0 
+:license: Apache 2.0
 """
 
 from patchify import patchify, unpatchify
+from skimage.feature.texture import greycomatrix, greycoprops
+from skimage.transform import resize
 import skimage
+from sklearn.feature_extraction.image import extract_patches_2d, reconstruct_from_patches_2d
 import cv2
 import numpy as np
+from tqdm import tqdm
 
 def main():
     pass
@@ -71,12 +75,12 @@ def glcm2d(img, vmin=None, vmax=None, levels=8, kernel_size=5, distance=1.0, ang
     ks = kernel_size
     h,w = img.shape
 
-    #digitize/binning
+    # digitize
     bins = np.linspace(mi, ma+1, levels+1)
     gl1 = np.digitize(img, bins) - 1
 
     if method == 'skimage':
-        patches = image.extract_patches_2d(gl1, (kernel_size, kernel_size))
+        patches = extract_patches_2d(gl1, (kernel_size, kernel_size))
         glcmstat_pcs = np.zeros_like(patches)
         for i in tqdm(range(patches.shape[0]), desc="GLCM statistic calculation"):
             glcm2 = greycomatrix(patches[i], distances=[int(distance)], angles=[int(angle)], levels=levels,
@@ -85,7 +89,7 @@ def glcm2d(img, vmin=None, vmax=None, levels=8, kernel_size=5, distance=1.0, ang
                             )
             result2 = greycoprops(glcm2, feature)
             glcmstat_pcs[i] = result2[0][0]
-        result = image.reconstruct_from_patches_2d(glcmstat_pcs, gl1.shape)    
+        result = reconstruct_from_patches_2d(glcmstat_pcs, gl1.shape)    
 
     if method == 'skimage_patchify':        
         patches = patchify(gl1, (kernel_size, kernel_size), step=1)
@@ -101,7 +105,7 @@ def glcm2d(img, vmin=None, vmax=None, levels=8, kernel_size=5, distance=1.0, ang
                     glcmstat[i,j] = result2[0][0]
                     pbar.update(1)
         pbar.close()        
-        result = skimage.transform.resize(glcmstat,(gl1.shape[0], gl1.shape[1]))
+        result = resize(glcmstat,(gl1.shape[0], gl1.shape[1]))
         
     if method == 'fast':
         # make shifted image
@@ -161,7 +165,7 @@ def glcm2d(img, vmin=None, vmax=None, levels=8, kernel_size=5, distance=1.0, ang
     return result
     
     
- if __name__ == '__main__':
+if __name__ == '__main__':
     main()
 
     img = skimage.data.camera()
