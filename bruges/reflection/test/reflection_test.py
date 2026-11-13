@@ -80,6 +80,27 @@ class AvoTest(unittest.TestCase):
         test = np.allclose(reflect, self.reflect_rpp, rtol=self.tolerance)
         self.assertTrue(test)
 
+    def test_shuey_gradient(self):
+        """Check that the Shuey gradient is independent of angle."""
+
+        properties = (
+            3000, 1500, 2400,
+            3500, 1900, 2500
+        )
+
+        for angle in [0, 10, 20, 30]:
+            result = avo.shuey(
+                *properties,
+                theta1=angle,
+                return_gradient=True
+            )
+
+            self.assertAlmostEqual(
+                result.gradient,
+                -0.20293,
+                places=4
+            )
+
     def test_bortfeld(self):
         reflect = avo.bortfeld(vp1, vs1, rho1, vp2, vs2, rho2, theta)
         test = np.allclose(reflect, self.reflect_rpp, rtol=self.tolerance)
