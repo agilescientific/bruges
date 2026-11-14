@@ -1,23 +1,35 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 """
-Find and run tests.
+Find and run the test suite.
+
+Exits with a non-zero status when any test fails, so CI and pre-commit hooks
+can rely on the return code. Discovery is anchored to this file, so the script
+works from any working directory.
 """
+import sys
 import unittest
-import os
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parent
+PACKAGE = ROOT / "bruges"
 
 
-def run_tests():
-    tests = []
-    for root, _, _ in os.walk('bruges'):
-        if 'test' in root:
-            tests.append(
-                unittest.TestLoader().discover(root,
-                                               pattern='*test.py'))
-    suite = unittest.TestSuite(tests)
-    return(suite)
+def run_tests() -> unittest.TestSuite:
+    loader = unittest.TestLoader()
+    suite = unittest.TestSuite()
+    test_dirs = sorted(p for p in PACKAGE.rglob("test") if p.is_dir())
+    if not test_dirs:
+        raise SystemExit(f"no test directories found under {PACKAGE}")
+    for test_dir in test_dirs:
+        suite.addTests(loader.discover(str(test_dir), pattern="*test.py"))
+    return suite
 
 
-if __name__ == '__main__':
-    suite = run_tests()
-    unittest.TextTestRunner(verbosity=2).run(suite)
+def main() -> int:
+    result = unittest.TextTestRunner(verbosity=2).run(run_tests())
+    return 0 if result.wasSuccessful() else 1
+
+
+if __name__ == "__main__":
+    sys.exit(main())
