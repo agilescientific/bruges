@@ -13,3 +13,4 @@ The following people have contributed to `bruges`:
 - [Jesse Pisel](https://github.com/jessepisel), USA
 - [Sean Ross-Ross](https://github.com/srossross), Vancouver, Canada
 - [Leonardo Uieda](https://github.com/leouieda), Liverpool, UK
+- tianchunzhong ([@Charles-delapore](https://github.com/Charles-delapore))

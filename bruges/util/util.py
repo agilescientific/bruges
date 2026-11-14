@@ -157,7 +157,7 @@ def normalize(a, new_min=0.0, new_max=1.0):
     Returns:
         ndarray. The normalized array.
     """
-    a = np.array(a, dtype=np.float)
+    a = np.array(a, dtype=float)
     n = (a - np.nanmin(a)) / np.nanmax(a - np.nanmin(a))
     return n * (new_max - new_min) + new_min
 

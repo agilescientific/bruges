@@ -74,6 +74,6 @@ def elastic_impedance(vp, vs, rho, theta1,
         ei /= alpha
 
     if ei.size == 1:
-        return np.asscalar(ei)
+        return np.asarray(ei).item()
     else:
         return np.squeeze(ei)
