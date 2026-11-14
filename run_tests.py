@@ -1,34 +1,26 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 """
-Find and run the test suite.
+Run the test suite.
 
 Exits with a non-zero status when any test fails, so CI and pre-commit hooks
-can rely on the return code. Discovery is anchored to this file, so the script
-works from any working directory.
+can rely on the return code. Uses pytest, which is already a test dependency
+and which discovers the `*test.py` modules on every supported Python version
+(3.9-3.13); `unittest discover` fails on those directory names before 3.12.
 """
 import sys
-import unittest
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent
-PACKAGE = ROOT / "bruges"
-
-
-def run_tests() -> unittest.TestSuite:
-    loader = unittest.TestLoader()
-    suite = unittest.TestSuite()
-    test_dirs = sorted(p for p in PACKAGE.rglob("test") if p.is_dir())
-    if not test_dirs:
-        raise SystemExit(f"no test directories found under {PACKAGE}")
-    for test_dir in test_dirs:
-        suite.addTests(loader.discover(str(test_dir), pattern="*test.py"))
-    return suite
+TESTS = ROOT / "bruges"
 
 
 def main() -> int:
-    result = unittest.TextTestRunner(verbosity=2).run(run_tests())
-    return 0 if result.wasSuccessful() else 1
+    try:
+        import pytest
+    except ImportError:  # pragma: no cover
+        raise SystemExit("pytest is required: pip install .[test]")
+    return int(pytest.main(["-q", str(TESTS)]))
 
 
 if __name__ == "__main__":
