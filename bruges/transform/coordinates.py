@@ -75,4 +75,4 @@ class CoordTransform(object):
         ​   array([300, 400])
         """
         p = np.dot(np.linalg.pinv(self.A), np.append(q, [1]))[:2]
-        return np.rint(p).astype(np.int)
+        return np.rint(p).astype(int)

@@ -26,7 +26,7 @@ def mean(arr, size=5):
     Returns:
         ndarray: the resulting smoothed array.
     """
-    arr = np.array(arr, dtype=np.float)
+    arr = np.array(arr, dtype=float)
 
     if not size // 2:
         size += 1
@@ -46,7 +46,7 @@ def rms(arr, size=5):
     Returns:
         ndarray: the resulting smoothed array.
     """
-    arr = np.array(arr, dtype=np.float)
+    arr = np.array(arr, dtype=float)
 
     if not size // 2:
         size += 1
@@ -66,7 +66,7 @@ def median(arr, size=5):
     Returns:
         ndarray: the resulting smoothed array.
     """
-    arr = np.array(arr, dtype=np.float)
+    arr = np.array(arr, dtype=float)
 
     if not size // 2:
         size += 1
@@ -97,7 +97,7 @@ def mode(arr, size=5, tie='smallest'):
             m, _ = -scipy.stats.mode(-this)
         return np.squeeze(m)
 
-    arr = np.array(arr, dtype=np.float)
+    arr = np.array(arr, dtype=float)
 
     if not size // 2:
         size += 1
@@ -131,7 +131,7 @@ def snn(arr, size=5, include=True):
             select += [centre]
         return np.mean(select)
 
-    arr = np.array(arr, dtype=np.float)
+    arr = np.array(arr, dtype=float)
     if arr.ndim != 2:
         raise BrugesError("arr must have 2-dimensions")
 
@@ -173,7 +173,7 @@ def kuwahara(arr, size=5):
         select = sub[np.argmin(np.var(sub, axis=1))]
         return np.mean(select)
 
-    arr = np.array(arr, dtype=np.float)
+    arr = np.array(arr, dtype=float)
     if arr.ndim != 2:
         raise BrugesError("arr must have 2-dimensions")
 
@@ -220,7 +220,7 @@ def conservative(arr, size=5, supercon=False):
         else:
             return centre
 
-    arr = np.array(arr, dtype=np.float)
+    arr = np.array(arr, dtype=float)
 
     if not size // 2:
         size += 1
