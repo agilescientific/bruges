@@ -46,22 +46,22 @@ class SpectraTest(unittest.TestCase):
 
         # Test with 1.0 overlap.
         test1 = spectrogram(self.data, window_length, overlap=1.0)
-        self.assertAlmostEquals(test1[0, self.f1], self.a1, places=2)
-        self.assertAlmostEquals(test1[8, self.f2], self.a2, places=2)
-        self.assertAlmostEquals(test1[6, self.f3], self.a3, places=2)
+        self.assertAlmostEqual(test1[0, self.f1], self.a1, places=2)
+        self.assertAlmostEqual(test1[8, self.f2], self.a2, places=2)
+        self.assertAlmostEqual(test1[6, self.f3], self.a3, places=2)
 
         # Test with 0.5 overlap.
         test2 = spectrogram(self.data, window_length, overlap=0.5)
-        self.assertAlmostEquals(test2[0, self.f1], self.a1, places=2)
-        self.assertAlmostEquals(test2[10, self.f2], self.a2, places=2)
-        self.assertAlmostEquals(test2[15, self.f3], self.a3, places=2)
+        self.assertAlmostEqual(test2[0, self.f1], self.a1, places=2)
+        self.assertAlmostEqual(test2[10, self.f2], self.a2, places=2)
+        self.assertAlmostEqual(test2[15, self.f3], self.a3, places=2)
 
     def test_1dspectraldecomp(self):
         dt = 1.0 / self.fs
         f = (self.f1, self.f2, self.f3)
         test = spectraldecomp(self.data, window_length=1, f=f, dt=dt)
-        self.assertAlmostEquals(test[5, 0] / test[5, 1], self.a1 / self.a2)
-        self.assertAlmostEquals(test[5, 0] / test[5, 2], self.a1 / self.a3)
+        self.assertAlmostEqual(test[5, 0] / test[5, 1], self.a1 / self.a2)
+        self.assertAlmostEqual(test[5, 0] / test[5, 2], self.a1 / self.a3)
 
     def test_2dspectraldecomp(self):
         dt = 1.0 / self.fs
@@ -70,10 +70,10 @@ class SpectraTest(unittest.TestCase):
         data[:, 0] = self.data
         data[:, 1] = self.data
         test = spectraldecomp(data, window_length=1, f=f, dt=dt)
-        self.assertAlmostEquals(test[5, 0, 0] / test[5, 0, 1], self.a1/self.a2)
-        self.assertAlmostEquals(test[5, 0, 0] / test[5, 0, 2], self.a1/self.a3)
-        self.assertAlmostEquals(test[5, 1, 0] / test[5, 1, 1], self.a1/self.a2)
-        self.assertAlmostEquals(test[5, 1, 0] / test[5, 1, 2], self.a1/self.a3)
+        self.assertAlmostEqual(test[5, 0, 0] / test[5, 0, 1], self.a1/self.a2)
+        self.assertAlmostEqual(test[5, 0, 0] / test[5, 0, 2], self.a1/self.a3)
+        self.assertAlmostEqual(test[5, 1, 0] / test[5, 1, 1], self.a1/self.a2)
+        self.assertAlmostEqual(test[5, 1, 0] / test[5, 1, 2], self.a1/self.a3)
 
 
 if __name__ == '__main__':

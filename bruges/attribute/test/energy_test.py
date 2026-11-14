@@ -31,7 +31,7 @@ class EnergyTest(unittest.TestCase):
         max_amp = amax(amplitude)
 
         ms_sin = 0.5  # The MS energy of a sin wave
-        self.assertAlmostEquals(ms_sin, max_amp, places=3)
+        self.assertAlmostEqual(ms_sin, max_amp, places=3)
 
         # Check that it is in the right location
         self.assertAlmostEqual(max_amp, amplitude[501], places=3)
