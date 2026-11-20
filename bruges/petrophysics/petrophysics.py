@@ -9,6 +9,7 @@ petrophysics.py
 """
 
 import numpy as np
+from scipy.optimize import curve_fit
 
 
 def gardner(vp, alpha=310, beta=0.25, fps=False):
@@ -128,19 +129,21 @@ velocity_to_slowness = slowness_to_velocity
 
 def gardner_param(vp, rhob):
      """
-     Finds optimal alpha and beta parameters for the gardner
+     Fits Gardner alpha and beta by minimizing squared velocity residuals.
+
+     Uses the inverse relation vp = (rhob / alpha)**(1 / beta).
 
      Volodymyr Vragov, October 2018
 
      Args:
-         rho(ndarray): Density.
-         vp (ndarray): P-wave velocity.
+         vp (ndarray): P-wave velocity in m/s.
+         rhob (ndarray): Density in kg/m^3.
 
      Returns:
          alpha (float): The factor.
          beta (float): The exponent, usually 0.25.
      """
-     params, _ = curve_fit(optimizer_gardner, rhob, vp)
+     params, _ = curve_fit(optimize_inverse_gardner, rhob, vp)
      return params[0], params[1]
      
 
